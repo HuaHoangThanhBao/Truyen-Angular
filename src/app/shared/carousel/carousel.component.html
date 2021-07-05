@@ -1,0 +1,28 @@
+<div class="body-container">
+  <div class="body-cover">
+    <div class="body-box">
+      <div class="title-header">
+        <h2>Truyện đề cử</h2>
+      </div>
+
+      <!--Carousel-->
+      <div class="caro-body">
+        <div id="splide" class="splide">
+          <div class="splide__track">
+            <ul class="splide__list">
+              <li class="splide__slide" *ngFor="let ca of carouselJson; let l = last">
+                {{l ? callCarousel(): null}}
+                <img data-src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
+                <a class="caro-info">
+                  <b class="caro-txt">{{ ca.tenTruyen }}</b>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!--End Carousel-->
+
+    </div>
+  </div>
+</div>

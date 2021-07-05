@@ -1,0 +1,31 @@
+@mixin key_frame($duration: 1ms, $count: infinit) {
+    @keyframes loading {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+    animation-name: loading;
+    animation-duration: $duration;
+    animation-iteration-count: $count;
+}
+
+.loader {
+    position: relative;
+    background-color: rgb(235, 235, 235);
+    width: 100%;
+    height: 20px;
+    overflow: hidden;
+    border-radius: 4px;
+    margin-bottom: 4px;
+
+    &::after {
+        display: block;
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transform: translateX(-100%);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+        @include key_frame(1s, infinite);
+    }
+}

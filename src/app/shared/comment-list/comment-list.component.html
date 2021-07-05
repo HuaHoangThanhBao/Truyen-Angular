@@ -1,0 +1,53 @@
+<div class="box-container">
+    <div class="story-content-panel">
+        <div class="story-content-header">
+            <h2>Bình Luận</h2>
+        </div>
+
+        <hr>
+
+        <!--Comment-->
+        <div class="chap__comment-panel pad-0">
+            <div class="comment-writing-container">
+                <form>
+                    <textarea placeholder="Các bạn có thể bình luận tại đây..."></textarea>
+
+                    <app-seleton-loader *ngIf="!jsonBinhLuan" Cwidth="100" Cheight="35" Cmargin="20px 0 0 0"
+                    circle="20px"></app-seleton-loader>
+                    <div *ngIf="jsonBinhLuan" class="btn-detail-group pad-top-10 pad-bot-25">
+                        <button class="btn-social">Gửi</button>
+                    </div>
+                </form>
+            </div>
+            <ul class="comment-list" *ngFor="let data of [].constructor(10); let i = index">
+                <li class="comment-item" *ngIf="!jsonBinhLuan || (jsonBinhLuan.length > 0 && i < jsonBinhLuan.length)">
+                    <app-seleton-loader *ngIf="!jsonBinhLuan" Cheight="25"></app-seleton-loader>
+                    <div *ngIf="jsonBinhLuan" class="comment-b">
+                        <a class="comment-link" href="/story-reading/{{ jsonBinhLuan[i].chuong.chuongID }}">{{ jsonBinhLuan[i].chuong.tenChuong }}</a>
+                        <span>{{ jsonBinhLuan[i].ngayBL }}</span>
+                    </div>
+                    <div class="comment-b">
+                        <div class="comment-u-img">
+                            <app-seleton-loader *ngIf="!jsonBinhLuan" Cwidth="45" Cheight="45"></app-seleton-loader>
+                            <img *ngIf="jsonBinhLuan" src="assets/images/user.png"
+                                alt="no image avaiable">
+                        </div>
+                        <div class="comment-des">
+                            <div class="comment-des-container">
+                                <app-seleton-loader *ngIf="!jsonBinhLuan" Cheight="20"></app-seleton-loader>
+                                <div *ngIf="jsonBinhLuan"  class="comment-des-title">
+                                    <p class="comment-name">{{ jsonBinhLuan[i].user.tenUser }}</p>
+                                </div>
+                                <app-seleton-loader *ngIf="!jsonBinhLuan" Cheight="20"></app-seleton-loader>
+                                <div *ngIf="jsonBinhLuan"  class="comment-des-content">
+                                    <p>{{ jsonBinhLuan[i].noiDung }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--End Comment-->
+    </div>
+</div>

@@ -1,0 +1,123 @@
+<!--Header Menu-->
+<app-navbar [theLoaiJson]="theLoaiJson"></app-navbar>
+<!--End Header Menu-->
+
+<body>
+
+    <main>
+        <div class="main-container container-fluid pad-top-75">
+            <div class="body-container">
+                <div class="body-cover">
+
+                    <!--Phần Body chứa ảnh-->
+                    <div class="rd__panel">
+                        <div class="body-box">
+                            <div class="rd__title">
+                                <div class="rd__title-item">
+                                    <h1>{{chuongJson?.truyen.tenTruyen}}</h1>
+                                </div>
+                                <div class="rd__title-item">
+                                    <p>{{chuongJson?.truyen.tenChuong}}</p>
+                                </div>
+                                <div class="rd__title-item">
+                                    <p>Cập nhật lúc: <span>{{ chuongJson?.thoiGianCapNhat }}</span></p>
+                                </div>
+                                <div class="chap__nav">
+                                    <ul id="chap__nav__header" class="chap__nav-list">
+                                        <li class="chap__nav-item">
+                                            <a href="/index">
+                                                <div class="chap__nav-item-box">
+                                                    <div class="chap__nav-item-icon">
+                                                        <img src="assets/images/home.svg" alt="no image avaiable">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="chap__nav-item">
+                                            <a href="/story-detail/{{chuongJson?.truyen.truyenID}}">
+                                                <div class="chap__nav-item-box">
+                                                    <div class="chap__nav-item-icon">
+                                                        <img src="assets/images/list.svg" alt="no image avaiable">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="chap__nav-item">
+                                            <a href="#">
+                                                <div class="chap__nav-item-box">
+                                                    <div class="chap__nav-item-icon">
+                                                        <img src="assets/images/heart.svg" alt="no image avaiable">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+
+                                        <li class="chap__nav-item"></li>
+
+                                        <li class="chap__nav-item">
+                                            <a *ngIf="!first" (click)="redirectToAnotherChap(false)">
+                                                <div class="chap__nav-item-box">
+                                                    <div class="chap__nav-item-icon">
+                                                        <img src="assets/images/left-arrow.svg" alt="no image avaiable">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="chap__nav-item">
+                                            <div class="chap__nav-select-box">
+                                                <select (change)="selectedChange($event.target.value)">
+                                                    <option *ngFor="let chuong of truyenJson?.chuongs"
+                                                        [attr.selected]="chuong?.chuongID == chuongJson?.chuongID ? true: null"
+                                                        [attr.value]="chuong?.chuongID">
+                                                        {{ chuong.tenChuong }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li class="chap__nav-item">
+                                            <a *ngIf="!last" (click)="redirectToAnotherChap(true)">
+                                                <div class="chap__nav-item-box">
+                                                    <div class="chap__nav-item-icon">
+                                                        <img src="assets/images/right-arrow.svg"
+                                                            alt="no image avaiable">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="rd__body__area" class="rd__body">
+                                <ul class="rd__body-list">
+                                    <li class="rd__image-box" *ngFor="let noidung of chuongJson?.noiDungChuongs">
+                                        <img src="https://drive.google.com/uc?export=view&id={{ noidung.hinhAnh }}"
+                                            alt="noidung.hinhAnh">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Body chứa ảnh-->
+
+                    <div class="body-box">
+                        <!--Section Bình luận-->
+                        <app-comment-list [jsonBinhLuan]="binhLuanJson"></app-comment-list>
+                        <!--End section bình luận-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Dark mode button-->
+        <div class="theme-switch-area">
+            <div class="theme-icon-container dark-mode">
+                <button id="theme-switch-btn" class="theme-btn"></button>
+            </div>
+        </div>
+        <!--End dark mode button-->
+    </main>
+
+
+    <!--Footer-->
+    <app-footer></app-footer>
+    <!--End Footer-->
+</body>

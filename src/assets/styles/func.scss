@@ -1,0 +1,57 @@
+@mixin Flex($isHorizontally: false, $isVertically: false, $isWrap: false) {
+  display: flex;
+
+  @if $isHorizontally {
+    justify-content: center;
+  }
+
+  @if $isVertically {
+    align-items: center;
+  }
+
+  @if $isWrap {
+    flex-wrap: wrap;
+  }
+}
+
+
+@mixin SetWidthHeight($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin noneOutLine($isNoneOutLine: false, $isNoneBorder: false) {
+  @if $isNoneOutLine {
+    outline: none;
+  }
+  @if $isNoneBorder{
+      border: none;
+  }
+}
+
+@mixin borderBottomOnly($size, $style, $color) {
+  border-bottom: $size $style $color;
+}
+
+@mixin theme() {
+  @each $theme, $map in $themes {
+    // $theme: darkTheme, lightTheme
+    // $map: ('text-color': ..., 'bg-color': ...)
+
+    // make the $map globally accessible, so that theme-get() can access it
+    $theme-map: $map !global;
+
+    // make a class for each theme using interpolation -> #{}
+    // use & for making the theme class ancestor of the class
+    // from which you use @include theme() {...}
+    .#{$theme} & {
+      @content;    // the content inside @include theme() {...}
+    }
+  }
+  // no use of the variable $theme-map now
+  $theme-map: null !global;
+}
+
+@function theme-get($key) {
+  @return map-get($theme-map, $key);
+}

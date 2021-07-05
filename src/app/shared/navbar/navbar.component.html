@@ -1,0 +1,47 @@
+<!--Header Menu-->
+<header class="header container-fluid">
+  <nav class="nav">
+    <ul id="top__nav" class="nav__list">
+      <li class="nav__item">
+        <a class="nav__link logo" href="/index">
+          <img src="assets/images/logo.png" alt="no image avaiable">
+        </a>
+      </li>
+      <li class="nav__item">
+        <a id="catagory-dropdown" class="nav__link">
+          <div class="toggle__button">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+            <div class="bar3"></div>
+          </div>
+        </a>
+      </li>
+      <li class="nav__item">
+        <a class="nav__link n-highL">
+          Danh mục
+        </a>
+        <div class="catagory-content">
+          <ul class="catagory-list">
+            <li class="catagory-item" *ngFor="let theloai of theLoaiJson">
+              <a href="/category/{{ theloai.theLoaiID }}">{{ theloai.tenTheLoai }}</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav__item"><a class="nav__link n-highL">Theo Dõi</a></li>
+      <li class="nav__item"><a class="nav__link n-highL">Lịch sử</a></li>
+      <li class="nav__item"><a class="nav__link n-highL" href="/login">Đăng nhập</a></li>
+      <li class="nav__item">
+        <form class="search__box">
+          <div class="search__box-input border_bottom">
+            <input type="text" placeholder="Tìm kiếm...">
+          </div>
+          <div class="icon border_bottom">
+            <img src="assets/images/loupe.svg" class="search-icon" alt="no image avaiable">
+          </div>
+        </form>
+      </li>
+    </ul>
+  </nav>
+</header>
+<!--End Header Menu-->

@@ -1,0 +1,38 @@
+<div class="body-box">
+  <div class="title-header">
+    <h2>Truyện mới cập nhật</h2>
+  </div>
+  <div class="body__list-container">
+    <div id="list-area" class="list-area">
+      <!--Item-->
+      <div class="list-item" *ngFor="let data of [].constructor(20); let i = index">
+        <div class="image-box" *ngIf="!truyenJson || (truyenJson.length > 0 && i < truyenJson.length)">
+          <a class="image-link" href="/story-detail/{{ truyenJson ? truyenJson[i]?.truyenID: ''}}">
+            <app-seleton-loader *ngIf="!truyenJson" Cwidth="25%" Cheight="250"></app-seleton-loader>
+            <img *ngIf="truyenJson" src="https://drive.google.com/uc?export=view&id={{ truyenJson ? truyenJson[i]?.hinhAnh: ''}}"
+              alt="image not available">
+          </a>
+        </div>
+        <div class="list_info">
+          <app-seleton-loader *ngIf="!truyenJson" Cwidth="100%"></app-seleton-loader>
+          <h3 *ngIf="truyenJson"><a>{{truyenJson[i]?.tenTruyen}}</a></h3>
+
+          <ngContainer *ngIf="truyenJson">
+            <div class="newest-chapters" *ngFor="let chap of truyenJson[i]?.chuongs.slice(-3).reverse()">
+              <app-seleton-loader *ngIf="!truyenJson" Cwidth="100%"></app-seleton-loader>
+              <a *ngIf="truyenJson" class="chapter-link" href="/story-reading/{{ truyenJson[i].truyenID }}/{{ chap.chuongID }}">
+                <span>{{chap.tenChuong}}</span>
+                <span>{{chap.thoiGianCapNhat | date: 'dd/MM/yyyy'}}</span>
+              </a>
+            </div>
+          </ngContainer>
+        </div>
+      </div>
+      <!--Item-->
+    </div>
+
+    <!--Pagination-->
+    <app-pagination (refresh)="callReloadList($event)"></app-pagination>
+    <!--End Pagination-->
+  </div>
+</div>

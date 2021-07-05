@@ -1,0 +1,197 @@
+<!--Header Menu-->
+<app-navbar [theLoaiJson]="jsonTheLoaiArr"></app-navbar>
+<!--End Header Menu-->
+
+<body>
+    <main>
+        <div class="main-container container-fluid">
+            <div class="banner-container">
+                <div class="banner img-fade"></div>
+            </div>
+            <div class="body-container">
+                <div class="body-cover">
+                    <div class="overlay__panel">
+                        <div class="body-box">
+
+                            <!--Section thông tin cơ bản của truyện-->
+                            <div class="box-container">
+                                <div class="panel-side">
+                                    <div class="image-outer">
+                                        <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="300">
+                                        </app-seleton-loader>
+                                        <img *ngIf="truyenDetailJson" class="lazyload"
+                                            data-src="https://drive.google.com/uc?export=view&id={{truyenDetailJson?.hinhAnh}}"
+                                            alt="no image avaiable">
+                                    </div>
+                                </div>
+                                <div class="panel-side">
+                                    <div class="truyen__detail-container">
+                                        <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="20" Cmargin="0 0 20px 0"
+                                            circle="20px"></app-seleton-loader>
+                                        <div *ngIf="truyenDetailJson" class="truyen__detail-title">
+                                            <h1>{{ truyenDetailJson?.tenTruyen }}</h1>
+                                        </div>
+
+                                        <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="20" Cmargin="0 0 20px 0"
+                                            circle="20px"></app-seleton-loader>
+                                        <div *ngIf="truyenDetailJson" class="truyen__detail-box">
+                                            <div class="truyen__detail-txt">
+                                                <p>Tác giả: <span>{{ truyenDetailJson?.tacGia.tenTacGia }}</span></p>
+                                            </div>
+                                            <div class="truyen__detail-txt">
+                                                <p>Tình trạng：<span>Đang Tiến Hành</span></p>
+                                            </div>
+                                        </div>
+
+                                        <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="20" Cmargin="0 0 20px 0"
+                                            circle="20px"></app-seleton-loader>
+                                        <div *ngIf="truyenDetailJson" class="truyen__detail-box">
+                                            <div class="truyen__detail-txt">
+                                                <p>Lượt xem: <span>{{ tongLuotXem }}</span></p>
+                                            </div>
+                                            <div class="truyen__detail-txt">
+                                                <p>Thể loại:
+                                                    <span *ngFor="let p of phuLucJson; let l = last">
+                                                        <a>{{ p.theLoai.tenTheLoai }}</a>
+                                                        <span *ngIf="!l"> - </span>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="20" Cmargin="0 0 20px 0"
+                                            circle="20px"></app-seleton-loader>
+                                        <div *ngIf="truyenDetailJson" class="truyen__detail-box">
+                                            <div class="truyen__detail-txt">
+                                                <p>Lượt theo dõi: <span>71.000</span></p>
+                                            </div>
+                                            <div class="truyen__detail-txt">
+                                                <div>
+                                                    <span>Đánh giá: </span>
+                                                    <span class="star"><img src="assets/images/star-on.png"
+                                                            alt="no image avaiable"></span>
+                                                    <span class="star"><img src="assets/images/star-on.png"
+                                                            alt="no image avaiable"></span>
+                                                    <span class="star"><img src="assets/images/star-on.png"
+                                                            alt="no image avaiable"></span>
+                                                    <span class="star"><img src="assets/images/star-on.png"
+                                                            alt="no image avaiable"></span>
+                                                    <span class="star"><img src="assets/images/star-on.png"
+                                                            alt="no image avaiable"></span>
+                                                    <span> 3.5</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="truyen__detail-box">
+                                            <div class="btn-detail-group">
+                                                <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="50" Cheight="35"
+                                                    circle="20px"></app-seleton-loader>
+                                                <button *ngIf="truyenDetailJson" class="btn-social">Theo Dõi</button>
+                                                <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="50" Cheight="35"
+                                                    circle="20px"></app-seleton-loader>
+                                                <button *ngIf="truyenDetailJson" class="btn-social">Like</button>
+                                                <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="50" Cheight="35"
+                                                    circle="20px"></app-seleton-loader>
+                                                <button *ngIf="truyenDetailJson" class="btn-social">Share</button>
+                                            </div>
+                                        </div>
+                                        <div class="truyen__detail-box">
+                                            <div class="btn-detail-group">
+                                                <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100" Cheight="35"
+                                                    circle="20px"></app-seleton-loader>
+                                                <button *ngIf="truyenDetailJson" class="btn-reading btn-social">Đọc từ
+                                                    đầu</button>
+                                                <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100" Cheight="35"
+                                                    circle="20px"></app-seleton-loader>
+                                                <button *ngIf="truyenDetailJson" class="btn-reading btn-social">Đọc mới
+                                                    nhất</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End section thông tin cơ bản của truyện-->
+
+                            <!--Section nội dung truyện-->
+                            <div class="box-container">
+                                <div class="story-content-panel">
+                                    <div class="story-content-header">
+                                        <h2>Nội Dung</h2>
+                                    </div>
+                                    
+                                    <hr>
+
+                                    <div class="box__detail--content">
+                                        <div class="content">
+                                            <p class="js-excerpt excerpt-hidden" [innerHTML]="truyenDetailJson?.moTa">
+                                            </p>
+                                        </div>
+                                        <a role="button" class="js-show-more">
+                                            <span id="expand-text">Xem thêm</span>
+                                            <!-- <i class="fa fa-angle-right"></i> -->
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End section mô tả nội dung truyện-->
+
+                            <!--Section danh sách chương-->
+                            <div class="box-container">
+                                <div class="story-content-panel">
+                                    <div class="story-content-header">
+                                        <h2>Danh Sách Chương</h2>
+                                    </div>
+                                    <hr>
+                                    <div class="chap__list-container">
+                                        <div class="chap__list-header">
+                                            <div class="chap__list-heading">
+                                                <p>Số chương</p>
+                                            </div>
+                                            <div class="chap__list-heading">
+                                                <p>Cập nhật</p>
+                                            </div>
+                                            <div class="chap__list-heading">
+                                                <p>Lượt xem</p>
+                                            </div>
+                                        </div>
+                                        <div class="chap__list-box">
+                                            <ul id="chap__list" class="chap__list-ul">
+                                                <li class="chap__list-item"
+                                                    *ngFor="let chuong of truyenDetailJson?.chuongs">
+                                                    <p><a class="chap__list-link"
+                                                            href="/story-reading/{{ chuong.truyenID }}/{{ chuong.chuongID }}">{{
+                                                            chuong.tenChuong }}</a></p>
+                                                    <p>{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy' }}</p>
+                                                    <p>{{ chuong.luotXem }}</p>
+                                                </li>
+                                            </ul>
+                                            <div class="expand-bottom">
+                                                <button id="expand-chap-cover">Xem thêm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End section danh sách chương-->
+
+                            <!--Section Bình luận-->
+                            <app-comment-list [jsonBinhLuan]="jsonBinhLuanArr"></app-comment-list>
+                            <!--End section bình luận-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Dark mode button-->
+        <div class="theme-switch-area">
+            <div class="theme-icon-container dark-mode">
+                <button id="theme-switch-btn" class="theme-btn"></button>
+            </div>
+        </div>
+        <!--End dark mode button-->
+    </main>
+
+    <!--Footer-->
+    <app-footer></app-footer>
+    <!--End Footer-->
+</body>

@@ -1,0 +1,73 @@
+<!--Header Menu-->
+<app-navbar [theLoaiJson]="jsonTheLoaiArr"></app-navbar>
+<!--End Header Menu-->
+
+<body>
+    <!--Login Area-->
+    <main>
+        <div class="main-container container-fluid">
+            <div class="banner-container">
+                <div class="banner"></div>
+            </div>
+            <div class="wrapper">
+                <div class="form-wrapper">
+                    <div class="form-container">
+                        <div class="slide-controls">
+                            <input type="radio" name="slide" id="login" checked>
+                            <input type="radio" name="slide" id="signup">
+                            <label for="login" class="slide login">Đăng nhập</label>
+                            <label for="signup" class="slide signup">Đăng ký</label>
+                            <div class="slider-tab"></div>
+                        </div>
+                        <div class="form-inner">
+                            <form action="#" class="login">
+                                <div class="field">
+                                    <input type="text" placeholder="Email của bạn..." required>
+                                </div>
+                                <div class="field">
+                                    <input type="password" placeholder="Mật khẩu..." required>
+                                </div>
+                                <div class="pass-link">
+                                    <a href="#">Quên mật khẩu?</a>
+                                </div>
+                                <div class="field btn">
+                                    <div class="btn-layer"></div>
+                                    <input type="submit" value="Đăng nhập">
+                                </div>
+                                <div class="signup-link">Chưa có tài khoản? <a href="">Đăng ký ngay</a></div>
+                            </form>
+                            <form action="#" class="signup">
+                                <div class="field">
+                                    <input type="text" placeholder="Email của bạn..." required>
+                                </div>
+                                <div class="field">
+                                    <input type="password" placeholder="Mật khẩu..." required>
+                                </div>
+                                <div class="field">
+                                    <input type="password" placeholder="Xác nhận mật khẩu..." required>
+                                </div>
+                                <div class="field btn">
+                                    <div class="btn-layer"></div>
+                                    <input type="submit" value="Đăng ký">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Dark mode button-->
+        <div class="theme-switch-area">
+          <div class="theme-icon-container dark-mode">
+            <button id="theme-switch-btn" class="theme-btn"></button>
+          </div>
+        </div>
+        <!--End dark mode button-->
+    </main>
+    <!--End Login Area-->
+
+    <!--Footer-->
+    <app-footer></app-footer>
+    <!--End Footer-->
+</body>

@@ -1,0 +1,46 @@
+<!--Rank List-->
+<div class="body-box">
+  <div class="title-header">
+    <h2>Top phổ biến</h2>
+  </div>
+  <div class="story__ranking">
+    <div class="story__ranking-panel">
+      <ul class="rank-list">
+        <li class="rank-item" *ngFor="let data of [].constructor(5); let i = index">
+          <div class="rank-b">
+            <p>{{ "0" + (i + 1) }}</p>
+          </div>
+          <div class="rank-b">
+            <a class="rank-link" href="/story-detail/{{ rankingJson ? rankingJson[i]?.truyenID: ''}}">
+              <app-seleton-loader *ngIf="!rankingJson" Cheight="45"></app-seleton-loader>
+              <img *ngIf="rankingJson"
+                src="https://drive.google.com/uc?export=view&id={{rankingJson ? rankingJson[i].hinhAnh: '' }}"
+                alt="{{ rankingJson[i]?.tenTruyen }}">
+            </a>
+          </div>
+          <div class="rank-b">
+            <app-seleton-loader *ngIf="!rankingJson"></app-seleton-loader>
+            <ngContainer *ngIf="rankingJson">
+              <div *ngIf="rankingJson" class="title-overflow pad-bot-25">
+                <div class="title-overflow-content">
+                  <a class="rank-link" href="/story-detail/{{ rankingJson[i]?.truyenID }}"><b>{{
+                      rankingJson[i]?.tenTruyen
+                      }}</b></a>
+                </div>
+              </div>
+            </ngContainer>
+
+            <app-seleton-loader *ngIf="!rankingJson"></app-seleton-loader>
+            <ngContainer *ngIf="rankingJson">
+              <div class="rank-info" *ngFor="let chuong of rankingJson[i]?.chuongs.slice(-1).reverse()">
+                <a class="rank-link" href="/story-reading/{{ rankingJson[i]?.truyenID }}/{{ chuong.chuongID }}">{{ chuong.tenChuong }}</a>
+                <span>{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy'}}</span>
+              </div>
+            </ngContainer>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--End Rank List-->

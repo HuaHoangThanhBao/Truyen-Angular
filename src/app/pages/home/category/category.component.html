@@ -1,0 +1,50 @@
+<!--Header Menu-->
+<app-navbar [theLoaiJson]="jsonTheLoaiArr"></app-navbar>
+<!--End Header Menu-->
+
+<body>
+  <main>
+    <div class="main-container container-fluid">
+      <div class="banner-container">
+        <div class="banner"></div>
+      </div>
+      <div class="body-container">
+        <div class="body-cover">
+
+          <!--Section bên trái-->
+          <div class="body-left-side right-padding">
+            <!--Danh sách truyện-->
+            <app-story-list [truyenJson]="truyenTheoDanhMucArr" (reload)="refreshFetchList($event)"></app-story-list>
+            <!--End Danh sách truyện-->
+          </div>
+          <!--End Section bên trái-->
+
+
+          <!--Section bên phải (side-bar)-->
+          <div class="body-right-side left-padding">
+            <!--Rank List-->
+            <app-ranking [rankingJson]="mostViews"></app-ranking>
+            <!--End Rank List-->
+
+            <!--Comment-->
+            <app-comment-sidebar [binhLuanJson]="jsonBinhLuanArr"></app-comment-sidebar>
+            <!--End Comment-->
+          </div>
+          <!--End Side-bar-->
+        </div>
+      </div>
+    </div>
+
+    <!--Dark mode button-->
+    <div class="theme-switch-area">
+      <div class="theme-icon-container dark-mode">
+        <button id="theme-switch-btn" class="theme-btn"></button>
+      </div>
+    </div>
+    <!--End dark mode button-->
+  </main>
+
+  <!--Footer-->
+  <app-footer></app-footer>
+  <!--End Footer-->
+</body>

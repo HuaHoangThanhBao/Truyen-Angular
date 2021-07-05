@@ -1,0 +1,50 @@
+$primaryColor: #f4f4f4;
+$black: #000000;
+$white: #ffffff;
+$green: #64d075;
+$blue: #0815c9;
+$orange: #f0ad4e;
+
+$bold_style: bold;
+
+$themes: (
+  darkTheme: (
+    'text-color': white,
+    'bg-light-dark': #424242,
+    'bg-dark': #282a2b,
+    'bg-dark-strong': #1d1e1f,
+  ),
+  lightTheme: (
+    'text-color': black,
+    'bg-white': #f4f4f4,
+  )
+);
+
+//Main
+$menu_text_size: 1rem;
+$title_header_size: 1.2rem;
+$title_img_size: 1rem;
+$text_img_size: 0.8rem;
+$text_chap_size: 0.2rem;
+$max-scale-width: 1500px;
+$opacity: 0.7;
+
+//Admin
+$headerHeight: 3rem;
+$navWidth: 68px;
+
+$firstColor: #4723d9;
+$firstColorLight: #afa5d9;
+$normalFontSize: 1rem;
+$zFixed: 100;
+
+
+//
+$carousel-height: 300px;
+$carousel-preview-width: 70;
+
+$products-amount-visible: 4;
+$product-width: 200px;
+
+$carousel-width: calc((200px*4) + 22px);
+
