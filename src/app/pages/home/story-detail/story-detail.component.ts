@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
@@ -27,7 +27,12 @@ export class StoryDetailComponent implements OnInit {
       const truyenID = param.get('id');
       //console.log(id);
 
-      this.http.get(environment.apiURL + `/binhluan?pageNumber=1&pageSize=5&apiKey=${environment.apiKey}&sorting=true&truyenID=` + truyenID)
+      this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=5&sorting=true&truyenID=` + truyenID, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(binhLuanData => {
           this.jsonBinhLuanArr = binhLuanData;
@@ -35,7 +40,12 @@ export class StoryDetailComponent implements OnInit {
         });
 
 
-      this.http.get(environment.apiURL + '/truyen/' + truyenID + `/${environment.apiKey}/details`)
+      this.http.get(environment.apiURL + '/truyen/' + truyenID + `/details`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(truyenDetail => {
           this.truyenDetailJson = truyenDetail;
@@ -43,21 +53,36 @@ export class StoryDetailComponent implements OnInit {
           this.tongLuotXem = this.truyenDetailJson.chuongs.reduce((ac, cur) => { return ac + cur.luotXem }, 0);
         });
 
-      this.http.get(environment.apiURL + '/phuluc/' + truyenID + `/${environment.apiKey}`)
+      this.http.get(environment.apiURL + '/phuluc/' + truyenID, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(phuluc => {
           this.phuLucJson = phuluc;
           console.log('phu luc:', this.phuLucJson);
         })
 
-      this.http.get(environment.apiURL + `/theloai/${environment.apiKey}`)
+      this.http.get(environment.apiURL + `/theloai`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(theLoaiData => {
           this.jsonTheLoaiArr = theLoaiData;
           console.log(this.jsonTheLoaiArr);
         })
 
-      this.http.get(environment.apiURL + `/binhluan?pageNumber=1&pageSize=10&apiKey=${environment.apiKey}&sorting=true&truyenID=` + truyenID)
+      this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=10&sorting=true&truyenID=` + truyenID, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(binhLuans => {
           this.binhLuans = binhLuans;
@@ -86,5 +111,40 @@ export class StoryDetailComponent implements OnInit {
         x.className = "nav__list";
       }
     }
+  }
+
+  addToHistory(truyenID: number, tenTruyen: string, chuongID: number, tenChuong: string, hinhAnh: string) {
+    //alert(truyenID + "/" + chuongID)
+    const data = { "truyenID": truyenID, "tenTruyen": tenTruyen, "chuongID": chuongID, "tenChuong": tenChuong, "hinhAnh": hinhAnh };
+    const localHist = JSON.parse(localStorage.getItem("tr_hist"));
+    let hist_arr;
+    let found;
+
+    if (localHist != null) {
+      hist_arr = [...localHist];
+      found = checkDuplicate();
+
+      function checkDuplicate() {
+        for (let i = 0; i < hist_arr.length; i++) {
+          if (hist_arr[i]["truyenID"] === truyenID) {
+              hist_arr[i]["tenTruyen"] = tenTruyen;
+              hist_arr[i]["chuongID"] = chuongID;
+              hist_arr[i]["tenChuong"] = tenChuong;
+              hist_arr[i]["hinhAnh"] = hinhAnh;
+              return true;
+          }
+        }
+        return false;
+      }
+    }
+    else hist_arr = [];
+
+    if (!found)
+      hist_arr.push(data);
+
+    //console.log(hist_arr)
+    localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
+
+    window.location.href = "/story-reading/" + truyenID + "/" + chuongID;
   }
 }

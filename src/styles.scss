@@ -295,3 +295,34 @@
   }
 }
 /*End Main Container*/
+
+
+.image-box {
+  position: relative;
+
+  .image-btn {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+      justify-content: center;
+      align-items: center;
+      height: 35px;
+      background: linear-gradient(rgba(0, 0, 0, 0.733), rgba(0, 0, 0, 0.541));
+      color: $white;
+
+      a{
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 14px;
+
+          span{
+              padding-right: 5px;
+          }
+      }
+  }
+}

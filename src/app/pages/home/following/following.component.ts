@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
+import { environment } from '../../../../environments/environment';
+declare function setUpDarkMode(): void;
 
 @Component({
   selector: 'app-following',
@@ -6,10 +10,135 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./following.component.scss']
 })
 export class FollowingComponent implements OnInit {
+  jsonTheLoaiArr: any;
+  jsonTruyenArr: any;
+  jsonBinhLuanArr: any;
+  mostViews: any;
+  truyenPaginationData: any;
 
-  constructor() { }
+  @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
-  ngOnInit(): void {
+  constructor(private http: HttpClient) {
+    this.fetchCorsPagination(1).then(headers => {
+      this.setPaginationVar(headers);
+      console.log('header:', this.getPaginationVar());
+      this.storyListComponent.passPagingData(this.getPaginationVar());
+    });
+    
+    const username = localStorage.getItem("username");
+    console.log(username)
+    this.http.get(environment.apiURL + `/theodoi/pagination?tenuser=${username}&pageNumber=1&pageSize=20&getall=true`, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    })
+      .toPromise()
+      .then(truyenData => {
+        this.jsonTruyenArr = truyenData;
+        console.log(this.jsonTruyenArr);
+      })
+
+    this.http.get(environment.apiURL + `/theloai`, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    })
+      .toPromise()
+      .then(theLoaiData => {
+        this.jsonTheLoaiArr = theLoaiData;
+        console.log(this.jsonTheLoaiArr);
+      })
+
+
+    this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=5&lastestUpdate=true`, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    })
+      .toPromise()
+      .then(binhLuanData => {
+        this.jsonBinhLuanArr = binhLuanData;
+        console.log(this.jsonBinhLuanArr);
+      })
+      
+    this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=5&topview=true`, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    })
+      .toPromise()
+      .then(mostViewData => {
+        this.mostViews = mostViewData;
+        console.log(this.mostViews);
+      })
   }
 
+  ngOnInit(): void {
+    this.categoryDropdownInit();
+    setUpDarkMode();
+  }
+
+  categoryDropdownInit() {
+    const catBut = document.getElementById('catagory-dropdown');
+    catBut.addEventListener('click', function () {
+      showMenuOnTablet();
+    });
+
+    function showMenuOnTablet() {
+      var x = document.getElementById("top__nav");
+      if (x.className === "nav__list") {
+        x.className += " responsive";
+      } else {
+        x.className = "nav__list";
+      }
+    }
+  }
+  
+  setPaginationVar(newVal) {
+    this.truyenPaginationData = newVal;
+  }
+
+  getPaginationVar() {
+    return this.truyenPaginationData;
+  }
+  
+  async fetchCorsPagination(number) {
+    const username = localStorage.getItem("username");
+    const response = await fetch(environment.apiURL + `/theodoi/pagination?tenuser=${username}&pageNumber=${number}&pageSize=20&getall=true`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      }
+    });
+    const headers = JSON.parse(response.headers.get('X-Pagination'));
+    return headers;
+  }
+  
+  refreshFetchList(value) {
+    console.log(value);
+    const username = localStorage.getItem("username");
+
+    this.fetchCorsPagination(value).then(headers => {
+      this.setPaginationVar(headers);
+      console.log('header:', this.getPaginationVar());
+      this.storyListComponent.passPagingData(this.getPaginationVar());
+    });
+
+    this.http.get(environment.apiURL + `/theodoi/pagination?tenuser=${username}&pageNumber=${value}&pageSize=20&getall=true`, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    })
+      .toPromise()
+      .then(truyenData => {
+        this.jsonTruyenArr = truyenData;
+        console.log("refresh list: ", this.jsonTruyenArr);
+      })
+  }
 }

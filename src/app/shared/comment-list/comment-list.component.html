@@ -23,7 +23,13 @@
                 <li class="comment-item" *ngIf="!jsonBinhLuan || (jsonBinhLuan.length > 0 && i < jsonBinhLuan.length)">
                     <app-seleton-loader *ngIf="!jsonBinhLuan" Cheight="25"></app-seleton-loader>
                     <div *ngIf="jsonBinhLuan" class="comment-b">
-                        <a class="comment-link" href="/story-reading/{{ jsonBinhLuan[i].chuong.chuongID }}">{{ jsonBinhLuan[i].chuong.tenChuong }}</a>
+                        <a class="comment-link" 
+                        
+                        (click)="addToHistory(jsonBinhLuan[i].chuong.truyen?.truyenID, jsonBinhLuan[i].chuong.truyen?.tenTruyen,
+                        jsonBinhLuan[i].chuong.chuongID, jsonBinhLuan[i].chuong.tenChuong, jsonBinhLuan[i].chuong.truyen?.hinhAnh)"
+
+                        href="/story-reading/{{ jsonBinhLuan[i].chuong.truyen?.truyenID }}/{{ jsonBinhLuan[i].chuong.chuongID }}">
+                        {{ jsonBinhLuan[i].chuong.tenChuong }}</a>
                         <span>{{ jsonBinhLuan[i].ngayBL }}</span>
                     </div>
                     <div class="comment-b">

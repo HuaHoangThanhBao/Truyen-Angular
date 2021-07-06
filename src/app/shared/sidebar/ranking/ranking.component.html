@@ -11,9 +11,9 @@
             <p>{{ "0" + (i + 1) }}</p>
           </div>
           <div class="rank-b">
-            <a class="rank-link" href="/story-detail/{{ rankingJson ? rankingJson[i]?.truyenID: ''}}">
-              <app-seleton-loader *ngIf="!rankingJson" Cheight="45"></app-seleton-loader>
-              <img *ngIf="rankingJson"
+            <app-seleton-loader *ngIf="!rankingJson" Cheight="45"></app-seleton-loader>
+            <a *ngIf="rankingJson" class="rank-link" href="/story-detail/{{ rankingJson ? rankingJson[i]?.truyenID: ''}}">
+              <img
                 src="https://drive.google.com/uc?export=view&id={{rankingJson ? rankingJson[i].hinhAnh: '' }}"
                 alt="{{ rankingJson[i]?.tenTruyen }}">
             </a>

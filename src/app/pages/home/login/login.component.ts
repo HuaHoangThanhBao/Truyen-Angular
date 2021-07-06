@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 declare function setUpDarkMode(): void;
 declare function loginFormSetUp(): void;
@@ -12,9 +13,15 @@ declare function loginFormSetUp(): void;
 export class LoginComponent implements OnInit {
 
   jsonTheLoaiArr: any;
+  invalidLogin: boolean;
 
   constructor(private http: HttpClient) { 
-    this.http.get(environment.apiURL + `/theloai/${environment.apiKey}`)
+    this.http.get(environment.apiURL + `/theloai`, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    })
       .toPromise()
       .then(theLoaiData => {
         this.jsonTheLoaiArr = theLoaiData;
@@ -26,6 +33,30 @@ export class LoginComponent implements OnInit {
     this.categoryDropdownInit();
     loginFormSetUp();
     setUpDarkMode();
+  }
+  
+  login(form: NgForm) {
+    const credentials = JSON.stringify(form.value);
+    this.http.post(environment.apiURL + `/auth/login`, credentials, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    }).subscribe(response => {
+      const token = (<any>response).token;
+      console.log(token);
+      localStorage.setItem("username", form.value["tenuser"]);
+      localStorage.setItem("jwt", token);
+      this.invalidLogin = false;
+      window.location.href = '/index';
+      //this.router.navigate(["/"]);
+    }, err => {
+      this.invalidLogin = true;
+    });
+  }
+
+  logOut() {
+    localStorage.removeItem("jwt");
   }
 
   categoryDropdownInit() {

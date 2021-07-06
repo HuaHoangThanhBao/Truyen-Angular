@@ -28,9 +28,10 @@
           </ul>
         </div>
       </li>
-      <li class="nav__item"><a class="nav__link n-highL">Theo Dõi</a></li>
-      <li class="nav__item"><a class="nav__link n-highL">Lịch sử</a></li>
-      <li class="nav__item"><a class="nav__link n-highL" href="/login">Đăng nhập</a></li>
+      <li class="nav__item"><a class="nav__link n-highL" href="/following">Theo Dõi</a></li>
+      <li class="nav__item"><a class="nav__link n-highL" href="/history">Lịch sử</a></li>
+      <li class="nav__item" *ngIf="checkLogedIn() == false"><a class="nav__link n-highL" href="/login">Đăng nhập</a></li>
+      <li class="nav__item" *ngIf="checkLogedIn() == true"><a class="nav__link n-highL" href="/account">Tài khoản</a></li>
       <li class="nav__item">
         <form class="search__box">
           <div class="search__box-input border_bottom">

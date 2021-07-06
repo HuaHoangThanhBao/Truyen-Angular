@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
@@ -35,28 +35,48 @@ export class CategoryComponent implements OnInit {
         this.storyListComponent.passPagingData(this.getPaginationVar());
       });
 
-      this.http.get(environment.apiURL + `/theloai/${environment.apiKey}`)
+      this.http.get(environment.apiURL + `/theloai`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(theLoaiData => {
           this.jsonTheLoaiArr = theLoaiData;
           console.log(this.jsonTheLoaiArr);
         })
 
-      this.http.get(environment.apiURL + `/truyen?pageNumber=1&pageSize=20&apiKey=${environment.apiKey}&sorting=true&theloaiID=` + id)
+      this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=20&sorting=true&theloaiID=` + id, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(danhMuc => {
           this.truyenTheoDanhMucArr = danhMuc;
           console.log(this.truyenTheoDanhMucArr);
         })
 
-      this.http.get(environment.apiURL + `/truyen?pageNumber=1&pageSize=5&apiKey=${environment.apiKey}&topview=true`)
+      this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=5&topview=true`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(mostViewData => {
           this.mostViews = mostViewData;
           console.log(this.mostViews);
         })
 
-      this.http.get(environment.apiURL + `/binhluan?pageNumber=1&pageSize=5&apiKey=${environment.apiKey}&lastestUpdate=true`)
+      this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=5&lastestUpdate=true`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(binhLuanData => {
           this.jsonBinhLuanArr = binhLuanData;
@@ -95,7 +115,13 @@ export class CategoryComponent implements OnInit {
   }
 
   async fetchCorsPagination(number) {
-    const response = await fetch(environment.apiURL + `/truyen?pageNumber=${number}&pageSize=20&apiKey=${environment.apiKey}&sorting=true&theloaiID=` + this.theLoaiId);
+    const response = await fetch(environment.apiURL + `/truyen/pagination?pageNumber=${number}&pageSize=20&sorting=true&theloaiID=` + this.theLoaiId, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      }
+    });
     const headers = JSON.parse(response.headers.get('X-Pagination'));
     return headers;
   }
@@ -109,7 +135,12 @@ export class CategoryComponent implements OnInit {
       this.storyListComponent.passPagingData(this.getPaginationVar());
     });
 
-    this.http.get(environment.apiURL + `/truyen?pageNumber=${value}&pageSize=20&apiKey=${environment.apiKey}&sorting=true&theloaiID=` + this.theLoaiId)
+    this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=${value}&pageSize=20&sorting=true&theloaiID=` + this.theLoaiId, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    })
       .toPromise()
       .then(truyenData => {
         this.truyenTheoDanhMucArr = truyenData;

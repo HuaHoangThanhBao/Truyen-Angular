@@ -158,9 +158,10 @@
                                             <ul id="chap__list" class="chap__list-ul">
                                                 <li class="chap__list-item"
                                                     *ngFor="let chuong of truyenDetailJson?.chuongs">
-                                                    <p><a class="chap__list-link"
-                                                            href="/story-reading/{{ chuong.truyenID }}/{{ chuong.chuongID }}">{{
-                                                            chuong.tenChuong }}</a></p>
+                                                    <p><a class="chap__list-link" 
+                                                        (click)="addToHistory(chuong?.truyenID, truyenDetailJson?.tenTruyen,
+                                                         chuong?.chuongID, chuong?.tenChuong, truyenDetailJson?.hinhAnh)">
+                                                        {{chuong.tenChuong }}</a></p>
                                                     <p>{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy' }}</p>
                                                     <p>{{ chuong.luotXem }}</p>
                                                 </li>

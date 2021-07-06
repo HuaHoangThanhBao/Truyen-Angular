@@ -15,7 +15,13 @@
                     </div>
                 </div>
                 <div class="comment-b">
-                    <a *ngIf="binhLuanJson" class="comment-link" href="/story-reading/{{ binhLuanJson[i].chuong.chuongID }}">{{binhLuanJson[i].chuong.tenChuong}}</a>
+                    <a *ngIf="binhLuanJson" class="comment-link" 
+
+                    (click)="addToHistory(binhLuanJson[i].chuong.truyen.truyenID, binhLuanJson[i].chuong.truyen.tenTruyen,
+                    binhLuanJson[i].chuong.chuongID, binhLuanJson[i].chuong.tenChuong, binhLuanJson[i].chuong.truyen.hinhAnh)"
+
+                    href="/story-reading/{{ binhLuanJson[i].chuong.truyen.truyenID }}/{{ binhLuanJson[i].chuong.chuongID }}">
+                    {{binhLuanJson[i].chuong.tenChuong}}</a>
                     <span *ngIf="binhLuanJson" >{{binhLuanJson[i].ngayBL}}</span>
                 </div>
                 <div class="comment-b">

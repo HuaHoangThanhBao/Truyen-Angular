@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
@@ -30,14 +30,24 @@ export class StoryReadingComponent implements OnInit {
       const truyenID = param.get('truyenID');
       this.currentChap = parseInt(chuongID);
 
-      this.http.get(environment.apiURL + '/chuong/' + chuongID + `/${environment.apiKey}/details`)
+      this.http.get(environment.apiURL + '/chuong/' + chuongID + `/details`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(chuong => {
           this.chuongJson = chuong;
           console.log(this.chuongJson);
         })
 
-      this.http.get(environment.apiURL + '/truyen/' + truyenID + `/${environment.apiKey}/details`)
+      this.http.get(environment.apiURL + '/truyen/' + truyenID + `/details`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(truyenDetail => {
           this.truyenJson = truyenDetail;
@@ -63,14 +73,24 @@ export class StoryReadingComponent implements OnInit {
         });
 
 
-      this.http.get(environment.apiURL + `/theloai/${environment.apiKey}`)
+      this.http.get(environment.apiURL + `/theloai`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(theLoaiData => {
           this.theLoaiJson = theLoaiData;
           console.log(this.theLoaiJson);
         })
 
-      this.http.get(environment.apiURL + `/binhluan?pageNumber=1&pageSize=10&apiKey=${environment.apiKey}&sorting=true&chuongID=` + chuongID)
+      this.http.get(environment.apiURL + `/binhluan?pageNumber=1&pageSize=10&sorting=true&chuongID=` + chuongID, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
+      })
         .toPromise()
         .then(binhLuans => {
           console.log(binhLuans);

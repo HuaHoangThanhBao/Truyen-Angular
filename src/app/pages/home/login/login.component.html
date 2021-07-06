@@ -20,13 +20,17 @@
                             <div class="slider-tab"></div>
                         </div>
                         <div class="form-inner">
-                            <form action="#" class="login">
+                            <!--Sign In-->
+                            <form class="login" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
                                 <div class="field">
-                                    <input type="text" placeholder="Email của bạn..." required>
+                                    <input type="email" id="username" name="tenuser" ngModel class="form-control"
+                                        placeholder="Tên đăng nhập..." required autofocus>
                                 </div>
                                 <div class="field">
-                                    <input type="password" placeholder="Mật khẩu..." required>
+                                    <input type="password" id="password" name="password" ngModel class="form-control"
+                                        placeholder="Mật khẩu..." required>
                                 </div>
+                                <div *ngIf="invalidLogin" class="alert alert-danger">Tên đăng nhập hoặc mật khẩu không khớp.</div>
                                 <div class="pass-link">
                                     <a href="#">Quên mật khẩu?</a>
                                 </div>
@@ -36,6 +40,9 @@
                                 </div>
                                 <div class="signup-link">Chưa có tài khoản? <a href="">Đăng ký ngay</a></div>
                             </form>
+                            <!--End Sign In-->
+                            
+                            <!--Sign Up-->
                             <form action="#" class="signup">
                                 <div class="field">
                                     <input type="text" placeholder="Email của bạn..." required>
@@ -51,6 +58,7 @@
                                     <input type="submit" value="Đăng ký">
                                 </div>
                             </form>
+                            <!--End Sign Up-->
                         </div>
                     </div>
                 </div>

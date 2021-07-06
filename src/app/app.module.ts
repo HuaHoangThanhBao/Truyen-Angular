@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { SeletonLoaderModule } from './modules/seleton-loader/seleton-loader.module';
+import { FormsModule } from '@angular/forms';
+import { JwtModule } from "@auth0/angular-jwt";
 
 import { AppComponent } from './app.component';
 import { StoryReadingComponent } from './pages/home/story-reading/story-reading.component';
@@ -27,6 +29,13 @@ import { RankingComponent } from './shared/sidebar/ranking/ranking.component';
 import { CommentListComponent } from './shared/comment-list/comment-list.component';
 import { StoryListComponent } from './shared/story-list/story-list.component';
 import { CommentSidebarComponent } from './shared/sidebar/comment-sidebar/comment-sidebar.component';
+import { AuthGuard } from './modules/guards/auth-guard.service';
+import { environment } from '../environments/environment';
+import { AccountComponent } from './pages/home/account/account.component';
+
+export function tokenGetter() {
+  return localStorage.getItem("jwt");
+}
 
 @NgModule({
   declarations: [
@@ -52,15 +61,23 @@ import { CommentSidebarComponent } from './shared/sidebar/comment-sidebar/commen
     RankingComponent,
     CommentListComponent,
     StoryListComponent,
-    CommentSidebarComponent
+    CommentSidebarComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    SeletonLoaderModule
+    SeletonLoaderModule,
+    FormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: [environment.apiURL]
+      }
+    })
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

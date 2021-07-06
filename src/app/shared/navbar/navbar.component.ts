@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-navbar',
@@ -6,11 +7,20 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+
   @Input() theLoaiJson: any;
 
-  constructor() { }
+  constructor(private jwtHelper: JwtHelperService) { }
 
   ngOnInit(): void {
   }
 
+  checkLogedIn() {
+    const token = localStorage.getItem("jwt");
+
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      return true;
+    }
+    return false;
+  }
 }
