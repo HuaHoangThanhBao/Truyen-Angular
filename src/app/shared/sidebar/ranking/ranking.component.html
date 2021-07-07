@@ -33,7 +33,14 @@
             <app-seleton-loader *ngIf="!rankingJson"></app-seleton-loader>
             <ngContainer *ngIf="rankingJson">
               <div class="rank-info" *ngFor="let chuong of rankingJson[i]?.chuongs.slice(-1).reverse()">
-                <a class="rank-link" href="/story-reading/{{ rankingJson[i]?.truyenID }}/{{ chuong.chuongID }}">{{ chuong.tenChuong }}</a>
+                <a class="rank-link" 
+                
+                (click)="addToHistory(rankingJson[i]?.truyenID, rankingJson[i]?.tenTruyen,
+                chuong.chuongID, chuong.tenChuong, rankingJson[i]?.hinhAnh)" 
+              
+                href="/story-reading/{{ rankingJson[i]?.truyenID }}/{{ chuong.chuongID }}">
+                  {{ chuong.tenChuong }}
+                </a>
                 <span>{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy'}}</span>
               </div>
             </ngContainer>
