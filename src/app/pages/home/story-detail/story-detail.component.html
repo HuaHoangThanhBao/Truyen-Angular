@@ -99,12 +99,20 @@
                                             <div class="btn-detail-group">
                                                 <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100" Cheight="35"
                                                     circle="20px"></app-seleton-loader>
-                                                <button *ngIf="truyenDetailJson" class="btn-reading btn-social">Đọc từ
-                                                    đầu</button>
+                                                <button *ngIf="truyenDetailJson" class="btn-reading btn-social"
+                                                
+                                                (click)="addToHistory(truyenDetailJson?.truyenID, truyenDetailJson?.tenTruyen,
+                                                truyenDetailJson?.chuongs[0].chuongID, truyenDetailJson?.chuongs[0].tenChuong, truyenDetailJson?.hinhAnh)"
+
+                                                >Đọc từ đầu</button>
                                                 <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100" Cheight="35"
                                                     circle="20px"></app-seleton-loader>
-                                                <button *ngIf="truyenDetailJson" class="btn-reading btn-social">Đọc mới
-                                                    nhất</button>
+                                                <button *ngIf="truyenDetailJson" class="btn-reading btn-social"
+                                                
+                                                (click)="addToHistory(truyenDetailJson?.truyenID, truyenDetailJson?.tenTruyen,
+                                                truyenDetailJson?.chuongs.slice(-1)[0].chuongID, truyenDetailJson?.chuongs.slice(-1)[0].tenChuong, truyenDetailJson?.hinhAnh)"
+
+                                                >Đọc mới nhất</button>
                                             </div>
                                         </div>
                                     </div>

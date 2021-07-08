@@ -12,6 +12,8 @@ declare function setUpDarkMode(): void;
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
+  title="Truyện mới cập nhật"
+
   jsonTruyenArr: any;
   jsonBinhLuanArr: any;
   jsonTheLoaiArr: any;

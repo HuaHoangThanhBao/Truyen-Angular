@@ -10,6 +10,8 @@ declare function setUpDarkMode(): void;
   styleUrls: ['./following.component.scss']
 })
 export class FollowingComponent implements OnInit {
+  title="Truyện đang theo dõi"
+
   jsonTheLoaiArr: any;
   jsonTruyenArr: any;
   jsonBinhLuanArr: any;

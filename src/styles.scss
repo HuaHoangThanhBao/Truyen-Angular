@@ -310,7 +310,6 @@
       align-items: center;
       height: 35px;
       background: linear-gradient(rgba(0, 0, 0, 0.733), rgba(0, 0, 0, 0.541));
-      color: $white;
 
       a{
           width: 100%;
@@ -319,6 +318,7 @@
           justify-content: center;
           align-items: center;
           font-size: 14px;
+          color: $white;
 
           span{
               padding-right: 5px;

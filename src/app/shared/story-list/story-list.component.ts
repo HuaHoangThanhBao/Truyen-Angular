@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./story-list.component.scss']
 })
 export class StoryListComponent implements OnInit {
+  @Input() headingTitle: string = "";
   @Input() truyenJson: any;
   @Input() isHistory: boolean = false;
   @Output() reload: EventEmitter<any> = new EventEmitter();

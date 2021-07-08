@@ -14,7 +14,7 @@
                     <!--Section bên trái-->
                     <div class="body-left-side right-padding">
                         <!--Danh sách truyện-->
-                        <app-story-list [truyenJson]="jsonTruyenArr" (reload)="refreshFetchList($event)">
+                        <app-story-list [truyenJson]="jsonTruyenArr" [headingTitle]="title" (reload)="refreshFetchList($event)">
                         </app-story-list>
                         <!--End Danh sách truyện-->
                     </div>

@@ -9,15 +9,20 @@ declare function setUpDarkMode(): void;
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
+  title="Lịch sử đọc truyện";
+
   jsonTruyenArr: any;
   jsonTheLoaiArr: any;
   jsonBinhLuanArr: any;
   mostViews: any;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     const localHist = JSON.parse(localStorage.getItem("tr_hist"));
-    let hist_arr = [...localHist];
-    this.jsonTruyenArr = hist_arr;
+    if (localHist != null) {
+      let hist_arr = [...localHist];
+      this.jsonTruyenArr = hist_arr;
+    }
+    else this.jsonTruyenArr = [];
 
     this.http.get(environment.apiURL + `/theloai`, {
       headers: new HttpHeaders({
@@ -31,7 +36,7 @@ export class HistoryComponent implements OnInit {
         console.log(this.jsonTheLoaiArr);
       })
 
-      
+
     this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=5&lastestUpdate=true`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -43,7 +48,7 @@ export class HistoryComponent implements OnInit {
         this.jsonBinhLuanArr = binhLuanData;
         console.log(this.jsonBinhLuanArr);
       })
-      
+
     this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=5&topview=true`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -55,7 +60,7 @@ export class HistoryComponent implements OnInit {
         this.mostViews = mostViewData;
         console.log(this.mostViews);
       })
-    }
+  }
 
   ngOnInit(): void {
     this.categoryDropdownInit();
