@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
   }
 
   checkLogedIn() {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem("token");
 
     if (token && !this.jwtHelper.isTokenExpired(token)) {
       return true;

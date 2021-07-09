@@ -14,8 +14,10 @@ import { FollowingComponent } from './pages/home/following/following.component';
 import { HistoryComponent } from './pages/home/history/history.component';
 import { IndexComponent } from './pages/home/index/index.component';
 import { LoginComponent } from './pages/home/login/login.component';
+import { RegisterComponent } from './pages/home/register/register.component';
 import { StoryDetailComponent } from './pages/home/story-detail/story-detail.component';
 import { StoryReadingComponent } from './pages/home/story-reading/story-reading.component';
+import { TwoStepVerificationComponent } from './pages/home/two-step-verification/two-step-verification.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'index', pathMatch: 'full' },
@@ -24,6 +26,8 @@ const routes: Routes = [
   { path: 'following', component: FollowingComponent, canActivate: [AuthGuard]},
   { path: 'history', component: HistoryComponent},
   { path: 'login', component: LoginComponent},
+  { path: 'register', component: RegisterComponent},
+  { path: 'two-step-veri', component: TwoStepVerificationComponent},
   { path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   { path: 'story-detail/:id', component: StoryDetailComponent},
   { path: 'story-reading/:truyenID/:chuongID', component: StoryReadingComponent},

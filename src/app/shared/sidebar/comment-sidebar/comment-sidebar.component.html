@@ -3,26 +3,26 @@
         <h2>Bình Luận Mới Nhất ({{ binhLuanJson?.length }})</h2>
     </div>
     <div class="chap__comment-panel">
-        <ul class="comment-list" *ngFor="let data of [].constructor(5); let i = index">
+        <ul class="comment-list" *ngFor="let data of [].constructor(binhLuanJson ? binhLuanJson.length : 5); let i = index">
             <li class="comment-item">
                 <div class="comment-b">
                     <div class="title-overflow pad-bot-10">
                         <div class="title-overflow-content txt-italic">
                             <app-seleton-loader *ngIf="!binhLuanJson" Cheight="25"></app-seleton-loader>
                             <a *ngIf="binhLuanJson" class="comment-link" 
-                            href="/story-detail/{{ binhLuanJson[i].chuong.truyen.truyenID }}"><b>{{ binhLuanJson[i].chuong.truyen.tenTruyen }}</b></a>
+                            href="/story-detail/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}"><b>{{ binhLuanJson[i]?.chuong.truyen.tenTruyen }}</b></a>
                         </div>
                     </div>
                 </div>
                 <div class="comment-b">
                     <a *ngIf="binhLuanJson" class="comment-link" 
 
-                    (click)="addToHistory(binhLuanJson[i].chuong.truyen.truyenID, binhLuanJson[i].chuong.truyen.tenTruyen,
-                    binhLuanJson[i].chuong.chuongID, binhLuanJson[i].chuong.tenChuong, binhLuanJson[i].chuong.truyen.hinhAnh)"
+                    (click)="addToHistory(binhLuanJson[i]?.chuong.truyen.truyenID, binhLuanJson[i]?.chuong.truyen.tenTruyen,
+                    binhLuanJson[i]?.chuong.chuongID, binhLuanJson[i]?.chuong.tenChuong, binhLuanJson[i]?.chuong.truyen.hinhAnh)"
 
-                    href="/story-reading/{{ binhLuanJson[i].chuong.truyen.truyenID }}/{{ binhLuanJson[i].chuong.chuongID }}">
-                    {{binhLuanJson[i].chuong.tenChuong}}</a>
-                    <span *ngIf="binhLuanJson" >{{binhLuanJson[i].ngayBL}}</span>
+                    href="/story-reading/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}/{{ binhLuanJson[i]?.chuong.chuongID }}">
+                    {{binhLuanJson[i]?.chuong.tenChuong}}</a>
+                    <span *ngIf="binhLuanJson" >{{binhLuanJson[i]?.ngayBL}}</span>
                 </div>
                 <div class="comment-b">
                     <div class="comment-u-img">
@@ -33,11 +33,11 @@
                         <div class="comment-des-container">
                             <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
                             <div *ngIf="binhLuanJson" class="comment-des-title">
-                                <p class="comment-name">{{binhLuanJson[i].user.tenUser}}</p>
+                                <p class="comment-name">{{binhLuanJson[i]?.user.tenUser}}</p>
                             </div>
                             <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
                             <div *ngIf="binhLuanJson" class="comment-des-content">
-                                <p>{{binhLuanJson[i].noiDung}}</p>
+                                <p>{{binhLuanJson[i]?.noiDung}}</p>
                             </div>
                         </div>
                     </div>

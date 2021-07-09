@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { SeletonLoaderModule } from './modules/seleton-loader/seleton-loader.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from "@auth0/angular-jwt";
 
 import { AppComponent } from './app.component';
@@ -32,9 +32,12 @@ import { CommentSidebarComponent } from './shared/sidebar/comment-sidebar/commen
 import { AuthGuard } from './modules/guards/auth-guard.service';
 import { environment } from '../environments/environment';
 import { AccountComponent } from './pages/home/account/account.component';
+import { TwoStepVerificationComponent } from './pages/home/two-step-verification/two-step-verification.component';
+import { RegisterComponent } from './pages/home/register/register.component';
+import { ForgotPasswordComponent } from './pages/home/forgot-password/forgot-password.component';
 
 export function tokenGetter() {
-  return localStorage.getItem("jwt");
+  return localStorage.getItem("token");
 }
 
 @NgModule({
@@ -62,7 +65,10 @@ export function tokenGetter() {
     CommentListComponent,
     StoryListComponent,
     CommentSidebarComponent,
-    AccountComponent
+    AccountComponent,
+    TwoStepVerificationComponent,
+    RegisterComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +76,7 @@ export function tokenGetter() {
     HttpClientModule,
     SeletonLoaderModule,
     FormsModule,
+    ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

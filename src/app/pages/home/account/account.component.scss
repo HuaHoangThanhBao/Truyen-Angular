@@ -1,0 +1,103 @@
+$activeColor: #ffffff;
+$unactiveColor: #eeeeee;
+$unactiveHoverColor: #dddddd;
+
+.pc-tab > input,
+.pc-tab section > div {
+    display: none;
+}
+
+#tab1:checked ~ section .tab1,
+#tab2:checked ~ section .tab2,
+#tab3:checked ~ section .tab3,
+#tab4:checked ~ section .tab4,
+#tab5:checked ~ section .tab5,
+#tab6:checked ~ section .tab6 {
+    display: block;
+}
+
+#tab1:checked ~ nav .tab1,
+#tab2:checked ~ nav .tab2,
+#tab3:checked ~ nav .tab3,
+#tab4:checked ~ nav .tab4,
+#tab5:checked ~ nav .tab5,
+#tab6:checked ~ nav .tab6 {
+    color: red;
+}
+
+.tab-col {
+    width: 30%;
+
+    @media (max-width: 799px) {
+        width: 100%;
+    }
+
+    &:last-child {
+        width: 70%;
+
+        @media (max-width: 799px) {
+            width: 100%;
+        }
+    }
+}
+
+.pc-tab {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        @media (max-width: 799px) {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        li {
+            @media (max-width: 799px) {
+                width: 50%;
+            }
+            label {
+                float: left;
+                height: 100%;
+                width: 100%;
+                padding: 15px 25px;
+                //border: 1px solid #ddd;
+                border-bottom: 0;
+                background: $unactiveColor;
+                color: #444;
+                &:hover {
+                    background: $unactiveHoverColor;
+                }
+                &:active {
+                    background: $activeColor;
+                }
+            }
+            &:not(:last-child) label {
+                border-right-width: 0;
+            }
+        }
+    }
+    section {
+        clear: both;
+
+        div {
+            padding: 20px;
+            width: 100%;
+            border: 1px solid #ddd;
+            background: #fff;
+            line-height: 1.5em;
+            letter-spacing: 0.3px;
+            color: #444;
+
+            h2 {
+                margin: 0;
+                letter-spacing: 1px;
+                color: #34495e;
+            }
+        }
+    }
+}

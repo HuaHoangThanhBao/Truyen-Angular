@@ -2,7 +2,16 @@ function setUpDarkMode(){
   const btnSwitch = document.getElementById('theme-switch-btn');
   const currentTheme = localStorage.getItem("theme");
 
-  if (currentTheme) {
+  if(currentTheme == null){
+    localStorage.setItem("theme", "light");
+    
+    document.documentElement.classList.remove("darkTheme");
+    document.documentElement.classList.add("lightTheme");
+
+    btnSwitch.parentElement.classList.add('dark-mode');
+    btnSwitch.parentElement.classList.remove('light-mode');
+  }
+  else if (currentTheme) {
     if (currentTheme === "dark") {
       document.documentElement.classList.add("darkTheme");
       document.documentElement.classList.remove("lightTheme");
