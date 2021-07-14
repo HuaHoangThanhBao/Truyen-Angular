@@ -10,7 +10,7 @@
                         <div class="title-overflow-content txt-italic">
                             <app-seleton-loader *ngIf="!binhLuanJson" Cheight="25"></app-seleton-loader>
                             <a *ngIf="binhLuanJson" class="comment-link" 
-                            href="/story-detail/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}"><b>{{ binhLuanJson[i]?.chuong.truyen.tenTruyen }}</b></a>
+                            routerLink="/story-detail/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}"><b>{{ binhLuanJson[i]?.chuong.truyen.tenTruyen }}</b></a>
                         </div>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     (click)="addToHistory(binhLuanJson[i]?.chuong.truyen.truyenID, binhLuanJson[i]?.chuong.truyen.tenTruyen,
                     binhLuanJson[i]?.chuong.chuongID, binhLuanJson[i]?.chuong.tenChuong, binhLuanJson[i]?.chuong.truyen.hinhAnh)"
 
-                    href="/story-reading/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}/{{ binhLuanJson[i]?.chuong.chuongID }}">
+                    routerLink="/story-reading/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}/{{ binhLuanJson[i]?.chuong.chuongID }}">
                     {{binhLuanJson[i]?.chuong.tenChuong}}</a>
                     <span *ngIf="binhLuanJson" >{{binhLuanJson[i]?.ngayBL}}</span>
                 </div>

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class EnvironmentUrlService {
-  public urlAddress: string = 'http://localhost:50504/api';
-  //public urlAddress: string = environment.apiURL;
+  //public urlAddress: string = 'http://localhost:50504/api';
+  public urlAddress: string = environment.apiURL;
   constructor() { }
 }

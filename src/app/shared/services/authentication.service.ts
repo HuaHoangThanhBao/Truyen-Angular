@@ -12,6 +12,8 @@ import { EnvironmentUrlService } from './environment-url.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CustomEncoder } from './custome-encoder';
 import { environment } from '../../../environments/environment';
+import { ForgotPasswordDto } from 'src/app/model/forgotPasswordDto.model';
+import { ResetPasswordDto } from 'src/app/model/resetPasswordDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,18 +38,32 @@ export class AuthenticationService {
       });
   }
 
-  public logout = () => {
-    localStorage.removeItem("token");
-    this.sendAuthStateChangeNotification(false);
+  public logout = (route: string) => {
+    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    });
   }
 
-//   public forgotPassword = (route: string, body: ForgotPasswordDto) => {
-//     return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
-//   }
+  public forgotPassword = (route: string, body: ForgotPasswordDto) => {
+    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    });
+  }
 
-//   public resetPassword = (route: string, body: ResetPasswordDto) => {
-//     return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body);
-//   }
+  public resetPassword = (route: string, body: ResetPasswordDto) => {
+    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    });
+  }
 
   public confirmEmail = (route: string, token: string, email: string) => {
     let params = new HttpParams({ encoder: new CustomEncoder() })

@@ -1,7 +1,3 @@
-<!--Header Menu-->
-<app-navbar [theLoaiJson]="jsonTheLoaiArr"></app-navbar>
-<!--End Header Menu-->
-
 <body>
     <!--Login Area-->
     <main>
@@ -26,13 +22,13 @@
                                 </div>
                                 <div *ngIf="invalidLogin" class="alert alert-danger">Tên đăng nhập hoặc mật khẩu không khớp.</div>
                                 <div class="pass-link">
-                                    <a [routerLink]="['/authentication/forgotpassword']">Quên mật khẩu?</a>
+                                    <a routerLink="/authentication/forgot-password">Quên mật khẩu?</a>
                                 </div>
                                 <div class="field btn">
                                     <div class="btn-layer"></div>
                                     <input type="submit" value="Đăng nhập">
                                 </div>
-                                <div class="signup-link">Chưa có tài khoản? <a href="">Đăng ký ngay</a></div>
+                                <div class="signup-link">Chưa có tài khoản? <a routerLink="/authentication/register">Đăng ký ngay</a></div>
                             </form>
                         </div>
                     </div>
@@ -90,8 +86,4 @@
         <!--End dark mode button-->
     </main>
     <!--End Login Area-->
-
-    <!--Footer-->
-    <app-footer></app-footer>
-    <!--End Footer-->
 </body>

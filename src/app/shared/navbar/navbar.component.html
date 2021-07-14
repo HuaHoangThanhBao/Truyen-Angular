@@ -3,7 +3,7 @@
   <nav class="nav">
     <ul id="top__nav" class="nav__list">
       <li class="nav__item">
-        <a class="nav__link logo" href="/index">
+        <a class="nav__link logo" routerLink="/index">
           <img src="assets/images/logo.png" alt="no image avaiable">
         </a>
       </li>
@@ -26,22 +26,22 @@
             <div class="catagory-content">
               <ul class="catagory-list">
                 <li class="catagory-item" *ngFor="let theloai of theLoaiJson">
-                  <a href="/category/{{ theloai.theLoaiID }}">{{ theloai.tenTheLoai }}</a>
+                  <a routerLink="/category/{{ theloai.theLoaiID }}">{{ theloai.tenTheLoai }}</a>
                 </li>
               </ul>
             </div>
           </div>
           <div class="sep">
-            <a class="nav__link n-highL" href="/following">Theo Dõi</a>
+            <a class="nav__link n-highL" routerLink="/following">Theo Dõi</a>
           </div>
           <div class="sep">
-            <a class="nav__link n-highL" href="/history">Lịch sử</a>
+            <a class="nav__link n-highL" routerLink="/history">Lịch sử</a>
           </div>
-          <div class="sep" *ngIf="checkLogedIn() == false">
-            <a class="nav__link n-highL" href="/login">Đăng nhập</a>
+          <div class="sep" *ngIf="!isLoggedIn">
+            <a class="nav__link n-highL" routerLink="/authentication/login">Đăng nhập</a>
           </div>
-          <div class="sep" *ngIf="checkLogedIn() == true">
-            <a class="nav__link n-highL" href="/account">Tài khoản</a>
+          <div class="sep" *ngIf="isLoggedIn">
+            <a class="nav__link n-highL" routerLink="/account">Tài khoản</a>
           </div>
           <div class="sep">
             <div class="search__panel">
@@ -57,7 +57,7 @@
                 <div class="search__result" *ngIf="filterTruyenResult?.length > 0">
                   <ul class="search__result--list">
                     <li class="search__result--item" *ngFor="let res of filterTruyenResult">
-                      <a href="/story-detail/{{ res.truyenID }}">
+                      <a routerLink="/story-detail/{{ res.truyenID }}">
                         <div class="search__result--box">
                           <img src="https://drive.google.com/uc?export=view&id={{res.hinhAnh}}">
                           <div class="search__result--title">
@@ -75,10 +75,10 @@
         </div>
 
       </li>
-      <!-- <li class="nav__item"><a class="nav__link n-highL" href="/following">Theo Dõi</a></li>
-      <li class="nav__item"><a class="nav__link n-highL" href="/history">Lịch sử</a></li>
-      <li class="nav__item" *ngIf="checkLogedIn() == false"><a class="nav__link n-highL" href="/login">Đăng nhập</a></li>
-      <li class="nav__item" *ngIf="checkLogedIn() == true"><a class="nav__link n-highL" href="/account">Tài khoản</a></li>
+      <!-- <li class="nav__item"><a class="nav__link n-highL" routerLink="/following">Theo Dõi</a></li>
+      <li class="nav__item"><a class="nav__link n-highL" routerLink="/history">Lịch sử</a></li>
+      <li class="nav__item" *ngIf="checkLogedIn() == false"><a class="nav__link n-highL" routerLink="/login">Đăng nhập</a></li>
+      <li class="nav__item" *ngIf="checkLogedIn() == true"><a class="nav__link n-highL" routerLink="/account">Tài khoản</a></li>
       <li class="nav__item">
         <form class="search__box">
           <div class="search__box-input border_bottom">

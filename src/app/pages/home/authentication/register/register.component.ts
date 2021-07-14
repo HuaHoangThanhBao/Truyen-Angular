@@ -1,10 +1,10 @@
 import { Router } from '@angular/router';
-import { PasswordConfirmationValidatorService } from './../../../shared/services/password-confirmation-validator.service';
-import { UserForRegistrationDto } from './../../../model/userForRegistrationDto.model';
-import { AuthenticationService } from './../../../shared/services/authentication.service';
+import { PasswordConfirmationValidatorService } from '../../../../shared/services/password-confirmation-validator.service';
+import { UserForRegistrationDto } from '../../../../model/userForRegistrationDto.model';
+import { AuthenticationService } from '../../../../shared/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { environment } from './../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -50,12 +50,12 @@ export class RegisterComponent implements OnInit {
       email: formValues.email,
       password: formValues.password,
       confirmPassword: formValues.confirm,
-      clientURI: environment.apiURL + '/auth/RegistrationVerification'
+      clientURI: 'https://www.ranhdoctruyen.com/unimozy/authentication/email-confirmation'
     };
 
     this._authService.registerUser("auth/registration", user)
     .subscribe(_ => {
-      this._router.navigate(["/login"]);
+      this._router.navigate(["/authentication/login"]);
     },
     error => {
       this.errorMessage = error;

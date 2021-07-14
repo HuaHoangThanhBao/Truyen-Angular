@@ -1,6 +1,7 @@
 import { Component, Input, Output, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-story-list',
@@ -16,7 +17,7 @@ export class StoryListComponent implements OnInit {
 
   pagingData: any;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -69,7 +70,7 @@ export class StoryListComponent implements OnInit {
     //console.log(hist_arr)
     localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
 
-    window.location.href = "/story-reading/" + truyenID + "/" + chuongID;
+    this.router.navigate(["/story-reading/" + truyenID + "/" + chuongID]);
   }
 
   delelteHistoryItem(truyenID: number) {
@@ -92,7 +93,7 @@ export class StoryListComponent implements OnInit {
 
       localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
 
-      window.location.href = "/history";
+      this.router.navigate(["/history"]);
     }
   }
 }

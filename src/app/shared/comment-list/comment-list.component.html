@@ -28,7 +28,7 @@
                         (click)="addToHistory(jsonBinhLuan[i].chuong.truyen?.truyenID, jsonBinhLuan[i].chuong.truyen?.tenTruyen,
                         jsonBinhLuan[i].chuong.chuongID, jsonBinhLuan[i].chuong.tenChuong, jsonBinhLuan[i].chuong.truyen?.hinhAnh)"
 
-                        href="/story-reading/{{ jsonBinhLuan[i].chuong.truyen?.truyenID }}/{{ jsonBinhLuan[i].chuong.chuongID }}">
+                        routerLink="/story-reading/{{ jsonBinhLuan[i].chuong.truyen?.truyenID }}/{{ jsonBinhLuan[i].chuong.chuongID }}">
                         {{ jsonBinhLuan[i].chuong.tenChuong }}</a>
                         <span>{{ jsonBinhLuan[i].ngayBL }}</span>
                     </div>

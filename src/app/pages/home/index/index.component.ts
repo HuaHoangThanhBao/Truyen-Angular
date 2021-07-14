@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ICommentModel, ICommentModelJsonType } from '../../../model/truyenModel';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../environments/environment';
+import { error } from 'protractor';
 
 declare function setUpDarkMode(): void;
 
@@ -20,6 +21,8 @@ export class IndexComponent implements OnInit {
 
   mostViews: any;
   truyenPaginationData: any;
+
+  isLoggedIn: boolean;
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
@@ -81,6 +84,26 @@ export class IndexComponent implements OnInit {
         this.jsonBinhLuanArr = binhLuanData;
         console.log(this.jsonBinhLuanArr);
       })
+
+
+    this.http.post(environment.apiURL + `/auth/checklogin`, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    })
+      .subscribe(
+        (response) => {  
+          console.log(response)
+          this.isLoggedIn = true;
+          return true;
+        },
+        (error) => {
+          console.log(error)
+          this.isLoggedIn = false;
+          return false;
+        }
+      );
   }
 
   ngOnInit(): void {

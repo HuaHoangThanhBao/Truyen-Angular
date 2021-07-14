@@ -12,7 +12,6 @@ import { StoryDetailComponent } from './pages/home/story-detail/story-detail.com
 import { CategoryComponent } from './pages/home/category/category.component';
 import { FollowingComponent } from './pages/home/following/following.component';
 import { HistoryComponent } from './pages/home/history/history.component';
-import { LoginComponent } from './pages/home/login/login.component';
 import { IndexComponent } from './pages/home/index/index.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { ChartsComponent } from './pages/admin/charts/charts.component';
@@ -32,9 +31,6 @@ import { CommentSidebarComponent } from './shared/sidebar/comment-sidebar/commen
 import { AuthGuard } from './modules/guards/auth-guard.service';
 import { environment } from '../environments/environment';
 import { AccountComponent } from './pages/home/account/account.component';
-import { TwoStepVerificationComponent } from './pages/home/two-step-verification/two-step-verification.component';
-import { RegisterComponent } from './pages/home/register/register.component';
-import { ForgotPasswordComponent } from './pages/home/forgot-password/forgot-password.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -48,7 +44,6 @@ export function tokenGetter() {
     CategoryComponent,
     FollowingComponent,
     HistoryComponent,
-    LoginComponent,
     IndexComponent,
     DashboardComponent,
     ChartsComponent,
@@ -66,9 +61,6 @@ export function tokenGetter() {
     StoryListComponent,
     CommentSidebarComponent,
     AccountComponent,
-    TwoStepVerificationComponent,
-    RegisterComponent,
-    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

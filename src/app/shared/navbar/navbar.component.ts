@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+  @Input() isLoggedIn: boolean;
 
   @Input() theLoaiJson: any;
   filterTruyenResult: any;
@@ -16,15 +17,6 @@ export class NavbarComponent implements OnInit {
   constructor(private jwtHelper: JwtHelperService, private http: HttpClient) { }
 
   ngOnInit(): void {
-  }
-
-  checkLogedIn() {
-    const token = localStorage.getItem("token");
-
-    if (token && !this.jwtHelper.isTokenExpired(token)) {
-      return true;
-    }
-    return false;
   }
 
   filterOnSearch(value) {

@@ -1,15 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 
-import { UserForAuthenticationDto } from './../../../model/userForAuthenticationDto.model';
+import { UserForAuthenticationDto } from '../../../../model/userForAuthenticationDto.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from './../../../shared/services/authentication.service';
+import { AuthenticationService } from '../../../../shared/services/authentication.service';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-declare function setUpDarkMode(): void;
+// declare function setUpDarkMode(): void;
 declare function loginFormSetUp(): void;
 
 @Component({
@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.categoryDropdownInit();
+    //this.categoryDropdownInit();
     //loginFormSetUp();
-    setUpDarkMode();
+    //setUpDarkMode();
 
     this.loginForm = new FormGroup({
       username: new FormControl("", [Validators.required]),
@@ -53,46 +53,22 @@ export class LoginComponent implements OnInit {
 
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
-  
-  login(form: NgForm) {
-    const credentials = JSON.stringify(form.value);
-    this.http.post(environment.apiURL + `/auth/login`, credentials, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    }).subscribe(response => {
-      const token = (<any>response).token;
-      console.log(token);
-      localStorage.setItem("username", form.value["tenuser"]);
-      localStorage.setItem("jwt", token);
-      this.invalidLogin = false;
-      window.location.href = '/index';
-      //this.router.navigate(["/"]);
-    }, err => {
-      this.invalidLogin = true;
-    });
-  }
 
-  logOut() {
-    localStorage.removeItem("jwt");
-  }
+  // categoryDropdownInit() {
+  //   const catBut = document.getElementById('catagory-dropdown');
+  //   catBut.addEventListener('click', function () {
+  //     showMenuOnTablet();
+  //   });
 
-  categoryDropdownInit() {
-    const catBut = document.getElementById('catagory-dropdown');
-    catBut.addEventListener('click', function () {
-      showMenuOnTablet();
-    });
-
-    function showMenuOnTablet() {
-      var x = document.getElementById("top__nav");
-      if (x.className === "nav__list") {
-        x.className += " responsive";
-      } else {
-        x.className = "nav__list";
-      }
-    }
-  }
+  //   function showMenuOnTablet() {
+  //     var x = document.getElementById("top__nav");
+  //     if (x.className === "nav__list") {
+  //       x.className += " responsive";
+  //     } else {
+  //       x.className = "nav__list";
+  //     }
+  //   }
+  // }
 
   ////////
   public validateControl = (controlName: string) => {
@@ -109,14 +85,14 @@ export class LoginComponent implements OnInit {
     const userForAuth: UserForAuthenticationDto = {
       email: login.username,
       password: login.password,
-      clientURI: environment.apiURL + 'auth/forgotpassword'
+      clientURI: 'https://www.ranhdoctruyen.com/unimozy/authentication/forgot-password'
     }
 
     this._authService.loginUser('auth/login', userForAuth)
     .subscribe(res => {
       if(res.is2StepVerificationRequired) {
         console.log('two step');
-        this._router.navigate(['/two-step-veri'], 
+        this._router.navigate(['/authentication/two-step-verification'], 
           { queryParams: { returnUrl: this._returnUrl, provider: res.provider, email: userForAuth.email }});
       }
       else {

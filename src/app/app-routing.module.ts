@@ -13,21 +13,16 @@ import { CategoryComponent } from './pages/home/category/category.component';
 import { FollowingComponent } from './pages/home/following/following.component';
 import { HistoryComponent } from './pages/home/history/history.component';
 import { IndexComponent } from './pages/home/index/index.component';
-import { LoginComponent } from './pages/home/login/login.component';
-import { RegisterComponent } from './pages/home/register/register.component';
 import { StoryDetailComponent } from './pages/home/story-detail/story-detail.component';
 import { StoryReadingComponent } from './pages/home/story-reading/story-reading.component';
-import { TwoStepVerificationComponent } from './pages/home/two-step-verification/two-step-verification.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'index', pathMatch: 'full' },
   { path: 'index', component: IndexComponent},
   { path: 'category/:id', component: CategoryComponent},
-  { path: 'following', component: FollowingComponent, canActivate: [AuthGuard]},
+  { path: 'following', component: FollowingComponent},
   { path: 'history', component: HistoryComponent},
-  { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
-  { path: 'two-step-veri', component: TwoStepVerificationComponent},
+  { path: 'authentication', loadChildren: () => import('./pages/home/authentication/authentication.module').then(m => m.AuthenticationModule) },
   { path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   { path: 'story-detail/:id', component: StoryDetailComponent},
   { path: 'story-reading/:truyenID/:chuongID', component: StoryReadingComponent},

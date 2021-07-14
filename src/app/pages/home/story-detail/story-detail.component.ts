@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
 declare function setUpDarkMode(): void;
@@ -22,7 +22,7 @@ export class StoryDetailComponent implements OnInit {
   tongLuotXem: number;
   binhLuans: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
     this.route.paramMap.subscribe((param) => {
       const truyenID = param.get('id');
       //console.log(id);
@@ -145,6 +145,6 @@ export class StoryDetailComponent implements OnInit {
     //console.log(hist_arr)
     localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
 
-    window.location.href = "/story-reading/" + truyenID + "/" + chuongID;
+    this.router.navigate(["/story-reading/" + truyenID + "/" + chuongID]);
   }
 }

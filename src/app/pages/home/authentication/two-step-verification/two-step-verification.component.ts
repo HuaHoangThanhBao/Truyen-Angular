@@ -1,5 +1,5 @@
-import { TwoFactorDto } from './../../../model/twoFactorDto.model';
-import { AuthenticationService } from './../../../shared/services/authentication.service';
+import { TwoFactorDto } from '../../../../model/twoFactorDto.model';
+import { AuthenticationService } from '../../../../shared/services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,8 +30,6 @@ export class TwoStepVerificationComponent implements OnInit {
       this._provider = this._route.snapshot.queryParams['provider'];
       this._email = this._route.snapshot.queryParams['email'];
       this._returnUrl = this._route.snapshot.queryParams['returnUrl'];
-
-      console.log(this._provider)
   }
 
   public validateControl = (controlName: string) => {
@@ -52,9 +50,8 @@ export class TwoStepVerificationComponent implements OnInit {
       token: formValue.twoFactorCode
     }
 
-    this._authService.twoStepLogin('/auth/LoginVerification', twoFactorDto)
+    this._authService.twoStepLogin('auth/LoginVerification', twoFactorDto)
     .subscribe(res => {
-      localStorage.setItem("token", res.token);
       this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
       this._router.navigate([this._returnUrl]);
     },

@@ -1,5 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { environment } from '../../../../environments/environment';
 declare function setUpDarkMode(): void;
 
@@ -15,7 +17,7 @@ export class AccountComponent implements OnInit {
   jsonBinhLuanArr: any;
   mostViews: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router) {
     this.http.get(environment.apiURL + `/theloai`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -73,5 +75,15 @@ export class AccountComponent implements OnInit {
         x.className = "nav__list";
       }
     }
+  }
+
+  logoutClick(){
+    this._authService.logout('auth/logout')
+    .subscribe(res => {
+      this._router.navigate(['/index'])
+    },
+    (error) => {
+      console.log(error);
+    })
   }
 }

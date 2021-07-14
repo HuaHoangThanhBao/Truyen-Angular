@@ -7,7 +7,7 @@
       <!--Item-->
       <div class="list-item" *ngFor="let data of [].constructor(truyenJson ? truyenJson.length : 20); let i = index">
         <div class="image-box" *ngIf="!truyenJson || (truyenJson.length > 0 && i < truyenJson.length)">
-          <a class="image-link" href="/story-detail/{{ truyenJson ? truyenJson[i]?.truyenID: ''}}">
+          <a class="image-link" routerLink="/story-detail/{{ truyenJson ? truyenJson[i]?.truyenID: ''}}">
             <app-seleton-loader *ngIf="!truyenJson" Cwidth="25%" Cheight="250"></app-seleton-loader>
             <img *ngIf="truyenJson" src="https://drive.google.com/uc?export=view&id={{ truyenJson ? truyenJson[i]?.hinhAnh: ''}}"
               alt="image not available">
@@ -21,11 +21,11 @@
         </div>
         <div class="list_info">
           <app-seleton-loader *ngIf="!truyenJson" Cwidth="100%"></app-seleton-loader>
-          <a *ngIf="truyenJson" class="chapter-link" href="/story-detail/{{ truyenJson[i]?.truyenID }}"><h3>{{truyenJson[i]?.tenTruyen}}</h3></a>
+          <a *ngIf="truyenJson" class="chapter-link" routerLink="/story-detail/{{ truyenJson[i]?.truyenID }}"><h3>{{truyenJson[i]?.tenTruyen}}</h3></a>
           
           <ngContainer *ngIf="isHistory == true">
             <div class="newest-chapters">
-              <a *ngIf="truyenJson" class="chapter-link" href="/story-reading/{{ truyenJson[i]?.truyenID }}/{{ truyenJson[i]?.chuongID }}">
+              <a *ngIf="truyenJson" class="chapter-link" routerLink="/story-reading/{{ truyenJson[i]?.truyenID }}/{{ truyenJson[i]?.chuongID }}">
                 <span>Đọc tiếp</span>
                 <span>{{ truyenJson[i]?.tenChuong }}</span>
               </a>
@@ -40,7 +40,7 @@
               (click)="addToHistory(truyenJson[i]?.truyenID, truyenJson[i]?.tenTruyen,
               chap.chuongID, chap.tenChuong, truyenJson[i]?.hinhAnh)" 
 
-              href="/story-reading/{{ truyenJson[i].truyenID }}/{{ chap.chuongID }}">
+              routerLink="/story-reading/{{ truyenJson[i].truyenID }}/{{ chap.chuongID }}">
                 <span>{{chap.tenChuong}}</span>
                 <span>{{chap.thoiGianCapNhat | date: 'dd/MM/yyyy'}}</span>
               </a>
