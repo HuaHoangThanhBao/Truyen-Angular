@@ -1,27 +1,52 @@
-<div class="card">
-    <div class="card-body">
-        <h1 class="card-title">Two Step Verification</h1>
+<body>
+    <!--Confirm Area-->
+    <main>
+        <div class="main-container container-fluid">
+            <div class="banner-container">
+                <div class="banner"></div>
+            </div>
+            <div class="wrapper">
+                <!--Confirm form-->
+                <div class="form-wrapper">
 
-        <div *ngIf="showError" class="alert alert-danger" role="alert">
-            {{errorMessage}}
+                    <h1 class="card-title">Bạn vui lòng kiểm tra mail và nhập mã xác nhận vào ô dưới:</h1>
+                    <div *ngIf="showError" class="alert alert-danger" role="alert">
+                        {{errorMessage}}
+                    </div>
+    
+                    <div class="form-container">
+                        <div class="form-inner">
+                            <form [formGroup]="twoStepForm" autocomplete="off" novalidate (ngSubmit)="loginUser(twoStepForm.value)">
+                                <div class="field">
+                                    <label for="twoFactorCode" class="col-form-label col-sm-2">Mã xác nhận:</label>
+                                    <div class="form-field">
+                                        <input type="text" id="twoFactorCode" formControlName="twoFactorCode" class="form-control" />
+                                    </div>
+                                    <div class="form-field">
+                                        <em *ngIf="validateControl('twoFactorCode') && hasError('twoFactorCode', 'required')">*Vui lòng không để trống</em>
+                                    </div>
+                                </div>
+                                <br>
+                                
+                                <div class="field btn">
+                                    <div class="btn-layer"></div>
+                                    <button type="submit" class="btn btn-info" [disabled]="!twoStepForm.valid">Xác nhận</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--End Register Form-->
+            </div>
         </div>
 
-        <form [formGroup]="twoStepForm" autocomplete="off" novalidate (ngSubmit)="loginUser(twoStepForm.value)">
-            <div class="form-group row">
-                <label for="twoFactorCode" class="col-form-label col-sm-2">Two Factor Code:</label>
-                <div class="col-md-5">
-                    <input type="text" id="twoFactorCode" formControlName="twoFactorCode" class="form-control" />
-                </div>
-                <div class="col-md-5">
-                    <em *ngIf="validateControl('twoFactorCode') && hasError('twoFactorCode', 'required')">The Code is required</em>
-                </div>
+        <!--Dark mode button-->
+        <div class="theme-switch-area">
+            <div class="theme-icon-container dark-mode">
+                <button id="theme-switch-btn" class="theme-btn"></button>
             </div>
-            <br>
-            <div class="form-group row">
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-info" [disabled]="!twoStepForm.valid">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
+        <!--End dark mode button-->
+    </main>
+    <!--End Confirm Area-->
+</body>

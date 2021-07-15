@@ -1,13 +1,39 @@
-<div class="card">
-    <div class="card-body">
-        <h1 class="card-title">Email Confirmation</h1>
+<body>
+    <!--Confirm Area-->
+    <main>
+        <div class="main-container container-fluid">
+            <div class="banner-container">
+                <div class="banner"></div>
+            </div>
+            <div class="wrapper">
+                <!--Confirm form-->
+                <div class="form-wrapper">
+                    <h1 class="card-title">Xác thực đăng ký</h1>
 
-        <div *ngIf="showError" class="alert alert-danger" role="alert">
-            {{errorMessage}}
+                    <div class="form-container">
+                        <div class="form-inner">
+                            <div *ngIf="showError" class="alert alert-danger" role="alert">
+                                {{errorMessage}}
+                            </div>
+
+                            <div *ngIf="showSuccess" class="alert alert-success" role="alert">
+                                Tài khoản của bạn đã được xác thực. Vui lòng <a class="redirect-link"
+                                    routerLink="/authentication/login"> bấm vào đây để đăng nhập. </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Confirm Form-->
+            </div>
         </div>
 
-        <div *ngIf="showSuccess" class="alert alert-success" role="alert">
-            Your email has been successfully confirmed. Please <a routerLink="/authentication/login"> click here to log in. </a>
+        <!--Dark mode button-->
+        <div class="theme-switch-area">
+            <div class="theme-icon-container dark-mode">
+                <button id="theme-switch-btn" class="theme-btn"></button>
+            </div>
         </div>
-    </div>
-</div>
+        <!--End dark mode button-->
+    </main>
+    <!--End Confirm Area-->
+</body>

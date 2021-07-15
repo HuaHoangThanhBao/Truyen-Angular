@@ -9,8 +9,7 @@ import { AuthenticationService } from '../../../../shared/services/authenticatio
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-// declare function setUpDarkMode(): void;
-declare function loginFormSetUp(): void;
+declare function setUpDarkMode(): void;
 
 @Component({
   selector: 'app-login',
@@ -27,24 +26,10 @@ export class LoginComponent implements OnInit {
   public showError: boolean;
   private _returnUrl: string;
 
-  constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute) { 
-    // this.http.get(environment.apiURL + `/theloai`, {
-    //   headers: new HttpHeaders({
-    //     "Content-Type": "application/json",
-    //     "Api-Key": environment.apiKey
-    //   })
-    // })
-    //   .toPromise()
-    //   .then(theLoaiData => {
-    //     this.jsonTheLoaiArr = theLoaiData;
-    //     console.log(this.jsonTheLoaiArr);
-    //   })
-    }
+  constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    //this.categoryDropdownInit();
-    //loginFormSetUp();
-    //setUpDarkMode();
+    setUpDarkMode();
 
     this.loginForm = new FormGroup({
       username: new FormControl("", [Validators.required]),
@@ -53,22 +38,6 @@ export class LoginComponent implements OnInit {
 
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
-
-  // categoryDropdownInit() {
-  //   const catBut = document.getElementById('catagory-dropdown');
-  //   catBut.addEventListener('click', function () {
-  //     showMenuOnTablet();
-  //   });
-
-  //   function showMenuOnTablet() {
-  //     var x = document.getElementById("top__nav");
-  //     if (x.className === "nav__list") {
-  //       x.className += " responsive";
-  //     } else {
-  //       x.className = "nav__list";
-  //     }
-  //   }
-  // }
 
   ////////
   public validateControl = (controlName: string) => {

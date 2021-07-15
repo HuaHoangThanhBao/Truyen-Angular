@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
 
+declare function setUpDarkMode(): void;
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -20,6 +22,8 @@ export class RegisterComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit(): void {
+    setUpDarkMode();
+    
     this.registerForm = new FormGroup({
       firstName: new FormControl(''),
       lastName: new FormControl(''),

@@ -4,6 +4,8 @@ import { ForgotPasswordDto} from 'src/app/model/forgotPasswordDto.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { environment } from '../../../../../environments/environment';
 
+declare function setUpDarkMode(): void;
+
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -17,6 +19,7 @@ export class ForgotPasswordComponent implements OnInit {
   public showError: boolean;
   constructor(private _authService: AuthenticationService) { }
   ngOnInit(): void {
+    setUpDarkMode();
     this.forgotPasswordForm = new FormGroup({
       email: new FormControl("", [Validators.required])
     })
@@ -37,7 +40,7 @@ export class ForgotPasswordComponent implements OnInit {
     this._authService.forgotPassword('auth/forgotpassword', forgotPassDto)
     .subscribe(_ => {
       this.showSuccess = true;
-      this.successMessage = 'The link has been sent, please check your email to reset your password.'
+      this.successMessage = 'Đường dẫn để reset password đã được gửi qua mail của bạn, vui lòng kiểm tra mail để tiếp tục.'
     },
     err => {
       this.showError = true;

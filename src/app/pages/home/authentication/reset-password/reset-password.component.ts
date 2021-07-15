@@ -5,6 +5,8 @@ import { ResetPasswordDto } from 'src/app/model/resetPasswordDto.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { PasswordConfirmationValidatorService } from 'src/app/shared/services/password-confirmation-validator.service';
 
+declare function setUpDarkMode(): void;
+
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -22,6 +24,7 @@ export class ResetPasswordComponent implements OnInit {
     private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    setUpDarkMode();
     this.resetPasswordForm = new FormGroup({
       password: new FormControl('', [Validators.required]),
       confirm: new FormControl('')

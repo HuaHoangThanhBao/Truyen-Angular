@@ -65,14 +65,15 @@ body {
         }
 
         .logo {
-          @include SetWidthHeight(75px, 75px);
+          @include SetWidthHeight(auto, 75px);
           position: relative;
           display: inline-block;
           padding: 10px;
 
           img {
             @include SetWidthHeight(100%, 100%);
-            object-fit: cover;
+            //object-fit: cover;
+            object-fit: contain
           }
         }
 
@@ -217,11 +218,11 @@ body {
         }
 
         &:first-child {
-          padding-left: 20px;
+          width: 250px;
         }
 
         &:last-child {
-          width: calc(100% - 100px);
+          width: calc(100% - 250px);
         }
 
         .menu-panel {
@@ -887,8 +888,8 @@ a {
 .theme-switch-area {
   z-index: 999;
   position: fixed;
-  right: 5px;
-  bottom: 30px;
+  right: 10px;
+  bottom: 10px;
   width: 45px;
   height: 45px;
   border-radius: 50%;

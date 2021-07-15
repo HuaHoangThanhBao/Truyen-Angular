@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+declare function setUpDarkMode(): void;
+
 @Component({
   selector: 'app-two-step-verification',
   templateUrl: './two-step-verification.component.html',
@@ -23,6 +25,8 @@ export class TwoStepVerificationComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit(): void {
+    setUpDarkMode();
+
     this.twoStepForm = new FormGroup({
       twoFactorCode: new FormControl('', [Validators.required]),
     });
