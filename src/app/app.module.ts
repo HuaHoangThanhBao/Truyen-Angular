@@ -31,6 +31,7 @@ import { CommentSidebarComponent } from './shared/sidebar/comment-sidebar/commen
 import { AuthGuard } from './modules/guards/auth-guard.service';
 import { environment } from '../environments/environment';
 import { AccountComponent } from './pages/home/account/account.component';
+import { LogInService } from './shared/services/log-in-service.service';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -76,7 +77,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard, LogInService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 
-declare function setUpDarkMode(): void;
-
 @Component({
   selector: 'app-email-confirmation',
   templateUrl: './email-confirmation.component.html',
@@ -17,7 +15,6 @@ export class EmailConfirmationComponent implements OnInit {
   constructor(private _authService: AuthenticationService, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    setUpDarkMode();
     this.confirmEmail();
   }
 

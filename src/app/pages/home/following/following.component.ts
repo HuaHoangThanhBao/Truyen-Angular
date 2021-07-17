@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../environments/environment';
-declare function setUpDarkMode(): void;
 
 @Component({
   selector: 'app-following',
@@ -12,7 +11,6 @@ declare function setUpDarkMode(): void;
 export class FollowingComponent implements OnInit {
   title="Truyện đang theo dõi"
 
-  jsonTheLoaiArr: any;
   jsonTruyenArr: any;
   jsonBinhLuanArr: any;
   mostViews: any;
@@ -39,18 +37,6 @@ export class FollowingComponent implements OnInit {
       .then(truyenData => {
         this.jsonTruyenArr = truyenData;
         console.log(this.jsonTruyenArr);
-      })
-
-    this.http.get(environment.apiURL + `/theloai`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .toPromise()
-      .then(theLoaiData => {
-        this.jsonTheLoaiArr = theLoaiData;
-        console.log(this.jsonTheLoaiArr);
       })
 
 
@@ -80,24 +66,6 @@ export class FollowingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categoryDropdownInit();
-    setUpDarkMode();
-  }
-
-  categoryDropdownInit() {
-    const catBut = document.getElementById('catagory-dropdown');
-    catBut.addEventListener('click', function () {
-      showMenuOnTablet();
-    });
-
-    function showMenuOnTablet() {
-      var x = document.getElementById("top__nav");
-      if (x.className === "nav__list") {
-        x.className += " responsive";
-      } else {
-        x.className = "nav__list";
-      }
-    }
   }
   
   setPaginationVar(newVal) {

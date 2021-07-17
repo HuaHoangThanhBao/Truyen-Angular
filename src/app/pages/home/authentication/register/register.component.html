@@ -24,18 +24,18 @@
                                     <div class="form-field">
                                         <input type="text" id="lastName" formControlName="lastName" class="form-control" />
                                     </div>
-                                    <!-- <div>
-                                        <em *ngIf="hasError('lastName', 'required')">*Vui lòng không để trống</em>
-                                    </div> -->
+                                    <div>
+                                        <em *ngIf="validateControl('lastName') && hasError('lastName', 'required')">*Vui lòng không để trống</em>
+                                    </div>
                                 </div>
                                 <div class="field">
                                     <label for="firstName" class="col-form-label col-sm-2">Tên</label>
                                     <div class="form-field">
                                         <input type="text" id="firstName" formControlName="firstName" class="form-control" />
                                     </div>
-                                    <!-- <div>
-                                        <em *ngIf="hasError('firstName', 'required')">*Vui lòng không để trống</em>
-                                    </div> -->
+                                    <div>
+                                        <em *ngIf="validateControl('firstName') && hasError('firstName', 'required')">*Vui lòng không để trống</em>
+                                    </div>
                                 </div>
                                 <div class="field">
                                     <label for="email" class="col-form-label col-sm-2">Email</label>
@@ -73,7 +73,7 @@
                                 <div class="field btn">
                                     <div class="btn-layer"></div>
                                     <button type="submit" class="btn btn-info"
-                                        [disabled]="!registerForm.valid">Đăng ký</button>
+                                        [disabled]="!registerForm.valid || btnSubmitLocked">Đăng ký</button>
                                 </div>
                                 <div class="signup-link">Đã có tài khoản? <a
                                         routerLink="/authentication/login">Đăng nhập</a></div>
@@ -85,14 +85,6 @@
                 <!--End Register Form-->
             </div>
         </div>
-
-        <!--Dark mode button-->
-        <div class="theme-switch-area">
-            <div class="theme-icon-container dark-mode">
-                <button id="theme-switch-btn" class="theme-btn"></button>
-            </div>
-        </div>
-        <!--End dark mode button-->
     </main>
     <!--End Register Area-->
 </body>

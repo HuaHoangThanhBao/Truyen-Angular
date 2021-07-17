@@ -5,8 +5,6 @@ import { StoryListComponent } from 'src/app/shared/story-list/story-list.compone
 import { environment } from '../../../../environments/environment';
 import { error } from 'protractor';
 
-declare function setUpDarkMode(): void;
-
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -17,12 +15,9 @@ export class IndexComponent implements OnInit {
 
   jsonTruyenArr: any;
   jsonBinhLuanArr: any;
-  jsonTheLoaiArr: any;
 
   mostViews: any;
   truyenPaginationData: any;
-
-  isLoggedIn: boolean;
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
@@ -49,18 +44,6 @@ export class IndexComponent implements OnInit {
         console.log(this.mostViews);
       })
 
-    this.http.get(environment.apiURL + `/theloai`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .toPromise()
-      .then(theLoaiData => {
-        this.jsonTheLoaiArr = theLoaiData;
-        console.log(this.jsonTheLoaiArr);
-      })
-
     this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=20&getall=true`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -84,31 +67,9 @@ export class IndexComponent implements OnInit {
         this.jsonBinhLuanArr = binhLuanData;
         console.log(this.jsonBinhLuanArr);
       })
-
-
-    this.http.post(environment.apiURL + `/auth/checklogin`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .subscribe(
-        (response) => {  
-          console.log(response)
-          this.isLoggedIn = true;
-          return true;
-        },
-        (error) => {
-          console.log(error)
-          this.isLoggedIn = false;
-          return false;
-        }
-      );
   }
 
   ngOnInit(): void {
-    this.categoryDropdownInit();
-    setUpDarkMode();
   }
 
   setPaginationVar(newVal) {
@@ -129,22 +90,6 @@ export class IndexComponent implements OnInit {
     });
     const headers = JSON.parse(response.headers.get('X-Pagination'));
     return headers;
-  }
-
-  categoryDropdownInit() {
-    const catBut = document.getElementById('catagory-dropdown');
-    catBut.addEventListener('click', function () {
-      showMenuOnTablet();
-    });
-
-    function showMenuOnTablet() {
-      var x = document.getElementById("top__nav");
-      if (x.className === "nav__list") {
-        x.className += " responsive";
-      } else {
-        x.className = "nav__list";
-      }
-    }
   }
 
   refreshFetchList(value) {

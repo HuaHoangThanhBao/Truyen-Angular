@@ -1,9 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
-
-declare function setUpDarkMode(): void;
 
 @Component({
   selector: 'app-story-reading',
@@ -14,7 +12,6 @@ export class StoryReadingComponent implements OnInit {
 
   chuongJson: any;
   binhLuanJson: any;
-  theLoaiJson: any;
   truyenJson: any;
 
   currentChap: number;
@@ -23,7 +20,7 @@ export class StoryReadingComponent implements OnInit {
 
   chuongCatagoryList: [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private _router: Router) {
 
     this.route.paramMap.subscribe((param) => {
       const chuongID = param.get('chuongID');
@@ -72,19 +69,6 @@ export class StoryReadingComponent implements OnInit {
           }
         });
 
-
-      this.http.get(environment.apiURL + `/theloai`, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          "Api-Key": environment.apiKey
-        })
-      })
-        .toPromise()
-        .then(theLoaiData => {
-          this.theLoaiJson = theLoaiData;
-          console.log(this.theLoaiJson);
-        })
-
       this.http.get(environment.apiURL + `/binhluan?pageNumber=1&pageSize=10&sorting=true&chuongID=` + chuongID, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
@@ -100,8 +84,6 @@ export class StoryReadingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    setUpDarkMode();
-    this.categoryDropdownInit();
     this.scrollMenu();
   }
 
@@ -132,27 +114,11 @@ export class StoryReadingComponent implements OnInit {
       else index = value;
     }
     //console.log(index);
-    if (resultID) window.location.href = "/story-reading/" + this.truyenJson.truyenID + "/" + resultID;
+    if (resultID) this._router.navigate([`/story-reading/${this.truyenJson.truyenID}/${resultID}`]);
   }
 
   selectedChange(value) {
-    window.location.href = "/story-reading/" + this.truyenJson.truyenID + "/" + value;
-  }
-
-  categoryDropdownInit() {
-    const catBut = document.getElementById('catagory-dropdown');
-    catBut.addEventListener('click', function () {
-      showMenuOnTablet();
-    });
-
-    function showMenuOnTablet() {
-      var x = document.getElementById("top__nav");
-      if (x.className === "nav__list") {
-        x.className += " responsive";
-      } else {
-        x.className = "nav__list";
-      }
-    }
+    this._router.navigate([`/story-reading/${this.truyenJson.truyenID}/${value}`]);
   }
 
   scrollMenu() {

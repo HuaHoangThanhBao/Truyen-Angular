@@ -1,7 +1,3 @@
-<!--Header Menu-->
-<app-navbar [theLoaiJson]="theLoaiJson"></app-navbar>
-<!--End Header Menu-->
-
 <body>
 
     <main>
@@ -25,7 +21,7 @@
                                 <div class="chap__nav">
                                     <ul id="chap__nav__header" class="chap__nav-list">
                                         <li class="chap__nav-item">
-                                            <a href="/index">
+                                            <a routerLink="/index">
                                                 <div class="chap__nav-item-box">
                                                     <div class="chap__nav-item-icon">
                                                         <img src="assets/images/home.svg" alt="no image avaiable">
@@ -34,7 +30,7 @@
                                             </a>
                                         </li>
                                         <li class="chap__nav-item">
-                                            <a href="/story-detail/{{chuongJson?.truyen.truyenID}}">
+                                            <a routerLink="/story-detail/{{chuongJson?.truyen.truyenID}}">
                                                 <div class="chap__nav-item-box">
                                                     <div class="chap__nav-item-icon">
                                                         <img src="assets/images/list.svg" alt="no image avaiable">
@@ -43,7 +39,7 @@
                                             </a>
                                         </li>
                                         <li class="chap__nav-item">
-                                            <a href="#">
+                                            <a routerLink="#">
                                                 <div class="chap__nav-item-box">
                                                     <div class="chap__nav-item-icon">
                                                         <img src="assets/images/heart.svg" alt="no image avaiable">
@@ -107,17 +103,5 @@
                 </div>
             </div>
         </div>
-        <!--Dark mode button-->
-        <div class="theme-switch-area">
-            <div class="theme-icon-container dark-mode">
-                <button id="theme-switch-btn" class="theme-btn"></button>
-            </div>
-        </div>
-        <!--End dark mode button-->
     </main>
-
-
-    <!--Footer-->
-    <app-footer></app-footer>
-    <!--End Footer-->
 </body>

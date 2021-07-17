@@ -5,8 +5,6 @@ import { ResetPasswordDto } from 'src/app/model/resetPasswordDto.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { PasswordConfirmationValidatorService } from 'src/app/shared/services/password-confirmation-validator.service';
 
-declare function setUpDarkMode(): void;
-
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -20,11 +18,12 @@ export class ResetPasswordComponent implements OnInit {
   public errorMessage: string;
   private _token: string;
   private _email: string;
+  btnSubmitLocked: boolean = false;
+
   constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,
     private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    setUpDarkMode();
     this.resetPasswordForm = new FormGroup({
       password: new FormControl('', [Validators.required]),
       confirm: new FormControl('')
@@ -45,6 +44,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   public resetPassword = (resetPasswordFormValue) => {
+    this.btnSubmitLocked = true;
     this.showError = this.showSuccess = false;
     const resetPass = { ...resetPasswordFormValue };
     const resetPassDto: ResetPasswordDto = {
@@ -60,6 +60,7 @@ export class ResetPasswordComponent implements OnInit {
         error => {
           this.showError = true;
           this.errorMessage = error;
+          this.btnSubmitLocked = false;
         })
   }
 }

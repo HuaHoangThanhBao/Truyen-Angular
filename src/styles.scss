@@ -133,11 +133,11 @@
                 @include SetWidthHeight(33.33333333%, auto);
               }
 
-              @media (min-width: 400px) and (max-width: 519px) {
+              @media (min-width: 350px) and (max-width: 519px) {
                 @include SetWidthHeight(50%, auto);
               }
 
-              @media (max-width: 399px) {
+              @media (max-width: 349px) {
                 @include SetWidthHeight(100%, auto);
               }
             }

@@ -30,7 +30,7 @@
                                 
                                 <div class="field btn">
                                     <div class="btn-layer"></div>
-                                    <button type="submit" class="btn btn-info" [disabled]="!twoStepForm.valid">Xác nhận</button>
+                                    <button type="submit" class="btn btn-info" [disabled]="!twoStepForm.valid || btnSubmitLocked">Xác nhận</button>
                                 </div>
                             </form>
                         </div>
@@ -39,14 +39,6 @@
                 <!--End Register Form-->
             </div>
         </div>
-
-        <!--Dark mode button-->
-        <div class="theme-switch-area">
-            <div class="theme-icon-container dark-mode">
-                <button id="theme-switch-btn" class="theme-btn"></button>
-            </div>
-        </div>
-        <!--End dark mode button-->
     </main>
     <!--End Confirm Area-->
 </body>

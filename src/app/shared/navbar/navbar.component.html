@@ -37,11 +37,9 @@
           <div class="sep">
             <a class="nav__link n-highL" routerLink="/history">Lịch sử</a>
           </div>
-          <div class="sep" *ngIf="!isLoggedIn">
-            <a class="nav__link n-highL" routerLink="/authentication/login">Đăng nhập</a>
-          </div>
-          <div class="sep" *ngIf="isLoggedIn">
-            <a class="nav__link n-highL" routerLink="/account">Tài khoản</a>
+          <div class="sep">
+            <a *ngIf="!isLoggedIn" class="nav__link n-highL" routerLink="/authentication/login">Đăng nhập</a>
+            <a *ngIf="isLoggedIn" class="nav__link n-highL" routerLink="/account">Tài khoản</a>
           </div>
           <div class="sep">
             <div class="search__panel">
@@ -73,22 +71,7 @@
             </div>
           </div>
         </div>
-
       </li>
-      <!-- <li class="nav__item"><a class="nav__link n-highL" routerLink="/following">Theo Dõi</a></li>
-      <li class="nav__item"><a class="nav__link n-highL" routerLink="/history">Lịch sử</a></li>
-      <li class="nav__item" *ngIf="checkLogedIn() == false"><a class="nav__link n-highL" routerLink="/login">Đăng nhập</a></li>
-      <li class="nav__item" *ngIf="checkLogedIn() == true"><a class="nav__link n-highL" routerLink="/account">Tài khoản</a></li>
-      <li class="nav__item">
-        <form class="search__box">
-          <div class="search__box-input border_bottom">
-            <input (input)="filterOnSearch($event)" type="text" placeholder="Tìm kiếm...">
-          </div>
-          <div class="icon border_bottom">
-            <img src="assets/images/loupe.svg" class="search-icon" alt="no image avaiable">
-          </div>
-        </form>
-      </li> -->
     </ul>
   </nav>
 </header>

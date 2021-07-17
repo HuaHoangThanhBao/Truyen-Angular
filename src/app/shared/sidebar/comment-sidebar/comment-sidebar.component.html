@@ -33,11 +33,11 @@
                         <div class="comment-des-container">
                             <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
                             <div *ngIf="binhLuanJson" class="comment-des-title">
-                                <p class="comment-name">{{binhLuanJson[i]?.user.tenUser}}</p>
+                                <p class="comment-name">{{binhLuanJson[i]?.user.username}}</p>
                             </div>
                             <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
                             <div *ngIf="binhLuanJson" class="comment-des-content">
-                                <p>{{binhLuanJson[i]?.noiDung}}</p>
+                                <div [innerHTML]="binhLuanJson[i].noiDung"></div>
                             </div>
                         </div>
                     </div>

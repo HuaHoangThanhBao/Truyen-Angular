@@ -6,8 +6,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
 
-declare function setUpDarkMode(): void;
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -18,15 +16,15 @@ export class RegisterComponent implements OnInit {
   public errorMessage: string = '';
   public showError: boolean;
 
+  btnSubmitLocked: boolean = false;
+
   constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,
     private _router: Router) { }
 
   ngOnInit(): void {
-    setUpDarkMode();
-    
     this.registerForm = new FormGroup({
-      firstName: new FormControl(''),
-      lastName: new FormControl(''),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
       confirm: new FormControl('')
@@ -45,6 +43,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public registerUser = (registerFormValue) => {
+    this.btnSubmitLocked = true;
     this.showError = false;
     const formValues = { ...registerFormValue };
 
@@ -64,6 +63,7 @@ export class RegisterComponent implements OnInit {
     error => {
       this.errorMessage = error;
       this.showError = true;
+      this.btnSubmitLocked = false;
     })
   }
 }

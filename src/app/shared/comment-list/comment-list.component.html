@@ -42,11 +42,11 @@
                             <div class="comment-des-container">
                                 <app-seleton-loader *ngIf="!jsonBinhLuan" Cheight="20"></app-seleton-loader>
                                 <div *ngIf="jsonBinhLuan"  class="comment-des-title">
-                                    <p class="comment-name">{{ jsonBinhLuan[i].user.tenUser }}</p>
+                                    <p class="comment-name">{{ jsonBinhLuan[i].user.username }}</p>
                                 </div>
                                 <app-seleton-loader *ngIf="!jsonBinhLuan" Cheight="20"></app-seleton-loader>
                                 <div *ngIf="jsonBinhLuan"  class="comment-des-content">
-                                    <p>{{ jsonBinhLuan[i].noiDung }}</p>
+                                    <div [innerHTML]="jsonBinhLuan[i].noiDung"></div>
                                 </div>
                             </div>
                         </div>

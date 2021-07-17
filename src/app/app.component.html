@@ -1,1 +1,17 @@
+<!--Header Menu-->
+<app-navbar [theLoaiJson]="jsonTheLoaiArr" [isLoggedIn]="isLoggedIn"></app-navbar>
+<!--End Header Menu-->
+
 <router-outlet></router-outlet>
+
+<!--Dark mode button-->
+<div class="theme-switch-area">
+    <div class="theme-icon-container dark-mode">
+        <button id="theme-switch-btn" class="theme-btn"></button>
+    </div>
+</div>
+<!--End dark mode button-->
+
+<!--Footer-->
+<app-footer></app-footer>
+<!--End Footer-->

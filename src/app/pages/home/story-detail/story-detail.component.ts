@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
-declare function setUpDarkMode(): void;
 declare function expandBtn(): void;
 
 @Component({
@@ -17,7 +16,6 @@ export class StoryDetailComponent implements OnInit {
   phuLucJson: any;
 
   jsonBinhLuanArr: any;
-  jsonTheLoaiArr: any;
   //commentFilter: ICommentModel[] = [];
   tongLuotXem: number;
   binhLuans: any;
@@ -65,18 +63,6 @@ export class StoryDetailComponent implements OnInit {
           console.log('phu luc:', this.phuLucJson);
         })
 
-      this.http.get(environment.apiURL + `/theloai`, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          "Api-Key": environment.apiKey
-        })
-      })
-        .toPromise()
-        .then(theLoaiData => {
-          this.jsonTheLoaiArr = theLoaiData;
-          console.log(this.jsonTheLoaiArr);
-        })
-
       this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=10&sorting=true&truyenID=` + truyenID, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
@@ -91,26 +77,8 @@ export class StoryDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categoryDropdownInit();
-    setUpDarkMode();
     expandBtn();
     //truyenUltiInit();
-  }
-
-  categoryDropdownInit() {
-    const catBut = document.getElementById('catagory-dropdown');
-    catBut.addEventListener('click', function () {
-      showMenuOnTablet();
-    });
-
-    function showMenuOnTablet() {
-      var x = document.getElementById("top__nav");
-      if (x.className === "nav__list") {
-        x.className += " responsive";
-      } else {
-        x.className = "nav__list";
-      }
-    }
   }
 
   addToHistory(truyenID: number, tenTruyen: string, chuongID: number, tenChuong: string, hinhAnh: string) {

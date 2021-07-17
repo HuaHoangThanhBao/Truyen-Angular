@@ -9,8 +9,6 @@ import { AuthenticationService } from '../../../../shared/services/authenticatio
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-declare function setUpDarkMode(): void;
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,14 +23,14 @@ export class LoginComponent implements OnInit {
   public errorMessage: string = '';
   public showError: boolean;
   private _returnUrl: string;
+  
+  btnSubmitLocked: boolean = false;
 
   constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    setUpDarkMode();
-
     this.loginForm = new FormGroup({
-      username: new FormControl("", [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl("", [Validators.required])
     })
 
@@ -49,10 +47,11 @@ export class LoginComponent implements OnInit {
   }
 
   public loginUser = (loginFormValue) => {
+    this.btnSubmitLocked = true;
     this.showError = false;
     const login = {... loginFormValue };
     const userForAuth: UserForAuthenticationDto = {
-      email: login.username,
+      email: login.email,
       password: login.password,
       clientURI: 'https://www.ranhdoctruyen.com/unimozy/authentication/forgot-password'
     }
@@ -66,7 +65,7 @@ export class LoginComponent implements OnInit {
       }
       else {
         console.log('two wrong');
-        localStorage.setItem("token", res.token);
+        //localStorage.setItem("token", res.token);
         this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
         //this._router.navigate([this._returnUrl]);
       }
@@ -74,6 +73,8 @@ export class LoginComponent implements OnInit {
     (error) => {
       this.errorMessage = error;
       this.showError = true;
+      this.btnSubmitLocked = false;
+      console.log(error)
     })
   }
 }

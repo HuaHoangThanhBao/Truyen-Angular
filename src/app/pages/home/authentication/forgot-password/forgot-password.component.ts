@@ -4,8 +4,6 @@ import { ForgotPasswordDto} from 'src/app/model/forgotPasswordDto.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { environment } from '../../../../../environments/environment';
 
-declare function setUpDarkMode(): void;
-
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -17,11 +15,12 @@ export class ForgotPasswordComponent implements OnInit {
   public errorMessage: string;
   public showSuccess: boolean;
   public showError: boolean;
+  btnSubmitLocked: boolean = false;
+
   constructor(private _authService: AuthenticationService) { }
   ngOnInit(): void {
-    setUpDarkMode();
     this.forgotPasswordForm = new FormGroup({
-      email: new FormControl("", [Validators.required])
+      email: new FormControl('', [Validators.required, Validators.email]),
     })
   }
   public validateControl = (controlName: string) => {
@@ -31,6 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
     return this.forgotPasswordForm.controls[controlName].hasError(errorName)
   }
   public forgotPassword = (forgotPasswordFormValue) => {
+    this.btnSubmitLocked = true;
     this.showError = this.showSuccess = false;
     const forgotPass = { ...forgotPasswordFormValue };
     const forgotPassDto: ForgotPasswordDto = {
@@ -45,6 +45,7 @@ export class ForgotPasswordComponent implements OnInit {
     err => {
       this.showError = true;
       this.errorMessage = err;
+      this.btnSubmitLocked = false;
     })
   }
 }

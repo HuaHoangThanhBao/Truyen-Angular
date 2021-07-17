@@ -4,14 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../environments/environment';
 
-declare function setUpDarkMode(): void;
-
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
+  title: string;
 
   jsonBinhLuanArr: any;
   jsonTheLoaiArr: any;
@@ -35,17 +34,18 @@ export class CategoryComponent implements OnInit {
         this.storyListComponent.passPagingData(this.getPaginationVar());
       });
 
-      this.http.get(environment.apiURL + `/theloai`, {
+      
+      this.http.get(environment.apiURL + `/theloai/` + id, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           "Api-Key": environment.apiKey
         })
       })
         .toPromise()
-        .then(theLoaiData => {
-          this.jsonTheLoaiArr = theLoaiData;
-          console.log(this.jsonTheLoaiArr);
+        .then(theLoai => {
+          this.title = `Danh mục: ${theLoai["tenTheLoai"]}`
         })
+        
 
       this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=20&sorting=true&theloaiID=` + id, {
         headers: new HttpHeaders({
@@ -86,24 +86,6 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    setUpDarkMode();
-    this.categoryDropdownInit();
-  }
-
-  categoryDropdownInit() {
-    const catBut = document.getElementById('catagory-dropdown');
-    catBut.addEventListener('click', function () {
-      showMenuOnTablet();
-    });
-
-    function showMenuOnTablet() {
-      var x = document.getElementById("top__nav");
-      if (x.className === "nav__list") {
-        x.className += " responsive";
-      } else {
-        x.className = "nav__list";
-      }
-    }
   }
 
   setPaginationVar(newVal) {

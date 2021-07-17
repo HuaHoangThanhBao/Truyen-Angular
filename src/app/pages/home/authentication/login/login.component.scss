@@ -117,7 +117,6 @@ input[type="radio"] {
 .form-inner {
 	form {
 		.field {
-			height: 50px;
 			width: 100%;
 			margin-top: 20px;
 			input {
@@ -179,6 +178,9 @@ form {
 		border-radius: 5px;
 		position: relative;
 		overflow: hidden;
+        border: none;
+        font-size: 17px;
+
 		.btn-layer {
 			height: 100%;
 			width: 300%;
@@ -208,4 +210,15 @@ form {
 			cursor: pointer;
 		}
 	}
+}
+
+
+.form-field{
+    margin: 10px 0px 10px 0px;
+    height: 40px;
+}
+
+em{
+    color: red;
+    font-size: 13px;
 }

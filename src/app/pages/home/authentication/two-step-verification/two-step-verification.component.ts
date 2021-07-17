@@ -3,8 +3,7 @@ import { AuthenticationService } from '../../../../shared/services/authenticatio
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
-declare function setUpDarkMode(): void;
+import { LogInService } from 'src/app/shared/services/log-in-service.service';
 
 @Component({
   selector: 'app-two-step-verification',
@@ -21,12 +20,12 @@ export class TwoStepVerificationComponent implements OnInit {
   private _email: string;
   private _returnUrl: string;
 
+  btnSubmitLocked: boolean = false;
+
   constructor(private _authService: AuthenticationService, private _route: ActivatedRoute, 
-    private _router: Router) { }
+    private _router: Router, private loginService: LogInService) { }
 
   ngOnInit(): void {
-    setUpDarkMode();
-
     this.twoStepForm = new FormGroup({
       twoFactorCode: new FormControl('', [Validators.required]),
     });
@@ -45,6 +44,7 @@ export class TwoStepVerificationComponent implements OnInit {
   }
 
   public loginUser = (twoStepFromValue) => {
+    this.btnSubmitLocked = true;
     this.showError = false;
     
     const formValue = { ...twoStepFromValue };
@@ -56,12 +56,14 @@ export class TwoStepVerificationComponent implements OnInit {
 
     this._authService.twoStepLogin('auth/LoginVerification', twoFactorDto)
     .subscribe(res => {
+      this.loginService.updateLoginStatus(true);
       this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
       this._router.navigate([this._returnUrl]);
     },
     error => {
       this.errorMessage = error;
       this.showError = true;
+      this.btnSubmitLocked = false;
     })
   }
 }
