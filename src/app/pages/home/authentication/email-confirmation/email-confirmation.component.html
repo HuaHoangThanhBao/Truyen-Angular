@@ -12,9 +12,7 @@
 
                     <div class="form-container">
                         <div class="form-inner">
-                            <div *ngIf="showError" class="alert alert-danger" role="alert">
-                                {{errorMessage}}
-                            </div>
+                            <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage.error.errorMessage }}</div>
 
                             <div *ngIf="showSuccess" class="alert alert-success" role="alert">
                                 Tài khoản của bạn đã được xác thực. Vui lòng <a class="redirect-link"

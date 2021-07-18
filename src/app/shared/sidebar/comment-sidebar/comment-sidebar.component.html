@@ -1,10 +1,10 @@
 <div class="body-box mar-top-20">
     <div class="title-header">
-        <h2>Bình Luận Mới Nhất ({{ binhLuanJson?.length }})</h2>
+        <h2>Bình Luận Mới Nhất</h2>
     </div>
     <div class="chap__comment-panel">
-        <ul class="comment-list" *ngFor="let data of [].constructor(binhLuanJson ? binhLuanJson.length : 5); let i = index">
-            <li class="comment-item">
+        <ul class="comment-list" *ngFor="let data of [].constructor(binhLuanJson ? binhLuanJson.length : 20); let i = index">
+            <li class="comment-item" *ngIf="!binhLuanJson || (binhLuanJson.length > 0 && i < binhLuanJson.length)">
                 <div class="comment-b">
                     <div class="title-overflow pad-bot-10">
                         <div class="title-overflow-content txt-italic">

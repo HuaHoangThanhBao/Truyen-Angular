@@ -71,7 +71,7 @@ export class CategoryComponent implements OnInit {
           console.log(this.mostViews);
         })
 
-      this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=5&lastestUpdate=true`, {
+      this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           "Api-Key": environment.apiKey

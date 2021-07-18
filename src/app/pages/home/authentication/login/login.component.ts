@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from '../../../../shared/services/authentication.service';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
   
   btnSubmitLocked: boolean = false;
 
-  constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute,
+    private toast: ToastAlertService) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -59,22 +61,19 @@ export class LoginComponent implements OnInit {
     this._authService.loginUser('auth/login', userForAuth)
     .subscribe(res => {
       if(res.is2StepVerificationRequired) {
-        console.log('two step');
+        this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình nhé!", "info");
         this._router.navigate(['/authentication/two-step-verification'], 
           { queryParams: { returnUrl: this._returnUrl, provider: res.provider, email: userForAuth.email }});
       }
       else {
-        console.log('two wrong');
-        //localStorage.setItem("token", res.token);
         this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-        //this._router.navigate([this._returnUrl]);
+        this._router.navigate([this._returnUrl]);
       }
     },
     (error) => {
       this.errorMessage = error;
       this.showError = true;
       this.btnSubmitLocked = false;
-      console.log(error)
     })
   }
 }

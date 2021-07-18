@@ -11,10 +11,7 @@
                     <div class="form-container">
                         <h1 class="card-title">Đăng ký</h1>
         
-                        <div *ngIf="showError" class="alert alert-danger" role="alert">
-                            <span [innerHTML]="errorMessage"></span>
-                        </div>
-        
+                        <div class="error alert alert-danger" *ngIf="errorMessage"  role="alert">{{ errorMessage.error.errorMessage }}</div>
         
                         <div class="form-inner">
                             <form [formGroup]="registerForm" autocomplete="off" novalidate
@@ -69,7 +66,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                
+
                                 <div class="field btn">
                                     <div class="btn-layer"></div>
                                     <button type="submit" class="btn btn-info"

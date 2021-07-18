@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { LogInService } from 'src/app/shared/services/log-in-service.service';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../environments/environment';
 
@@ -18,16 +19,17 @@ export class FollowingComponent implements OnInit {
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loginService: LogInService) {
+  }
+
+  ngOnInit(): void {
     this.fetchCorsPagination(1).then(headers => {
       this.setPaginationVar(headers);
       console.log('header:', this.getPaginationVar());
       this.storyListComponent.passPagingData(this.getPaginationVar());
     });
     
-    const username = localStorage.getItem("username");
-    console.log(username)
-    this.http.get(environment.apiURL + `/theodoi/pagination?tenuser=${username}&pageNumber=1&pageSize=20&getall=true`, {
+    this.http.get(environment.apiURL + `/theodoi/pagination?userid=${this.loginService.getUserID()}&pageNumber=1&pageSize=20&getall=true`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         "Api-Key": environment.apiKey
@@ -40,7 +42,7 @@ export class FollowingComponent implements OnInit {
       })
 
 
-    this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=5&lastestUpdate=true`, {
+    this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         "Api-Key": environment.apiKey
@@ -63,9 +65,6 @@ export class FollowingComponent implements OnInit {
         this.mostViews = mostViewData;
         console.log(this.mostViews);
       })
-  }
-
-  ngOnInit(): void {
   }
   
   setPaginationVar(newVal) {

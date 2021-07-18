@@ -36,8 +36,8 @@
       @include SetWidthHeight(100%, auto);
       background-color: $white;
       @include theme() {
-        color: theme-get('text-color');
-        background-color: theme-get('bg-light-dark');
+        color: theme-get("text-color");
+        background-color: theme-get("bg-light-dark");
       }
       border-radius: 8px;
       margin-bottom: 20x;
@@ -48,19 +48,11 @@
 
         .btn-group {
           @include SetWidthHeight(100%, 100%);
-          @include Flex(
-            $isHorizontally: false,
-            $isVertically: false,
-            $isWrap: false
-          );
+          @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
 
           .gr-btn {
             @include SetWidthHeight(33.33333333%, 100%);
-            @include Flex(
-              $isHorizontally: true,
-              $isVertically: true,
-              $isWrap: true
-            );
+            @include Flex($isHorizontally: true, $isVertically: true, $isWrap: true);
 
             &:first-child {
               padding-right: 5px;
@@ -79,8 +71,8 @@
               text-align: center;
 
               @include theme() {
-                color: theme-get('text-color');
-                background-color: theme-get('bg-dark');
+                color: theme-get("text-color");
+                background-color: theme-get("bg-dark");
               }
 
               &.active {
@@ -104,11 +96,7 @@
 
         .list-area {
           @include SetWidthHeight(100%, auto);
-          @include Flex(
-            $isHorizontally: false,
-            $isVertically: false,
-            $isWrap: true
-          );
+          @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
 
           .list-item {
             @include SetWidthHeight(25%, auto);
@@ -179,13 +167,9 @@
 
               .chapter-link {
                 @include theme() {
-                  color: theme-get('text-color');
+                  color: theme-get("text-color");
                 }
-                @include Flex(
-                  $isHorizontally: false,
-                  $isVertically: false,
-                  $isWrap: false
-                );
+                @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
                 margin-bottom: 5px;
 
                 span {
@@ -232,11 +216,7 @@
             }
 
             .rank-b:first-child {
-              @include Flex(
-                $isHorizontally: false,
-                $isVertically: true,
-                $isWrap: false
-              );
+              @include Flex($isHorizontally: false, $isVertically: true, $isWrap: false);
               @include SetWidthHeight(35px, 100%);
               float: left;
 
@@ -282,9 +262,9 @@
               }
             }
 
-            .rank-link{
+            .rank-link {
               @include theme() {
-                color: theme-get('text-color');
+                color: theme-get("text-color");
               }
             }
           }
@@ -296,33 +276,148 @@
 }
 /*End Main Container*/
 
-
 .image-box {
   position: relative;
 
   .image-btn {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    background: linear-gradient(rgba(0, 0, 0, 0.733), rgba(0, 0, 0, 0.541));
+
+    a {
+      width: 100%;
+      height: 100%;
+      display: flex;
       justify-content: center;
       align-items: center;
-      height: 35px;
-      background: linear-gradient(rgba(0, 0, 0, 0.733), rgba(0, 0, 0, 0.541));
+      font-size: 14px;
+      color: $white;
 
-      a{
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 14px;
-          color: $white;
-
-          span{
-              padding-right: 5px;
-          }
+      span {
+        padding-right: 5px;
       }
+    }
+  }
+}
+
+
+/*Toast message*/
+#toast{
+  position: fixed;
+  top: 120px;
+  right: 32px;
+  z-index: 2;
+}
+
+.toast {
+  margin-bottom: 20px;
+  width: 300px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  border-radius: 7px;
+  background: $white;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+  @include theme() {
+    color: theme-get("text-color");
+    background-color: theme-get("bg-dark");
+  }
+  transition: all linear .3s;
+
+  &.toast--success {
+    border-left: 6px solid #47d864;
+
+    svg {
+      fill: #47d864;
+    }
+  }
+  
+  &.toast--error {
+    border-left: 6px solid #FF623D;
+
+    svg {
+      fill: #FF623D;
+    }
+  }
+
+  &.toast--warning{
+    border-left: 6px solid #FFDC9F;
+
+    svg{
+      fill: #FFDC9F;
+    }
+  }
+
+  &.toast--info{
+    border-left: 6px solid #63AFD7;
+
+    svg{
+      fill: #63AFD7;
+    }
+  }
+
+  .toast__icon {
+    width: 30px;
+    margin: 10px 0px 0px 15px;
+  }
+
+  .toast__body {
+    //width: calc(100% - 80px);
+    width: calc(100% - 30px);
+    padding: 0px 15px 0px 15px;
+    line-height: 1.5;
+
+    .toast__title {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .toast__content {
+      font-size: 13px;
+    }
+  }
+
+  // .toast__btn {
+  //   width: 50px;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+
+  //   .close__btn {
+  //     border: none;
+  //     outline: none;
+  //     font-size: 17px;
+  //     background: transparent;
+  //     display: flex;
+  //     align-items: center;
+
+  //     svg {
+  //       width: 15px;
+  //       height: 15px;
+  //     }
+  //   }
+  // }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(calc(100% - 32px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
   }
 }

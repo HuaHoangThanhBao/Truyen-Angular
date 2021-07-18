@@ -39,7 +39,7 @@ export class AuthenticationService {
   }
 
   public logout = (route: string) => {
-    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), {
+    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), null, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
         "Api-Key": environment.apiKey

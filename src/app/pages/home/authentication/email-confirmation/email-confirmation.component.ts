@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -12,7 +13,7 @@ export class EmailConfirmationComponent implements OnInit {
   public showError: boolean;
   public errorMessage: string;
 
-  constructor(private _authService: AuthenticationService, private _route: ActivatedRoute) { }
+  constructor(private _authService: AuthenticationService, private _route: ActivatedRoute, private toast: ToastAlertService) { }
 
   ngOnInit(): void {
     this.confirmEmail();
@@ -26,11 +27,13 @@ export class EmailConfirmationComponent implements OnInit {
 
     this._authService.confirmEmail('auth/registrationverification', token, email)
     .subscribe(_ => {
+      this.toast.showToast("Hoan hô!", "Tài khoản được kích hoạt thành công!", "success");
       this.showSuccess = true;
     },
     error => {
       this.showError = true;
-      this.errorMessage = 'Có gì đó không đúng. Vui lòng bấm vào đường dẫn gửi trong mail để xác nhận.';
+      this.errorMessage = error;
+      console.log(this.errorMessage)
     })
   }
 }

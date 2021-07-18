@@ -10,9 +10,8 @@
                 <div class="form-wrapper">
 
                     <h1 class="card-title">Bạn vui lòng kiểm tra mail và nhập mã xác nhận vào ô dưới:</h1>
-                    <div *ngIf="showError" class="alert alert-danger" role="alert">
-                        {{errorMessage}}
-                    </div>
+                    
+                    <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage.error.errorMessage }}</div>
     
                     <div class="form-container">
                         <div class="form-inner">

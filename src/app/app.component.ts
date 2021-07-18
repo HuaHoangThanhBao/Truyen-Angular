@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @ViewChild(IndexComponent) storyListComponent: IndexComponent;
 
-  constructor(private http: HttpClient, private loginService: LogInService){
+  constructor(private http: HttpClient, private loginService: LogInService) {
     this.http.get(environment.apiURL + `/theloai`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log(this.jsonTheLoaiArr);
       })
 
-      
+
     this.http.post(environment.apiURL + `/auth/checklogin`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -42,9 +42,11 @@ export class AppComponent implements OnInit, OnDestroy {
       })
     })
       .subscribe(
-        (response) => {  
-          console.log(response)
+        (response) => {
+          console.log('check login response:', response);
+          console.log('user id: ', response["message"])
           this.isLoggedIn = true;
+          loginService.setUserID(response["message"]);
           return true;
         },
         (error) => {
@@ -55,7 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
       );
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.subscription = this.loginService.getLoginStatus().subscribe(status => this.isLoggedIn = status);
     setUpDarkMode();
     this.categoryDropdownInit();
@@ -65,7 +67,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe(); // onDestroy cancels the subscribe request
   }
 
-  
+
   categoryDropdownInit() {
     const catBut = document.getElementById('catagory-dropdown');
     catBut.addEventListener('click', function () {

@@ -5,6 +5,7 @@ import { AuthenticationService } from '../../../../shared/services/authenticatio
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
+import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,7 @@ export class RegisterComponent implements OnInit {
   btnSubmitLocked: boolean = false;
 
   constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,
-    private _router: Router) { }
+    private _router: Router, private toast: ToastAlertService) { }
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -58,12 +59,15 @@ export class RegisterComponent implements OnInit {
 
     this._authService.registerUser("auth/registration", user)
     .subscribe(_ => {
+      this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình để đến bước tiếp theo nhé!", "info");
       this._router.navigate(["/authentication/login"]);
     },
     error => {
       this.errorMessage = error;
       this.showError = true;
       this.btnSubmitLocked = false;
+      console.log(error)
+      console.log(error.error.errorMessage)
     })
   }
 }

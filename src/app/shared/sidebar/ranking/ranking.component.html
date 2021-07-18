@@ -6,8 +6,8 @@
   <div class="story__ranking">
     <div class="story__ranking-panel">
       <ul class="rank-list">
-        <li class="rank-item" *ngFor="let data of [].constructor(5); let i = index">
-          <div class="rank-b">
+        <li class="rank-item" *ngFor="let data of [].constructor(rankingJson ? rankingJson.length : 5); let i = index">
+          <div class="rank-b" *ngIf="!rankingJson || (rankingJson.length > 0 && i < rankingJson.length)">
             <p>{{ "0" + (i + 1) }}</p>
           </div>
           <div class="rank-b">

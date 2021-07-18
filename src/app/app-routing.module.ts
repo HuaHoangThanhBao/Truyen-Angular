@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'following', component: FollowingComponent},
   { path: 'history', component: HistoryComponent},
   { path: 'authentication', loadChildren: () => import('./pages/home/authentication/authentication.module').then(m => m.AuthenticationModule) },
-  { path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
+  { path: 'account', component: AccountComponent/*, canActivate: [AuthGuard]*/},
   { path: 'story-detail/:id', component: StoryDetailComponent},
   { path: 'story-reading/:truyenID/:chuongID', component: StoryReadingComponent},
 

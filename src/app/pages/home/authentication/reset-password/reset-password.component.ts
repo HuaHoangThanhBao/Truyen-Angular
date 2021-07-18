@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ResetPasswordDto } from 'src/app/model/resetPasswordDto.model';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { PasswordConfirmationValidatorService } from 'src/app/shared/services/password-confirmation-validator.service';
+import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -21,7 +22,7 @@ export class ResetPasswordComponent implements OnInit {
   btnSubmitLocked: boolean = false;
 
   constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,
-    private _route: ActivatedRoute) { }
+    private _route: ActivatedRoute, private toast: ToastAlertService) { }
 
   ngOnInit(): void {
     this.resetPasswordForm = new FormGroup({
@@ -56,6 +57,8 @@ export class ResetPasswordComponent implements OnInit {
     this._authService.resetPassword('auth/resetpassword', resetPassDto)
       .subscribe(_ => {
         this.showSuccess = true;
+        this.toast.showToast("Thành công", "Đổi mật khẩu thành công!", "success");
+        this.toast.showToast("Lưu ý", "Bảo vệ thông tin cùa mình thật kỹ nhé!", "warning");
       },
         error => {
           this.showError = true;

@@ -10,6 +10,8 @@
                 <div class="form-wrapper">
                     <h1 class="card-title">Đăng nhập</h1>
 
+                    <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage.error.errorMessage }}</div>
+
                     <div class="form-container">
                         <div class="form-inner">
                             <form [formGroup]="loginForm" autocomplete="off" novalidate
@@ -36,6 +38,7 @@
                                 </div>
                                 <div *ngIf="invalidLogin" class="alert alert-danger">Tên đăng nhập hoặc mật khẩu không
                                     khớp.</div>
+                                
                                 <div class="pass-link">
                                     <a routerLink="/authentication/forgot-password">Quên mật khẩu?</a>
                                 </div>

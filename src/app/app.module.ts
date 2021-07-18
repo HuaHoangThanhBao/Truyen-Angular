@@ -32,6 +32,7 @@ import { AuthGuard } from './modules/guards/auth-guard.service';
 import { environment } from '../environments/environment';
 import { AccountComponent } from './pages/home/account/account.component';
 import { LogInService } from './shared/services/log-in-service.service';
+import { ToastAlertService } from './shared/services/toast-alert-service.service';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -61,7 +62,7 @@ export function tokenGetter() {
     CommentListComponent,
     StoryListComponent,
     CommentSidebarComponent,
-    AccountComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +78,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthGuard, LogInService],
+  providers: [AuthGuard, LogInService, ToastAlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
