@@ -21,6 +21,9 @@ export class StoryDetailComponent implements OnInit {
   binhLuans: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
+  }
+
+  ngOnInit(): void {
     this.route.paramMap.subscribe((param) => {
       const truyenID = param.get('id');
       //console.log(id);
@@ -74,9 +77,7 @@ export class StoryDetailComponent implements OnInit {
           this.binhLuans = binhLuans;
         });
     })
-  }
-
-  ngOnInit(): void {
+    
     expandBtn();
     //truyenUltiInit();
   }

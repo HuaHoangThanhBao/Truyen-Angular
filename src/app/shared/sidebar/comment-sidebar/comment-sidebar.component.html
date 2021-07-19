@@ -3,45 +3,47 @@
         <h2>Bình Luận Mới Nhất</h2>
     </div>
     <div class="chap__comment-panel">
-        <ul class="comment-list" *ngFor="let data of [].constructor(binhLuanJson ? binhLuanJson.length : 20); let i = index">
-            <li class="comment-item" *ngIf="!binhLuanJson || (binhLuanJson.length > 0 && i < binhLuanJson.length)">
-                <div class="comment-b">
-                    <div class="title-overflow pad-bot-10">
-                        <div class="title-overflow-content txt-italic">
-                            <app-seleton-loader *ngIf="!binhLuanJson" Cheight="25"></app-seleton-loader>
-                            <a *ngIf="binhLuanJson" class="comment-link" 
-                            routerLink="/story-detail/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}"><b>{{ binhLuanJson[i]?.chuong.truyen.tenTruyen }}</b></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="comment-b">
-                    <a *ngIf="binhLuanJson" class="comment-link" 
-
-                    (click)="addToHistory(binhLuanJson[i]?.chuong.truyen.truyenID, binhLuanJson[i]?.chuong.truyen.tenTruyen,
-                    binhLuanJson[i]?.chuong.chuongID, binhLuanJson[i]?.chuong.tenChuong, binhLuanJson[i]?.chuong.truyen.hinhAnh)"
-
-                    routerLink="/story-reading/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}/{{ binhLuanJson[i]?.chuong.chuongID }}">
-                    {{binhLuanJson[i]?.chuong.tenChuong}}</a>
-                    <span *ngIf="binhLuanJson" >{{binhLuanJson[i]?.ngayBL}}</span>
-                </div>
-                <div class="comment-b">
-                    <div class="comment-u-img">
-                        <app-seleton-loader *ngIf="!binhLuanJson" Cheight="45"></app-seleton-loader>
-                        <img *ngIf="binhLuanJson" src="assets/images/user.png" alt="no image avaiable">
-                    </div>
-                    <div class="comment-des">
-                        <div class="comment-des-container">
-                            <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
-                            <div *ngIf="binhLuanJson" class="comment-des-title">
-                                <p class="comment-name">{{binhLuanJson[i]?.user.username}}</p>
-                            </div>
-                            <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
-                            <div *ngIf="binhLuanJson" class="comment-des-content">
-                                <div [innerHTML]="binhLuanJson[i].noiDung"></div>
+        <ul class="comment-list">
+            <li class="comment-item" *ngFor="let data of [].constructor(binhLuanJson ? binhLuanJson.length : 20); let i = index">
+                <ng-container *ngIf="!binhLuanJson || (binhLuanJson.length > 0 && i < binhLuanJson.length)">
+                    <div class="comment-b">
+                        <div class="title-overflow pad-bot-10">
+                            <div class="title-overflow-content txt-italic">
+                                <app-seleton-loader *ngIf="!binhLuanJson" Cheight="25"></app-seleton-loader>
+                                <a *ngIf="binhLuanJson" class="comment-link" 
+                                routerLink="/story-detail/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}"><b>{{ binhLuanJson[i]?.chuong.truyen.tenTruyen }}</b></a>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="comment-b">
+                        <a *ngIf="binhLuanJson" class="comment-link" 
+    
+                        (click)="addToHistory(binhLuanJson[i]?.chuong.truyen.truyenID, binhLuanJson[i]?.chuong.truyen.tenTruyen,
+                        binhLuanJson[i]?.chuong.chuongID, binhLuanJson[i]?.chuong.tenChuong, binhLuanJson[i]?.chuong.truyen.hinhAnh)"
+    
+                        routerLink="/story-reading/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}/{{ binhLuanJson[i]?.chuong.chuongID }}">
+                        {{binhLuanJson[i]?.chuong.tenChuong}}</a>
+                        <span *ngIf="binhLuanJson" >{{binhLuanJson[i]?.ngayBL}}</span>
+                    </div>
+                    <div class="comment-b">
+                        <div class="comment-u-img">
+                            <app-seleton-loader *ngIf="!binhLuanJson" Cheight="45"></app-seleton-loader>
+                            <img *ngIf="binhLuanJson" src="assets/images/avatar/{{ binhLuanJson[i]?.user.hinhAnh }}" alt="no image avaiable">
+                        </div>
+                        <div class="comment-des">
+                            <div class="comment-des-container">
+                                <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
+                                <div *ngIf="binhLuanJson" class="comment-des-title">
+                                    <p class="comment-name">{{binhLuanJson[i]?.user.username}}</p>
+                                </div>
+                                <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
+                                <div *ngIf="binhLuanJson" class="comment-des-content">
+                                    <div [innerHTML]="binhLuanJson[i].noiDung"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
             </li>
         </ul>
     </div>

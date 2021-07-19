@@ -60,10 +60,8 @@ export class TwoStepVerificationComponent implements OnInit {
       this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
 
       //console.log(res.token);
-      this.loginService.setUserID(res.token);
-
-
-      this.loginService.updateLoginStatus(true);
+      this.loginService.updateUserID(res.token);
+      
       this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
       this._router.navigate([this._returnUrl]);
     },

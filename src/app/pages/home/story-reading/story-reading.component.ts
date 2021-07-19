@@ -21,6 +21,9 @@ export class StoryReadingComponent implements OnInit {
   chuongCatagoryList: [];
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private _router: Router) {
+  }
+
+  ngOnInit(): void {
 
     this.route.paramMap.subscribe((param) => {
       const chuongID = param.get('chuongID');
@@ -81,9 +84,7 @@ export class StoryReadingComponent implements OnInit {
           this.binhLuanJson = binhLuans;
         });
     })
-  }
-
-  ngOnInit(): void {
+    
     this.scrollMenu();
   }
 

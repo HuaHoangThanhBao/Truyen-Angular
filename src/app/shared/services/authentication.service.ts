@@ -14,6 +14,9 @@ import { CustomEncoder } from './custome-encoder';
 import { environment } from '../../../environments/environment';
 import { ForgotPasswordDto } from 'src/app/model/forgotPasswordDto.model';
 import { ResetPasswordDto } from 'src/app/model/resetPasswordDto.model';
+import { UpdatePasswordDto } from 'src/app/model/updatePasswordDto.model';
+import { UpdateUserAvatarDto } from 'src/app/model/updateUserAvatar.model';
+import { PubLishBinhLuanDto } from 'src/app/model/publishBinhLuanDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +60,33 @@ export class AuthenticationService {
   }
 
   public resetPassword = (route: string, body: ResetPasswordDto) => {
+    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    });
+  }
+  
+  public updatePassword = (route: string, body: UpdatePasswordDto) => {
+    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    });
+  }
+  
+  public updateUserAvatar = (route: string, body: UpdateUserAvatarDto) => {
+    return this._http.put(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    });
+  }
+
+  public publishBinhLuan = (route: string, body: PubLishBinhLuanDto) => {
     return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",

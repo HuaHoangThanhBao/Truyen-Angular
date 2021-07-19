@@ -38,8 +38,8 @@
             <a class="nav__link n-highL" routerLink="/history">Lịch sử</a>
           </div>
           <div class="sep">
-            <a *ngIf="!isLoggedIn" class="nav__link n-highL" routerLink="/authentication/login">Đăng nhập</a>
-            <a *ngIf="isLoggedIn" class="nav__link n-highL" routerLink="/account">Tài khoản</a>
+            <a *ngIf="!userLoginID" class="nav__link n-highL" routerLink="/authentication/login">Đăng nhập</a>
+            <a *ngIf="userLoginID" class="nav__link n-highL" routerLink="/account">Tài khoản</a>
           </div>
           <div class="sep">
             <div class="search__panel">

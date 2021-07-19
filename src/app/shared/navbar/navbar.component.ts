@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { LogInService } from '../services/log-in-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,14 +11,16 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  @Input() isLoggedIn: boolean;
+  userLoginID: string;
 
   @Input() theLoaiJson: any;
   filterTruyenResult: any;
+  public userLoginIDSubcription: Subscription;
 
-  constructor(private jwtHelper: JwtHelperService, private http: HttpClient) { }
+  constructor(private jwtHelper: JwtHelperService, private http: HttpClient, private loginService: LogInService) { }
 
   ngOnInit(): void {
+    this.userLoginIDSubcription = this.loginService.getUserID().subscribe(id => this.userLoginID = id);
   }
 
   filterOnSearch(value) {

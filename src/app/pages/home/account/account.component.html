@@ -24,53 +24,160 @@
                                     <input id="tab6" type="radio" name="pct" />
                                     <div class="tab-col">
                                         <nav>
-                                            <ul>
-                                                <li class="tab1">
+                                            <ul class="tab-list">
+                                                <li class="tab-item tab1">
                                                     <label for="tab1">Thông tin tài khoản</label>
                                                 </li>
-                                                <li class="tab2">
+                                                <li class="tab-item tab2">
                                                     <label for="tab2">Thông tin chung</label>
                                                 </li>
-                                                <li class="tab3">
+                                                <li class="tab-item tab3">
                                                     <label for="tab3">Truyện theo dõi</label>
                                                 </li>
-                                                <li class="tab4">
+                                                <li class="tab-item tab4">
                                                     <label for="tab4">Bình luận</label>
                                                 </li>
-                                                <li class="tab5">
+                                                <li class="tab-item tab5">
                                                     <label for="tab5">Đổi mật khẩu</label>
                                                 </li>
-                                                <li class="tab6">
+                                                <li class="tab-item tab6">
                                                     <label for="tab6">Đăng xuất</label>
                                                 </li>
                                             </ul>
                                         </nav>
                                     </div>
                                     <section class="tab-col">
-                                        <div class="tab1">
+                                        <div class="tab-content tab1">
                                             <h2>Thông tin tài khoản</h2>
                                             <p>Họ: {{userData?.lastName}}</p>
                                             <p>Tên: {{userData?.firstName}}</p>
+                                            <p>Email: {{userData?.email}}</p>
                                         </div>
-                                        <div class="tab2">
+                                        <div class="tab-content tab2">
                                             <h2>Thông tin chung</h2>
-                                            <p>Bạn chưa có thông tin chung nào!</p>
-                                            <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                Perferendis, maiores.</p> -->
+                                            <br>
+                                            <div *ngIf="userData">
+                                                <h3>Avatar của bạn</h3>
+                                                <img id="user-data" src="assets/images/avatar/{{ userData.hinhAnh }}">
+                                            </div>
+                                            <h3>Bạn có thể thay đổi avatar của mình bằng một trong các hình dưới đây</h3>
+                                            <div class="img-form">
+                                                <div class="img-list">
+                                                    <button (click)="setCurrentAvatar('cat-lie.png')">
+                                                        <img class="img" src="assets/images/avatar/cat-lie.png">
+                                                    </button>
+                                                    <button (click)="setCurrentAvatar('panda-eat.png')">
+                                                        <img class="img" src="assets/images/avatar/panda-eat.png">
+                                                    </button>
+                                                    <button (click)="setCurrentAvatar('panda-lie.png')">
+                                                        <img class="img" src="assets/images/avatar/panda-lie.png">
+                                                    </button>
+                                                    <button (click)="setCurrentAvatar('fox-hello.png')">
+                                                        <img class="img" src="assets/images/avatar/fox-hello.png">
+                                                    </button>
+                                                    <button (click)="setCurrentAvatar('chicken-hello.png')">
+                                                        <img class="img" src="assets/images/avatar/chicken-hello.png">
+                                                    </button>
+                                                    <button (click)="setCurrentAvatar('cow-eat.png')">
+                                                        <img class="img" src="assets/images/avatar/cow-eat.png">
+                                                    </button>
+                                                </div>
+                                                <button class="save-avatar-btn" type="submit" (click)="updateAvatar()" [disabled]="btnSubmitLocked">Lưu ảnh đại diện</button>
+                                            </div>
                                         </div>
-                                        <div class="tab3">
+                                        <div class="tab-content tab3">
                                             <h2>Truyện đang theo dõi</h2>
-                                            <p>Tính năng này sẽ sớm có nhé!</p>
+                                            <ng-container *ngIf="userData">
+                                                <ul class="fol-list">
+                                                    <li class="fol-item" *ngFor="let data of userData?.theoDois">
+                                                        <a routerLink="/story-detail/{{ data.truyen.truyenID }}">
+                                                            <img class="img"
+                                                                src="https://drive.google.com/uc?export=view&id={{ data.truyen.hinhAnh }}">
+                                                        </a>
+                                                        <p class="fol-name">{{ data.truyen.tenTruyen }}</p>
+                                                    </li>
+                                                </ul>
+                                            </ng-container>
+                                            <ng-container *ngIf="!userData">
+                                                <p>Rất tiếc, bạn chưa theo dõi truyện nào!</p>
+                                            </ng-container>
                                         </div>
-                                        <div class="tab4">
+                                        <div class="tab-content tab4">
                                             <h2>Bình luận mà bạn đã đăng</h2>
-                                            <p>Tính năng này sẽ sớm có nhé!</p>
+
+                                            <ng-container *ngIf="userData">
+                                                <!--Timeline-->
+                                                <div class="timeline-area">
+                                                    <div class="timeline">
+                                                        <div class="timeline-item"
+                                                            *ngFor="let data of userData?.binhLuans">
+                                                            <span class="bounce-btn bg-red"></span>
+                                                            <div class="timeline-txt impor">
+                                                                <h3 class="timeline-title">{{ data.chuong.truyen.tenTruyen }}</h3>
+                                                                <h4 class="timeline-sup">{{ data.chuong.tenChuong }}</h4>
+                                                                <div class="timeline-content" [innerHTML]="data.noiDung"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--End Timeline-->
+                                            </ng-container>
+                                            
+                                            <ng-container *ngIf="!userData">
+                                                <p>Bạn chưa có bình luận nào. Hãy tích cực tham gia bình luận nhé!</p>
+                                            </ng-container>
                                         </div>
-                                        <div class="tab5">
+                                        <div class="tab-content tab5">
                                             <h2>Đổi mật khẩu</h2>
-                                            <p>Tính năng này sẽ sớm có nhé!</p>
+                                            <div class="wrapper">
+                                                <!--Reset form-->
+                                                <div class="form-wrapper">
+                                                    <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage.error.errorMessage }}</div>
+                                                    
+                                                    <div class="form-container">
+                                                        <div class="form-inner">
+                                                            <form [formGroup]="updatePasswordForm" autocomplete="off" novalidate (ngSubmit)="updatePassword(updatePasswordForm.value)">
+                                                                <div class="field">
+                                                                    <label for="password" class="col-form-label col-sm-2">Mật khẩu cũ</label>
+                                                                    <div class="form-field">
+                                                                        <input type="password" id="oldpassword" formControlName="oldpassword" class="form-control" placeholder="Mật khẩu cũ"/>
+                                                                    </div>
+                                                                    <div class="form-field">
+                                                                        <em *ngIf="validateControl('oldpassword') && hasError('oldpassword', 'required')">*Vui lòng không để trống</em>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field">
+                                                                    <label for="password" class="col-form-label col-sm-2">Mật khẩu mới</label>
+                                                                    <div class="form-field">
+                                                                        <input type="password" id="password" formControlName="password" class="form-control" placeholder="Mật khẩu mới"/>
+                                                                    </div>
+                                                                    <div class="form-field">
+                                                                        <em *ngIf="validateControl('password') && hasError('password', 'required')">*Vui lòng không để trống</em>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="field">
+                                                                    <label for="confirm" class="col-form-label col-sm-2">Xác nhận mật khẩu mới</label>
+                                                                    <div class="form-field">
+                                                                        <input type="password" id="confirm" formControlName="confirm" class="form-control" placeholder="Xác nhận mật khẩu mới"/>
+                                                                    </div>
+                                                                    <div class="form-field">
+                                                                        <em *ngIf="validateControl('confirm') && hasError('confirm', 'required')">*Vui lòng không để trống</em>
+                                                                        <em *ngIf="hasError('confirm', 'mustMatch')">Mật khẩu xác nhận không khớp</em>
+                                                                    </div>
+                                                                </div>
+                                                                <br>
+                                                                <div class="field btn">
+                                                                    <div class="btn-layer"></div>
+                                                                    <button type="submit" class="btn btn-info" [disabled]="!updatePasswordForm.valid || btnSubmitLocked">Đặt lại mật khẩu</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--End Reset Form-->
+                                            </div>
                                         </div>
-                                        <div class="tab6">
+                                        <div class="tab-content tab6">
                                             <h2>Bạn có muốn đăng xuất tài khoản?</h2>
                                             <button class="logout-btn" (click)="logoutClick()">Đăng xuất</button>
                                         </div>

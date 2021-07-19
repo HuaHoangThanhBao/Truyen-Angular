@@ -12,16 +12,22 @@ declare function setUpDarkMode(): void;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
-  jsonTheLoaiArr: any;
-  isLoggedIn: boolean;
+export class AppComponent implements OnInit {
 
+  jsonTheLoaiArr: any;
   title = 'NgTruyen';
-  public subscription: Subscription;
+  
+  userLoginID: string;
+  public userLoginIDSubcription: Subscription;
 
   @ViewChild(IndexComponent) storyListComponent: IndexComponent;
 
   constructor(private http: HttpClient, private loginService: LogInService) {
+  }
+
+  ngOnInit(): void {
+    this.userLoginIDSubcription = this.loginService.getUserID().subscribe(id => this.userLoginID = id);
+
     this.http.get(environment.apiURL + `/theloai`, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -34,39 +40,36 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log(this.jsonTheLoaiArr);
       })
 
-
-    this.http.post(environment.apiURL + `/auth/checklogin`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
+    if (this.userLoginID == undefined) {
+      this.http.post(environment.apiURL + `/auth/checklogin`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
       })
-    })
-      .subscribe(
-        (response) => {
-          console.log('check login response:', response);
-          console.log('user id: ', response["message"])
-          this.isLoggedIn = true;
-          loginService.setUserID(response["message"]);
-          return true;
-        },
-        (error) => {
-          console.log(error)
-          this.isLoggedIn = false;
-          return false;
-        }
-      );
-  }
+        .subscribe(
+          (response) => {
+            console.log('check login response:', response);
+            console.log('user id: ', response["message"])
+            this.loginService.updateUserID(response["message"]);
+            console.log('user is logged in')
+            return true;
+          },
+          (error) => {
+            console.log(error)
+            return false;
+          }
+        );
+    }
 
-  ngOnInit(): void {
-    this.subscription = this.loginService.getLoginStatus().subscribe(status => this.isLoggedIn = status);
     setUpDarkMode();
     this.categoryDropdownInit();
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe(); // onDestroy cancels the subscribe request
-  }
 
+  ngOnDestroy(): void {
+    this.userLoginIDSubcription.unsubscribe(); // onDestroy cancels the subscribe request
+  }
 
   categoryDropdownInit() {
     const catBut = document.getElementById('catagory-dropdown');

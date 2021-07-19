@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { LogInService } from 'src/app/shared/services/log-in-service.service';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../environments/environment';
@@ -17,29 +18,56 @@ export class FollowingComponent implements OnInit {
   mostViews: any;
   truyenPaginationData: any;
 
+  userLoginID: string;
+  public userLoginIDSubcription: Subscription;
+
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
   constructor(private http: HttpClient, private loginService: LogInService) {
   }
 
   ngOnInit(): void {
+    this.userLoginIDSubcription = this.loginService.getUserID().subscribe(id => this.userLoginID = id);
+
     this.fetchCorsPagination(1).then(headers => {
       this.setPaginationVar(headers);
       console.log('header:', this.getPaginationVar());
       this.storyListComponent.passPagingData(this.getPaginationVar());
     });
     
-    this.http.get(environment.apiURL + `/theodoi/pagination?userid=${this.loginService.getUserID()}&pageNumber=1&pageSize=20&getall=true`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
+    if (this.userLoginID == undefined) {
+      
+      this.http.post(environment.apiURL + `/auth/checklogin`, {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json",
+          "Api-Key": environment.apiKey
+        })
       })
-    })
-      .toPromise()
-      .then(truyenData => {
-        this.jsonTruyenArr = truyenData;
-        console.log(this.jsonTruyenArr);
-      })
+        .subscribe(
+          (response) => {
+          
+            this.loginService.updateUserID(response["message"]);
+            this.userLoginID = response["message"];
+            console.log('theo doi page, user id:', this.userLoginID);
+
+            this.http.get(environment.apiURL + `/theodoi/pagination?userid=${this.userLoginID}&pageNumber=1&pageSize=20&getall=true`, {
+              headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Api-Key": environment.apiKey
+              })
+            })
+              .toPromise()
+              .then(truyenData => {
+                this.jsonTruyenArr = truyenData;
+                console.log(this.jsonTruyenArr);
+              })
+          },
+          (error) => {
+            console.log(error)
+            return false;
+          }
+        );
+    }
 
 
     this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`, {
