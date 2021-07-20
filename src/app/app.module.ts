@@ -34,6 +34,7 @@ import { AccountComponent } from './pages/home/account/account.component';
 import { LogInService } from './shared/services/log-in-service.service';
 import { ToastAlertService } from './shared/services/toast-alert-service.service';
 import { ImagesLazyloadModule } from './shared/images-lazyload/images.lazyload.module';
+import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -63,7 +64,8 @@ export function tokenGetter() {
     CommentListComponent,
     StoryListComponent,
     CommentSidebarComponent,
-    AccountComponent
+    AccountComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { GenresComponent } from './pages/admin/genres/genres.component';
 import { StoriesComponent } from './pages/admin/stories/stories.component';
 import { UsersComponent } from './pages/admin/users/users.component';
+import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 import { AccountComponent } from './pages/home/account/account.component';
 import { CategoryComponent } from './pages/home/category/category.component';
 import { FollowingComponent } from './pages/home/following/following.component';
@@ -34,6 +35,8 @@ const routes: Routes = [
   { path: 'stories', component: StoriesComponent},
   { path: 'users', component: UsersComponent},
   { path: 'acceptance', component: AcceptanceComponent},
+  
+  {path: '**', component: NotFoundComponent},
 ];
 
 @NgModule({
