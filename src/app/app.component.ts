@@ -26,7 +26,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userLoginIDSubcription = this.loginService.getUserID().subscribe(id => this.userLoginID = id);
+    console.log('parent component')
+    //this.userLoginIDSubcription = this.loginService.getUserID().subscribe(id => this.userLoginID = id);
 
     this.http.get(environment.apiURL + `/theloai`, {
       headers: new HttpHeaders({
@@ -40,7 +41,7 @@ export class AppComponent implements OnInit {
         console.log(this.jsonTheLoaiArr);
       })
 
-    if (this.userLoginID == undefined) {
+    // if (this.userLoginID == undefined) {
       this.http.post(environment.apiURL + `/auth/checklogin`, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
@@ -56,11 +57,12 @@ export class AppComponent implements OnInit {
             return true;
           },
           (error) => {
+            this.loginService.updateUserID(null);
             console.log(error)
             return false;
           }
         );
-    }
+    // }
 
     setUpDarkMode();
     this.categoryDropdownInit();

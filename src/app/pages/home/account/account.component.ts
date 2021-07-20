@@ -16,7 +16,7 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit, OnDestroy {
+export class AccountComponent implements OnInit {
 
   public updatePasswordForm: FormGroup;
 
@@ -32,8 +32,6 @@ export class AccountComponent implements OnInit, OnDestroy {
   public errorMessage: string;
   btnSubmitLocked: boolean = false;
 
-
-  userLoginID: string;
   public userLoginIDSubcription: Subscription;
 
   constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router, private loginService: LogInService,
@@ -41,54 +39,38 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userLoginIDSubcription = this.loginService.getUserID().subscribe(id => this.userLoginID = id);
 
-    if (this.userLoginID == undefined) {
-      this.http.post(environment.apiURL + `/auth/checklogin`, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          "Api-Key": environment.apiKey
-        })
+    console.log('account component')
+    this.http.post(environment.apiURL + `/auth/checklogin`, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
       })
-        .subscribe(
-          (response) => {
-          
-            this.loginService.updateUserID(response["message"]);
-            this.userLoginID = response["message"];
-            console.log('account page, user id:', this.userLoginID);
-
-            this.http.get(environment.apiURL + `/user/${this.userLoginID}/details`, {
-              headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Api-Key": environment.apiKey
-              })
+    })
+      .subscribe(
+        (response) => {
+          this.http.get(environment.apiURL + `/user/${ response["message"] }/details`, {
+            headers: new HttpHeaders({
+              "Content-Type": "application/json",
+              "Api-Key": environment.apiKey
             })
-              .toPromise()
-              .then(userInfo => {
-                this.userData = userInfo;
-                console.log('user info: ', userInfo);
-              })
-          },
-          (error) => {
-            console.log(error);
-            this._router.navigate(['/index']);
-            return false;
-          }
-        );
-    }
-    else{
-      this.http.get(environment.apiURL + `/user/${this.userLoginID}/details`, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          "Api-Key": environment.apiKey
-        })
-      })
-        .toPromise()
-        .then(userInfo => {
-          this.userData = userInfo;
-          console.log('user info: ', userInfo);
-        })
-    }
+          })
+          .subscribe(
+            (response) => {
+              this.userData = response;
+              console.log('user info: ', this.userData);
+            },
+            (error) => {
+              console.log('eror:', error);
+            }
+          );
+        },
+        (error) => {
+          console.log(error);
+          this._router.navigate(['/authentication/login']);
+          return false;
+        }
+      );
 
     /*Form*/
     this.updatePasswordForm = new FormGroup({
@@ -199,9 +181,5 @@ export class AccountComponent implements OnInit, OnDestroy {
         (error) => {
           console.log(error);
         })
-  }
-
-  ngOnDestroy(): void {
-    this.userLoginIDSubcription.unsubscribe(); // onDestroy cancels the subscribe request
   }
 }

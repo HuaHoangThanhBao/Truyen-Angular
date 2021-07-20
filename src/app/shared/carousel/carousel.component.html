@@ -6,22 +6,26 @@
       </div>
 
       <!--Carousel-->
-      <div class="caro-body">
-        <div id="splide" class="splide">
-          <div class="splide__track">
-            <ul class="splide__list">
-              <li class="splide__slide" *ngFor="let ca of carouselJson; let l = last">
-                {{l ? callCarousel(): null}}
-                <img data-src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
-                <a class="caro-info">
-                  <b class="caro-txt">{{ ca.tenTruyen }}</b>
-                </a>
-              </li>
-            </ul>
+      <ng-container *ngIf="carouselJson">
+
+        <div class="caro-body">
+          <div id="splide" class="splide">
+            <div class="splide__track">
+              <ul class="splide__list">
+                <li class="splide__slide" *ngFor="let ca of carouselJson; let l = last">
+                  {{l ? callCarousel(): null}}
+                  <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
+                  <a class="caro-info" href="story-detail/ca.truyenID">
+                    <b class="caro-txt">{{ ca.tenTruyen }}</b>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-      <!--End Carousel-->
+        <!--End Carousel-->
+
+      </ng-container>
 
     </div>
   </div>

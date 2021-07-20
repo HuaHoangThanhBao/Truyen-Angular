@@ -29,9 +29,9 @@ export class CategoryComponent implements OnInit {
       this.theLoaiId = parseInt(id);
       
       this.fetchCorsPagination(1).then(headers => {
-        this.setPaginationVar(headers);
-        console.log('header:', this.getPaginationVar());
-        this.storyListComponent.passPagingData(this.getPaginationVar());
+        this.truyenPaginationData = headers;
+        console.log('header:', this.truyenPaginationData);
+        this.storyListComponent.passPagingData(this.truyenPaginationData);
       });
 
       
@@ -88,14 +88,6 @@ export class CategoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setPaginationVar(newVal) {
-    this.truyenPaginationData = newVal;
-  }
-
-  getPaginationVar() {
-    return this.truyenPaginationData;
-  }
-
   async fetchCorsPagination(number) {
     const response = await fetch(environment.apiURL + `/truyen/pagination?pageNumber=${number}&pageSize=20&sorting=true&theloaiID=` + this.theLoaiId, {
       method: 'GET',
@@ -112,9 +104,9 @@ export class CategoryComponent implements OnInit {
     console.log(value)
 
     this.fetchCorsPagination(value).then(headers => {
-      this.setPaginationVar(headers);
-      console.log('header:', this.getPaginationVar());
-      this.storyListComponent.passPagingData(this.getPaginationVar());
+      this.truyenPaginationData = headers;
+      console.log('header:', this.truyenPaginationData);
+      this.storyListComponent.passPagingData(this.truyenPaginationData);
     });
 
     this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=${value}&pageSize=20&sorting=true&theloaiID=` + this.theLoaiId, {

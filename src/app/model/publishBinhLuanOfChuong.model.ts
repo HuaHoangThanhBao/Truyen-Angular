@@ -1,4 +1,4 @@
-export interface PubLishBinhLuanDto {
+export interface PubLishBinhLuanOfChuongDto {
     userID: string;
     chuongID: number;
     noiDung: string;

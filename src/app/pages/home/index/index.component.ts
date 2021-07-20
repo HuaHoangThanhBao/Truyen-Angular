@@ -27,9 +27,9 @@ export class IndexComponent implements OnInit {
   constructor(private http: HttpClient) {
 
     this.fetchCorsPagination(1).then(headers => {
-      this.setPaginationVar(headers);
-      console.log('header:', this.getPaginationVar());
-      this.storyListComponent.passPagingData(this.getPaginationVar());
+      this.truyenPaginationData = headers;
+      console.log('header:', this.truyenPaginationData);
+      this.storyListComponent.passPagingData(this.truyenPaginationData);
     });
 
     this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=5&topview=true`, {
@@ -72,14 +72,6 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  setPaginationVar(newVal) {
-    this.truyenPaginationData = newVal;
-  }
-
-  getPaginationVar() {
-    return this.truyenPaginationData;
-  }
-
   async fetchCorsPagination(number) {
     const response = await fetch(environment.apiURL + `/truyen/pagination?pageNumber=${number}&pageSize=20&getall=true`, {
       method: 'GET',
@@ -96,9 +88,9 @@ export class IndexComponent implements OnInit {
     console.log(value)
 
     this.fetchCorsPagination(value).then(headers => {
-      this.setPaginationVar(headers);
-      console.log('header:', this.getPaginationVar());
-      this.storyListComponent.passPagingData(this.getPaginationVar());
+      this.truyenPaginationData = headers;
+      console.log('header:', this.truyenPaginationData);
+      this.storyListComponent.passPagingData(this.truyenPaginationData);
     });
 
     this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=${value}&pageSize=20&getall=true`, {

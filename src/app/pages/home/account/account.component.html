@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="tab-content tab3">
                                             <h2>Truyện đang theo dõi</h2>
-                                            <ng-container *ngIf="userData">
+                                            <ng-container *ngIf="userData?.theoDois">
                                                 <ul class="fol-list">
                                                     <li class="fol-item" *ngFor="let data of userData?.theoDois">
                                                         <a routerLink="/story-detail/{{ data.truyen.truyenID }}">
@@ -98,23 +98,28 @@
                                                     </li>
                                                 </ul>
                                             </ng-container>
-                                            <ng-container *ngIf="!userData">
+                                            <ng-container *ngIf="!userData?.theoDois">
                                                 <p>Rất tiếc, bạn chưa theo dõi truyện nào!</p>
                                             </ng-container>
                                         </div>
                                         <div class="tab-content tab4">
                                             <h2>Bình luận mà bạn đã đăng</h2>
 
-                                            <ng-container *ngIf="userData">
+                                            <ng-container *ngIf="userData?.binhLuans">
                                                 <!--Timeline-->
                                                 <div class="timeline-area">
                                                     <div class="timeline">
                                                         <div class="timeline-item"
                                                             *ngFor="let data of userData?.binhLuans">
                                                             <span class="bounce-btn bg-red"></span>
-                                                            <div class="timeline-txt impor">
-                                                                <h3 class="timeline-title">{{ data.chuong.truyen.tenTruyen }}</h3>
-                                                                <h4 class="timeline-sup">{{ data.chuong.tenChuong }}</h4>
+                                                            <div class="timeline-txt impor" *ngIf="data?.truyen">
+                                                                <h3 class="timeline-title">{{ data?.truyen.tenTruyen }}</h3>
+                                                                <!-- <h4 class="timeline-sup">{{ data.chuong.tenChuong }}</h4> -->
+                                                                <div class="timeline-content" [innerHTML]="data?.noiDung"></div>
+                                                            </div>
+                                                            <div class="timeline-txt impor" *ngIf="data?.chuong">
+                                                                <h3 class="timeline-title">{{ data?.chuong.truyen.tenTruyen }}</h3>
+                                                                <h4 class="timeline-sup">{{ data?.chuong.tenChuong }}</h4>
                                                                 <div class="timeline-content" [innerHTML]="data.noiDung"></div>
                                                             </div>
                                                         </div>
@@ -123,7 +128,7 @@
                                                 <!--End Timeline-->
                                             </ng-container>
                                             
-                                            <ng-container *ngIf="!userData">
+                                            <ng-container *ngIf="!userData?.binhLuans">
                                                 <p>Bạn chưa có bình luận nào. Hãy tích cực tham gia bình luận nhé!</p>
                                             </ng-container>
                                         </div>
@@ -205,4 +210,11 @@
             </div>
         </div>
     </main>
+    <div *ngIf="!userData" class="overlay-process">
+        <div class="spinner">
+            <div class="bounce1"></div>
+            <div class="bounce2"></div>
+            <div class="bounce3"></div>
+          </div>
+    </div>
 </body>

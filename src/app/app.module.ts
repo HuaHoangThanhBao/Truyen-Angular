@@ -33,6 +33,7 @@ import { environment } from '../environments/environment';
 import { AccountComponent } from './pages/home/account/account.component';
 import { LogInService } from './shared/services/log-in-service.service';
 import { ToastAlertService } from './shared/services/toast-alert-service.service';
+import { ImagesLazyloadModule } from './shared/images-lazyload/images.lazyload.module';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -71,6 +72,7 @@ export function tokenGetter() {
     SeletonLoaderModule,
     FormsModule,
     ReactiveFormsModule,
+    ImagesLazyloadModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

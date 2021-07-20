@@ -1,13 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LogInService } from '../services/log-in-service.service';
 import { ToastAlertService } from '../services/toast-alert-service.service';
 import { environment } from '../../../environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PubLishBinhLuanDto } from 'src/app/model/publishBinhLuanDto.model';
+import { PubLishBinhLuanOfTruyenDto } from 'src/app/model/publishBinhLuanOfTruyenDto.model';
 import { AuthenticationService } from '../services/authentication.service';
+import { PubLishBinhLuanOfChuongDto } from 'src/app/model/publishBinhLuanOfChuong.model';
 
 @Component({
   selector: 'app-comment-list',
@@ -29,14 +30,11 @@ export class CommentListComponent implements OnInit {
   public showError: boolean;
 
   userLoginID: string;
-  public userLoginIDSubcription: Subscription;
 
   constructor(private _authService: AuthenticationService, private router: Router, private http: HttpClient, private loginService: LogInService,
     private toast: ToastAlertService) { }
 
   ngOnInit(): void {
-    this.userLoginIDSubcription = this.loginService.getUserID().subscribe(id => this.userLoginID = id);
-
     if (this.userLoginID == undefined) {
       this.http.post(environment.apiURL + `/auth/checklogin`, {
         headers: new HttpHeaders({
@@ -46,11 +44,7 @@ export class CommentListComponent implements OnInit {
       })
         .subscribe(
           (response) => {
-
-            this.loginService.updateUserID(response["message"]);
             this.userLoginID = response["message"];
-            console.log('account page, user id:', this.userLoginID);
-
           },
           (error) => {
             console.log(error);
@@ -77,34 +71,52 @@ export class CommentListComponent implements OnInit {
     this.showError = false;
     const formValues = { ...publishCommentFormValue };
 
-    let binhLuan: PubLishBinhLuanDto;
-
-    if(this.isDetail){
+    if (this.isDetail) {
+      let binhLuan: PubLishBinhLuanOfTruyenDto;
+  
       binhLuan = {
         userID: this.userLoginID,
-        chuongID: this.jsonTruyen?.chuongs[0].chuongID,
+        TruyenID: this.jsonTruyen?.truyenID,
         noiDung: formValues.noiDung
       };
+
+      this._authService.publishBinhLuanOfTruyen("binhluan", binhLuan)
+        .subscribe(_ => {
+          this.publishCommentForm.setValue({noiDung: ''});
+          
+          this.toast.showToast("Chúc mừng", "Bạn đã đăng bình luận thành công!", "success");
+        },
+          error => {
+            this.errorMessage = error;
+            this.showError = true;
+            this.btnSubmitLocked = false;
+            console.log(error)
+            console.log(error.error.errorMessage)
+          })
     }
-    else{
+    else {
+      let binhLuan: PubLishBinhLuanOfChuongDto;
+      
       binhLuan = {
         userID: this.userLoginID,
         chuongID: this.jsonChuong?.chuongID,
         noiDung: formValues.noiDung
       };
-    }
 
-    this._authService.publishBinhLuan("binhluan", binhLuan)
-      .subscribe(_ => {
-        this.toast.showToast("Thành công", "Bạn đã đăng bình luận thành công!", "success");
-      },
-        error => {
-          this.errorMessage = error;
-          this.showError = true;
-          this.btnSubmitLocked = false;
-          console.log(error)
-          console.log(error.error.errorMessage)
-        })
+      this._authService.publishBinhLuanOfChuong("binhluan", binhLuan)
+        .subscribe(_ => {
+          this.publishCommentForm.setValue({noiDung: ''});
+
+          this.toast.showToast("Chúc mừng", "Bạn đã đăng bình luận thành công!", "success");
+        },
+          error => {
+            this.errorMessage = error;
+            this.showError = true;
+            this.btnSubmitLocked = false;
+            console.log(error)
+            console.log(error.error.errorMessage)
+          })
+    }
   }
 
   addToHistory(truyenID: number, tenTruyen: string, chuongID: number, tenChuong: string, hinhAnh: string) {
@@ -139,6 +151,6 @@ export class CommentListComponent implements OnInit {
     //console.log(hist_arr)
     localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
 
-    this.router.navigate([`/story-reading/${truyenID}/${chuongID}`]);
+    this.router.navigate([`story-reading/${truyenID}/${chuongID}`])
   }
 }

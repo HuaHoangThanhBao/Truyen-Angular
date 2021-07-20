@@ -4,41 +4,54 @@
     </div>
     <div class="chap__comment-panel">
         <ul class="comment-list">
-            <li class="comment-item" *ngFor="let data of [].constructor(binhLuanJson ? binhLuanJson.length : 20); let i = index">
-                <ng-container *ngIf="!binhLuanJson || (binhLuanJson.length > 0 && i < binhLuanJson.length)">
+            <li class="comment-item" *ngFor="let data of (binhLuanJson != undefined ? binhLuanJson : [].constructor(5))">
+                <ng-container>
                     <div class="comment-b">
                         <div class="title-overflow pad-bot-10">
                             <div class="title-overflow-content txt-italic">
                                 <app-seleton-loader *ngIf="!binhLuanJson" Cheight="25"></app-seleton-loader>
-                                <a *ngIf="binhLuanJson" class="comment-link" 
-                                routerLink="/story-detail/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}"><b>{{ binhLuanJson[i]?.chuong.truyen.tenTruyen }}</b></a>
+
+                                <a *ngIf="binhLuanJson" class="comment-link"
+                                    routerLink="/story-detail/{{ data?.truyen?.truyenID }}">
+                                    <b>{{ data?.truyen?.tenTruyen }}</b>
+                                </a>
+                                
+                                <a *ngIf="binhLuanJson" class="comment-link"
+                                    routerLink="/story-detail/{{ data?.chuong?.truyen.truyenID }}">
+                                    <b>{{ data?.chuong?.truyen.tenTruyen }}</b>
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="comment-b">
-                        <a *ngIf="binhLuanJson" class="comment-link" 
+                        <ng-container *ngIf="data?.chuong">
+
+                        </ng-container>
+                        <a *ngIf="data?.chuong" class="comment-link" 
     
-                        (click)="addToHistory(binhLuanJson[i]?.chuong.truyen.truyenID, binhLuanJson[i]?.chuong.truyen.tenTruyen,
-                        binhLuanJson[i]?.chuong.chuongID, binhLuanJson[i]?.chuong.tenChuong, binhLuanJson[i]?.chuong.truyen.hinhAnh)"
+                        (click)="addToHistory(data?.chuong.truyen.truyenID, data?.chuong.truyen.tenTruyen,
+                        data?.chuong.chuongID, data?.chuong.tenChuong, data?.chuong.truyen.hinhAnh)"
     
-                        routerLink="/story-reading/{{ binhLuanJson[i]?.chuong.truyen.truyenID }}/{{ binhLuanJson[i]?.chuong.chuongID }}">
-                        {{binhLuanJson[i]?.chuong.tenChuong}}</a>
-                        <span *ngIf="binhLuanJson" >{{binhLuanJson[i]?.ngayBL}}</span>
+                        routerLink="/story-reading/{{ data?.chuong.truyen.truyenID }}/{{ data?.chuong.chuongID }}">
+                        {{data?.chuong.tenChuong}}</a>
+                        
+                        <span *ngIf="binhLuanJson" >{{data?.ngayBL}}</span>
                     </div>
+                    
                     <div class="comment-b">
                         <div class="comment-u-img">
                             <app-seleton-loader *ngIf="!binhLuanJson" Cheight="45"></app-seleton-loader>
-                            <img *ngIf="binhLuanJson" src="assets/images/avatar/{{ binhLuanJson[i]?.user.hinhAnh }}" alt="no image avaiable">
+                            <img *ngIf="binhLuanJson" loading="lazy" data-src="assets/images/avatar/{{ data?.user.hinhAnh }}" alt="no image avaiable">
                         </div>
                         <div class="comment-des">
                             <div class="comment-des-container">
                                 <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
                                 <div *ngIf="binhLuanJson" class="comment-des-title">
-                                    <p class="comment-name">{{binhLuanJson[i]?.user.username}}</p>
+                                    <p class="comment-name">{{data?.user.username}}</p>
                                 </div>
                                 <app-seleton-loader *ngIf="!binhLuanJson" Cheight="20"></app-seleton-loader>
                                 <div *ngIf="binhLuanJson" class="comment-des-content">
-                                    <div [innerHTML]="binhLuanJson[i].noiDung"></div>
+                                    <div [innerHTML]="data?.noiDung"></div>
                                 </div>
                             </div>
                         </div>

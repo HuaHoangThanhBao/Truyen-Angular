@@ -24,7 +24,7 @@
                                             <a routerLink="/index">
                                                 <div class="chap__nav-item-box">
                                                     <div class="chap__nav-item-icon">
-                                                        <img src="assets/images/home.svg" alt="no image avaiable">
+                                                        <img loading="lazy" data-src="assets/images/home.svg" alt="no image avaiable">
                                                     </div>
                                                 </div>
                                             </a>
@@ -33,7 +33,7 @@
                                             <a routerLink="/story-detail/{{chuongJson?.truyen.truyenID}}">
                                                 <div class="chap__nav-item-box">
                                                     <div class="chap__nav-item-icon">
-                                                        <img src="assets/images/list.svg" alt="no image avaiable">
+                                                        <img loading="lazy" data-src="assets/images/list.svg" alt="no image avaiable">
                                                     </div>
                                                 </div>
                                             </a>
@@ -42,7 +42,7 @@
                                             <a routerLink="#">
                                                 <div class="chap__nav-item-box">
                                                     <div class="chap__nav-item-icon">
-                                                        <img src="assets/images/heart.svg" alt="no image avaiable">
+                                                        <img loading="lazy" data-src="assets/images/heart.svg" alt="no image avaiable">
                                                     </div>
                                                 </div>
                                             </a>
@@ -54,7 +54,7 @@
                                             <a *ngIf="!first" (click)="redirectToAnotherChap(false)">
                                                 <div class="chap__nav-item-box">
                                                     <div class="chap__nav-item-icon">
-                                                        <img src="assets/images/left-arrow.svg" alt="no image avaiable">
+                                                        <img loading="lazy" data-src="assets/images/left-arrow.svg" alt="no image avaiable">
                                                     </div>
                                                 </div>
                                             </a>
@@ -74,7 +74,7 @@
                                             <a *ngIf="!last" (click)="redirectToAnotherChap(true)">
                                                 <div class="chap__nav-item-box">
                                                     <div class="chap__nav-item-icon">
-                                                        <img src="assets/images/right-arrow.svg"
+                                                        <img loading="lazy" data-src="assets/images/right-arrow.svg"
                                                             alt="no image avaiable">
                                                     </div>
                                                 </div>
@@ -86,7 +86,7 @@
                             <div id="rd__body__area" class="rd__body">
                                 <ul class="rd__body-list">
                                     <li class="rd__image-box" *ngFor="let noidung of chuongJson?.noiDungChuongs">
-                                        <img src="https://drive.google.com/uc?export=view&id={{ noidung.hinhAnh }}"
+                                        <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ noidung.hinhAnh }}"
                                             alt="noidung.hinhAnh">
                                     </li>
                                 </ul>

@@ -8,56 +8,57 @@
 
         <!--Comment-->
         <div class="chap__comment-panel pad-0">
+
+            <!--Comment Form-->
             <div class="comment-writing-container">
-                <form [formGroup]="publishCommentForm" autocomplete="off" novalidate
-                    (ngSubmit)="publishComment(publishCommentForm.value)">
-
-                    <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{
-                        errorMessage.error.errorMessage }}</div>
-
-                    <textarea id="noiDung" formControlName="noiDung" class="form-control"
-                        placeholder="Các bạn có thể bình luận tại đây..."></textarea>
-                    <div class="comment-alert">
-                        <em *ngIf="validateControl('noiDung') && hasError('noiDung', 'required')">*Vui lòng không để
-                            trống</em>
-                    </div>
-
-                    <app-seleton-loader *ngIf="!jsonBinhLuan" Cwidth="100" Cheight="35" Cmargin="20px 0 0 0"
-                        circle="20px"></app-seleton-loader>
-                    <div *ngIf="jsonBinhLuan" class="btn-detail-group pad-top-10 pad-bot-25">
-                        <button class="btn-social" type="submit"
-                            [disabled]="true">Gửi</button>
-                    </div>
-                </form>
-            </div>
-            <ul class="comment-list">
-                <li class="comment-item"
-                    *ngFor="let data of [].constructor(jsonBinhLuan ? jsonBinhLuan.length : 10); let i = index">
-                    <ng-container *ngIf="!jsonBinhLuan || (jsonBinhLuan.length > 0 && i < jsonBinhLuan.length)">
-                        <app-seleton-loader *ngIf="!jsonBinhLuan" Cheight="25"></app-seleton-loader>
-                        <div *ngIf="jsonBinhLuan" class="comment-b">
-                            <a class="comment-link"
-                                (click)="addToHistory(jsonBinhLuan[i].chuong.truyen?.truyenID, jsonBinhLuan[i].chuong.truyen?.tenTruyen,
-                            jsonBinhLuan[i].chuong.chuongID, jsonBinhLuan[i].chuong.tenChuong, jsonBinhLuan[i].chuong.truyen?.hinhAnh)"
-                                routerLink="/story-reading/{{ jsonBinhLuan[i].chuong.truyen?.truyenID }}/{{ jsonBinhLuan[i].chuong.chuongID }}">
-                                {{ jsonBinhLuan[i].chuong.tenChuong }}</a>
-                            <span>{{ jsonBinhLuan[i].ngayBL }}</span>
+                <ng-container *ngIf="userLoginID">
+                    <form [formGroup]="publishCommentForm" autocomplete="off" novalidate
+                        (ngSubmit)="publishComment(publishCommentForm.value)">
+    
+                        <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{
+                            errorMessage.error.errorMessage }}</div>
+    
+                        <textarea id="noiDung" formControlName="noiDung" class="form-control"
+                            placeholder="Các bạn có thể bình luận tại đây..."></textarea>
+                        <div class="comment-alert">
+                            <em *ngIf="validateControl('noiDung') && hasError('noiDung', 'required')">*Vui lòng không để
+                                trống</em>
                         </div>
+    
+                        <app-seleton-loader *ngIf="!jsonBinhLuan" Cwidth="100" Cheight="35" Cmargin="20px 0 0 0"
+                            circle="20px"></app-seleton-loader>
+                        <div *ngIf="jsonBinhLuan" class="btn-detail-group pad-top-10 pad-bot-25">
+                            <button class="btn-social" type="submit"
+                                [disabled]="!publishCommentForm.valid || btnSubmitLocked">Gửi</button>
+                        </div>
+                    </form>
+                </ng-container>
+                <ng-container *ngIf="!userLoginID">
+                    <div>Bạn vui lòng đăng nhập để đăng bình luận nhé!</div>
+                    <button class="btn-login-redirect" href="/authentication/login">Đăng nhập</button>
+                </ng-container>
+            </div>
+            <!--End Comment Form-->
+
+            <!--Comment List Area-->
+            <ul class="comment-list">
+                <li class="comment-item" *ngFor="let data of (jsonBinhLuan != undefined ? jsonBinhLuan : [].constructor(5))">
+                    <ng-container>
                         <div class="comment-b">
                             <div class="comment-u-img">
                                 <app-seleton-loader *ngIf="!jsonBinhLuan" Cwidth="45" Cheight="45"></app-seleton-loader>
-                                <img *ngIf="jsonBinhLuan" src="assets/images/avatar/{{ jsonBinhLuan[i]?.user.hinhAnh }}"
+                                <img *ngIf="jsonBinhLuan" src="assets/images/avatar/{{ data?.user.hinhAnh }}"
                                     alt="no image avaiable">
                             </div>
                             <div class="comment-des">
                                 <div class="comment-des-container">
                                     <app-seleton-loader *ngIf="!jsonBinhLuan" Cheight="20"></app-seleton-loader>
                                     <div *ngIf="jsonBinhLuan" class="comment-des-title">
-                                        <p class="comment-name">{{ jsonBinhLuan[i].user.username }}</p>
+                                        <p class="comment-name">{{ data?.user.username }}</p>
                                     </div>
                                     <app-seleton-loader *ngIf="!jsonBinhLuan" Cheight="20"></app-seleton-loader>
                                     <div *ngIf="jsonBinhLuan" class="comment-des-content">
-                                        <div [innerHTML]="jsonBinhLuan[i].noiDung"></div>
+                                        <div [innerHTML]="data?.noiDung"></div>
                                     </div>
                                 </div>
                             </div>
@@ -65,6 +66,7 @@
                     </ng-container>
                 </li>
             </ul>
+            <!--End Comment List Area-->
         </div>
         <!--End Comment-->
     </div>

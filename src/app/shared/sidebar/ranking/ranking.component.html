@@ -6,16 +6,14 @@
   <div class="story__ranking">
     <div class="story__ranking-panel">
       <ul class="rank-list">
-        <li class="rank-item" *ngFor="let data of [].constructor(rankingJson ? rankingJson.length : 5); let i = index">
-          <div class="rank-b" *ngIf="!rankingJson || (rankingJson.length > 0 && i < rankingJson.length)">
+        <li class="rank-item" *ngFor="let data of (rankingJson != undefined ? rankingJson : [].constructor(5)); let i = index">
+          <div class="rank-b">
             <p>{{ "0" + (i + 1) }}</p>
           </div>
           <div class="rank-b">
             <app-seleton-loader *ngIf="!rankingJson" Cheight="45"></app-seleton-loader>
-            <a *ngIf="rankingJson" class="rank-link" routerLink="/story-detail/{{ rankingJson ? rankingJson[i]?.truyenID: ''}}">
-              <img
-                src="https://drive.google.com/uc?export=view&id={{rankingJson ? rankingJson[i].hinhAnh: '' }}"
-                alt="{{ rankingJson[i]?.tenTruyen }}">
+            <a *ngIf="rankingJson" class="rank-link" routerLink="/story-detail/{{ data?.truyenID }}">
+              <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"  alt="{{ data?.tenTruyen }}">
             </a>
           </div>
           <div class="rank-b">
@@ -23,8 +21,8 @@
             <ngContainer *ngIf="rankingJson">
               <div *ngIf="rankingJson" class="title-overflow pad-bot-25">
                 <div class="title-overflow-content">
-                  <a class="rank-link" routerLink="/story-detail/{{ rankingJson[i]?.truyenID }}"><b>{{
-                      rankingJson[i]?.tenTruyen
+                  <a class="rank-link" routerLink="/story-detail/{{ data?.truyenID }}"><b>{{
+                    data?.tenTruyen
                       }}</b></a>
                 </div>
               </div>
@@ -32,13 +30,13 @@
 
             <app-seleton-loader *ngIf="!rankingJson"></app-seleton-loader>
             <ngContainer *ngIf="rankingJson">
-              <div class="rank-info" *ngFor="let chuong of rankingJson[i]?.chuongs.slice(-1).reverse()">
+              <div class="rank-info" *ngFor="let chuong of data?.chuongs.slice(-1).reverse()">
                 <a class="rank-link" 
                 
-                (click)="addToHistory(rankingJson[i]?.truyenID, rankingJson[i]?.tenTruyen,
-                chuong.chuongID, chuong.tenChuong, rankingJson[i]?.hinhAnh)" 
+                (click)="addToHistory(data?.truyenID, data?.tenTruyen,
+                chuong.chuongID, chuong.tenChuong, rdata?.hinhAnh)" 
               
-                routerLink="/story-reading/{{ rankingJson[i]?.truyenID }}/{{ chuong.chuongID }}">
+                routerLink="/story-reading/{{ rdata?.truyenID }}/{{ chuong.chuongID }}">
                   {{ chuong.tenChuong }}
                 </a>
                 <span>{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy'}}</span>

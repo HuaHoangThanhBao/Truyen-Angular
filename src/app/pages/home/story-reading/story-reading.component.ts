@@ -72,7 +72,7 @@ export class StoryReadingComponent implements OnInit {
           }
         });
 
-      this.http.get(environment.apiURL + `/binhluan?pageNumber=1&pageSize=10&sorting=true&chuongID=` + chuongID, {
+      this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=10&sorting=true&chuongID=` + chuongID, {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
           "Api-Key": environment.apiKey
@@ -80,7 +80,7 @@ export class StoryReadingComponent implements OnInit {
       })
         .toPromise()
         .then(binhLuans => {
-          console.log(binhLuans);
+          console.log('binh luan of reading:', binhLuans);
           this.binhLuanJson = binhLuans;
         });
     })
