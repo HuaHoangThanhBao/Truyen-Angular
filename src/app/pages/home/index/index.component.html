@@ -1,7 +1,7 @@
 <body>
   <main>
-    <div class="main-container container-fluid">
-      <div class="banner-container">
+    <div class="main__container container-fluid">
+      <div class="banner__container">
         <div class="banner"></div>
       </div>
 
@@ -10,11 +10,11 @@
       <app-carousel [carouselJson]="mostViews"></app-carousel>
       <!--End-->
 
-      <div class="body-container">
-        <div class="body-cover">
+      <div class="body__container">
+        <div class="body__cover">
 
           <!--Section bên trái-->
-          <div class="body-left-side right-padding">
+          <div class="body__cover--left right-padding">
             <!--Danh sách truyện-->
             <app-story-list [truyenJson]="jsonTruyenArr" [headingTitle]="title" (reload)="refreshFetchList($event)">
             </app-story-list>
@@ -24,7 +24,7 @@
 
 
           <!--Section bên phải (side-bar)-->
-          <div class="body-right-side left-padding">
+          <div class="body__cover--right left-padding">
             <!--Rank List-->
             <app-ranking [rankingJson]="mostViews"></app-ranking>
             <!--End Rank List-->

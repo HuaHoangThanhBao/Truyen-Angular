@@ -3,9 +3,9 @@
 @import "./assets/styles/general.scss";
 
 /*Main Container*/
-.main-container {
-  .body-cover {
-    .body-left-side {
+.main__container {
+  .body__cover {
+    .body__cover--left {
       @include SetWidthHeight(66.66666667%, auto);
 
       &.right-padding {
@@ -20,7 +20,7 @@
         @include SetWidthHeight(100%, auto);
       }
     }
-    .body-right-side {
+    .body__cover--right {
       @include SetWidthHeight(33.33333333%, 100%);
 
       &.left-padding {
@@ -32,7 +32,7 @@
       }
     }
 
-    .body-box {
+    .body__box {
       @include SetWidthHeight(100%, auto);
       background-color: $white;
       @include theme() {

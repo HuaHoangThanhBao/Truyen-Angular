@@ -1,14 +1,5 @@
-.main-container {
-	&.container-fluid {
-		padding: 25px;
-	}
-	.banner-container {
-		width: auto;
-		height: 0px;
-	}
-}
 .wrapper {
-	min-height: 600px;
+	min-height: 1000px;
 	display: flex;
 	align-items: center;
 

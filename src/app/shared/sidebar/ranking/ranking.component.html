@@ -1,5 +1,5 @@
 <!--Rank List-->
-<div class="body-box">
+<div class="body__box">
   <div class="title-header">
     <h2>Top phổ biến</h2>
   </div>
@@ -12,7 +12,7 @@
           </div>
           <div class="rank-b">
             <app-seleton-loader *ngIf="!rankingJson" Cheight="45"></app-seleton-loader>
-            <a *ngIf="rankingJson" class="rank-link" routerLink="/story-detail/{{ data?.truyenID }}">
+            <a *ngIf="rankingJson" class="rank-link" href="/story-detail/{{ data?.truyenID }}">
               <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"  alt="{{ data?.tenTruyen }}">
             </a>
           </div>
@@ -21,7 +21,7 @@
             <ngContainer *ngIf="rankingJson">
               <div *ngIf="rankingJson" class="title-overflow pad-bot-25">
                 <div class="title-overflow-content">
-                  <a class="rank-link" routerLink="/story-detail/{{ data?.truyenID }}"><b>{{
+                  <a class="rank-link" href="story-detail/{{ data?.truyenID }}"><b>{{
                     data?.tenTruyen
                       }}</b></a>
                 </div>
@@ -36,7 +36,7 @@
                 (click)="addToHistory(data?.truyenID, data?.tenTruyen,
                 chuong.chuongID, chuong.tenChuong, rdata?.hinhAnh)" 
               
-                routerLink="/story-reading/{{ rdata?.truyenID }}/{{ chuong.chuongID }}">
+                href="story-reading/{{ data?.truyenID }}/{{ chuong.chuongID }}">
                   {{ chuong.tenChuong }}
                 </a>
                 <span>{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy'}}</span>

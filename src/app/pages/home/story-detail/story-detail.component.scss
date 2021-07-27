@@ -2,7 +2,7 @@
 @import "../../../../assets/styles/func.scss";
 @import "../../../../assets/styles/var.scss";
 
-.body-cover {
+.body__cover {
   .overlay__panel {
     @include SetWidthHeight(100%, 100%);
     // padding-left: 40px;
@@ -14,18 +14,21 @@
       padding-right: 10px;
     }
 
-    .body-box {
-      @include SetWidthHeight(100%, 100%);
+    .body__box {
       border-radius: 20px;
       z-index: 2;
       margin-top: -450px;
 
-      .box-container {
+      .box__container {
         @include SetWidthHeight(100%, auto);
         @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
-        padding-bottom: 20px;
+        padding: 20px 20px 0px 20px;
 
-        .panel-side:first-child {
+        &.block {
+          display: block;
+        }
+
+        .panel__side:first-child {
           @include SetWidthHeight(250px, auto);
 
           @media (max-width: 799px) {
@@ -33,138 +36,200 @@
             display: block;
           }
 
-          .image-outer {
-            @include SetWidthHeight(100%, 100%);
-            padding-left: 20px;
-            padding-right: 20px;
+          & > img {
+            @include SetWidthHeight(100%, 300px);
+            border-radius: 10px;
+            object-fit: cover;
+            margin-top: -40px;
+            box-shadow: 10px 10px 25px rgba(black, 0.2);
 
-            img {
-              @include SetWidthHeight(100%, 300px);
-              border-radius: 10px;
-              object-fit: cover;
-              margin-top: -40px;
-              box-shadow: 10px 10px 25px rgba(black, 0.2);
-
-              @media (max-width: 799px) {
-                @include SetWidthHeight(250px, auto);
-              }
+            @media (max-width: 799px) {
+              @include SetWidthHeight(250px, auto);
             }
           }
         }
 
-        .panel-side:nth-child(2) {
+        .panel__side:nth-child(2) {
           width: calc(100% - 250px);
+          padding: 20px;
 
           @media (max-width: 799px) {
             display: block;
             @include SetWidthHeight(100%, auto);
           }
 
-          .truyen__detail-container {
-            @include SetWidthHeight(100%, auto);
-            padding: 20px;
+          .truyen__detail-title {
+            margin-bottom: 20px;
+          }
 
-            .truyen__detail-title {
-              margin-bottom: 20px;
-            }
+          .box__detail {
+            position: relative;
+            @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
+            margin-top: 20px;
 
-            .truyen__detail-box {
-              position: relative;
-              @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
-              margin-top: 20px;
+            .box__detail-txt {
+              @include SetWidthHeight(50%, auto);
+              font-size: 15px;
+              line-height: 1.5;
 
-              .truyen__detail-txt {
-                @include SetWidthHeight(50%, auto);
-                font-size: 15px;
-                line-height: 1.5;
+              @media (max-width: 599px) {
+                @include SetWidthHeight(100%, auto);
+              }
+
+              &:nth-child(even) {
+                padding-left: 10px;
 
                 @media (max-width: 599px) {
-                  @include SetWidthHeight(100%, auto);
-                }
-
-                &:nth-child(even) {
-                  padding-left: 10px;
-
-                  @media (max-width: 599px) {
-                    padding-left: 0;
-                    padding-top: 20px;
-                  }
+                  padding-left: 0;
+                  padding-top: 20px;
                 }
               }
             }
+
+            /*Các button social*/
+            .btn__group {
+              width: 100%;
+              height: auto;
+              display: flex;
+              gap: 20px;
+
+              .btn-social {
+                @include SetWidthHeight(100px, 35px);
+                @include noneOutLine($isNoneOutLine: false, $isNoneBorder: true);
+                color: #000000;
+                border-radius: 20px;
+                //margin-right: 20px;
+                background-color: $primaryColor;
+
+                &:hover {
+                  background-color: $green;
+                  color: $white;
+                }
+              }
+
+              .btn-reading {
+                @include SetWidthHeight(100px, 35px);
+                color: $white;
+                //border-radius: 20px;
+                //margin-right: 20px;
+                background-color: $orange;
+
+                &:hover {
+                  background-color: $orange;
+                  color: $white;
+                }
+              }
+            }
+            /*End Button*/
           }
         }
 
-        .story-content-panel {
-          width: 100%;
-          padding-left: 20px;
-          padding-top: 20px;
-          padding-right: 20px;
-
-          .story-content-header {
-            padding-bottom: 10px;
-          }
-
-          /*Nút read more cho nội dung*/
-          .box__detail--content {
-            .content {
-              margin: 0;
-              padding: 0;
-              padding-bottom: 1rem;
-              position: relative;
-              padding-top: 20px;
-              line-height: 1.2;
-            }
-          }
-
-          .excerpt-hidden {
-            max-height: 40px;
-            overflow: hidden;
+        /*Nút read more cho nội dung*/
+        .box__detail--content {
+          .content {
+            margin: 0;
+            padding: 0;
+            padding-bottom: 1rem;
             position: relative;
-
-            &:after {
-              content: "";
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              @include SetWidthHeight(100%, 64px);
-              // width: 100%;
-              // height: 64px;
-            }
+            padding-top: 20px;
+            line-height: 1.2;
           }
-
-          .excerpt-visible {
-            height: auto;
-            // overflow: auto;
-          }
-          /*End nút read more*/
         }
 
-        /*Danh sách chương*/
-        .chap__list-container {
-          @include SetWidthHeight(100%, auto);
-          max-height: 550px;
-          overflow-y: auto;
-          //width: 100%;
+        .excerpt-hidden {
+          max-height: 40px;
+          overflow: hidden;
+          position: relative;
 
-          .chap__list-header {
-            @include SetWidthHeight(100%, auto);
-            @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
-            padding-top: 20px;
-            padding-bottom: 15px;
-            border: 1px dashed lightgrey;
-            border-width: 0px 0px 1px 0px;
-
-            .chap__list-heading {
-              @include SetWidthHeight(50%, auto);
-              padding-right: 5px;
-              font-weight: bold;
-
-              @media (max-width: 400px) {
-                font-size: 14px;
-              }
-            }
+          &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            @include SetWidthHeight(100%, 64px);
+            // width: 100%;
+            // height: 64px;
           }
+        }
+
+        .excerpt-visible {
+          height: auto;
+          // overflow: auto;
+        }
+        /*End nút read more*/
+      }
+    }
+  }
+}
+
+/*Danh sách chương*/
+.chap__list--container {
+  @include SetWidthHeight(100%, auto);
+  max-height: 550px;
+  overflow-y: auto;
+  padding: 20px 0px 0px 0px;
+  //width: 100%;
+
+  .chap__list--header {
+    @include SetWidthHeight(100%, auto);
+    @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+    padding-top: 20px;
+    padding-bottom: 15px;
+    border: 1px dashed lightgrey;
+    border-width: 0px 0px 1px 0px;
+
+    .chap__list--heading {
+      @include SetWidthHeight(50%, auto);
+      padding-right: 5px;
+      font-weight: bold;
+
+      @media (max-width: 400px) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .chap__list {
+    @include SetWidthHeight(100%, auto);
+    display: block;
+    list-style: none;
+    margin-top: 15px;
+    position: relative;
+    max-height: 270px;
+    overflow: hidden;
+
+    .chap__list--item {
+      @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border: 1px dashed lightgrey;
+      border-width: 0px 0px 1px 0px;
+
+      .chap__list--link {
+        @include theme() {
+          color: theme-get("text-color");
+        }
+        &:hover {
+          color: rgb(241, 76, 11);
+        }
+      }
+
+      &:last-child {
+        border-width: 0px;
+        margin-bottom: 0px;
+      }
+
+      .chap__list--txt {
+        @include SetWidthHeight(33.33333%, auto);
+        padding-right: 5px;
+
+        &:first-child:hover {
+          color: $green;
+        }
+
+        @media (max-width: 400px) {
+          line-height: 1.4;
+          font-size: 12px;
         }
       }
     }

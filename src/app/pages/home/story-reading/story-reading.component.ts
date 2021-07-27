@@ -115,18 +115,18 @@ export class StoryReadingComponent implements OnInit {
       else index = value;
     }
     //console.log(index);
-    if (resultID) this._router.navigate([`/story-reading/${this.truyenJson.truyenID}/${resultID}`]);
+    if (resultID) window.location.href = `story-reading/${this.truyenJson.truyenID}/${resultID}`;
   }
 
   selectedChange(value) {
-    this._router.navigate([`/story-reading/${this.truyenJson.truyenID}/${value}`]);
+    window.location.href = `story-reading/${this.truyenJson.truyenID}/${value}`;
   }
 
   scrollMenu() {
     window.onscroll = function () { fixedOnScroll() };
 
-    var nav_header = document.getElementById("chap__nav__header");
-    var whereToActive = document.getElementById("rd__body__area");
+    var nav_header = document.getElementById("nav__menu--header");
+    var whereToActive = document.getElementById("image__list");
     var sticky = whereToActive.offsetTop;
 
     function fixedOnScroll() {

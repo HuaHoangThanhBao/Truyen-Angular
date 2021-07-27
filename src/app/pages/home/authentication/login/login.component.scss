@@ -1,13 +1,5 @@
-.main-container {
-	&.container-fluid {
-		padding: 25px;
-	}
-	.banner-container {
-		width: auto;
-		height: 0px;
-	}
-}
 .wrapper {
+	margin: 100px 0px 0px 0px;
 	min-height: 600px;
 	display: flex;
 	align-items: center;
@@ -211,7 +203,6 @@ form {
 		}
 	}
 }
-
 
 .form-field{
     margin: 10px 0px 10px 0px;

@@ -1,20 +1,20 @@
 <body>
     <main>
-        <div class="main-container container-fluid">
-            <div class="banner-container">
+        <div class="main__container container-fluid">
+            <div class="banner__container">
                 <div class="banner"></div>
             </div>
-            <div class="body-container">
-                <div class="body-cover">
+            <div class="body__container">
+                <div class="body__cover">
 
                     <!--Section bên trái-->
-                    <div class="body-left-side right-padding">
+                    <div class="body__cover--left right-padding">
                         <!--Danh sách truyện-->
-                        <div class="body-box">
+                        <div class="body__box">
                             <div class="title-header">
                                 <h2>Tài khoản</h2>
                             </div>
-                            <div class="body-cover">
+                            <div class="body__cover">
                                 <div class="pc-tab">
                                     <input checked="checked" id="tab1" type="radio" name="pct" />
                                     <input id="tab2" type="radio" name="pct" />
@@ -196,7 +196,7 @@
 
 
                     <!--Section bên phải (side-bar)-->
-                    <div class="body-right-side left-padding">
+                    <div class="body__cover--right left-padding">
                         <!--Rank List-->
                         <app-ranking [rankingJson]="mostViews"></app-ranking>
                         <!--End Rank List-->

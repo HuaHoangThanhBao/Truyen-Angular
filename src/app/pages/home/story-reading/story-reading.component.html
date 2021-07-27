@@ -1,103 +1,107 @@
 <body>
 
     <main>
-        <div class="main-container container-fluid pad-top-75">
-            <div class="body-container">
-                <div class="body-cover">
+        <div class="main__container container-fluid pad-top-75">
+            <div class="body__container">
+                <div class="body__cover">
 
                     <!--Phần Body chứa ảnh-->
-                    <div class="rd__panel">
-                        <div class="body-box">
-                            <div class="rd__title">
-                                <div class="rd__title-item">
-                                    <h1>{{chuongJson?.truyen.tenTruyen}}</h1>
-                                </div>
-                                <div class="rd__title-item">
-                                    <p>{{chuongJson?.truyen.tenChuong}}</p>
-                                </div>
-                                <div class="rd__title-item">
-                                    <p>Cập nhật lúc: <span>{{ chuongJson?.thoiGianCapNhat }}</span></p>
-                                </div>
-                                <div class="chap__nav">
-                                    <ul id="chap__nav__header" class="chap__nav-list">
-                                        <li class="chap__nav-item">
-                                            <a routerLink="/index">
-                                                <div class="chap__nav-item-box">
-                                                    <div class="chap__nav-item-icon">
-                                                        <img loading="lazy" data-src="assets/images/home.svg" alt="no image avaiable">
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="chap__nav-item">
-                                            <a routerLink="/story-detail/{{chuongJson?.truyen.truyenID}}">
-                                                <div class="chap__nav-item-box">
-                                                    <div class="chap__nav-item-icon">
-                                                        <img loading="lazy" data-src="assets/images/list.svg" alt="no image avaiable">
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="chap__nav-item">
-                                            <a routerLink="#">
-                                                <div class="chap__nav-item-box">
-                                                    <div class="chap__nav-item-icon">
-                                                        <img loading="lazy" data-src="assets/images/heart.svg" alt="no image avaiable">
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-
-                                        <li class="chap__nav-item"></li>
-
-                                        <li class="chap__nav-item">
-                                            <a *ngIf="!first" (click)="redirectToAnotherChap(false)">
-                                                <div class="chap__nav-item-box">
-                                                    <div class="chap__nav-item-icon">
-                                                        <img loading="lazy" data-src="assets/images/left-arrow.svg" alt="no image avaiable">
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="chap__nav-item">
-                                            <div class="chap__nav-select-box">
-                                                <select (change)="selectedChange($event.target.value)">
-                                                    <option *ngFor="let chuong of truyenJson?.chuongs"
-                                                        [attr.selected]="chuong?.chuongID == chuongJson?.chuongID ? true: null"
-                                                        [attr.value]="chuong?.chuongID">
-                                                        {{ chuong.tenChuong }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </li>
-                                        <li class="chap__nav-item">
-                                            <a *ngIf="!last" (click)="redirectToAnotherChap(true)">
-                                                <div class="chap__nav-item-box">
-                                                    <div class="chap__nav-item-icon">
-                                                        <img loading="lazy" data-src="assets/images/right-arrow.svg"
-                                                            alt="no image avaiable">
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                    <div class="body__box">
+                        <div class="body__box--header">
+                            <div class="box__header--item">
+                                <h1>{{chuongJson?.truyen.tenTruyen}}</h1>
                             </div>
-                            <div id="rd__body__area" class="rd__body">
-                                <ul class="rd__body-list">
-                                    <li class="rd__image-box" *ngFor="let noidung of chuongJson?.noiDungChuongs">
-                                        <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ noidung.hinhAnh }}"
-                                            alt="noidung.hinhAnh">
+                            <div class="box__header--item">
+                                <p>{{chuongJson?.truyen.tenChuong}}</p>
+                            </div>
+                            <div class="box__header--item">
+                                <p>Cập nhật lúc: <span>{{ chuongJson?.thoiGianCapNhat }}</span></p>
+                            </div>
+                            <div class="nav__menu">
+                                <ul id="nav__menu--header" class="nav__menu--list">
+                                    <li class="nav__menu-item">
+                                        <a href="index">
+                                            <div class="nav__menu-item-box">
+                                                <div class="nav__menu-item-icon">
+                                                    <img loading="lazy" data-src="assets/images/home.svg"
+                                                        alt="no image avaiable">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav__menu-item">
+                                        <a href="story-detail/{{chuongJson?.truyen.truyenID}}">
+                                            <div class="nav__menu-item-box">
+                                                <div class="nav__menu-item-icon">
+                                                    <img loading="lazy" data-src="assets/images/list.svg"
+                                                        alt="no image avaiable">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav__menu-item">
+                                        <a href="#">
+                                            <div class="nav__menu-item-box">
+                                                <div class="nav__menu-item-icon">
+                                                    <img loading="lazy" data-src="assets/images/heart.svg"
+                                                        alt="no image avaiable">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav__menu-item"></li>
+
+                                    <li class="nav__menu-item">
+                                        <a *ngIf="!first" (click)="redirectToAnotherChap(false)">
+                                            <div class="nav__menu-item-box">
+                                                <div class="nav__menu-item-icon">
+                                                    <img loading="lazy" data-src="assets/images/left-arrow.svg"
+                                                        alt="no image avaiable">
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav__menu-item">
+                                        <div class="nav__menu-select-box">
+                                            <select (change)="selectedChange($event.target.value)">
+                                                <option *ngFor="let chuong of truyenJson?.chuongs"
+                                                    [attr.selected]="chuong?.chuongID == chuongJson?.chuongID ? true: null"
+                                                    [attr.value]="chuong?.chuongID">
+                                                    {{ chuong.tenChuong }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li class="nav__menu-item">
+                                        <a *ngIf="!last" (click)="redirectToAnotherChap(true)">
+                                            <div class="nav__menu-item-box">
+                                                <div class="nav__menu-item-icon">
+                                                    <img loading="lazy" data-src="assets/images/right-arrow.svg"
+                                                        alt="no image avaiable">
+                                                </div>
+                                            </div>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
+                        <!--Image render list-->
+                        <ul id="image__list" class="image__list">
+                            <li class="image__list--item" *ngFor="let noidung of chuongJson?.noiDungChuongs">
+                                <img loading="lazy"
+                                    data-src="https://drive.google.com/uc?export=view&id={{ noidung.hinhAnh }}"
+                                    alt="noidung.hinhAnh">
+                            </li>
+                        </ul>
+                        <!--End image render list-->
                     </div>
                     <!--End Body chứa ảnh-->
 
-                    <div class="body-box">
+                    <div class="body__box">
                         <!--Section Bình luận-->
-                        <app-comment-list [jsonBinhLuan]="binhLuanJson" [jsonChuong]="chuongJson" [isDetail]="false"></app-comment-list>
+                        <app-comment-list [jsonBinhLuan]="binhLuanJson" [jsonChuong]="chuongJson" [isDetail]="false">
+                        </app-comment-list>
                         <!--End section bình luận-->
                     </div>
                 </div>
