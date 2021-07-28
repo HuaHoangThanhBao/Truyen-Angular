@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LogInService } from 'src/app/shared/services/log-in-service.service';
+import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../environments/environment';
 
@@ -23,7 +24,8 @@ export class FollowingComponent implements OnInit {
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
-  constructor(private http: HttpClient, private router: Router, private loginService: LogInService) {
+  constructor(private http: HttpClient, private router: Router, private loginService: LogInService,
+    private toast: ToastAlertService) {
   }
 
 
@@ -60,7 +62,7 @@ export class FollowingComponent implements OnInit {
         },
         (error) => {
           console.log(error);
-          this.router.navigate(['/authentication/login']);
+          window.location.href = 'authentication/login';
           return false;
         }
       );
@@ -122,5 +124,34 @@ export class FollowingComponent implements OnInit {
         this.jsonTruyenArr = truyenData;
         console.log("refresh list: ", this.jsonTruyenArr);
       })
+  }
+
+  deleteFollowingItem(truyenID){
+    this.http.delete(environment.apiURL + `/theodoi/deleteforuser?userid=${this.userLoginID}&truyenID=${truyenID}`, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    })
+      .toPromise()
+      .then(res => {
+        this.toast.showToast("Thành công", "Bỏ theo dõi truyện thành công!", "success");
+        
+        this.http.get(environment.apiURL + `/theodoi/pagination?userid=${this.userLoginID}&pageNumber=${1}&pageSize=20&getall=true`, {
+          headers: new HttpHeaders({
+            "Content-Type": "application/json",
+            "Api-Key": environment.apiKey
+          })
+        })
+          .toPromise()
+          .then(truyenData => {
+            this.jsonTruyenArr = truyenData;
+            console.log("refresh list: ", this.jsonTruyenArr);
+          })
+      })
+      ,
+      (error) =>{
+        this.toast.showToast("Lỗi", "Xin lỗi bạn, có lỗi xảy ra", "error");
+      }
   }
 }

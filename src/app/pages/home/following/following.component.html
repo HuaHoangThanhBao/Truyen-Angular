@@ -10,7 +10,9 @@
                     <!--Section bên trái-->
                     <div class="body__cover--left right-padding">
                         <!--Danh sách truyện-->
-                        <app-story-list [truyenJson]="jsonTruyenArr" [headingTitle]="title" (reload)="refreshFetchList($event)">
+                        <app-story-list [truyenJson]="jsonTruyenArr" [headingTitle]="title" [isFollowing]="true" 
+                        (deleteFollowingItemEvent)="deleteFollowingItem($event)"
+                        (reload)="refreshFetchList($event)">
                         </app-story-list>
                         <!--End Danh sách truyện-->
                     </div>

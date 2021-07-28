@@ -12,7 +12,7 @@
           </div>
           <div class="rank-b">
             <app-seleton-loader *ngIf="!rankingJson" Cheight="45"></app-seleton-loader>
-            <a *ngIf="rankingJson" class="rank-link" href="/story-detail/{{ data?.truyenID }}">
+            <a *ngIf="rankingJson" class="rank-link" href="story-detail/{{ data?.truyenID }}">
               <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"  alt="{{ data?.tenTruyen }}">
             </a>
           </div>
@@ -34,7 +34,7 @@
                 <a class="rank-link" 
                 
                 (click)="addToHistory(data?.truyenID, data?.tenTruyen,
-                chuong.chuongID, chuong.tenChuong, rdata?.hinhAnh)" 
+                chuong.chuongID, chuong.tenChuong, data?.hinhAnh)" 
               
                 href="story-reading/{{ data?.truyenID }}/{{ chuong.chuongID }}">
                   {{ chuong.tenChuong }}

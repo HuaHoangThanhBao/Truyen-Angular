@@ -18,6 +18,7 @@ import { UpdatePasswordDto } from 'src/app/model/updatePasswordDto.model';
 import { UpdateUserAvatarDto } from 'src/app/model/updateUserAvatar.model';
 import { PubLishBinhLuanOfTruyenDto } from 'src/app/model/publishBinhLuanOfTruyenDto.model';
 import { PubLishBinhLuanOfChuongDto } from 'src/app/model/publishBinhLuanOfChuong.model';
+import { PubLishTheoDoiOfTruyenDto } from 'src/app/model/publishTheoDoiOfTruyen.model';
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +98,15 @@ export class AuthenticationService {
   }
   
   public publishBinhLuanOfChuong = (route: string, body: PubLishBinhLuanOfChuongDto) => {
+    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
+      headers: new HttpHeaders({
+        "Content-Type": "application/json",
+        "Api-Key": environment.apiKey
+      })
+    });
+  }
+  
+  public publishTheoDoiOfTruyen = (route: string, body: PubLishTheoDoiOfTruyenDto) => {
     return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",

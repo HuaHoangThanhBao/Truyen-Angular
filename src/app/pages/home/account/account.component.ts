@@ -67,7 +67,7 @@ export class AccountComponent implements OnInit {
         },
         (error) => {
           console.log(error);
-          this._router.navigate(['/authentication/login']);
+          window.location.href = 'authentication/login';
           return false;
         }
       );
@@ -176,7 +176,7 @@ export class AccountComponent implements OnInit {
       .subscribe(res => {
         this.toast.showToast("Rất tiếc khi bạn đăng xuất", "Hãy quay lại sớm nhé!", "warning");
         this.userLoginIDSubcription.unsubscribe();
-        this._router.navigate(['/index']);
+        window.location.href = 'index';
       },
         (error) => {
           console.log(error);

@@ -12,12 +12,12 @@
                                 <app-seleton-loader *ngIf="!binhLuanJson" Cheight="25"></app-seleton-loader>
 
                                 <a *ngIf="binhLuanJson" class="comment-link"
-                                    routerLink="/story-detail/{{ data?.truyen?.truyenID }}">
+                                    href="story-detail/{{ data?.chuong?.truyen.truyenID }}">
                                     <b>{{ data?.truyen?.tenTruyen }}</b>
                                 </a>
                                 
                                 <a *ngIf="binhLuanJson" class="comment-link"
-                                    routerLink="/story-detail/{{ data?.chuong?.truyen.truyenID }}">
+                                    href="story-detail/{{ data?.chuong?.truyen.truyenID }}">
                                     <b>{{ data?.chuong?.truyen.tenTruyen }}</b>
                                 </a>
                             </div>
@@ -32,7 +32,7 @@
                         (click)="addToHistory(data?.chuong.truyen.truyenID, data?.chuong.truyen.tenTruyen,
                         data?.chuong.chuongID, data?.chuong.tenChuong, data?.chuong.truyen.hinhAnh)"
     
-                        routerLink="/story-reading/{{ data?.chuong.truyen.truyenID }}/{{ data?.chuong.chuongID }}">
+                        href="story-reading/{{ data?.chuong.truyen.truyenID }}/{{ data?.chuong.chuongID }}">
                         {{data?.chuong.tenChuong}}</a>
                         
                         <span *ngIf="binhLuanJson" >{{data?.ngayBL}}</span>

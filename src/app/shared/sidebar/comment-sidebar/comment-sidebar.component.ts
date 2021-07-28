@@ -47,6 +47,6 @@ export class CommentSidebarComponent implements OnInit {
     //console.log(hist_arr)
     localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
 
-    this.router.navigate([`/story-reading/${truyenID}/${chuongID}`]);
+    window.location.href = `story-reading/${truyenID}/${chuongID}`;
   }
 }

@@ -1,5 +1,5 @@
 export interface PubLishBinhLuanOfTruyenDto {
     userID: string;
-    TruyenID: number;
+    truyenID: number;
     noiDung: string;
 }

@@ -371,10 +371,6 @@ body {
     width: 100%;
     height: 600px;
 
-    @media (max-width: 700px) {
-      height: 400px;
-    }
-
     .banner {
       margin-top: 75px;
       width: 100%;
@@ -653,14 +649,15 @@ body {
     a {
       margin: 0 5px 5px 5px;
       border-radius: 50%;
-      box-shadow: inset 0 1px 0 0 #fff, 0 1px 2px #666;
+      //box-shadow: inset 0 1px 0 0 #fff, 0 1px 2px #666;
       text-shadow: 0 1px 1px #fff;
-      background-color: #e6e6e6;
+      background-color: $white;
       height: 33px;
       width: 33px;
       font-size: 16px;
       line-height: 1.8;
       user-select: none;
+      border: 1px solid #52CF92;
 
       &.current {
         box-shadow: 0 1px 1px #999;

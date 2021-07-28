@@ -84,7 +84,7 @@
                                         <div class="btn__group">
                                             <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="50" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyenDetailJson" class="btn-social">Theo Dõi</button>
+                                            <button *ngIf="truyenDetailJson" class="btn-social" (click)="addFollowing()">Theo Dõi</button>
                                             <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="50" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
                                             <button *ngIf="truyenDetailJson" class="btn-social">Like</button>

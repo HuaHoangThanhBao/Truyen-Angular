@@ -76,7 +76,7 @@ export class CommentListComponent implements OnInit {
   
       binhLuan = {
         userID: this.userLoginID,
-        TruyenID: this.jsonTruyen?.truyenID,
+        truyenID: this.jsonTruyen?.truyenID,
         noiDung: formValues.noiDung
       };
 
@@ -151,6 +151,10 @@ export class CommentListComponent implements OnInit {
     //console.log(hist_arr)
     localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
 
-    this.router.navigate([`story-reading/${truyenID}/${chuongID}`])
+    window.location.href = `story-reading/${truyenID}/${chuongID}`;
+  }
+
+  navigateToLoginPage(){
+    window.location.href = 'authentication/login';
   }
 }

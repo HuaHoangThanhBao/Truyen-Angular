@@ -12,7 +12,9 @@ export class StoryListComponent implements OnInit {
   @Input() headingTitle: string = "";
   @Input() truyenJson: any;
   @Input() isHistory: boolean = false;
+  @Input() isFollowing: boolean = false;
   @Output() reload: EventEmitter<any> = new EventEmitter();
+  @Output() deleteFollowingItemEvent: EventEmitter<any> = new EventEmitter();
   @ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
 
   pagingData: any;
@@ -36,6 +38,10 @@ export class StoryListComponent implements OnInit {
 
   callReloadList(value) {
     this.reload.emit(value);
+  }
+
+  callDeleteFollowingItem(truyenID){
+    this.deleteFollowingItemEvent.emit(truyenID);
   }
   
   addToHistory(truyenID: number, tenTruyen: string, chuongID: number, tenChuong: string, hinhAnh: string) {
@@ -70,7 +76,7 @@ export class StoryListComponent implements OnInit {
     //console.log(hist_arr)
     localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
 
-    this.router.navigate(["/story-reading/" + truyenID + "/" + chuongID]);
+    window.location.href = `story-reading/${truyenID}/${chuongID}`;
   }
 
   delelteHistoryItem(truyenID: number) {
@@ -93,7 +99,7 @@ export class StoryListComponent implements OnInit {
 
       localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
 
-      this.router.navigate(["/history"]);
+      window.location.href = "history";
     }
   }
 }

@@ -35,7 +35,7 @@
                 </ng-container>
                 <ng-container *ngIf="!userLoginID">
                     <div>Bạn vui lòng đăng nhập để đăng bình luận nhé!</div>
-                    <button class="btn-login-redirect" routerLink="/authentication/login">Đăng nhập</button>
+                    <button class="btn-login-redirect" (click)="navigateToLoginPage()">Đăng nhập</button>
                 </ng-container>
             </div>
             <!--End Comment Form-->

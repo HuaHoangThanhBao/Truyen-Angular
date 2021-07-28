@@ -18,6 +18,12 @@
                   <span>Xóa</span>
               </a>
           </div>
+          <div *ngIf="isFollowing == true" class="image-btn">
+              <a (click)="callDeleteFollowingItem(data?.truyenID)">
+                  <span>&#10006;</span>
+                  <span>Xóa</span>
+              </a>
+          </div>
         </div>
         <div class="list_info">
           <app-seleton-loader *ngIf="!truyenJson" Cwidth="100%"></app-seleton-loader>
