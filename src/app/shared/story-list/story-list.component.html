@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="list_info">
-          <app-seleton-loader *ngIf="!truyenJson" Cwidth="100%"></app-seleton-loader>
+          <app-seleton-loader *ngIf="!truyenJson" Cheight="20" Cwidth="100%"></app-seleton-loader>
           <a *ngIf="truyenJson" class="chapter-link" href="story-detail/{{ data?.truyenID }}"><h3>{{data?.tenTruyen}}</h3></a>
           
           <ngContainer *ngIf="isHistory == true">

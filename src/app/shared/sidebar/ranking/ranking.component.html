@@ -17,7 +17,7 @@
             </a>
           </div>
           <div class="rank-b">
-            <app-seleton-loader *ngIf="!rankingJson"></app-seleton-loader>
+            <app-seleton-loader Cheight="20" *ngIf="!rankingJson"></app-seleton-loader>
             <ngContainer *ngIf="rankingJson">
               <div *ngIf="rankingJson" class="title-overflow">
                 <div class="title-overflow-content">
@@ -28,7 +28,7 @@
               </div>
             </ngContainer>
 
-            <app-seleton-loader *ngIf="!rankingJson"></app-seleton-loader>
+            <app-seleton-loader Cheight="20" *ngIf="!rankingJson"></app-seleton-loader>
             <ngContainer *ngIf="rankingJson">
               <div class="rank-info" *ngFor="let chuong of data?.chuongs.slice(-1).reverse()">
                 <a class="rank-link" 

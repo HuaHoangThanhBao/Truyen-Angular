@@ -377,6 +377,8 @@ a {
 
 /*Main Container*/
 .main__container {
+  padding-bottom: 40px;
+
   .body__container {
     @include SetWidthHeight(100%, auto);
     display: flex;
@@ -599,6 +601,7 @@ a {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    line-height: 1.5;
 
     b {
       font-size: 16px;
@@ -794,6 +797,11 @@ a {
 /*End Dark mode button*/
 
 /*Expand list in item-page.html*/
+.js-excerpt{
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 .js-excerpt::after {
   content: "";
   display: block;

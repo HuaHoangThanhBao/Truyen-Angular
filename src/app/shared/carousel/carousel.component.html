@@ -6,22 +6,28 @@
       </div>
 
       <!--Carousel-->
-      <ng-container *ngIf="carouselJson">
-
         <div class="caro__body">
-          <div class="caro__body--nav nav-left">
+          <div *ngIf="carouselJson" class="caro__body--nav nav-left">
             <div class="ion-chevron-left carousel-arrow-icon-left"></div>
           </div>
-          <div class="caro__body--slide">
+
+          <app-seleton-loader *ngIf="!carouselJson" Cheight="100%" Cwidth="100%"></app-seleton-loader>
+
+          <div *ngIf="carouselJson" class="caro__body--slide">
             <div class="caro__body--item" *ngFor="let ca of carouselJson; let l = last">
               <div class="caro__item--wrapper">
-                <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
+                <a href="story-detail/{{ ca.truyenID }}">
+                  <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
+                </a>
                 <div class="caro__item--caption">
                   <a href="story-detail/{{ ca.truyenID }}">
                     <p class="truncate">{{ ca.tenTruyen }}</p>
                   </a>
                   <div class="caro__item--href">
-                    <a href="story-reading/{{ ca.truyenID }}/{{ ca.chuongs.slice(-1)[0].chuongID }}">
+                    <a href="story-reading/{{ ca.truyenID }}/{{ ca.chuongs.slice(-1)[0].chuongID }}"
+                    
+                      (click)="addToHistory(ca?.truyenID, ca?.tenTruyen, ca.chuongs.slice(-1)[0].chuongID, ca.chuongs.slice(-1)[0].tenChuong, ca?.hinhAnh)" 
+                    >
                       {{ ca.chuongs.slice(-1)[0].tenChuong }}
                     </a>
                     <a>
@@ -50,13 +56,11 @@
             </div>
           </div>
 
-          <div class="caro__body--nav nav-right">
+          <div *ngIf="carouselJson" class="caro__body--nav nav-right">
             <div class="ion-chevron-right carousel-arrow-icon-right"></div>
           </div>
         </div>
         <!--End Carousel-->
-
-      </ng-container>
 
     </div>
   </div>

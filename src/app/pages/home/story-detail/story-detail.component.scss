@@ -24,7 +24,8 @@
         @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
         padding: 20px 20px 0px 20px;
 
-        &.block {
+        &.box-block {
+          padding-bottom: 20px;
           display: block;
         }
 
@@ -55,6 +56,7 @@
 
           @media (max-width: 799px) {
             display: block;
+            padding: 20px 0px 20px 0px;
             @include SetWidthHeight(100%, auto);
           }
 
