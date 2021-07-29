@@ -19,7 +19,7 @@
           <div class="rank-b">
             <app-seleton-loader *ngIf="!rankingJson"></app-seleton-loader>
             <ngContainer *ngIf="rankingJson">
-              <div *ngIf="rankingJson" class="title-overflow pad-bot-25">
+              <div *ngIf="rankingJson" class="title-overflow">
                 <div class="title-overflow-content">
                   <a class="rank-link" href="story-detail/{{ data?.truyenID }}"><b>{{
                     data?.tenTruyen

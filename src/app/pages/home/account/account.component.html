@@ -58,28 +58,28 @@
                                             <br>
                                             <div *ngIf="userData">
                                                 <h3>Avatar của bạn</h3>
-                                                <img id="user-data" src="assets/images/avatar/{{ userData.hinhAnh }}">
+                                                <img id="user-data" loading="lazy" data-src="assets/images/avatar/{{ userData.hinhAnh }}">
                                             </div>
                                             <h3>Bạn có thể thay đổi avatar của mình bằng một trong các hình dưới đây</h3>
                                             <div class="img-form">
                                                 <div class="img-list">
                                                     <button (click)="setCurrentAvatar('cat-lie.png')">
-                                                        <img class="img" src="assets/images/avatar/cat-lie.png">
+                                                        <img class="img" loading="lazy" data-src="assets/images/avatar/cat-lie.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('panda-eat.png')">
-                                                        <img class="img" src="assets/images/avatar/panda-eat.png">
+                                                        <img class="img" loading="lazy" data-src="assets/images/avatar/panda-eat.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('panda-lie.png')">
-                                                        <img class="img" src="assets/images/avatar/panda-lie.png">
+                                                        <img class="img" loading="lazy" data-src="assets/images/avatar/panda-lie.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('fox-hello.png')">
-                                                        <img class="img" src="assets/images/avatar/fox-hello.png">
+                                                        <img class="img" loading="lazy" data-src="assets/images/avatar/fox-hello.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('chicken-hello.png')">
-                                                        <img class="img" src="assets/images/avatar/chicken-hello.png">
+                                                        <img class="img" loading="lazy" data-src="assets/images/avatar/chicken-hello.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('cow-eat.png')">
-                                                        <img class="img" src="assets/images/avatar/cow-eat.png">
+                                                        <img class="img" loading="lazy" data-src="assets/images/avatar/cow-eat.png">
                                                     </button>
                                                 </div>
                                                 <button class="save-avatar-btn" type="submit" (click)="updateAvatar()" [disabled]="btnSubmitLocked">Lưu ảnh đại diện</button>
@@ -91,8 +91,8 @@
                                                 <ul class="fol-list">
                                                     <li class="fol-item" *ngFor="let data of userData?.theoDois">
                                                         <a routerLink="/story-detail/{{ data.truyen.truyenID }}">
-                                                            <img class="img"
-                                                                src="https://drive.google.com/uc?export=view&id={{ data.truyen.hinhAnh }}">
+                                                            <img class="img" loading="lazy" 
+                                                            data-src="https://drive.google.com/uc?export=view&id={{ data.truyen.hinhAnh }}">
                                                         </a>
                                                         <p class="fol-name">{{ data.truyen.tenTruyen }}</p>
                                                     </li>
@@ -134,9 +134,9 @@
                                         </div>
                                         <div class="tab-content tab5">
                                             <h2>Đổi mật khẩu</h2>
-                                            <div class="wrapper">
+                                            <div class="form__wrapper">
                                                 <!--Reset form-->
-                                                <div class="form-wrapper">
+                                                <div class="form__container">
                                                     <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage.error.errorMessage }}</div>
                                                     
                                                     <div class="form-container">

@@ -12,7 +12,7 @@
                                 <app-seleton-loader *ngIf="!binhLuanJson" Cheight="25"></app-seleton-loader>
 
                                 <a *ngIf="binhLuanJson" class="comment-link"
-                                    href="story-detail/{{ data?.chuong?.truyen.truyenID }}">
+                                    href="story-detail/{{ data?.truyen?.truyenID }}">
                                     <b>{{ data?.truyen?.tenTruyen }}</b>
                                 </a>
                                 
@@ -29,10 +29,10 @@
                         </ng-container>
                         <a *ngIf="data?.chuong" class="comment-link" 
     
-                        (click)="addToHistory(data?.chuong.truyen.truyenID, data?.chuong.truyen.tenTruyen,
-                        data?.chuong.chuongID, data?.chuong.tenChuong, data?.chuong.truyen.hinhAnh)"
+                        (click)="addToHistory(data?.chuong?.truyen.truyenID, data?.chuong?.truyen.tenTruyen,
+                        data?.chuong?.chuongID, data?.chuong?.tenChuong, data?.chuong?.truyen.hinhAnh)"
     
-                        href="story-reading/{{ data?.chuong.truyen.truyenID }}/{{ data?.chuong.chuongID }}">
+                        href="story-reading/{{ data?.chuong?.truyen.truyenID }}/{{ data?.chuong?.chuongID }}">
                         {{data?.chuong.tenChuong}}</a>
                         
                         <span *ngIf="binhLuanJson" >{{data?.ngayBL}}</span>

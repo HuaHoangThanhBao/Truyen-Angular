@@ -32,8 +32,6 @@ export class AccountComponent implements OnInit {
   public errorMessage: string;
   btnSubmitLocked: boolean = false;
 
-  public userLoginIDSubcription: Subscription;
-
   constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router, private loginService: LogInService,
     private toast: ToastAlertService, private _passConfValidator: PasswordConfirmationValidatorService) {
   }
@@ -175,7 +173,6 @@ export class AccountComponent implements OnInit {
     this._authService.logout('auth/logout')
       .subscribe(res => {
         this.toast.showToast("Rất tiếc khi bạn đăng xuất", "Hãy quay lại sớm nhé!", "warning");
-        this.userLoginIDSubcription.unsubscribe();
         window.location.href = 'index';
       },
         (error) => {

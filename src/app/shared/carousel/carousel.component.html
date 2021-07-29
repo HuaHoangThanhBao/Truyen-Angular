@@ -15,7 +15,7 @@
           <div class="caro__body--slide">
             <div class="caro__body--item" *ngFor="let ca of carouselJson; let l = last">
               <div class="caro__item--wrapper">
-                <img data-src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
+                <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
                 <div class="caro__item--caption">
                   <a href="story-detail/{{ ca.truyenID }}">
                     <p class="truncate">{{ ca.tenTruyen }}</p>

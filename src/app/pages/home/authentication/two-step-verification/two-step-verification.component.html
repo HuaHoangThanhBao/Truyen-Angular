@@ -2,35 +2,31 @@
     <!--Confirm Area-->
     <main>
         <div class="main__container container-fluid">
-            <div class="wrapper">
+            <div class="form__wrapper">
                 <!--Confirm form-->
-                <div class="form-wrapper">
+                <div class="form__container">
 
                     <h1 class="card-title">Bạn vui lòng kiểm tra mail và nhập mã xác nhận vào ô dưới:</h1>
                     
                     <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage.error.errorMessage }}</div>
     
-                    <div class="form-container">
-                        <div class="form-inner">
-                            <form [formGroup]="twoStepForm" autocomplete="off" novalidate (ngSubmit)="loginUser(twoStepForm.value)">
-                                <div class="field">
-                                    <label for="twoFactorCode" class="col-form-label col-sm-2">Mã xác nhận:</label>
-                                    <div class="form-field">
-                                        <input type="text" id="twoFactorCode" formControlName="twoFactorCode" class="form-control" />
-                                    </div>
-                                    <div class="form-field">
-                                        <em *ngIf="validateControl('twoFactorCode') && hasError('twoFactorCode', 'required')">*Vui lòng không để trống</em>
-                                    </div>
-                                </div>
-                                <br>
-                                
-                                <div class="field btn">
-                                    <div class="btn-layer"></div>
-                                    <button type="submit" class="btn btn-info" [disabled]="!twoStepForm.valid || btnSubmitLocked">Xác nhận</button>
-                                </div>
-                            </form>
+                    <form [formGroup]="twoStepForm" autocomplete="off" novalidate (ngSubmit)="loginUser(twoStepForm.value)">
+                        <div class="field">
+                            <label for="twoFactorCode" class="col-form-label col-sm-2">Mã xác nhận:</label>
+                            <div class="form-field">
+                                <input type="text" id="twoFactorCode" formControlName="twoFactorCode" class="form-control" />
+                            </div>
+                            <div class="form-field">
+                                <em *ngIf="validateControl('twoFactorCode') && hasError('twoFactorCode', 'required')">*Vui lòng không để trống</em>
+                            </div>
                         </div>
-                    </div>
+                        <br>
+                        
+                        <div class="field btn">
+                            <div class="btn-layer"></div>
+                            <button type="submit" class="btn btn-info" [disabled]="!twoStepForm.valid || btnSubmitLocked">Xác nhận</button>
+                        </div>
+                    </form>
                 </div>
                 <!--End Register Form-->
             </div>

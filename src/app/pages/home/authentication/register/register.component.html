@@ -2,79 +2,75 @@
     <!--Register Area-->
     <main>
         <div class="main__container container-fluid">
-            <div class="wrapper">
+            <div class="form__wrapper">
                 <!--Register form-->
-                <div class="form-wrapper">
-                    <div class="form-container">
-                        <h1 class="card-title">Đăng ký</h1>
+                <div class="form__container">
+                    <h1 class="card-title">Đăng ký</h1>
         
-                        <div class="error alert alert-danger" *ngIf="errorMessage"  role="alert">{{ errorMessage.error.errorMessage }}</div>
+                    <div class="error alert alert-danger" *ngIf="errorMessage"  role="alert">{{ errorMessage.error.errorMessage }}</div>
         
-                        <div class="form-inner">
-                            <form [formGroup]="registerForm" autocomplete="off" novalidate
-                                (ngSubmit)="registerUser(registerForm.value)">
-                                <div class="field">
-                                    <label for="lastName" class="col-form-label col-sm-2">Họ</label>
-                                    <div class="form-field">
-                                        <input type="text" id="lastName" formControlName="lastName" class="form-control" />
-                                    </div>
-                                    <div>
-                                        <em *ngIf="validateControl('lastName') && hasError('lastName', 'required')">*Vui lòng không để trống</em>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label for="firstName" class="col-form-label col-sm-2">Tên</label>
-                                    <div class="form-field">
-                                        <input type="text" id="firstName" formControlName="firstName" class="form-control" />
-                                    </div>
-                                    <div>
-                                        <em *ngIf="validateControl('firstName') && hasError('firstName', 'required')">*Vui lòng không để trống</em>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label for="email" class="col-form-label col-sm-2">Email</label>
-                                    <div class="form-field">
-                                        <input type="email" id="email" formControlName="email" class="form-control" />
-                                    </div>
-                                    <div>
-                                        <em *ngIf="validateControl('email') && hasError('email', 'email')">*Vui lòng cung cấp email hợp lệ</em>
-                                        <em *ngIf="validateControl('email') && hasError('email', 'required')">*Vui lòng không để trống</em>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label for="password" class="col-form-label col-sm-2">Mật khẩu</label>
-                                    <div class="form-field">
-                                        <input type="password" id="password" formControlName="password"
-                                            class="form-control" />
-                                    </div>
-                                    <div>
-                                        <em *ngIf="validateControl('password') && hasError('password', 'required')">*Vui lòng không để trống</em>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <label for="confirm" class="col-form-label col-sm-2">Xác nhận mật khẩu</label>
-                                    <div class="form-field">
-                                        <input type="password" id="confirm" formControlName="confirm"
-                                            class="form-control" />
-                                    </div>
-                                    <div>
-                                        <em *ngIf="validateControl('confirm') && hasError('confirm', 'required')">*Vui lòng không để trống</em>
-                                        <em *ngIf="hasError('confirm', 'mustMatch')">Mật khẩu xác nhận không khớp</em>
-                                    </div>
-                                </div>
-                                <br>
-
-                                <div class="field btn">
-                                    <div class="btn-layer"></div>
-                                    <button type="submit" class="btn btn-info"
-                                        [disabled]="!registerForm.valid || btnSubmitLocked">Đăng ký</button>
-                                </div>
-                                <div class="signup-link">Đã có tài khoản? <a
-                                        routerLink="/authentication/login">Đăng nhập</a></div>
-                                <div class="signup-link"><a routerLink="/index">Quay về trang chủ</a></div>
-                            </form>
+                    <form [formGroup]="registerForm" autocomplete="off" novalidate
+                        (ngSubmit)="registerUser(registerForm.value)">
+                        <div class="field">
+                            <label for="lastName" class="col-form-label col-sm-2">Họ</label>
+                            <div class="form-field">
+                                <input type="text" id="lastName" formControlName="lastName" class="form-control" />
+                            </div>
+                            <div>
+                                <em *ngIf="validateControl('lastName') && hasError('lastName', 'required')">*Vui lòng không để trống</em>
+                            </div>
                         </div>
-                    </div>
+                        <div class="field">
+                            <label for="firstName" class="col-form-label col-sm-2">Tên</label>
+                            <div class="form-field">
+                                <input type="text" id="firstName" formControlName="firstName" class="form-control" />
+                            </div>
+                            <div>
+                                <em *ngIf="validateControl('firstName') && hasError('firstName', 'required')">*Vui lòng không để trống</em>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="email" class="col-form-label col-sm-2">Email</label>
+                            <div class="form-field">
+                                <input type="email" id="email" formControlName="email" class="form-control" />
+                            </div>
+                            <div>
+                                <em *ngIf="validateControl('email') && hasError('email', 'email')">*Vui lòng cung cấp email hợp lệ</em>
+                                <em *ngIf="validateControl('email') && hasError('email', 'required')">*Vui lòng không để trống</em>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="password" class="col-form-label col-sm-2">Mật khẩu</label>
+                            <div class="form-field">
+                                <input type="password" id="password" formControlName="password"
+                                    class="form-control" />
+                            </div>
+                            <div>
+                                <em *ngIf="validateControl('password') && hasError('password', 'required')">*Vui lòng không để trống</em>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="confirm" class="col-form-label col-sm-2">Xác nhận mật khẩu</label>
+                            <div class="form-field">
+                                <input type="password" id="confirm" formControlName="confirm"
+                                    class="form-control" />
+                            </div>
+                            <div>
+                                <em *ngIf="validateControl('confirm') && hasError('confirm', 'required')">*Vui lòng không để trống</em>
+                                <em *ngIf="hasError('confirm', 'mustMatch')">Mật khẩu xác nhận không khớp</em>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="field btn">
+                            <div class="btn-layer"></div>
+                            <button type="submit" class="btn btn-info"
+                                [disabled]="!registerForm.valid || btnSubmitLocked">Đăng ký</button>
+                        </div>
+                        <div class="signup-link">Đã có tài khoản? <a
+                                routerLink="/authentication/login">Đăng nhập</a></div>
+                        <div class="signup-link"><a routerLink="/index">Quay về trang chủ</a></div>
+                    </form>
                 </div>
                 <!--End Register Form-->
             </div>
