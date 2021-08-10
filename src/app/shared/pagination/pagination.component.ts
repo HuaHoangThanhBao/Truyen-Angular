@@ -23,7 +23,7 @@ export class PaginationComponent implements OnInit {
   passPagingData(data) {
     this.numbers = [];
     this.pagingHeaderData = data;
-    console.log("passing header from Story List Component: ", this.pagingHeaderData);
+    //console.log("passing header from Story List Component: ", this.pagingHeaderData);
     for (let i = 1; i <= this.pagingHeaderData.TotalPages; i++) {
       this.numbers.push(i);
     }

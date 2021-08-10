@@ -1,5 +1,10 @@
-@import "./func.scss";
-@import "./var.scss";
+@import "./rule.scss";
+
+:root {
+  --list-item-columns: 4;
+  --list-item-columns-gap: 10px;
+  --padding: 20px;
+}
 
 *,
 *:after,
@@ -27,38 +32,6 @@ body {
   @include theme() {
     //color: theme-get('text-color');
     background-color: theme-get("bg-dark");
-  }
-}
-
-h1 {
-  font-size: 27px;
-  line-height: 1.5;
-}
-
-h2 {
-  font-size: 25px;
-  line-height: 1.5;
-
-  @media (max-width: 399px) {
-    font-size: 20px;
-  }
-}
-
-h3 {
-  font-size: 16px;
-  line-height: 1.3;
-  font-weight: 400;
-}
-
-button {
-  cursor: pointer;
-}
-
-a {
-  cursor: pointer;
-  text-decoration: none;
-  @include theme() {
-    color: theme-get("text-color");
   }
 }
 
@@ -389,10 +362,7 @@ a {
     max-width: $max-scale-width;
     @include SetWidthHeight(100%, 100%);
     @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
+    padding: var(--padding);
 
     @media (max-width: 399px) {
       padding-left: 5px;
@@ -425,19 +395,15 @@ a {
 /*Bình Luận*/
 .chap__comment-panel {
   width: 100%;
-  //height: 100%;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
+  padding: var(--padding);
 
   .comment-writing-container {
-    width: 100%;
-    margin-top: 20px;
+    padding-top: var(--padding);
 
     textarea {
       width: 100%;
       height: 120px;
-      padding: 10px;
+      padding: var(--padding);
       border: 1px solid black;
       outline: none;
       border-radius: 5px;
@@ -458,13 +424,13 @@ a {
     .comment-item {
       width: calc(100% - 15px);
       display: block;
-      padding-bottom: 25px;
-      margin-top: 25px;
+      padding-bottom: var(--padding);
+      margin-top: var(--padding);
       border: 1px solid #e2e2e2;
       border-width: 0px 0px 1px 0px;
 
       &:last-child {
-        border-width: 0px;
+        border: none;
       }
 
       .comment-b {
@@ -485,7 +451,7 @@ a {
         }
 
         &:last-child {
-          padding-top: 20px;
+          padding-top: var(--padding);
           display: flex;
 
           .comment-u-img {
@@ -501,7 +467,7 @@ a {
           }
 
           .comment-des {
-            width: calc(100% - 50px);
+            width: calc(100% - var(--padding));
             float: left;
 
             .comment-des-container {
@@ -704,6 +670,7 @@ a {
   }
 }
 
+/*Các hình ngôi sao đánh giá*/
 .star {
   img {
     height: 100%;
@@ -712,28 +679,7 @@ a {
     vertical-align: middle;
   }
 }
-
-.flex {
-  display: flex;
-}
-
-.img-fade {
-  filter: blur(8px);
-}
-
-.txt-italic {
-  font-style: italic;
-}
-
-.border_bottom {
-  @include borderBottomOnly(1px, solid, black);
-}
-
-.n-highL {
-  &:hover {
-    border-bottom: 3px solid $green;
-  }
-}
+/*End*/
 
 /*Dark mode button*/
 .theme-switch-area {
@@ -867,29 +813,6 @@ a {
   }
 }
 /*End*/
-
-//Scroll bar
-// ::-webkit-scrollbar {
-//   width: 8.5px;
-//   border-radius: 5px;
-// }
-
-// /* Track */
-// ::-webkit-scrollbar-track {
-//   background: #f1f1f1b2;
-//   border-radius: 5px;
-// }
-
-// /* Handle */
-// ::-webkit-scrollbar-thumb {
-//   background: rgb(133, 133, 133);
-//   border-radius: 5px;
-// }
-
-// /* Handle on hover */
-// ::-webkit-scrollbar-thumb:hover {
-//   background: #C1C1C1;
-// }
 
 /*Form-Wrapper cho các trang trong thư mục authentication*/
 .form__wrapper {

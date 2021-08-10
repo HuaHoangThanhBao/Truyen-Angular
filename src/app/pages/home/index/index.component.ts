@@ -28,7 +28,7 @@ export class IndexComponent implements OnInit {
 
     this.fetchCorsPagination(1).then(headers => {
       this.truyenPaginationData = headers;
-      console.log('header:', this.truyenPaginationData);
+      //console.log('header:', this.truyenPaginationData);
       this.storyListComponent.passPagingData(this.truyenPaginationData);
     });
 
@@ -41,7 +41,7 @@ export class IndexComponent implements OnInit {
       .toPromise()
       .then(mostViewData => {
         this.mostViews = mostViewData;
-        console.log(this.mostViews);
+        //console.log(this.mostViews);
       })
 
     this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=20&getall=true`, {
@@ -53,7 +53,7 @@ export class IndexComponent implements OnInit {
       .toPromise()
       .then(truyenData => {
         this.jsonTruyenArr = truyenData;
-        console.log(this.jsonTruyenArr);
+        //console.log(this.jsonTruyenArr);
       })
 
     this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`, {
@@ -65,7 +65,7 @@ export class IndexComponent implements OnInit {
       .toPromise()
       .then(binhLuanData => {
         this.jsonBinhLuanArr = binhLuanData;
-        console.log(this.jsonBinhLuanArr);
+        //console.log(this.jsonBinhLuanArr);
       })
   }
 

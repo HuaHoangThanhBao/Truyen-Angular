@@ -7,11 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from "@auth0/angular-jwt";
 
 import { AppComponent } from './app.component';
-import { StoryReadingComponent } from './pages/home/story-reading/story-reading.component';
-import { StoryDetailComponent } from './pages/home/story-detail/story-detail.component';
-import { CategoryComponent } from './pages/home/category/category.component';
-import { FollowingComponent } from './pages/home/following/following.component';
-import { HistoryComponent } from './pages/home/history/history.component';
 import { IndexComponent } from './pages/home/index/index.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { ChartsComponent } from './pages/admin/charts/charts.component';
@@ -21,20 +16,14 @@ import { UsersComponent } from './pages/admin/users/users.component';
 import { StoriesComponent } from './pages/admin/stories/stories.component';
 import { AcceptanceComponent } from './pages/admin/acceptance/acceptance.component';
 import { CarouselComponent } from './shared/carousel/carousel.component';
-import { PaginationComponent } from './shared/pagination/pagination.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
-import { RankingComponent } from './shared/sidebar/ranking/ranking.component';
-import { CommentListComponent } from './shared/comment-list/comment-list.component';
-import { StoryListComponent } from './shared/story-list/story-list.component';
-import { CommentSidebarComponent } from './shared/sidebar/comment-sidebar/comment-sidebar.component';
 import { AuthGuard } from './modules/guards/auth-guard.service';
 import { environment } from '../environments/environment';
-import { AccountComponent } from './pages/home/account/account.component';
-import { LogInService } from './shared/services/log-in-service.service';
 import { ToastAlertService } from './shared/services/toast-alert-service.service';
-import { ImagesLazyloadModule } from './shared/images-lazyload/images.lazyload.module';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
+import { GeneralModules } from './pages/home/generalModules.module';
+import { RouterModule } from '@angular/router';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -43,11 +32,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    StoryReadingComponent,
-    StoryDetailComponent,
-    CategoryComponent,
-    FollowingComponent,
-    HistoryComponent,
     IndexComponent,
     DashboardComponent,
     ChartsComponent,
@@ -57,24 +41,18 @@ export function tokenGetter() {
     StoriesComponent,
     AcceptanceComponent,
     CarouselComponent,
-    PaginationComponent,
     FooterComponent,
     NavbarComponent,
-    RankingComponent,
-    CommentListComponent,
-    StoryListComponent,
-    CommentSidebarComponent,
-    AccountComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    SeletonLoaderModule,
     FormsModule,
     ReactiveFormsModule,
-    ImagesLazyloadModule,
+    GeneralModules,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -82,7 +60,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthGuard, LogInService, ToastAlertService],
+  providers: [AuthGuard, ToastAlertService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -16,17 +16,17 @@
           <div *ngIf="carouselJson" class="caro__body--slide">
             <div class="caro__body--item" *ngFor="let ca of carouselJson; let l = last">
               <div class="caro__item--wrapper">
-                <a href="story-detail/{{ ca.truyenID }}">
+                <a routerLink="/details/story-detail/{{ ca.truyenID }}">
                   <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
                 </a>
                 <div class="caro__item--caption">
-                  <a href="story-detail/{{ ca.truyenID }}">
+                  <a routerLink="/details/story-detail/{{ ca.truyenID }}">
                     <p class="truncate">{{ ca.tenTruyen }}</p>
                   </a>
                   <div class="caro__item--href">
-                    <a href="story-reading/{{ ca.truyenID }}/{{ ca.chuongs.slice(-1)[0].chuongID }}"
+                    <a routerLink="/details/story-reading/{{ ca.truyenID }}/{{ ca.chuongs.slice(-1)[0].chuongID }}"
                     
-                      (click)="addToHistory(ca?.truyenID, ca?.tenTruyen, ca.chuongs.slice(-1)[0].chuongID, ca.chuongs.slice(-1)[0].tenChuong, ca?.hinhAnh)" 
+                      (click)="this.historyManagement.addToHistory(ca?.truyenID, ca?.tenTruyen, ca.chuongs.slice(-1)[0].chuongID, ca.chuongs.slice(-1)[0].tenChuong, ca?.hinhAnh)" 
                     >
                       {{ ca.chuongs.slice(-1)[0].tenChuong }}
                     </a>

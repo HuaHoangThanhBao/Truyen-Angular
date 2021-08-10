@@ -1,7 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { environment } from '../../../../../environments/environment';
 
 import { UserForAuthenticationDto } from '../../../../model/userForAuthenticationDto.model';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -27,7 +25,7 @@ export class LoginComponent implements OnInit {
   
   btnSubmitLocked: boolean = false;
 
-  constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute,
+  constructor(private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute,
     private toast: ToastAlertService) {}
 
   ngOnInit(): void {

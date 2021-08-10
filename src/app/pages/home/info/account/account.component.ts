@@ -1,20 +1,17 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { UpdatePasswordDto } from 'src/app/model/updatePasswordDto.model';
 import { UpdateUserAvatarDto } from 'src/app/model/updateUserAvatar.model';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { LogInService } from 'src/app/shared/services/log-in-service.service';
 import { PasswordConfirmationValidatorService } from 'src/app/shared/services/password-confirmation-validator.service';
 import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
-import { environment } from '../../../../environments/environment';
+import { RequestService } from '../../../../shared/services/request.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  styleUrls: ['./account.component.scss'],
+  providers: [RequestService]
 })
 export class AccountComponent implements OnInit {
 
@@ -32,27 +29,21 @@ export class AccountComponent implements OnInit {
   public errorMessage: string;
   btnSubmitLocked: boolean = false;
 
-  constructor(private http: HttpClient, private _authService: AuthenticationService, private _router: Router, private loginService: LogInService,
-    private toast: ToastAlertService, private _passConfValidator: PasswordConfirmationValidatorService) {
+  constructor(private _router: Router, private toast: ToastAlertService, private _passConfValidator: PasswordConfirmationValidatorService,
+     private requestService: RequestService) {
   }
 
   ngOnInit(): void {
 
     console.log('account component')
-    this.http.post(environment.apiURL + `/auth/checklogin`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .subscribe(
-        (response) => {
-          this.http.get(environment.apiURL + `/user/${ response["message"] }/details`, {
-            headers: new HttpHeaders({
-              "Content-Type": "application/json",
-              "Api-Key": environment.apiKey
-            })
-          })
+
+    this.requestService.post('auth/checklogin', null)
+      .subscribe(response => {
+        console.log(response)
+        
+        if (response["statusCode"] == 200)
+        {
+          this.requestService.get(`user/${response["message"]}/details`)
           .subscribe(
             (response) => {
               this.userData = response;
@@ -62,13 +53,11 @@ export class AccountComponent implements OnInit {
               console.log('eror:', error);
             }
           );
-        },
-        (error) => {
-          console.log(error);
-          window.location.href = 'authentication/login';
-          return false;
         }
-      );
+        else{
+          this._router.navigate(['/authentication/login']);
+        }
+      })
 
     /*Form*/
     this.updatePasswordForm = new FormGroup({
@@ -81,24 +70,14 @@ export class AccountComponent implements OnInit {
     /**/
 
 
-    this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
+    this.requestService.get(`binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`)
       .toPromise()
       .then(binhLuanData => {
         this.jsonBinhLuanArr = binhLuanData;
         console.log(this.jsonBinhLuanArr);
       })
 
-    this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=5&topview=true`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
+    this.requestService.get(`truyen/pagination?pageNumber=1&pageSize=5&topview=true`)
       .toPromise()
       .then(mostViewData => {
         this.mostViews = mostViewData;
@@ -124,8 +103,7 @@ export class AccountComponent implements OnInit {
       password: updatePass.password,
       confirmPassword: updatePass.confirm
     }
-    console.log(updatePassDto);
-    this._authService.updatePassword('auth/updatepassword', updatePassDto)
+    this.requestService.put('auth/updatepassword', updatePassDto)
       .subscribe(_ => {
         this.showSuccess = true;
         this.toast.showToast("Thành công", "Đổi mật khẩu thành công!", "success");
@@ -144,8 +122,6 @@ export class AccountComponent implements OnInit {
   }
 
   public updateAvatar = () => {
-    console.log('save ảnh đại diện');
-    console.log(this.currentAvatar);
     if (this.currentAvatar == "") {
       this.toast.showToast("Ôi không", "Bạn chưa chọn avatar!", "error");
     }
@@ -154,7 +130,7 @@ export class AccountComponent implements OnInit {
         email: this.userData.email,
         hinhAnh: this.currentAvatar
       }
-      this._authService.updateUserAvatar('user/UpdateUserAvatar', updateAvatarDto)
+      this.requestService.put('user/UpdateUserAvatar', updateAvatarDto)
         .subscribe(_ => {
           this.showSuccess = true;
           this.toast.showToast("Thành công", "Bạn đã đổi sang avatar mới!", "success");
@@ -170,7 +146,7 @@ export class AccountComponent implements OnInit {
   }
 
   logoutClick() {
-    this._authService.logout('auth/logout')
+    this.requestService.post('auth/logout', null)
       .subscribe(res => {
         this.toast.showToast("Rất tiếc khi bạn đăng xuất", "Hãy quay lại sớm nhé!", "warning");
         window.location.href = 'index';

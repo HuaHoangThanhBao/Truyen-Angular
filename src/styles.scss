@@ -2,279 +2,171 @@
 @import "./assets/styles/func.scss";
 @import "./assets/styles/general.scss";
 
+.body__cover{
+  gap: var(--padding);
+}
+
 /*Main Container*/
-.main__container {
-  .body__cover {
-    .body__cover--left {
-      @include SetWidthHeight(66.66666667%, auto);
+.body__cover--left {
+  @include SetWidthHeight(calc(66.66666667% - 20px), auto);
+}
 
-      &.right-padding {
-        padding-right: 5px;
+.body__cover--right {
+  @include SetWidthHeight(calc(100% - 66.66666667%), auto);
+}
 
-        @media (max-width: 999px) {
-          padding: 0 0 25px 0;
+.body__box {
+  @include SetWidthHeight(100%, auto);
+  background-color: $white;
+  @include theme() {
+    color: theme-get("text-color");
+    background-color: theme-get("bg-light-dark");
+  }
+  border-radius: 8px;
+  margin-bottom: 20x;
+
+  .title-header {
+    @include SetWidthHeight(100%, 65px);
+    padding: 20px;
+  }
+  
+  .body__list-container {
+    padding: var(--padding);
+    @include SetWidthHeight(100%, auto);
+  }
+}
+
+
+/*Danh sách truyện*/
+.list-area {
+  @include SetWidthHeight(100%, auto);
+  @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
+  gap: var(--list-item-columns-gap);
+
+  .list-item {
+    @include SetWidthHeight(calc(calc(100% / var(--list-item-columns)) - var(--list-item-columns-gap)), auto);
+    display: block;
+
+    .image-box {
+      @include SetWidthHeight(100%, 250px);
+      .image-link {
+        img {
+          @include SetWidthHeight(100%, 100%);
+          position: relative;
+          object-fit: cover;
+          border-radius: 3px;
         }
-      }
-
-      @media (max-width: 999px) {
-        @include SetWidthHeight(100%, auto);
       }
     }
-    .body__cover--right {
-      @include SetWidthHeight(33.33333333%, 100%);
+  }
 
-      &.left-padding {
-        padding-left: 5px;
-      }
+  .list_info {
+    position: relative;
+    display: block;
+    margin-top: 10px;
 
-      @media (max-width: 999px) {
-        @include SetWidthHeight(100%, auto);
-      }
-    }
+    .newest-chapters {
+      margin-top: 10px;
 
-    .body__box {
-      @include SetWidthHeight(100%, auto);
-      background-color: $white;
-      @include theme() {
-        color: theme-get("text-color");
-        background-color: theme-get("bg-light-dark");
-      }
-      border-radius: 8px;
-      margin-bottom: 20x;
+      .chapter-link {
+        @include theme() {
+          color: theme-get("text-color");
+        }
+        @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+        margin-bottom: 5px;
 
-      .title-header {
-        @include SetWidthHeight(100%, 65px);
-        padding: 20px;
+        span {
+          font-size: 12px;
+          flex-direction: column;
+          line-height: 1.5;
+        }
 
-        .btn-group {
-          @include SetWidthHeight(100%, 100%);
-          @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+        span:first-child {
+          text-align: left;
+        }
 
-          .gr-btn {
-            @include SetWidthHeight(33.33333333%, 100%);
-            @include Flex($isHorizontally: true, $isVertically: true, $isWrap: true);
-
-            &:first-child {
-              padding-right: 5px;
-            }
-            &:last-child {
-              padding-left: 5px;
-            }
-
-            .btn {
-              @include SetWidthHeight(100%, 100%);
-              @include noneOutLine($isNoneOutLine: true, $isNoneBorder: true);
-              border-radius: 20px;
-              //background-color: inherit;
-              padding: 2px;
-              font-size: 13px;
-              text-align: center;
-
-              @include theme() {
-                color: theme-get("text-color");
-                background-color: theme-get("bg-dark");
-              }
-
-              &.active {
-                background-color: $green;
-                color: $white;
-              }
-
-              @media (max-width: 399px) {
-                font-size: 12px;
-              }
-            }
-          }
+        span:last-child {
+          color: #c0c4d1;
+          text-align: right;
+          position: absolute;
+          right: 0;
         }
       }
-
-      .body__list-container {
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-bottom: 20px;
-        @include SetWidthHeight(100%, auto);
-
-        .list-area {
-          @include SetWidthHeight(100%, auto);
-          @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
-
-          .list-item {
-            @include SetWidthHeight(25%, auto);
-            display: block;
-            float: left;
-            padding: 5px;
-
-            .image-box {
-              @include SetWidthHeight(100%, 250px);
-              .image-link {
-                img {
-                  @include SetWidthHeight(100%, 100%);
-                  position: relative;
-                  object-fit: cover;
-                  border-radius: 3px;
-                }
-              }
-            }
-
-            & {
-              @media (min-width: 520px) and (max-width: 767px) {
-                @include SetWidthHeight(33.33333333%, auto);
-              }
-
-              @media (min-width: 350px) and (max-width: 519px) {
-                @include SetWidthHeight(50%, auto);
-              }
-
-              @media (max-width: 349px) {
-                @include SetWidthHeight(100%, auto);
-              }
-            }
-
-            &:nth-child(4n + 1) {
-              @media (min-width: 768px) {
-                clear: both;
-              }
-            }
-
-            &:nth-child(3n + 1) {
-              @media (min-width: 520px) and (max-width: 767px) {
-                clear: both;
-              }
-            }
-
-            &:nth-child(2n + 1) {
-              @media (min-width: 400px) and (max-width: 519px) {
-                clear: both;
-              }
-            }
-
-            &:nth-child(n + 1) {
-              @media (max-width: 400px) {
-                clear: both;
-              }
-            }
-          }
-
-          .list_info {
-            @include SetWidthHeight(100%, auto);
-            position: relative;
-            display: block;
-            margin-top: 10px;
-
-            .newest-chapters {
-              @include SetWidthHeight(100%, auto);
-              margin-top: 10px;
-
-              .chapter-link {
-                @include theme() {
-                  color: theme-get("text-color");
-                }
-                @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
-                margin-bottom: 5px;
-
-                span {
-                  font-size: 12px;
-                  flex-direction: column;
-                  line-height: 1.5;
-                }
-
-                span:first-child {
-                  text-align: left;
-                }
-
-                span:last-child {
-                  color: #c0c4d1;
-                  text-align: right;
-                  position: absolute;
-                  right: 0;
-                }
-              }
-            }
-          }
-        }
-      }
-
-      /*Phần Xếp hạng*/
-      .story__ranking {
-        @include SetWidthHeight(100%, auto);
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-bottom: 20px;
-
-        .story__ranking-panel {
-          @include SetWidthHeight(100%, 100%);
-
-          .rank-list {
-            @include SetWidthHeight(100%, auto);
-            list-style: none;
-            margin-top: 20px;
-            display: block;
-
-            .rank-item {
-              height: 60px;
-              margin-bottom: 30px;
-            }
-
-            .rank-b:first-child {
-              @include Flex($isHorizontally: false, $isVertically: true, $isWrap: false);
-              @include SetWidthHeight(35px, 100%);
-              float: left;
-
-              p {
-                font-size: 18px;
-              }
-            }
-
-            .rank-b:nth-child(2) {
-              @include SetWidthHeight(55px, 100%);
-              float: left;
-
-              img {
-                @include SetWidthHeight(100%, 100%);
-                object-fit: cover;
-                border-radius: 5px;
-              }
-            }
-
-            .rank-b:last-child {
-              width: calc(100% - 90px);
-              height: 100%;
-              float: left;
-              padding-left: 15px;
-              position: relative;
-
-              .rank-info {
-                @include SetWidthHeight(100%, auto);
-                font-size: 14px;
-
-                span {
-                  @media (max-width: 360px) {
-                    clear: both;
-                    position: absolute;
-                    bottom: 0;
-                    left: 15px;
-                  }
-
-                  @media (min-width: 361px) {
-                    float: right !important;
-                  }
-                }
-              }
-            }
-
-            .rank-link {
-              @include theme() {
-                color: theme-get("text-color");
-              }
-            }
-          }
-        }
-      }
-      /*End Xếp hạng*/
     }
   }
 }
-/*End Main Container*/
+/*End Danh sách truyện*/
+
+
+/*Phần Xếp hạng*/
+.story__ranking {
+  @include SetWidthHeight(100%, auto);
+  padding: var(--padding);
+
+  .story__ranking-panel {
+    @include SetWidthHeight(100%, 100%);
+
+    .rank-list {
+      @include SetWidthHeight(100%, auto);
+      list-style: none;
+
+      .rank-item {
+        height: 60px;
+        display: flex;
+        margin-bottom: var(--padding);
+        gap: var(--padding);
+      }
+
+      .rank-b:first-child {
+        @include Flex($isHorizontally: false, $isVertically: true, $isWrap: false);
+        @include SetWidthHeight(20px, 100%);
+        p {
+          font-size: 18px;
+        }
+      }
+
+      .rank-b:nth-child(2) {
+        @include SetWidthHeight(55px, 100%);
+
+        img {
+          @include SetWidthHeight(100%, 100%);
+          object-fit: cover;
+          border-radius: 5px;
+        }
+      }
+
+      .rank-b:last-child {
+        flex: 1;
+        height: 100%;
+        position: relative;
+
+        .rank-info {
+          @include SetWidthHeight(100%, auto);
+          font-size: 14px;
+
+          span {
+            @media (max-width: 360px) {
+              clear: both;
+              position: absolute;
+              bottom: 0;
+              left: 15px;
+            }
+            @media (min-width: 361px) {
+              float: right !important;
+            }
+          }
+        }
+      }
+      
+      .rank-link {
+        @include theme() {
+          color: theme-get("text-color");
+        }
+      }
+    }
+  }
+}
+/*End Xếp hạng*/
 
 .image-box {
   position: relative;
@@ -465,6 +357,8 @@
   //   }
   // }
 }
+/*End toast message*/
+
 
 @keyframes slideInLeft {
   from {
@@ -483,3 +377,35 @@
   }
 }
 /*End*/
+
+@media (max-width: 999px) {
+  .body__cover--left, .body__cover--right{
+    @include SetWidthHeight(100%, 100%);
+  }
+}
+
+@media (min-width: 520px) and (max-width: 767px) {
+  .list-area .list-item{
+    --list-item-columns: 3;
+  }
+}
+
+@media (min-width: 350px) and (max-width: 519px) {
+  .list-area .list-item{
+    --list-item-columns: 2;
+  }
+}
+
+@media (max-width: 349px) {
+  .list-area .list-item{
+    --list-item-columns: 1;
+  }
+}
+
+@media (min-width: 768px) {
+  /**/
+}
+
+@media (max-width: 400px) {
+  /**/
+}

@@ -1,6 +1,4 @@
 import { TwoFactorDto } from './../../model/twoFactorDto.model';
-// import { ResetPasswordDto } from './../../_interfaces/resetPassword/resetPasswordDto.model';
-// import { ForgotPasswordDto } from '../../_interfaces/resetPassword/forgotPasswordDto.model';
 import { AuthResponseDto } from './../../model/authResponseDto.model';
 import { RegistrationResponseDto } from './../../model/registrationResponseDto.model';
 import { UserForAuthenticationDto } from './../../model/userForAuthenticationDto.model';
@@ -14,11 +12,6 @@ import { CustomEncoder } from './custome-encoder';
 import { environment } from '../../../environments/environment';
 import { ForgotPasswordDto } from 'src/app/model/forgotPasswordDto.model';
 import { ResetPasswordDto } from 'src/app/model/resetPasswordDto.model';
-import { UpdatePasswordDto } from 'src/app/model/updatePasswordDto.model';
-import { UpdateUserAvatarDto } from 'src/app/model/updateUserAvatar.model';
-import { PubLishBinhLuanOfTruyenDto } from 'src/app/model/publishBinhLuanOfTruyenDto.model';
-import { PubLishBinhLuanOfChuongDto } from 'src/app/model/publishBinhLuanOfChuong.model';
-import { PubLishTheoDoiOfTruyenDto } from 'src/app/model/publishTheoDoiOfTruyen.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,15 +36,6 @@ export class AuthenticationService {
       });
   }
 
-  public logout = (route: string) => {
-    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), null, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    });
-  }
-
   public forgotPassword = (route: string, body: ForgotPasswordDto) => {
     return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
       headers: new HttpHeaders({
@@ -62,51 +46,6 @@ export class AuthenticationService {
   }
 
   public resetPassword = (route: string, body: ResetPasswordDto) => {
-    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    });
-  }
-  
-  public updatePassword = (route: string, body: UpdatePasswordDto) => {
-    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    });
-  }
-  
-  public updateUserAvatar = (route: string, body: UpdateUserAvatarDto) => {
-    return this._http.put(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    });
-  }
-
-  public publishBinhLuanOfTruyen = (route: string, body: PubLishBinhLuanOfTruyenDto) => {
-    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    });
-  }
-  
-  public publishBinhLuanOfChuong = (route: string, body: PubLishBinhLuanOfChuongDto) => {
-    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    });
-  }
-  
-  public publishTheoDoiOfTruyen = (route: string, body: PubLishTheoDoiOfTruyenDto) => {
     return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, {
       headers: new HttpHeaders({
         "Content-Type": "application/json",

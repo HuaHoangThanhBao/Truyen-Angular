@@ -11,7 +11,8 @@
                     <!--Section bên trái-->
                     <div class="body__cover--left right-padding">
                         <!--Danh sách truyện-->
-                        <app-story-list [truyenJson]="jsonTruyenArr" [headingTitle]="title" [isHistory]="true">
+                        <app-story-list [truyenJson]="jsonTruyenArr" [headingTitle]="title" [isHistory]="true"
+                        (refreshHistories)="refreshHistories()">
                         </app-story-list>
                         <!--End Danh sách truyện-->
                     </div>

@@ -3,7 +3,6 @@ import { AuthenticationService } from '../../../../shared/services/authenticatio
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LogInService } from 'src/app/shared/services/log-in-service.service';
 import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
 
 @Component({
@@ -24,7 +23,7 @@ export class TwoStepVerificationComponent implements OnInit {
   btnSubmitLocked: boolean = false;
 
   constructor(private _authService: AuthenticationService, private _route: ActivatedRoute, 
-    private _router: Router, private loginService: LogInService, private toast: ToastAlertService) { }
+    private _router: Router, private toast: ToastAlertService) { }
 
   ngOnInit(): void {
     this.twoStepForm = new FormGroup({
@@ -60,10 +59,10 @@ export class TwoStepVerificationComponent implements OnInit {
       this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
 
       //console.log(res.token);
-      this.loginService.updateUserID(res.token);
+      //this.loginService.login(res.token);
       
       this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-      this._router.navigate([this._returnUrl]);
+      window.location.href = this._returnUrl;
     },
     error => {
       this.errorMessage = error;

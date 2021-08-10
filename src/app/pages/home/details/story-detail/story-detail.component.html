@@ -14,8 +14,8 @@
                                 <div class="panel__side">
                                     <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="300">
                                     </app-seleton-loader>
-                                    <img *ngIf="truyenDetailJson" class="lazyload"
-                                        data-src="https://drive.google.com/uc?export=view&id={{truyenDetailJson?.hinhAnh}}"
+                                    <img *ngIf="truyenDetailJson" 
+                                        src="https://drive.google.com/uc?export=view&id={{truyenDetailJson?.hinhAnh}}"
                                         alt="no image avaiable">
                                 </div>
                                 <div class="panel__side">
@@ -98,12 +98,12 @@
                                             <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
                                             <button *ngIf="truyenDetailJson" class="btn-reading btn-social"
-                                                (click)="addToHistory(truyenDetailJson?.truyenID, truyenDetailJson?.tenTruyen,
+                                                (click)="this.historyManagement.addToHistory(truyenDetailJson?.truyenID, truyenDetailJson?.tenTruyen,
                                                 truyenDetailJson?.chuongs[0].chuongID, truyenDetailJson?.chuongs[0].tenChuong, truyenDetailJson?.hinhAnh)">Đọc từ đầu</button>
                                             <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
                                             <button *ngIf="truyenDetailJson" class="btn-reading btn-social"
-                                                (click)="addToHistory(truyenDetailJson?.truyenID, truyeboxxnDetailJson?.tenTruyen,
+                                                (click)="this.historyManagement.addToHistory(truyenDetailJson?.truyenID, truyeboxxnDetailJson?.tenTruyen,
                                                 truyenDetailJson?.chuongs.slice(-1)[0].chuongID, truyenDetailJson?.chuongs.slice(-1)[0].tenChuong, truyenDetailJson?.hinhAnh)">Đọc
                                                 mới nhất</button>
                                         </div>
@@ -150,7 +150,7 @@
                                     <ul id="chap__list" class="chap__list">
                                         <li class="chap__list--item" *ngFor="let chuong of truyenDetailJson?.chuongs">
                                             <p class="chap__list--txt">
-                                                <a class="chap__list--link" (click)="addToHistory(chuong?.truyenID, truyenDetailJson?.tenTruyen,
+                                                <a class="chap__list--link" (click)="this.historyManagement.addToHistory(chuong?.truyenID, truyenDetailJson?.tenTruyen,
                                                 chuong?.chuongID, chuong?.tenChuong, truyenDetailJson?.hinhAnh)">
                                                     {{chuong.tenChuong }}
                                                 </a>

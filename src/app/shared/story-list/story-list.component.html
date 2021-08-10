@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <div class="body__box">
   <div class="title-header">
     <h2>{{headingTitle}}</h2>
@@ -7,13 +8,13 @@
       <!--Item-->
       <div class="list-item"  *ngFor="let data of (truyenJson != undefined ? truyenJson : [].constructor(20))">
         <div class="image-box">
-          <a class="image-link" href="story-detail/{{ data?.truyenID }}">
+          <a class="image-link" routerLink="/details/story-detail/{{ data?.truyenID }}">
             <app-seleton-loader *ngIf="!truyenJson" Cwidth="25%" Cheight="250"></app-seleton-loader>
             <img *ngIf="truyenJson" loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"
               alt="image not available">
           </a>
           <div *ngIf="isHistory == true" class="image-btn">
-              <a (click)="delelteHistoryItem(data?.truyenID)">
+              <a (click)="callRefreshHistories(data?.truyenID)">
                   <span>&#10006;</span>
                   <span>Xóa</span>
               </a>
@@ -27,11 +28,11 @@
         </div>
         <div class="list_info">
           <app-seleton-loader *ngIf="!truyenJson" Cheight="20" Cwidth="100%"></app-seleton-loader>
-          <a *ngIf="truyenJson" class="chapter-link" href="story-detail/{{ data?.truyenID }}"><h3>{{data?.tenTruyen}}</h3></a>
+          <a *ngIf="truyenJson" class="chapter-link" routerLink="/details/story-detail/{{ data?.truyenID }}"><h3>{{data?.tenTruyen}}</h3></a>
           
           <ngContainer *ngIf="isHistory == true">
             <div class="newest-chapters">
-              <a *ngIf="truyenJson" class="chapter-link" href="story-reading/{{ data?.truyenID }}/{{ data?.chuongID }}">
+              <a *ngIf="truyenJson" class="chapter-link" routerLink="/details/story-reading/{{ data?.truyenID }}/{{ data?.chuongID }}">
                 <span>Đọc tiếp</span>
                 <span>{{ data?.tenChuong }}</span>
               </a>
@@ -43,9 +44,9 @@
               <app-seleton-loader *ngIf="!truyenJson" Cwidth="100%"></app-seleton-loader>
               <a *ngIf="truyenJson" class="chapter-link"
 
-              (click)="addToHistory(data?.truyenID,data?.tenTruyen, chap.chuongID, chap.tenChuong, data?.hinhAnh)" 
+              (click)="this.historyManagement.addToHistory(data?.truyenID,data?.tenTruyen, chap.chuongID, chap.tenChuong, data?.hinhAnh)" 
 
-              href="story-reading/{{data?.truyenID }}/{{ chap.chuongID }}">
+              routerLink="/details/story-reading/{{data?.truyenID }}/{{ chap.chuongID }}">
                 <span>{{chap.tenChuong}}</span>
                 <span>{{chap.thoiGianCapNhat | date: 'dd/MM/yyyy'}}</span>
               </a>

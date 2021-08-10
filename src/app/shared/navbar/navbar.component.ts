@@ -1,36 +1,34 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LogInService } from '../services/log-in-service.service';
+import { RequestService } from '../services/request.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
+  providers: [RequestService]
 })
 export class NavbarComponent implements OnInit {
-  userLoginID: string;
+  loggedIn: boolean = false;
+  filterTruyenResult: any;
 
   @Input() theLoaiJson: any;
-  filterTruyenResult: any;
-  public userLoginIDSubcription: Subscription;
 
-  constructor(private jwtHelper: JwtHelperService, private http: HttpClient, private loginService: LogInService) { }
+  constructor(private requestService: RequestService) { }
 
   ngOnInit(): void {
-    this.userLoginIDSubcription = this.loginService.getUserID().subscribe(id => this.userLoginID = id);
+    this.requestService.post('auth/checklogin', null)
+      .subscribe(response => {
+        console.log(response)
+        if (response["statusCode"] == 200)
+          this.loggedIn = true;
+      })
   }
 
   filterOnSearch(value) {
     if(value != "") {
-      this.http.get(environment.apiURL + `/truyen/pagination?TenTruyen=${value}&sorting=true`, {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          "Api-Key": environment.apiKey
-        })
-      })
+      this.requestService.get(`truyen/pagination?TenTruyen=${value}&sorting=true`)
         .toPromise()
         .then(truyenFilter => {
           this.filterTruyenResult = truyenFilter;

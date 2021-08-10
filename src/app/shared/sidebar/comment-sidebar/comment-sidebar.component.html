@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <div class="body__box">
     <div class="title-header">
         <h2>Bình Luận Mới Nhất</h2>
@@ -12,12 +13,12 @@
                                 <app-seleton-loader *ngIf="!binhLuanJson" Cheight="25"></app-seleton-loader>
 
                                 <a *ngIf="binhLuanJson" class="comment-link"
-                                    href="story-detail/{{ data?.truyen?.truyenID }}">
+                                    routerLink="/details/story-detail/{{ data?.truyen?.truyenID }}">
                                     <b>{{ data?.truyen?.tenTruyen }}</b>
                                 </a>
                                 
                                 <a *ngIf="binhLuanJson" class="comment-link"
-                                    href="story-detail/{{ data?.chuong?.truyen.truyenID }}">
+                                    routerLink="/details/story-detail/{{ data?.chuong?.truyen.truyenID }}">
                                     <b>{{ data?.chuong?.truyen.tenTruyen }}</b>
                                 </a>
                             </div>
@@ -29,10 +30,10 @@
                         </ng-container>
                         <a *ngIf="data?.chuong" class="comment-link" 
     
-                        (click)="addToHistory(data?.chuong?.truyen.truyenID, data?.chuong?.truyen.tenTruyen,
+                        (click)="this.historyManagement.addToHistory(data?.chuong?.truyen.truyenID, data?.chuong?.truyen.tenTruyen,
                         data?.chuong?.chuongID, data?.chuong?.tenChuong, data?.chuong?.truyen.hinhAnh)"
     
-                        href="story-reading/{{ data?.chuong?.truyen.truyenID }}/{{ data?.chuong?.chuongID }}">
+                        routerLink="/details/story-reading/{{ data?.chuong?.truyen.truyenID }}/{{ data?.chuong?.chuongID }}">
                         {{data?.chuong.tenChuong}}</a>
                         
                         <span *ngIf="binhLuanJson" >{{data?.ngayBL}}</span>

@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
+import { HistoryManagement } from '../../../../shared/services/historyManagement.service';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
-  styleUrls: ['./history.component.scss']
+  styleUrls: ['./history.component.scss'],
+  providers: [HistoryManagement]
 })
 export class HistoryComponent implements OnInit {
   title="Lịch sử đọc truyện";
@@ -14,14 +16,11 @@ export class HistoryComponent implements OnInit {
   jsonBinhLuanArr: any;
   mostViews: any;
 
-  constructor(private http: HttpClient) {
-    const localHist = JSON.parse(localStorage.getItem("tr_hist"));
-    if (localHist != null) {
-      let hist_arr = [...localHist];
-      this.jsonTruyenArr = hist_arr;
-    }
-    else this.jsonTruyenArr = [];
+  constructor(private http: HttpClient, private historyManagement: HistoryManagement) {
+  }
 
+  ngOnInit(): void {
+    this.jsonTruyenArr = this.historyManagement.getHistories();
 
     this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`, {
       headers: new HttpHeaders({
@@ -32,7 +31,7 @@ export class HistoryComponent implements OnInit {
       .toPromise()
       .then(binhLuanData => {
         this.jsonBinhLuanArr = binhLuanData;
-        console.log(this.jsonBinhLuanArr);
+        //console.log(this.jsonBinhLuanArr);
       })
 
     this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=5&topview=true`, {
@@ -44,10 +43,11 @@ export class HistoryComponent implements OnInit {
       .toPromise()
       .then(mostViewData => {
         this.mostViews = mostViewData;
-        console.log(this.mostViews);
+        //console.log(this.mostViews);
       })
   }
 
-  ngOnInit(): void {
+  refreshHistories(){
+    this.jsonTruyenArr = this.historyManagement.getHistories();
   }
 }
