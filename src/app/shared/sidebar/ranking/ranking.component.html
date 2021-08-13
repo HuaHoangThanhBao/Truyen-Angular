@@ -7,20 +7,20 @@
   <div class="story__ranking">
     <div class="story__ranking-panel">
       <ul class="rank-list">
-        <li class="rank-item" *ngFor="let data of (rankingJson != undefined ? rankingJson : [].constructor(5)); let i = index">
+        <li class="rank-item" *ngFor="let data of (truyenRanks ? truyenRanks : [].constructor(5)); let i = index">
           <div class="rank-b">
             <p>{{ "0" + (i + 1) }}</p>
           </div>
           <div class="rank-b">
-            <app-seleton-loader *ngIf="!rankingJson" Cheight="45"></app-seleton-loader>
-            <a *ngIf="rankingJson" class="rank-link" routerLink="/details/story-detail/{{ data?.truyenID }}">
+            <app-seleton-loader *ngIf="!truyenRanks" Cheight="45"></app-seleton-loader>
+            <a *ngIf="truyenRanks" class="rank-link" routerLink="/details/story-detail/{{ data?.truyenID }}">
               <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"  alt="{{ data?.tenTruyen }}">
             </a>
           </div>
           <div class="rank-b">
-            <app-seleton-loader Cheight="20" *ngIf="!rankingJson"></app-seleton-loader>
-            <ngContainer *ngIf="rankingJson">
-              <div *ngIf="rankingJson" class="title-overflow">
+            <app-seleton-loader Cheight="20" *ngIf="!truyenRanks"></app-seleton-loader>
+            <ngContainer *ngIf="truyenRanks">
+              <div *ngIf="truyenRanks" class="title-overflow">
                 <div class="title-overflow-content">
                   <a class="rank-link" routerLink="/details/story-detail/{{ data?.truyenID }}"><b>{{
                     data?.tenTruyen
@@ -29,8 +29,8 @@
               </div>
             </ngContainer>
 
-            <app-seleton-loader Cheight="20" *ngIf="!rankingJson"></app-seleton-loader>
-            <ngContainer *ngIf="rankingJson">
+            <app-seleton-loader Cheight="20" *ngIf="!truyenRanks"></app-seleton-loader>
+            <ngContainer *ngIf="truyenRanks">
               <div class="rank-info" *ngFor="let chuong of data?.chuongs.slice(-1).reverse()">
                 <a class="rank-link" 
                 

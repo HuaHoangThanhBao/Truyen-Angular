@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HistoryManagement } from '../../services/historyManagement.service';
+import { Truyen } from '../../../model/truyen/Truyen.model';
 
 @Component({
   selector: 'app-ranking',
@@ -8,7 +9,7 @@ import { HistoryManagement } from '../../services/historyManagement.service';
   providers: [HistoryManagement]
 })
 export class RankingComponent implements OnInit {
-  @Input() rankingJson: any;
+  @Input() truyenRanks: Truyen[];
 
   constructor(private historyManagement: HistoryManagement) { }
 

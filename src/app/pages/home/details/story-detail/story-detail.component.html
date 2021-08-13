@@ -12,39 +12,39 @@
                             <!--Section thông tin cơ bản của truyện-->
                             <div class="box__container">
                                 <div class="panel__side">
-                                    <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="300">
+                                    <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="300">
                                     </app-seleton-loader>
-                                    <img *ngIf="truyenDetailJson" 
-                                        src="https://drive.google.com/uc?export=view&id={{truyenDetailJson?.hinhAnh}}"
+                                    <img *ngIf="truyen" 
+                                        src="https://drive.google.com/uc?export=view&id={{truyen?.hinhAnh}}"
                                         alt="no image avaiable">
                                 </div>
                                 <div class="panel__side">
-                                    <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="20"
+                                    <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
                                         Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
-                                    <div *ngIf="truyenDetailJson" class="truyen__detail-title">
-                                        <h1>{{ truyenDetailJson?.tenTruyen }}</h1>
+                                    <div *ngIf="truyen" class="truyen__detail-title">
+                                        <h1>{{ truyen?.tenTruyen }}</h1>
                                     </div>
 
-                                    <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="20"
+                                    <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
                                         Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
-                                    <div *ngIf="truyenDetailJson" class="box__detail">
+                                    <div *ngIf="truyen" class="box__detail">
                                         <div class="box__detail-txt">
-                                            <p>Tác giả: <span>{{ truyenDetailJson?.tacGia.tenTacGia }}</span></p>
+                                            <p>Tác giả: <span>{{ truyen?.tacGia.tenTacGia }}</span></p>
                                         </div>
                                         <div class="box__detail-txt">
                                             <p>Tình trạng：<span>Đang Tiến Hành</span></p>
                                         </div>
                                     </div>
 
-                                    <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="20"
+                                    <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
                                         Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
-                                    <div *ngIf="truyenDetailJson" class="box__detail">
+                                    <div *ngIf="truyen" class="box__detail">
                                         <div class="box__detail-txt">
                                             <p>Lượt xem: <span>{{ tongLuotXem }}</span></p>
                                         </div>
                                         <div class="box__detail-txt">
                                             <p>Thể loại:
-                                                <span *ngFor="let p of phuLucJson; let l = last">
+                                                <span *ngFor="let p of phuLucs; let l = last">
                                                     <a>{{ p.theLoai.tenTheLoai }}</a>
                                                     <span *ngIf="!l"> - </span>
                                                 </span>
@@ -52,9 +52,9 @@
                                         </div>
                                     </div>
 
-                                    <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100%" Cheight="20"
+                                    <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
                                         Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
-                                    <div *ngIf="truyenDetailJson" class="box__detail">
+                                    <div *ngIf="truyen" class="box__detail">
                                         <div class="box__detail-txt">
                                             <p>Lượt theo dõi: <span>71.000</span></p>
                                         </div>
@@ -82,29 +82,29 @@
                                     </div>
                                     <div class="box__detail">
                                         <div class="btn__group">
-                                            <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="50" Cheight="35"
+                                            <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyenDetailJson" class="btn-social" (click)="addFollowing()">Theo Dõi</button>
-                                            <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="50" Cheight="35"
+                                            <button *ngIf="truyen" class="btn-social" (click)="addFollowing()">Theo Dõi</button>
+                                            <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyenDetailJson" class="btn-social">Like</button>
-                                            <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="50" Cheight="35"
+                                            <button *ngIf="truyen" class="btn-social">Like</button>
+                                            <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyenDetailJson" class="btn-social">Share</button>
+                                            <button *ngIf="truyen" class="btn-social">Share</button>
                                         </div>
                                     </div>
                                     <div class="box__detail">
                                         <div class="btn__group">
-                                            <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100" Cheight="35"
+                                            <app-seleton-loader *ngIf="!truyen" Cwidth="100" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyenDetailJson" class="btn-reading btn-social"
-                                                (click)="this.historyManagement.addToHistory(truyenDetailJson?.truyenID, truyenDetailJson?.tenTruyen,
-                                                truyenDetailJson?.chuongs[0].chuongID, truyenDetailJson?.chuongs[0].tenChuong, truyenDetailJson?.hinhAnh)">Đọc từ đầu</button>
-                                            <app-seleton-loader *ngIf="!truyenDetailJson" Cwidth="100" Cheight="35"
+                                            <button *ngIf="truyen" class="btn-reading btn-social"
+                                                (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyen?.tenTruyen,
+                                                truyen?.chuongs[0].chuongID, truyen?.chuongs[0].tenChuong, truyen?.hinhAnh)">Đọc từ đầu</button>
+                                            <app-seleton-loader *ngIf="!truyen" Cwidth="100" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyenDetailJson" class="btn-reading btn-social"
-                                                (click)="this.historyManagement.addToHistory(truyenDetailJson?.truyenID, truyeboxxnDetailJson?.tenTruyen,
-                                                truyenDetailJson?.chuongs.slice(-1)[0].chuongID, truyenDetailJson?.chuongs.slice(-1)[0].tenChuong, truyenDetailJson?.hinhAnh)">Đọc
+                                            <button *ngIf="truyen" class="btn-reading btn-social"
+                                                (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyeboxxnDetailJson?.tenTruyen,
+                                                truyen?.chuongs.slice(-1)[0].chuongID, truyen?.chuongs.slice(-1)[0].tenChuong, truyen?.hinhAnh)">Đọc
                                                 mới nhất</button>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@
                                 <hr>
                                 <div class="box__detail--content">
                                     <div class="content">
-                                        <p class="js-excerpt excerpt-hidden" [innerHTML]="truyenDetailJson?.moTa">
+                                        <p class="js-excerpt excerpt-hidden" [innerHTML]="truyen?.moTa">
                                         </p>
                                     </div>
                                     <a role="button" class="js-show-more">
@@ -148,10 +148,10 @@
                                         </div>
                                     </div>
                                     <ul id="chap__list" class="chap__list">
-                                        <li class="chap__list--item" *ngFor="let chuong of truyenDetailJson?.chuongs">
+                                        <li class="chap__list--item" *ngFor="let chuong of truyen?.chuongs">
                                             <p class="chap__list--txt">
-                                                <a class="chap__list--link" (click)="this.historyManagement.addToHistory(chuong?.truyenID, truyenDetailJson?.tenTruyen,
-                                                chuong?.chuongID, chuong?.tenChuong, truyenDetailJson?.hinhAnh)">
+                                                <a class="chap__list--link" (click)="this.historyManagement.addToHistory(chuong?.truyenID, truyen?.tenTruyen,
+                                                chuong?.chuongID, chuong?.tenChuong, truyen?.hinhAnh)">
                                                     {{chuong.tenChuong }}
                                                 </a>
                                             </p>
@@ -167,7 +167,7 @@
                             <!--End section danh sách chương-->
 
                             <!--Section Bình luận-->
-                            <app-comment-list [jsonBinhLuan]="jsonBinhLuanArr" [jsonTruyen]="truyenDetailJson"
+                            <app-comment-list [binhLuans]="binhLuans" [truyen]="truyen"
                                 [isDetail]="true"></app-comment-list>
                             <!--End section bình luận-->
                         </div>

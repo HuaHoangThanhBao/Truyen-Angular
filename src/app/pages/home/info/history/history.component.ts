@@ -1,7 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../../environments/environment';
 import { HistoryManagement } from '../../../../shared/services/historyManagement.service';
+import { TruyenService } from '../../../../services/truyenService.service';
+import { BinhLuanService } from '../../../../services/binhLuanService.service';
+import { RequestParam } from '../../../../model/param/RequestParam.model';
+import { BinhLuan } from '../../../../model/binhluan/BinhLuan.model';
+import { Truyen } from 'src/app/model/truyen/Truyen.model';
 
 @Component({
   selector: 'app-history',
@@ -12,42 +18,32 @@ import { HistoryManagement } from '../../../../shared/services/historyManagement
 export class HistoryComponent implements OnInit {
   title="Lịch sử đọc truyện";
 
-  jsonTruyenArr: any;
-  jsonBinhLuanArr: any;
-  mostViews: any;
+  truyens: Truyen[];
+  truyensTopView: Truyen[];
+  binhLuans: BinhLuan[];
 
-  constructor(private http: HttpClient, private historyManagement: HistoryManagement) {
+  @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
+
+  constructor(private historyManagement: HistoryManagement, private truyenService: TruyenService, private binhLuanService: BinhLuanService) {
   }
 
   ngOnInit(): void {
-    this.jsonTruyenArr = this.historyManagement.getHistories();
+    this.truyens = this.historyManagement.getHistories();
 
-    this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .toPromise()
-      .then(binhLuanData => {
-        this.jsonBinhLuanArr = binhLuanData;
-        //console.log(this.jsonBinhLuanArr);
-      })
+    let truyenTopViewParams: RequestParam = {pageNumber: 1, pageSize: 5, topView: true}
+    this.truyenService.getListWithParams(truyenTopViewParams).subscribe(truyens => {
+      this.truyensTopView = truyens;
+      //console.log(truyens)
+    });
 
-    this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=5&topview=true`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .toPromise()
-      .then(mostViewData => {
-        this.mostViews = mostViewData;
-        //console.log(this.mostViews);
-      })
+    let binhLuanUpdateParams: RequestParam = {pageNumber: 1, pageSize: 20, lastestUpdate: true}
+    this.binhLuanService.getListWithParams(binhLuanUpdateParams).subscribe(binhLuans => {
+      this.binhLuans = binhLuans;
+      //console.log(this.binhLuans)
+    });
   }
 
   refreshHistories(){
-    this.jsonTruyenArr = this.historyManagement.getHistories();
+    this.truyens = this.historyManagement.getHistories();
   }
 }

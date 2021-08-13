@@ -49,16 +49,16 @@
                                     <section class="tab-col">
                                         <div class="tab-content tab1">
                                             <h2>Thông tin tài khoản</h2>
-                                            <p>Họ: {{userData?.lastName}}</p>
-                                            <p>Tên: {{userData?.firstName}}</p>
-                                            <p>Email: {{userData?.email}}</p>
+                                            <p>Họ: {{user?.lastName}}</p>
+                                            <p>Tên: {{user?.firstName}}</p>
+                                            <p>Email: {{user?.email}}</p>
                                         </div>
                                         <div class="tab-content tab2">
                                             <h2>Thông tin chung</h2>
                                             <br>
-                                            <div *ngIf="userData">
+                                            <div *ngIf="user">
                                                 <h3>Avatar của bạn</h3>
-                                                <img id="user-data" loading="lazy" data-src="assets/images/avatar/{{ userData.hinhAnh }}">
+                                                <img id="user-data" loading="lazy" data-src="assets/images/avatar/{{ user.hinhAnh }}">
                                             </div>
                                             <h3>Bạn có thể thay đổi avatar của mình bằng một trong các hình dưới đây</h3>
                                             <div class="img-form">
@@ -87,9 +87,9 @@
                                         </div>
                                         <div class="tab-content tab3">
                                             <h2>Truyện đang theo dõi</h2>
-                                            <ng-container *ngIf="userData?.theoDois">
+                                            <ng-container *ngIf="user?.theoDois">
                                                 <ul class="fol-list">
-                                                    <li class="fol-item" *ngFor="let data of userData?.theoDois">
+                                                    <li class="fol-item" *ngFor="let data of user?.theoDois">
                                                         <a routerLink="/story-detail/{{ data.truyen.truyenID }}">
                                                             <img class="img" loading="lazy" 
                                                             data-src="https://drive.google.com/uc?export=view&id={{ data.truyen.hinhAnh }}">
@@ -98,19 +98,19 @@
                                                     </li>
                                                 </ul>
                                             </ng-container>
-                                            <ng-container *ngIf="!userData?.theoDois">
+                                            <ng-container *ngIf="!user?.theoDois">
                                                 <p>Rất tiếc, bạn chưa theo dõi truyện nào!</p>
                                             </ng-container>
                                         </div>
                                         <div class="tab-content tab4">
                                             <h2>Bình luận mà bạn đã đăng</h2>
 
-                                            <ng-container *ngIf="userData?.binhLuans">
+                                            <ng-container *ngIf="user?.binhLuans">
                                                 <!--Timeline-->
                                                 <div class="timeline-area">
                                                     <div class="timeline">
                                                         <div class="timeline-item"
-                                                            *ngFor="let data of userData?.binhLuans">
+                                                            *ngFor="let data of user?.binhLuans">
                                                             <span class="bounce-btn"></span>
                                                             <div class="timeline-txt impor" *ngIf="data?.truyen">
                                                                 <h3 class="timeline-title">{{ data?.truyen.tenTruyen }}</h3>
@@ -128,7 +128,7 @@
                                                 <!--End Timeline-->
                                             </ng-container>
                                             
-                                            <ng-container *ngIf="!userData?.binhLuans">
+                                            <ng-container *ngIf="!user?.binhLuans">
                                                 <p>Bạn chưa có bình luận nào. Hãy tích cực tham gia bình luận nhé!</p>
                                             </ng-container>
                                         </div>
@@ -198,11 +198,11 @@
                     <!--Section bên phải (side-bar)-->
                     <div class="body__cover--right left-padding">
                         <!--Rank List-->
-                        <app-ranking [rankingJson]="mostViews"></app-ranking>
+                        <app-ranking [truyenRanks]="truyensTopView"></app-ranking>
                         <!--End Rank List-->
 
                         <!--Comment-->
-                        <app-comment-sidebar [binhLuanJson]="jsonBinhLuanArr"></app-comment-sidebar>
+                        <app-comment-sidebar [binhLuans]="binhLuans"></app-comment-sidebar>
                         <!--End Comment-->
                     </div>
                     <!--End Side-bar-->
@@ -210,7 +210,7 @@
             </div>
         </div>
     </main>
-    <div *ngIf="!userData" class="overlay-process">
+    <div *ngIf="!user" class="overlay-process">
         <div class="spinner">
             <div class="bounce1"></div>
             <div class="bounce2"></div>

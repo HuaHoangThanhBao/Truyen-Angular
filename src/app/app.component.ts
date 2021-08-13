@@ -1,5 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { RequestService } from './shared/services/request.service';
+import { TheLoaiService } from './services/theLoaiService.service';
+import { TheLoai } from './model/theloai/TheLoai.model';
 
 declare function setUpDarkMode(): void;
 
@@ -10,22 +12,18 @@ declare function setUpDarkMode(): void;
   providers: [RequestService]
 })
 export class AppComponent implements OnInit {
+  title = 'RanhDocTruyen';
+  theLoais: TheLoai[];
 
-  jsonTheLoaiArr: any;
-  title = 'NgTruyen';
-
-  constructor(private requestService: RequestService) {
+  constructor(private theLoaiService: TheLoaiService) {
   }
 
   ngOnInit(): void {
     console.log('app component on init');
 
-    this.requestService.get('theloai')
-    .toPromise()
-    .then(theLoaiData => {
-      this.jsonTheLoaiArr = theLoaiData;
-      //console.log(this.jsonTheLoaiArr);
-    })
+    this.theLoaiService.getList().subscribe(theloais => {
+      this.theLoais = theloais
+    });
 
     setUpDarkMode();
     this.categoryDropdownInit();

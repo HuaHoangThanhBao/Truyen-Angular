@@ -2,6 +2,7 @@ import { Component, Input, Output, OnInit, ViewChild, EventEmitter } from '@angu
 import { PaginationComponent } from '../pagination/pagination.component';
 import { environment } from '../../../environments/environment';
 import { HistoryManagement } from '../services/historyManagement.service';
+import { Truyen } from '../../model/truyen/Truyen.model';
 
 @Component({
   selector: 'app-story-list',
@@ -11,7 +12,7 @@ import { HistoryManagement } from '../services/historyManagement.service';
 })
 export class StoryListComponent implements OnInit {
   @Input() headingTitle: string = "";
-  @Input() truyenJson: any;
+  @Input() truyens: Truyen[];
   @Input() isHistory: boolean = false;
   @Input() isFollowing: boolean = false;
   @Output() reload: EventEmitter<any> = new EventEmitter();
@@ -21,18 +22,14 @@ export class StoryListComponent implements OnInit {
 
   pagingData: any;
 
+  testData: Truyen[];
+
   constructor(private historyManagement: HistoryManagement) { }
 
   ngOnInit(): void {
   }
 
-  async fetchCorsPagination(currentPage) {
-    const response = await fetch(environment.apiURL + `/truyen?pageNumber=${currentPage}&pageSize=20&apiKey=${environment.apiKey}&getall=true`);
-    const headers = JSON.parse(response.headers.get('X-Pagination'));
-    return headers;
-  }
-
-  passPagingData(data) {
+  passPagingHeaders(data) {
     this.pagingData = data;
     //console.log("passing header from Index Component: ", this.pagingData);
     this.paginationComponent.passPagingData(data);
@@ -42,11 +39,11 @@ export class StoryListComponent implements OnInit {
     this.reload.emit(value);
   }
 
-  callDeleteFollowingItem(truyenID){
+  callDeleteFollowingItem(truyenID) {
     this.deleteFollowingItemEvent.emit(truyenID);
   }
 
-  callRefreshHistories(truyenID){
+  callRefreshHistories(truyenID) {
     this.historyManagement.delelteHistoryItem(truyenID);
     this.refreshHistories.emit(truyenID);
   }

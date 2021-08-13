@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ICommentModel, ICommentModelJsonType } from '../../../model/truyenModel';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
-import { environment } from '../../../../environments/environment';
-import { error } from 'protractor';
+import { TruyenService } from '../../../services/truyenService.service';
+import { Truyen } from '../../../model/truyen/Truyen.model';
+import { RequestParam } from '../../../model/param/RequestParam.model';
+import { BinhLuanService } from '../../../services/binhLuanService.service';
+import { BinhLuan } from '../../../model/binhluan/BinhLuan.model';
 
 @Component({
   selector: 'app-index',
@@ -11,98 +14,57 @@ import { error } from 'protractor';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
-  title="Truyện mới cập nhật"
+  title = "Truyện mới cập nhật";
+  truyens: Truyen[];
+  truyensTopView: Truyen[];
 
-  jsonTruyenArr: any;
-  jsonBinhLuanArr: any;
-
-  mostViews: any;
-  truyenPaginationData: any;
+  binhLuans: BinhLuan[];
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
-  //commentJsonLimited: any;
   commentFilter: ICommentModel[] = [];
 
-  constructor(private http: HttpClient) {
-
-    this.fetchCorsPagination(1).then(headers => {
-      this.truyenPaginationData = headers;
-      //console.log('header:', this.truyenPaginationData);
-      this.storyListComponent.passPagingData(this.truyenPaginationData);
-    });
-
-    this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=5&topview=true`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .toPromise()
-      .then(mostViewData => {
-        this.mostViews = mostViewData;
-        //console.log(this.mostViews);
-      })
-
-    this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=1&pageSize=20&getall=true`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .toPromise()
-      .then(truyenData => {
-        this.jsonTruyenArr = truyenData;
-        //console.log(this.jsonTruyenArr);
-      })
-
-    this.http.get(environment.apiURL + `/binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .toPromise()
-      .then(binhLuanData => {
-        this.jsonBinhLuanArr = binhLuanData;
-        //console.log(this.jsonBinhLuanArr);
-      })
+  constructor(private truyenService: TruyenService, private binhLuanService: BinhLuanService) {
   }
 
   ngOnInit(): void {
-  }
-
-  async fetchCorsPagination(number) {
-    const response = await fetch(environment.apiURL + `/truyen/pagination?pageNumber=${number}&pageSize=20&getall=true`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      }
-    });
-    const headers = JSON.parse(response.headers.get('X-Pagination'));
-    return headers;
-  }
-
-  refreshFetchList(value) {
-    console.log(value)
-
-    this.fetchCorsPagination(value).then(headers => {
-      this.truyenPaginationData = headers;
-      console.log('header:', this.truyenPaginationData);
-      this.storyListComponent.passPagingData(this.truyenPaginationData);
+    let truyenHeaderPagParams: RequestParam = { pageNumber: 1, pageSize: 20, getAll: true }
+    this.truyenService.getPaginationHeaders(truyenHeaderPagParams).then(headers => {
+      this.storyListComponent.passPagingHeaders(headers);
     });
 
-    this.http.get(environment.apiURL + `/truyen/pagination?pageNumber=${value}&pageSize=20&getall=true`, {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      })
-    })
-      .toPromise()
-      .then(truyenData => {
-        this.jsonTruyenArr = truyenData;
-        console.log("refresh list: ", this.jsonTruyenArr);
-      })
+    let truyenTopViewParams: RequestParam = {pageNumber: 1, pageSize: 5, topView: true}
+    this.truyenService.getListWithParams(truyenTopViewParams).subscribe(truyens => {
+      this.truyensTopView = truyens;
+      //console.log(truyens)
+    });
+
+
+    let truyenLatestUpdateParams: RequestParam = {pageNumber: 1, pageSize: 20, getAll: true}
+    this.truyenService.getListWithParams(truyenLatestUpdateParams).subscribe(truyens => {
+      this.truyens = truyens;
+      //console.log(truyens)
+    });
+
+    let binhLuanUpdateParams: RequestParam = {pageNumber: 1, pageSize: 20, lastestUpdate: true}
+    this.binhLuanService.getListWithParams(binhLuanUpdateParams).subscribe(binhLuans => {
+      this.binhLuans = binhLuans;
+      //console.log(this.binhLuans)
+    });
+  }
+
+  reloadTruyenOnPag(number) {
+    //console.log(value)
+
+    let truyenHeaderPagParams: RequestParam = { pageNumber: number, pageSize: 20, getAll: true }
+    this.truyenService.getPaginationHeaders(truyenHeaderPagParams).then(headers => {
+      this.storyListComponent.passPagingHeaders(headers);
+    });
+    
+    let truyenOnReloadParams: RequestParam = {pageNumber: number, pageSize: 20, getAll: true}
+    this.truyenService.getListWithParams(truyenOnReloadParams).subscribe(truyens => {
+      this.truyens = truyens;
+      //console.log(truyens)
+    });
   }
 }

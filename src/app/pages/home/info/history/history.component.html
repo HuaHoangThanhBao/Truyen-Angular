@@ -11,7 +11,7 @@
                     <!--Section bên trái-->
                     <div class="body__cover--left right-padding">
                         <!--Danh sách truyện-->
-                        <app-story-list [truyenJson]="jsonTruyenArr" [headingTitle]="title" [isHistory]="true"
+                        <app-story-list [truyens]="truyens" [headingTitle]="title" [isHistory]="true"
                         (refreshHistories)="refreshHistories()">
                         </app-story-list>
                         <!--End Danh sách truyện-->
@@ -23,11 +23,11 @@
                     <!--Section bên phải (side-bar)-->
                     <div class="body__cover--right left-padding">
                         <!--Rank List-->
-                        <app-ranking [rankingJson]="mostViews"></app-ranking>
+                        <app-ranking [truyenRanks]="truyensTopView"></app-ranking>
                         <!--End Rank List-->
 
                         <!--Comment-->
-                        <app-comment-sidebar [binhLuanJson]="jsonBinhLuanArr"></app-comment-sidebar>
+                        <app-comment-sidebar [binhLuans]="binhLuans"></app-comment-sidebar>
                         <!--End Comment-->
                     </div>
                     <!--End Side-bar-->

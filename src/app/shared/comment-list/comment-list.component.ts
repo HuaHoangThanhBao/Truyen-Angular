@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ToastAlertService } from '../services/toast-alert-service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RequestService } from '../services/request.service';
+import { BinhLuan } from '../../model/binhluan/BinhLuan.model';
+import { Truyen } from '../../model/truyen/Truyen.model';
+import { Chuong } from '../../model/chuong/Chuong.model';
 
 @Component({
   selector: 'app-comment-list',
@@ -12,12 +15,12 @@ export class CommentListComponent implements OnInit {
 
   public publishCommentForm: FormGroup;
 
-  @Input() jsonBinhLuan: any;
-  @Input() jsonTruyen: any;
-  @Input() jsonChuong: any;
+  @Input() binhLuans: BinhLuan[];
+  @Input() truyen: Truyen;
+  @Input() chuong: Chuong;
   @Input() isDetail: boolean;
-  userLoginID: string;
 
+  userLoginID: string;
   btnSubmitLocked: boolean = false;
 
   public errorMessage: string = '';
@@ -54,12 +57,12 @@ export class CommentListComponent implements OnInit {
     let binhLuanDto: any = this.isDetail ?
     {
       userID: this.userLoginID,
-      truyenID: this.jsonTruyen?.truyenID,
+      truyenID: this.truyen?.truyenID,
       noiDung: formValues.noiDung
     }:
     {
       userID: this.userLoginID,
-      chuongID: this.jsonChuong?.chuongID,
+      chuongID: this.chuong?.chuongID,
       noiDung: formValues.noiDung
     };
     

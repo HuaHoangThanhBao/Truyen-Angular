@@ -4,6 +4,13 @@ import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.s
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../../environments/environment';
 import { RequestService } from '../../../../shared/services/request.service';
+import { TruyenService } from '../../../../services/truyenService.service';
+import { BinhLuanService } from '../../../../services/binhLuanService.service';
+import { Truyen } from '../../../../model/truyen/Truyen.model';
+import { BinhLuan } from '../../../../model/binhluan/BinhLuan.model';
+import { RequestParam } from '../../../../model/param/RequestParam.model';
+import { TheoDoiService } from '../../../../services/theoDoiService.service';
+import { TheoDoi } from '../../../../model/theodoi/TheoDoi.model';
 
 @Component({
   selector: 'app-following',
@@ -14,17 +21,21 @@ import { RequestService } from '../../../../shared/services/request.service';
 export class FollowingComponent implements OnInit {
   title = "Truyện đang theo dõi"
 
-  jsonTruyenArr: any;
-  jsonBinhLuanArr: any;
-  mostViews: any;
-  truyenPaginationData: any;
+  truyensByTheoDoi: TheoDoi[];
+  truyensTopView: Truyen[];
+  binhLuans: BinhLuan[];
 
-  userLoginID: string;
+  //jsonBinhLuanArr: any;
+  //mostViews: any;
+  //truyenPaginationData: any;
+
+  private userLoginID: string;
   loggedIn: boolean = false;
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
-  constructor(private _router: Router, private toast: ToastAlertService, private requestService: RequestService) {
+  constructor(private _router: Router, private toast: ToastAlertService, private requestService: RequestService, private truyenService: TruyenService,
+    private binhLuanService: BinhLuanService, private theoDoiService: TheoDoiService) {
   }
 
 
@@ -39,81 +50,49 @@ export class FollowingComponent implements OnInit {
             this.loggedIn = true;
             this.userLoginID = response["message"];
 
-            this.fetchCorsPagination(1).then(headers => {
-              this.truyenPaginationData = headers;
-              //console.log('header:', this.truyenPaginationData);
-              this.storyListComponent.passPagingData(this.truyenPaginationData);
-            });
-
-            this.requestService.get(`theodoi/pagination?userid=${this.userLoginID}&pageNumber=${1}&pageSize=20&getall=true`)
-              .toPromise()
-              .then(truyenData => {
-                this.jsonTruyenArr = truyenData;
-                //console.log("refresh list: ", this.jsonTruyenArr);
-              })
+            this.reloadTruyenOnPag(1);
           }
-          else{
+          else {
             this._router.navigate(['authentication/login']);
           }
         }
       );
 
-    this.requestService.get(`binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`)
-      .toPromise()
-      .then(binhLuanData => {
-        this.jsonBinhLuanArr = binhLuanData;
-        //console.log(this.jsonBinhLuanArr);
-      })
 
-    this.requestService.get(`truyen/pagination?pageNumber=1&pageSize=5&topview=true`)
-      .toPromise()
-      .then(mostViewData => {
-        this.mostViews = mostViewData;
-        //console.log(this.mostViews);
-      })
-  }
-
-  async fetchCorsPagination(number) {
-    const response = await fetch(environment.apiURL + `/theodoi/pagination?userid=B4298A95-6646-46C8-9F46-08D94B5B53E1&pageNumber=1&pageSize=20&getall=true`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
-        "Api-Key": environment.apiKey
-      }
-    });
-    const headers = JSON.parse(response.headers.get('X-Pagination'));
-    return headers;
-  }
-
-  refreshFetchList(value) {
-    console.log(value);
-
-    this.fetchCorsPagination(value).then(headers => {
-      this.truyenPaginationData = headers;
-      console.log('header:', this.truyenPaginationData);
-      this.storyListComponent.passPagingData(this.truyenPaginationData);
+    let binhLuanUpdateParams: RequestParam = { pageNumber: 1, pageSize: 20, lastestUpdate: true }
+    this.binhLuanService.getListWithParams(binhLuanUpdateParams).subscribe(binhLuans => {
+      this.binhLuans = binhLuans;
+      //console.log(this.binhLuans)
     });
 
-    this.requestService.get(`theodoi/pagination?userid=${this.userLoginID}&pageNumber=${value}&pageSize=20&getall=true`)
-      .toPromise()
-      .then(truyenData => {
-        this.jsonTruyenArr = truyenData;
-        //console.log("refresh list: ", this.jsonTruyenArr);
-      })
+    let truyenTopViewParams: RequestParam = { pageNumber: 1, pageSize: 5, topView: true }
+    this.truyenService.getListWithParams(truyenTopViewParams).subscribe(truyens => {
+      this.truyensTopView = truyens;
+      //console.log(truyens)
+    });
+
+  }
+
+  reloadTruyenOnPag(number) {
+    //console.log(value)
+
+    let truyenHeaderPagParams: RequestParam = { pageNumber: number, pageSize: 20, getAll: true, userID: this.userLoginID }
+    this.theoDoiService.getPaginationHeaders(truyenHeaderPagParams).then(headers => {
+      this.storyListComponent.passPagingHeaders(headers);
+    });
+
+    let truyenOnReloadParams: RequestParam = { pageNumber: number, pageSize: 20, getAll: true, userID: this.userLoginID }
+    this.theoDoiService.getListWithParams(truyenOnReloadParams).subscribe(truyens => {
+      this.truyensByTheoDoi = truyens;
+      //console.log(truyens)
+    });
   }
 
   deleteFollowingItem(truyenID) {
-    this.requestService.delete(`theodoi/deleteforuser?userid=${this.userLoginID}&truyenID=${truyenID}`)
-      .toPromise()
-      .then(res => {
-        this.toast.showToast("Thành công", "Bỏ theo dõi truyện thành công!", "success");
-
-        this.requestService.get(`theodoi/pagination?userid=${this.userLoginID}&pageNumber=${1}&pageSize=20&getall=true`)
-          .toPromise()
-          .then(truyenData => {
-            this.jsonTruyenArr = truyenData;
-            //console.log("refresh list: ", this.jsonTruyenArr);
-          })
-      })
+    let truyenOnDeleteParams: RequestParam = { userID: this.userLoginID, truyenID: truyenID }
+    this.theoDoiService.deleteWithParams("deleteforuser", truyenOnDeleteParams).subscribe(_ => {
+      this.toast.showToast("Thành công", "Bỏ theo dõi truyện thành công!", "success");
+      this.reloadTruyenOnPag(1);
+    });
   }
 }

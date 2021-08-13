@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HistoryManagement } from '../../services/historyManagement.service';
+import { BinhLuan } from '../../../model/binhluan/BinhLuan.model';
 
 @Component({
   selector: 'app-comment-sidebar',
@@ -10,7 +11,7 @@ import { HistoryManagement } from '../../services/historyManagement.service';
 })
 export class CommentSidebarComponent implements OnInit {
 
-  @Input() binhLuanJson: any;
+  @Input() binhLuans: BinhLuan[];
   
   constructor(private historyManagement: HistoryManagement) { }
 

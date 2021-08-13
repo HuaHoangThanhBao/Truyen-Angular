@@ -4,6 +4,13 @@ import { PubLishTheoDoiOfTruyenDto } from 'src/app/model/publishTheoDoiOfTruyen.
 import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
 import { HistoryManagement } from '../../../../shared/services/historyManagement.service';
 import { RequestService } from '../../../../shared/services/request.service';
+import { RequestParam } from '../../../../model/param/RequestParam.model';
+import { TruyenService } from '../../../../services/truyenService.service';
+import { BinhLuanService } from '../../../../services/binhLuanService.service';
+import { BinhLuan } from '../../../../model/binhluan/BinhLuan.model';
+import { Truyen } from '../../../../model/truyen/Truyen.model';
+import { PhuLucService } from '../../../../services/phuLucService.service';
+import { PhuLuc } from '../../../../model/phuluc/PhuLuc.model';
 
 declare function expandBtn(): void;
 
@@ -14,53 +21,40 @@ declare function expandBtn(): void;
   providers: [HistoryManagement]
 })
 export class StoryDetailComponent implements OnInit {
+  binhLuans: BinhLuan[];
+  truyen: Truyen;
+  phuLucs: PhuLuc;
 
-  truyenDetailJson: any;
-  phuLucJson: any;
-
-  jsonBinhLuanArr: any;
   tongLuotXem: number;
-  binhLuans: any;
-  truyenID: string;
+  truyenID: number;
 
   constructor(private route: ActivatedRoute, private _router: Router, private historyManagement: HistoryManagement,
-    private toast: ToastAlertService, private requestService: RequestService) {
+    private toast: ToastAlertService, private requestService: RequestService, private truyenService: TruyenService, 
+    private binhLuanService: BinhLuanService, private phuLucService: PhuLucService) {
 
     this.route.paramMap.subscribe((param) => {
-      this.truyenID = param.get('truyenID');
+      this.truyenID = parseInt(param.get('truyenID'));
     });
 
   }
 
   ngOnInit(): void {
-    this.requestService.get(`binhluan/pagination?pageNumber=1&pageSize=5&sorting=true&truyenID=${this.truyenID}`)
-      .toPromise()
-      .then(binhLuanData => {
-        this.jsonBinhLuanArr = binhLuanData;
-        //console.log('binhluan in st-DETAIL:', this.jsonBinhLuanArr);
-      });
+    let binhLuansParams: RequestParam = {pageNumber: 1, pageSize: 5, sorting: true, truyenID: this.truyenID}
+    this.binhLuanService.getListWithParams(binhLuansParams).subscribe(binhLuans => {
+      this.binhLuans = binhLuans;
+      //console.log(binhLuans)
+    });
 
-
-    this.requestService.get(`truyen/${this.truyenID}/details`)
-      .toPromise()
-      .then(truyenDetail => {
-        this.truyenDetailJson = truyenDetail;
-        //console.log('truyen detail:', this.truyenDetailJson);
-        this.tongLuotXem = this.truyenDetailJson.chuongs.reduce((ac, cur) => { return ac + cur.luotXem }, 0);
-      });
-
-    this.requestService.get(`phuluc/${this.truyenID}`)
-      .toPromise()
-      .then(phuluc => {
-        this.phuLucJson = phuluc;
-        //console.log('phu luc:', this.phuLucJson);
-      })
-
-    this.requestService.get(`binhluan/pagination?pageNumber=1&pageSize=10&sorting=true&truyenID=${this.truyenID}`)
-      .toPromise()
-      .then(binhLuans => {
-        this.binhLuans = binhLuans;
-      });
+    this.truyenService.getDetail(this.truyenID).subscribe(truyen => {
+      this.truyen = truyen;
+      this.tongLuotXem = truyen.chuongs.reduce((ac, cur) => { return ac + cur.luotXem }, 0);
+      //console.log(truyen)
+    });
+    
+    this.phuLucService.get(this.truyenID).subscribe(phulucs => {
+      this.phuLucs = phulucs;
+      //console.log(phulucs)
+    });
 
     expandBtn();
     //truyenUltiInit();
@@ -72,7 +66,7 @@ export class StoryDetailComponent implements OnInit {
         console.log(response)
         if (response["statusCode"] == 200) {
           const theoDoiDto: PubLishTheoDoiOfTruyenDto = {
-            truyenID: parseInt(this.truyenID),
+            truyenID: this.truyenID,
             userID: response["message"]
           }
 

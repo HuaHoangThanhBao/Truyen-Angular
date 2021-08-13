@@ -6,6 +6,13 @@ import { UpdateUserAvatarDto } from 'src/app/model/updateUserAvatar.model';
 import { PasswordConfirmationValidatorService } from 'src/app/shared/services/password-confirmation-validator.service';
 import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
 import { RequestService } from '../../../../shared/services/request.service';
+import { TruyenService } from '../../../../services/truyenService.service';
+import { BinhLuanService } from '../../../../services/binhLuanService.service';
+import { UserService } from '../../../../services/userService.service';
+import { User } from '../../../../model/user/User.model';
+import { BinhLuan } from '../../../../model/binhluan/BinhLuan.model';
+import { Truyen } from '../../../../model/truyen/Truyen.model';
+import { RequestParam } from '../../../../model/param/RequestParam.model';
 
 @Component({
   selector: 'app-account',
@@ -17,11 +24,10 @@ export class AccountComponent implements OnInit {
 
   public updatePasswordForm: FormGroup;
 
-  jsonTruyenArr: any;
-  jsonBinhLuanArr: any;
-  mostViews: any;
+  truyensTopView: Truyen[];
+  binhLuans: BinhLuan[];
+  user: User;
 
-  userData: any;
   currentAvatar: string = "";
 
   public showSuccess: boolean;
@@ -30,7 +36,8 @@ export class AccountComponent implements OnInit {
   btnSubmitLocked: boolean = false;
 
   constructor(private _router: Router, private toast: ToastAlertService, private _passConfValidator: PasswordConfirmationValidatorService,
-     private requestService: RequestService) {
+     private requestService: RequestService, private truyenService: TruyenService, private binhLuanService: BinhLuanService,
+     private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -43,16 +50,9 @@ export class AccountComponent implements OnInit {
         
         if (response["statusCode"] == 200)
         {
-          this.requestService.get(`user/${response["message"]}/details`)
-          .subscribe(
-            (response) => {
-              this.userData = response;
-              console.log('user info: ', this.userData);
-            },
-            (error) => {
-              console.log('eror:', error);
-            }
-          );
+          this.userService.getDetail(response["message"]).subscribe(user => {
+            this.user = user;
+          })
         }
         else{
           this._router.navigate(['/authentication/login']);
@@ -70,19 +70,17 @@ export class AccountComponent implements OnInit {
     /**/
 
 
-    this.requestService.get(`binhluan/pagination?pageNumber=1&pageSize=20&lastestUpdate=true`)
-      .toPromise()
-      .then(binhLuanData => {
-        this.jsonBinhLuanArr = binhLuanData;
-        console.log(this.jsonBinhLuanArr);
-      })
+    let truyenTopViewParams: RequestParam = {pageNumber: 1, pageSize: 5, topView: true}
+    this.truyenService.getListWithParams(truyenTopViewParams).subscribe(truyens => {
+      this.truyensTopView = truyens;
+      //console.log(truyens)
+    });
 
-    this.requestService.get(`truyen/pagination?pageNumber=1&pageSize=5&topview=true`)
-      .toPromise()
-      .then(mostViewData => {
-        this.mostViews = mostViewData;
-        console.log(this.mostViews);
-      })
+    let binhLuanUpdateParams: RequestParam = {pageNumber: 1, pageSize: 20, lastestUpdate: true}
+    this.binhLuanService.getListWithParams(binhLuanUpdateParams).subscribe(binhLuans => {
+      this.binhLuans = binhLuans;
+      //console.log(this.binhLuans)
+    });
   }
 
   public validateControl = (controlName: string) => {
@@ -98,7 +96,7 @@ export class AccountComponent implements OnInit {
     this.showError = this.showSuccess = false;
     const updatePass = { ...updatePasswordFormValue };
     const updatePassDto: UpdatePasswordDto = {
-      email: this.userData.email,
+      email: this.user.email,
       oldPassword: updatePass.oldpassword,
       password: updatePass.password,
       confirmPassword: updatePass.confirm
@@ -127,7 +125,7 @@ export class AccountComponent implements OnInit {
     }
     else {
       const updateAvatarDto: UpdateUserAvatarDto = {
-        email: this.userData.email,
+        email: this.user.email,
         hinhAnh: this.currentAvatar
       }
       this.requestService.put('user/UpdateUserAvatar', updateAvatarDto)

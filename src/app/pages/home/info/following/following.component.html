@@ -10,9 +10,9 @@
                     <!--Section bên trái-->
                     <div class="body__cover--left right-padding">
                         <!--Danh sách truyện-->
-                        <app-story-list [truyenJson]="jsonTruyenArr" [headingTitle]="title" [isFollowing]="true" 
+                        <app-story-list [truyens]="truyensByTheoDoi" [headingTitle]="title" [isFollowing]="true" 
                         (deleteFollowingItemEvent)="deleteFollowingItem($event)"
-                        (reload)="refreshFetchList($event)">
+                        (reload)="reloadTruyenOnPag($event)">
                         </app-story-list>
                         <!--End Danh sách truyện-->
                     </div>
@@ -22,11 +22,11 @@
                     <!--Section bên phải (side-bar)-->
                     <div class="body__cover--right left-padding">
                         <!--Rank List-->
-                        <app-ranking [rankingJson]="mostViews"></app-ranking>
+                        <app-ranking [truyenRanks]="truyensTopView"></app-ranking>
                         <!--End Rank List-->
 
                         <!--Comment-->
-                        <app-comment-sidebar [binhLuanJson]="jsonBinhLuanArr"></app-comment-sidebar>
+                        <app-comment-sidebar [binhLuans]="binhLuans"></app-comment-sidebar>
                         <!--End Comment-->
                     </div>
                     <!--End Side-bar-->

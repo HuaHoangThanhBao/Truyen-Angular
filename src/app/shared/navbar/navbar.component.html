@@ -25,7 +25,7 @@
             </a>
             <div class="catagory-content">
               <ul class="catagory-list">
-                <li class="catagory-item" *ngFor="let theloai of theLoaiJson">
+                <li class="catagory-item" *ngFor="let theloai of theLoais">
                   <a href="details/category/{{ theloai.theLoaiID }}">{{ theloai.tenTheLoai }}</a>
                 </li>
               </ul>
@@ -52,9 +52,9 @@
                     <img src="assets/images/loupe.svg" class="search-icon" alt="no image avaiable">
                   </div>
                 </div>
-                <div class="search__result" *ngIf="filterTruyenResult?.length > 0">
+                <div class="search__result" *ngIf="truyensOnSearch?.length > 0">
                   <ul class="search__result--list">
-                    <li class="search__result--item" *ngFor="let res of filterTruyenResult">
+                    <li class="search__result--item" *ngFor="let res of truyensOnSearch">
                       <a routerLink="/details/story-detail/{{ res.truyenID }}">
                         <div class="search__result--box">
                           <img src="https://drive.google.com/uc?export=view&id={{res.hinhAnh}}">

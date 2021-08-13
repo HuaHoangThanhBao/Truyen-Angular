@@ -9,16 +9,17 @@
                     <div class="body__box">
                         <div class="body__box--header">
                             <div class="box__header--item">
-                                <h1>{{chuongJson?.truyen.tenTruyen}}</h1>
+                                <h1>{{chuong?.truyen.tenTruyen}}</h1>
                             </div>
                             <div class="box__header--item">
-                                <p>{{chuongJson?.truyen.tenChuong}}</p>
+                                <p>{{chuong?.truyen.tenChuong}}</p>
                             </div>
                             <div class="box__header--item">
-                                <p>Cập nhật lúc: <span>{{ chuongJson?.thoiGianCapNhat }}</span></p>
+                                <p>Cập nhật lúc: <span>{{ chuong?.thoiGianCapNhat }}</span></p>
                             </div>
                             <div class="nav__menu">
-                                <ul id="nav__menu--header" class="nav__menu--list">
+                                <app-seleton-loader *ngIf="!truyen?.chuongs" Cheight="30" Cwidth="100%"></app-seleton-loader>
+                                <ul *ngIf="truyen?.chuongs" id="nav__menu--header" class="nav__menu--list">
                                     <li class="nav__menu-item">
                                         <a href="index">
                                             <div class="nav__menu-item-box">
@@ -30,7 +31,7 @@
                                         </a>
                                     </li>
                                     <li class="nav__menu-item">
-                                        <a href="story-detail/{{chuongJson?.truyen.truyenID}}">
+                                        <a href="story-detail/{{chuong?.truyen.truyenID}}">
                                             <div class="nav__menu-item-box">
                                                 <div class="nav__menu-item-icon">
                                                     <img loading="lazy" data-src="assets/images/list.svg"
@@ -65,10 +66,10 @@
                                     <li class="nav__menu-item">
                                         <div class="nav__menu-select-box">
                                             <select (change)="selectedChange($event.target.value)">
-                                                <option *ngFor="let chuong of truyenJson?.chuongs"
-                                                    [attr.selected]="chuong?.chuongID == chuongJson?.chuongID ? true: null"
-                                                    [attr.value]="chuong?.chuongID">
-                                                    {{ chuong.tenChuong }}
+                                                <option *ngFor="let c of truyen?.chuongs"
+                                                    [attr.selected]="c?.chuongID == chuong?.chuongID ? true: null"
+                                                    [attr.value]="c?.chuongID">
+                                                    {{ c.tenChuong }}
                                                 </option>
                                             </select>
                                         </div>
@@ -88,7 +89,7 @@
                         </div>
                         <!--Image render list-->
                         <ul id="image__list" class="image__list">
-                            <li class="image__list--item" *ngFor="let noidung of chuongJson?.noiDungChuongs">
+                            <li class="image__list--item" *ngFor="let noidung of chuong?.noiDungChuongs">
                                 <img loading="lazy"
                                     data-src="https://drive.google.com/uc?export=view&id={{ noidung.hinhAnh }}"
                                     alt="noidung.hinhAnh">
@@ -100,7 +101,7 @@
 
                     <div class="body__box">
                         <!--Section Bình luận-->
-                        <app-comment-list [jsonBinhLuan]="binhLuanJson" [jsonChuong]="chuongJson" [isDetail]="false">
+                        <app-comment-list [binhLuans]="binhLuans" [chuong]="chuong" [isDetail]="false">
                         </app-comment-list>
                         <!--End section bình luận-->
                     </div>
