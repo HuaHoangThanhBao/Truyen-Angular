@@ -73,7 +73,7 @@ export class StoryReadingComponent implements OnInit {
       //console.log(truyens)
     });
 
-    this.scrollMenu();
+    //this.scrollMenu();
   }
 
   redirectToAnotherChap(value) {

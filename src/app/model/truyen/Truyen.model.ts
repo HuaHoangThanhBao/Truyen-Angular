@@ -4,15 +4,15 @@ import { PhuLuc } from '../phuluc/PhuLuc.model';
 import { TheoDoi } from '../theodoi/TheoDoi.model';
 
 export interface Truyen{
-    binhLuans: BinhLuan[],
-    chuongs: Chuong[],
-    hinhAnh: string,
-    moTa: string,
-    phuLucs: PhuLuc[],
-    tacGia: string,
-    tenTruyen: string,
-    theoDois: TheoDoi[],
-    tinhTrang: boolean,
-    trangThai: number,
-    truyenID: number
+    binhLuans: BinhLuan[];
+    chuongs: Chuong[];
+    hinhAnh: string;
+    moTa: string;
+    phuLucs: PhuLuc[];
+    tacGia: string;
+    tenTruyen: string;
+    theoDois: TheoDoi[];
+    tinhTrang: boolean;
+    trangThai: number;
+    truyenID: number;
 }

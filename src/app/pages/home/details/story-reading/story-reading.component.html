@@ -20,6 +20,7 @@
                             <div class="nav__menu">
                                 <app-seleton-loader *ngIf="!truyen?.chuongs" Cheight="30" Cwidth="100%"></app-seleton-loader>
                                 <ul *ngIf="truyen?.chuongs" id="nav__menu--header" class="nav__menu--list">
+                                    {{scrollMenu()}}
                                     <li class="nav__menu-item">
                                         <a href="index">
                                             <div class="nav__menu-item-box">
