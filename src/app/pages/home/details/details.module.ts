@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { CategoryComponent } from '../details/category/category.component';
 import { StoryDetailComponent } from '../details/story-detail/story-detail.component';
 import { StoryReadingComponent } from '../details/story-reading/story-reading.component';
-import { GeneralModules } from '../generalModules.module';
+import { GeneralModules } from '../../generalModules.module';
 
 @NgModule({
   declarations: [CategoryComponent, StoryDetailComponent, StoryReadingComponent],

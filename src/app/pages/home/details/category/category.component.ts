@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../../environments/environment';
-import { RequestService } from '../../../../shared/services/request.service';
+import { RequestService } from '../../../../services/others/request.service';
 import { Truyen } from '../../../../model/truyen/Truyen.model';
 import { RequestParam } from '../../../../model/param/RequestParam.model';
-import { TruyenService } from '../../../../services/truyenService.service';
+import { TruyenService } from '../../../../services/model-service/truyenService.service';
 import { BinhLuan } from '../../../../model/binhluan/BinhLuan.model';
-import { BinhLuanService } from '../../../../services/binhLuanService.service';
-import { TheLoaiService } from 'src/app/services/theLoaiService.service';
+import { BinhLuanService } from '../../../../services/model-service/binhLuanService.service';
+import { TheLoaiService } from 'src/app/services/model-service/theLoaiService.service';
 
 @Component({
   selector: 'app-category',

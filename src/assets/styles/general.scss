@@ -42,7 +42,9 @@ body {
   top: 0;
   position: fixed;
   z-index: 999;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+  //box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+  border: 1px solid #E4E4E4;
+  border-width: 0px 0px 1px 0px;
 
   .nav {
     max-width: $max-scale-width;
@@ -84,7 +86,7 @@ body {
 
         .search__box {
           @include SetWidthHeight(100%, 100%);
-          padding: 20px 20px;
+          padding: 20px 0px 20px 0px;
           position: relative;
 
           .search__outer {
@@ -135,7 +137,9 @@ body {
               background: $white;
 
               .search__result--item {
-                margin: 15px 5px 5px 5px;
+                padding: 15px 5px 5px 5px;
+                border: 1px solid #e7e7e7e7;
+                border-width: 0px 1px 1px 1px;
 
                 .search__result--box {
                   display: flex;
@@ -853,12 +857,6 @@ body {
       text-decoration: underline;
     }
 
-    .error {
-      padding: 10px 0px 10px 0px;
-      color: red;
-      line-height: 1.5;
-    }
-
     .field {
       min-height: 50px;
       width: 100%;
@@ -953,4 +951,10 @@ body {
       }
     }
   }
+}
+
+.error {
+  padding: 10px 0px 10px 0px;
+  color: red;
+  line-height: 1.5;
 }

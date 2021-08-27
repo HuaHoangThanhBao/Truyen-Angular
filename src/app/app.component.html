@@ -1,5 +1,5 @@
 <!--Header Menu-->
-<app-navbar [theLoais]="theLoais"></app-navbar>
+<app-navbar [theLoais]="theLoais" [userLoginID]="userLoginID" [active]="navBarActive"></app-navbar>
 <!--End Header Menu-->
 
 <router-outlet></router-outlet>
@@ -15,5 +15,5 @@
 <div id="toast"></div>
 
 <!--Footer-->
-<app-footer></app-footer>
+<app-footer [active]="navBarActive"></app-footer>
 <!--End Footer-->

@@ -1,1 +1,99 @@
-<p>dashboard works!</p>
+<router-outlet></router-outlet>
+
+<body>
+    <div class="container-fluid">
+        <!--Side Bar menu-->
+        <app-admin-side-navbar></app-admin-side-navbar>
+        <!--End Side Bar Menu-->
+
+        <!--Content Continer-->
+        <div id="page-wrapper" class="page-content">
+            <div class="page-content-container">
+                <div class="container-fluid">
+                    <app-admin-top-navbar></app-admin-top-navbar>
+
+                    <!--Timeline Container-->
+                    <div class="timeline">
+                        <div class="timeline-wrapper">
+                            <div class="timeline-box">
+                                <div class="header-title">
+                                    <h1>Phần trăm theo dõi</h1>
+                                </div>
+                                <div class="percent">
+                                    <div class="percent-ouline">
+                                        <h3>75%</h3>
+                                    </div>
+                                </div>
+                                <div class="percent-text">
+                                    Notes: Current sprint requires stakeholders
+                                    to approve newly amended policies
+                                </div>
+                            </div>
+                            <div class="timeline-box">
+                                <div class="header-title">
+                                    <h1>Timeline bình luận</h1>
+                                </div>
+                                <!--Timeline-->
+                                <div class="timeline-area">
+                                    <div class="timeline-item" *ngFor="let data of binhLuans">
+                                        <div class="timeline-time">{{ data.ngayBL }}</div>
+                                        <span class="bounce-btn"></span>
+                                        <div class="timeline-txt">
+                                            <p>{{ data.noiDung }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End Timeline-->
+                        </div>
+                    </div>
+                    <!--End Timeline Container-->
+
+
+                    <!--Table Container-->
+                    <div class="table">
+                        <div class="table-wrapper">
+                            <div class="table-header">
+                                <div class="table-col">
+                                    <h4>Top Theo Dõi Trong ngày</h4>
+                                    <h5>Danh Sách Lượt Theo Dõi</h5>
+                                </div>
+                                <div class="table-col">
+                                    <p>Tìm kiếm:</p>
+                                    <input placeholder="Tìm kiếm">
+                                </div>
+                            </div>
+                            <div class="table-area">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Tên Truyện</th>
+                                            <th>Thời gian</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of theoDois">
+                                            <td>
+                                                <div class="image-box">
+                                                    <img id="user-data" loading="lazy"
+                                                        data-src="assets/images/avatar/{{ data.user.hinhAnh }}">
+                                                </div>
+                                                <p>{{ data.user.userName }}</p>
+                                            </td>
+                                            <td>{{ data.truyen.tenTruyen }}</td>
+                                            <td>{{ data.thoiGian }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Table Container-->
+            </div>
+        </div>
+        <!--End Content Continer-->
+    </div>
+
+</body>

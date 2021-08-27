@@ -22,7 +22,7 @@
                                 <ul *ngIf="truyen?.chuongs" id="nav__menu--header" class="nav__menu--list">
                                     {{scrollMenu()}}
                                     <li class="nav__menu-item">
-                                        <a href="index">
+                                        <a routerLink="/index">
                                             <div class="nav__menu-item-box">
                                                 <div class="nav__menu-item-icon">
                                                     <img loading="lazy" data-src="assets/images/home.svg"
@@ -32,7 +32,7 @@
                                         </a>
                                     </li>
                                     <li class="nav__menu-item">
-                                        <a href="story-detail/{{chuong?.truyen.truyenID}}">
+                                        <a routerLink="/details/story-detail/{{chuong?.truyen.truyenID}}">
                                             <div class="nav__menu-item-box">
                                                 <div class="nav__menu-item-icon">
                                                     <img loading="lazy" data-src="assets/images/list.svg"
@@ -42,7 +42,7 @@
                                         </a>
                                     </li>
                                     <li class="nav__menu-item">
-                                        <a href="#">
+                                        <a routerLink="#">
                                             <div class="nav__menu-item-box">
                                                 <div class="nav__menu-item-icon">
                                                     <img loading="lazy" data-src="assets/images/heart.svg"

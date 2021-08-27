@@ -1,8 +1,8 @@
-import { TwoFactorDto } from './../../model/twoFactorDto.model';
-import { AuthResponseDto } from './../../model/authResponseDto.model';
-import { RegistrationResponseDto } from './../../model/registrationResponseDto.model';
-import { UserForAuthenticationDto } from './../../model/userForAuthenticationDto.model';
-import { UserForRegistrationDto } from './../../model/userForRegistrationDto.model';
+import { TwoFactorDto } from '../../model/authentication/twoFactorDto.model';
+import { AuthResponseDto } from '../../model/authentication/authResponseDto.model';
+import { RegistrationResponseDto } from '../../model/authentication/registrationResponseDto.model';
+import { UserForAuthenticationDto } from '../../model/authentication/userForAuthenticationDto.model';
+import { UserForRegistrationDto } from '../../model/authentication/userForRegistrationDto.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -10,8 +10,8 @@ import { EnvironmentUrlService } from './environment-url.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CustomEncoder } from './custome-encoder';
 import { environment } from '../../../environments/environment';
-import { ForgotPasswordDto } from 'src/app/model/forgotPasswordDto.model';
-import { ResetPasswordDto } from 'src/app/model/resetPasswordDto.model';
+import { ForgotPasswordDto } from 'src/app/model/authentication/forgotPasswordDto.model';
+import { ResetPasswordDto } from 'src/app/model/authentication/resetPasswordDto.model';
 
 @Injectable({
   providedIn: 'root'

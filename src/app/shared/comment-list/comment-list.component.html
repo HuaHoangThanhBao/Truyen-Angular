@@ -12,11 +12,11 @@
             <!--Comment Form-->
             <div class="comment-writing-container">
                 <ng-container *ngIf="userLoginID">
+                    <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{
+                        errorMessage.error.message }}</div>
+                        
                     <form [formGroup]="publishCommentForm" autocomplete="off" novalidate
                         (ngSubmit)="publishComment(publishCommentForm.value)">
-    
-                        <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{
-                            errorMessage.error.errorMessage }}</div>
     
                         <textarea id="noiDung" formControlName="noiDung" class="form-control"
                             placeholder="Các bạn có thể bình luận tại đây..."></textarea>
@@ -54,7 +54,7 @@
                                 <div class="comment-des-container">
                                     <app-seleton-loader *ngIf="!binhLuans" Cheight="20"></app-seleton-loader>
                                     <div *ngIf="binhLuans" class="comment-des-title">
-                                        <p class="comment-name">{{ data?.user.username }}</p>
+                                        <p class="comment-name">{{ data?.user.userName }}</p>
                                     </div>
                                     <app-seleton-loader *ngIf="!binhLuans" Cheight="20"></app-seleton-loader>
                                     <div *ngIf="binhLuans" class="comment-des-content">

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { HistoryManagement } from '../../services/historyManagement.service';
+import { HistoryManagement } from '../../../services/others/historyManagement.service';
 import { Truyen } from '../../../model/truyen/Truyen.model';
 
 @Component({

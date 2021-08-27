@@ -35,7 +35,8 @@
               "src/assets/js/carousel.js",
               "src/assets/js/darkMode.js",
               "src/assets/js/expand.js",
-              "src/assets/js/login.js"
+              "src/assets/js/login.js",
+              "src/assets/js/admin.js"
             ]
           },
           "configurations": {

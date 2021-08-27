@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ResetPasswordDto } from 'src/app/model/resetPasswordDto.model';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { PasswordConfirmationValidatorService } from 'src/app/shared/services/password-confirmation-validator.service';
-import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
+import { ResetPasswordDto } from 'src/app/model/authentication/resetPasswordDto.model';
+import { AuthenticationService } from 'src/app/services/others/authentication.service';
+import { PasswordConfirmationValidatorService } from 'src/app/services/others/password-confirmation-validator.service';
+import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 
 @Component({
   selector: 'app-reset-password',

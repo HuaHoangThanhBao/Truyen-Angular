@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HistoryManagement } from '../../services/historyManagement.service';
+import { HistoryManagement } from '../../../services/others/historyManagement.service';
 import { BinhLuan } from '../../../model/binhluan/BinhLuan.model';
 
 @Component({

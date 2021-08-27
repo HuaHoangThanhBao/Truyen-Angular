@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 
-import { UserForAuthenticationDto } from '../../../../model/userForAuthenticationDto.model';
+import { UserForAuthenticationDto } from '../../../../model/authentication/userForAuthenticationDto.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from '../../../../shared/services/authentication.service';
+import { AuthenticationService } from '../../../../services/others/authentication.service';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
+import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -53,7 +54,7 @@ export class LoginComponent implements OnInit {
     const userForAuth: UserForAuthenticationDto = {
       email: login.email,
       password: login.password,
-      clientURI: 'https://www.ranhdoctruyen.com/unimozy/authentication/forgot-password'
+      clientURI: `${environment.host}/authentication/forgot-password`
     }
 
     this._authService.loginUser('auth/login', userForAuth)

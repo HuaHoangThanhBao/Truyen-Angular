@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
+import { AuthenticationService } from 'src/app/services/others/authentication.service';
+import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -33,7 +33,6 @@ export class EmailConfirmationComponent implements OnInit {
     error => {
       this.showError = true;
       this.errorMessage = error;
-      console.log(this.errorMessage)
     })
   }
 }

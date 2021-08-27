@@ -1,16 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
+import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../../environments/environment';
-import { RequestService } from '../../../../shared/services/request.service';
-import { TruyenService } from '../../../../services/truyenService.service';
-import { BinhLuanService } from '../../../../services/binhLuanService.service';
+import { RequestService } from '../../../../services/others/request.service';
+import { TruyenService } from '../../../../services/model-service/truyenService.service';
+import { BinhLuanService } from '../../../../services/model-service/binhLuanService.service';
 import { Truyen } from '../../../../model/truyen/Truyen.model';
 import { BinhLuan } from '../../../../model/binhluan/BinhLuan.model';
 import { RequestParam } from '../../../../model/param/RequestParam.model';
-import { TheoDoiService } from '../../../../services/theoDoiService.service';
+import { TheoDoiService } from '../../../../services/model-service/theoDoiService.service';
 import { TheoDoi } from '../../../../model/theodoi/TheoDoi.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-following',
@@ -34,30 +35,19 @@ export class FollowingComponent implements OnInit {
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
-  constructor(private _router: Router, private toast: ToastAlertService, private requestService: RequestService, private truyenService: TruyenService,
+  constructor(private jwtHelper: JwtHelperService, private _router: Router, private toast: ToastAlertService, private requestService: RequestService, private truyenService: TruyenService,
     private binhLuanService: BinhLuanService, private theoDoiService: TheoDoiService) {
   }
 
 
   ngOnInit(): void {
-    console.log('following component');
-
-    this.requestService.post(`auth/checklogin`, null)
-      .subscribe(
-        (response) => {
-          console.log(response)
-          if (response["statusCode"] == 200) {
-            this.loggedIn = true;
-            this.userLoginID = response["message"];
-
-            this.reloadTruyenOnPag(1);
-          }
-          else {
-            this._router.navigate(['authentication/login']);
-          }
-        }
-      );
-
+    const token = localStorage.getItem("jwt");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      var decode = this.jwtHelper.decodeToken(token);
+      this.userLoginID = decode['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'];
+      this.loggedIn = true;
+      this.reloadTruyenOnPag(1);
+    }
 
     let binhLuanUpdateParams: RequestParam = { pageNumber: 1, pageSize: 20, lastestUpdate: true }
     this.binhLuanService.getListWithParams(binhLuanUpdateParams).subscribe(binhLuans => {

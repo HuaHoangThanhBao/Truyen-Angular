@@ -56,12 +56,15 @@
                                         <div class="tab-content tab2">
                                             <h2>Thông tin chung</h2>
                                             <br>
-                                            <div *ngIf="user">
+                                            <div *ngIf="user && user?.hinhAnh">
                                                 <h3>Avatar của bạn</h3>
                                                 <img id="user-data" loading="lazy"
                                                     data-src="assets/images/avatar/{{ user.hinhAnh }}">
                                             </div>
-                                            <h3>Bạn có thể thay đổi avatar của mình bằng một trong các hình dưới đây
+                                            <p *ngIf="!user || !user?.hinhAnh">Bạn chưa có avatar, vui lòng chọn một trong các
+                                                hình dưới đây nhé!</p>
+                                            <br>
+                                            <h3>Bạn có thể thay đổi avatar của mình bằng một trong các hình dưới đây:
                                             </h3>
                                             <div class="img-form">
                                                 <div class="img-list">

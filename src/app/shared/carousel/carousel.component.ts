@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HistoryManagement } from '../services/historyManagement.service';
+import { HistoryManagement } from '../../services/others/historyManagement.service';
 declare function carouselInit(): void;
 
 @Component({

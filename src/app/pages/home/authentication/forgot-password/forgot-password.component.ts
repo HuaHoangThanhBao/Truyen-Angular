@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ForgotPasswordDto} from 'src/app/model/forgotPasswordDto.model';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
+import { ForgotPasswordDto} from 'src/app/model/authentication/forgotPasswordDto.model';
+import { AuthenticationService } from 'src/app/services/others/authentication.service';
+import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
@@ -40,7 +40,7 @@ export class ForgotPasswordComponent implements OnInit {
     const forgotPass = { ...forgotPasswordFormValue };
     const forgotPassDto: ForgotPasswordDto = {
       email: forgotPass.email,
-      clientURI: 'https://www.ranhdoctruyen.com/unimozy/authentication/reset-password'
+      clientURI: `${environment.host}/authentication/reset-password`
     }
     this._authService.forgotPassword('auth/forgotpassword', forgotPassDto)
     .subscribe(_ => {

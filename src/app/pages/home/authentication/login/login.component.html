@@ -7,7 +7,7 @@
                 <div class="form__container">
                     <h1 class="card-title">Đăng nhập</h1>
 
-                    <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage.error.errorMessage }}</div>
+                    <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage.error.message }}</div>
 
                     <form [formGroup]="loginForm" autocomplete="off" novalidate
                         (ngSubmit)="loginUser(loginForm.value)">

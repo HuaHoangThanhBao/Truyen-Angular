@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { RequestService } from '../services/request.service';
+import { RequestService } from '../../services/others/request.service';
 import { RequestParam } from '../../model/param/RequestParam.model';
-import { TruyenService } from '../../services/truyenService.service';
+import { TruyenService } from '../../services/model-service/truyenService.service';
 import { templateJitUrl } from '@angular/compiler';
 import { Truyen } from '../../model/truyen/Truyen.model';
 import { TheLoai } from '../../model/theloai/TheLoai.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-navbar',
@@ -15,21 +16,15 @@ import { TheLoai } from '../../model/theloai/TheLoai.model';
   providers: [RequestService]
 })
 export class NavbarComponent implements OnInit {
-  loggedIn: boolean = false;
-
   truyensOnSearch: Truyen[];
 
+  @Input() active: boolean;
+  @Input() userLoginID: string;
   @Input() theLoais: TheLoai[];
 
-  constructor(private requestService: RequestService, private truyenService: TruyenService) { }
+  constructor(private jwtHelper: JwtHelperService, private requestService: RequestService, private truyenService: TruyenService) { }
 
   ngOnInit(): void {
-    this.requestService.post('auth/checklogin', null)
-      .subscribe(response => {
-        console.log(response)
-        if (response["statusCode"] == 200)
-          this.loggedIn = true;
-      })
   }
 
   filterOnSearch(value) {

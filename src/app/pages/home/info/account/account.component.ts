@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UpdatePasswordDto } from 'src/app/model/updatePasswordDto.model';
-import { UpdateUserAvatarDto } from 'src/app/model/updateUserAvatar.model';
-import { PasswordConfirmationValidatorService } from 'src/app/shared/services/password-confirmation-validator.service';
-import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
-import { RequestService } from '../../../../shared/services/request.service';
-import { TruyenService } from '../../../../services/truyenService.service';
-import { BinhLuanService } from '../../../../services/binhLuanService.service';
-import { UserService } from '../../../../services/userService.service';
+import { UpdatePasswordDto } from 'src/app/model/authentication/updatePasswordDto.model';
+import { UpdateUserAvatarDto } from 'src/app/model/authentication/updateUserAvatar.model';
+import { PasswordConfirmationValidatorService } from 'src/app/services/others/password-confirmation-validator.service';
+import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
+import { RequestService } from '../../../../services/others/request.service';
+import { TruyenService } from '../../../../services/model-service/truyenService.service';
+import { BinhLuanService } from '../../../../services/model-service/binhLuanService.service';
+import { UserService } from '../../../../services/model-service/userService.service';
 import { User } from '../../../../model/user/User.model';
 import { BinhLuan } from '../../../../model/binhluan/BinhLuan.model';
 import { Truyen } from '../../../../model/truyen/Truyen.model';
 import { RequestParam } from '../../../../model/param/RequestParam.model';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { LoginService } from '../../../../services/others/login-service.service';
 
 @Component({
   selector: 'app-account',
@@ -27,6 +29,7 @@ export class AccountComponent implements OnInit {
   truyensTopView: Truyen[];
   binhLuans: BinhLuan[];
   user: User;
+  userLoginID: string;
 
   currentAvatar: string = "";
 
@@ -35,29 +38,23 @@ export class AccountComponent implements OnInit {
   public errorMessage: string;
   btnSubmitLocked: boolean = false;
 
-  constructor(private _router: Router, private toast: ToastAlertService, private _passConfValidator: PasswordConfirmationValidatorService,
-     private requestService: RequestService, private truyenService: TruyenService, private binhLuanService: BinhLuanService,
-     private userService: UserService) {
+  constructor(private jwtHelper: JwtHelperService, private _router: Router, private toast: ToastAlertService, private _passConfValidator: PasswordConfirmationValidatorService,
+    private requestService: RequestService, private truyenService: TruyenService, private binhLuanService: BinhLuanService,
+    private userService: UserService, private loginService: LoginService) {
   }
 
   ngOnInit(): void {
-
-    console.log('account component')
-
-    this.requestService.post('auth/checklogin', null)
-      .subscribe(response => {
-        console.log(response)
-        
-        if (response["statusCode"] == 200)
-        {
-          this.userService.getDetail(response["message"]).subscribe(user => {
-            this.user = user;
-          })
-        }
-        else{
-          this._router.navigate(['/authentication/login']);
-        }
-      })
+    this.loginService.currentUser.subscribe(newID => {
+      console.log(newID);
+      
+      if(newID != "")
+      {
+        this.userLoginID = newID;
+        this.userService.getDetail(this.userLoginID).subscribe(user => {
+          this.user = user;
+        });
+      }
+    })
 
     /*Form*/
     this.updatePasswordForm = new FormGroup({
@@ -70,13 +67,13 @@ export class AccountComponent implements OnInit {
     /**/
 
 
-    let truyenTopViewParams: RequestParam = {pageNumber: 1, pageSize: 5, topView: true}
+    let truyenTopViewParams: RequestParam = { pageNumber: 1, pageSize: 5, topView: true }
     this.truyenService.getListWithParams(truyenTopViewParams).subscribe(truyens => {
       this.truyensTopView = truyens;
       //console.log(truyens)
     });
 
-    let binhLuanUpdateParams: RequestParam = {pageNumber: 1, pageSize: 20, lastestUpdate: true}
+    let binhLuanUpdateParams: RequestParam = { pageNumber: 1, pageSize: 20, lastestUpdate: true }
     this.binhLuanService.getListWithParams(binhLuanUpdateParams).subscribe(binhLuans => {
       this.binhLuans = binhLuans;
       //console.log(this.binhLuans)
@@ -125,9 +122,10 @@ export class AccountComponent implements OnInit {
     }
     else {
       const updateAvatarDto: UpdateUserAvatarDto = {
-        email: this.user.email,
+        userID: this.userLoginID,
         hinhAnh: this.currentAvatar
       }
+      console.log(updateAvatarDto);
       this.requestService.put('user/UpdateUserAvatar', updateAvatarDto)
         .subscribe(_ => {
           this.showSuccess = true;
@@ -144,8 +142,13 @@ export class AccountComponent implements OnInit {
   }
 
   logoutClick() {
-    this.requestService.post('auth/logout', null)
+    const token = localStorage.getItem("jwt");
+    const refreshToken: string = localStorage.getItem("refreshToken");
+    const credentials = JSON.stringify({ accessToken: token, refreshToken: refreshToken });
+    this.requestService.post('token/revoke', credentials)
       .subscribe(res => {
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("refreshToken");
         this.toast.showToast("Rất tiếc khi bạn đăng xuất", "Hãy quay lại sớm nhé!", "warning");
         window.location.href = 'index';
       },

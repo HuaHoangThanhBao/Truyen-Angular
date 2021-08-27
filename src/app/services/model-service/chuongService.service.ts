@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { TheLoai } from '../model/theloai/TheLoai.model';
 import { ResourceService } from './resourceService.service';
+import { Chuong } from '../../model/chuong/Chuong.model';
 
 
 @Injectable({ providedIn: 'root' })
-export class TheLoaiService extends ResourceService<TheLoai> {
+export class ChuongService extends ResourceService<Chuong> {
     constructor(protected httpClient: HttpClient) {
         super(httpClient);
     }
 
     getResourceUrl(): string {
-        return 'theloai';
+        return 'chuong';
     }
 }

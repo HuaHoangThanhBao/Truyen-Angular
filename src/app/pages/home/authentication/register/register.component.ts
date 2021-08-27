@@ -1,11 +1,11 @@
 import { Router } from '@angular/router';
-import { PasswordConfirmationValidatorService } from '../../../../shared/services/password-confirmation-validator.service';
-import { UserForRegistrationDto } from '../../../../model/userForRegistrationDto.model';
-import { AuthenticationService } from '../../../../shared/services/authentication.service';
+import { PasswordConfirmationValidatorService } from '../../../../services/others/password-confirmation-validator.service';
+import { UserForRegistrationDto } from '../../../../model/authentication/userForRegistrationDto.model';
+import { AuthenticationService } from '../../../../services/others/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
-import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
+import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 
 @Component({
   selector: 'app-register',
@@ -53,8 +53,9 @@ export class RegisterComponent implements OnInit {
       lastName: formValues.lastName,
       email: formValues.email,
       password: formValues.password,
+      quyen: 0,
       confirmPassword: formValues.confirm,
-      clientURI: 'https://www.ranhdoctruyen.com/unimozy/authentication/email-confirmation'
+      clientURI: `${environment.host}/authentication/email-confirmation`
     };
 
     this._authService.registerUser("auth/registration", user)
@@ -66,8 +67,6 @@ export class RegisterComponent implements OnInit {
       this.errorMessage = error;
       this.showError = true;
       this.btnSubmitLocked = false;
-      console.log(error)
-      console.log(error.error.errorMessage)
     })
   }
 }

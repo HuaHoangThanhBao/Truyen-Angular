@@ -1,9 +1,9 @@
-import { TwoFactorDto } from '../../../../model/twoFactorDto.model';
-import { AuthenticationService } from '../../../../shared/services/authentication.service';
+import { TwoFactorDto } from '../../../../model/authentication/twoFactorDto.model';
+import { AuthenticationService } from '../../../../services/others/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastAlertService } from 'src/app/shared/services/toast-alert-service.service';
+import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 
 @Component({
   selector: 'app-two-step-verification',
@@ -22,17 +22,17 @@ export class TwoStepVerificationComponent implements OnInit {
 
   btnSubmitLocked: boolean = false;
 
-  constructor(private _authService: AuthenticationService, private _route: ActivatedRoute, 
+  constructor(private _authService: AuthenticationService, private _route: ActivatedRoute,
     private _router: Router, private toast: ToastAlertService) { }
 
   ngOnInit(): void {
     this.twoStepForm = new FormGroup({
       twoFactorCode: new FormControl('', [Validators.required]),
     });
-    
-      this._provider = this._route.snapshot.queryParams['provider'];
-      this._email = this._route.snapshot.queryParams['email'];
-      this._returnUrl = this._route.snapshot.queryParams['returnUrl'];
+
+    this._provider = this._route.snapshot.queryParams['provider'];
+    this._email = this._route.snapshot.queryParams['email'];
+    this._returnUrl = this._route.snapshot.queryParams['returnUrl'];
   }
 
   public validateControl = (controlName: string) => {
@@ -46,7 +46,7 @@ export class TwoStepVerificationComponent implements OnInit {
   public loginUser = (twoStepFromValue) => {
     this.btnSubmitLocked = true;
     this.showError = false;
-    
+
     const formValue = { ...twoStepFromValue };
     let twoFactorDto: TwoFactorDto = {
       email: this._email,
@@ -55,19 +55,21 @@ export class TwoStepVerificationComponent implements OnInit {
     }
 
     this._authService.twoStepLogin('auth/LoginVerification', twoFactorDto)
-    .subscribe(res => {
-      this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
+      .subscribe(res => {
+        this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
 
-      //console.log(res.token);
-      //this.loginService.login(res.token);
-      
-      this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-      window.location.href = this._returnUrl;
-    },
-    error => {
-      this.errorMessage = error;
-      this.showError = true;
-      this.btnSubmitLocked = false;
-    })
+        const token = (<any>res).token;
+        const refreshToken = (<any>res).refreshToken;
+        localStorage.setItem("jwt", token);
+        localStorage.setItem("refreshToken", refreshToken);
+
+        this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
+        window.location.href = this._returnUrl;
+      },
+        error => {
+          this.errorMessage = error;
+          this.showError = true;
+          this.btnSubmitLocked = false;
+        })
   }
 }

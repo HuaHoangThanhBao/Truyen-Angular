@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+declare function setUpAdmin(): void;
 
 @Component({
   selector: 'app-acceptance',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AcceptanceComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+   }
 
   ngOnInit(): void {
+    setUpAdmin();
   }
 
 }

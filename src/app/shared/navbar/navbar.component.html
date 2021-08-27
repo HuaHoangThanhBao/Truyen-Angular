@@ -1,5 +1,6 @@
 <!--Header Menu-->
-<header class="header container-fluid">
+<header class="header container-fluid" *ngIf="active">
+  
   <nav class="nav">
     <ul id="top__nav" class="nav__list">
       <li class="nav__item">
@@ -17,7 +18,6 @@
         </a>
       </li>
       <li class="nav__item">
-
         <div class="menu-panel">
           <div class="sep">
             <a class="nav__link n-highL">
@@ -26,7 +26,7 @@
             <div class="catagory-content">
               <ul class="catagory-list">
                 <li class="catagory-item" *ngFor="let theloai of theLoais">
-                  <a href="details/category/{{ theloai.theLoaiID }}">{{ theloai.tenTheLoai }}</a>
+                  <a routerLink="/details/category/{{ theloai.theLoaiID }}">{{ theloai.tenTheLoai }}</a>
                 </li>
               </ul>
             </div>
@@ -38,8 +38,8 @@
             <a class="nav__link n-highL" routerLink="/info/history">Lịch sử</a>
           </div>
           <div class="sep">
-            <a *ngIf="!loggedIn" class="nav__link n-highL" routerLink="/authentication/login">Đăng nhập</a>
-            <a *ngIf="loggedIn" class="nav__link n-highL" routerLink="/info/account">Tài khoản</a>
+            <a *ngIf="!userLoginID" class="nav__link n-highL" routerLink="/authentication/login">Đăng nhập</a>
+            <a *ngIf="userLoginID" class="nav__link n-highL" routerLink="/info/account">Tài khoản</a>
           </div>
           <div class="sep">
             <div class="search__panel">

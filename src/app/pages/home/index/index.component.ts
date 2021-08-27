@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { ICommentModel, ICommentModelJsonType } from '../../../model/truyenModel';
+import { ICommentModel, ICommentModelJsonType } from '../../../model/authentication/truyenModel';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
-import { TruyenService } from '../../../services/truyenService.service';
+import { TruyenService } from '../../../services/model-service/truyenService.service';
 import { Truyen } from '../../../model/truyen/Truyen.model';
 import { RequestParam } from '../../../model/param/RequestParam.model';
-import { BinhLuanService } from '../../../services/binhLuanService.service';
+import { BinhLuanService } from '../../../services/model-service/binhLuanService.service';
 import { BinhLuan } from '../../../model/binhluan/BinhLuan.model';
 
 @Component({

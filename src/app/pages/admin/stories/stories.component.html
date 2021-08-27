@@ -1,1 +1,70 @@
-<p>stories works!</p>
+<body>
+    <div class="container-fluid">
+        <!--Side Bar menu-->
+        <app-admin-side-navbar></app-admin-side-navbar>
+        <!--End Side Bar Menu-->
+
+        <!--Content Container-->
+        <div id="page-wrapper" class="page__content-wrapper">
+            <div class="page__content-container">
+                <div class="container-fluid">
+                    <app-admin-top-navbar></app-admin-top-navbar>
+
+                    <div class="header-title">
+                        <h1>Quản lý truyện</h1>
+                        <button id="add-btn" class="download-report-btn">
+                            <img src="assets/images/plus.svg">
+                            Thêm mới
+                        </button>
+                    </div>
+                    <!--Table Container-->
+                    <div class="table">
+                        <div class="table-wrapper">
+                            <div class="table-header">
+                                <div class="table-col">
+                                    <h5>Danh Sách Truyện</h5>
+                                </div>
+                                <div class="table-col">
+                                    <p>Tìm kiếm:</p>
+                                    <input placeholder="Tìm kiếm">
+                                </div>
+                            </div>
+                            <div class="table-area">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Ảnh</th>
+                                            <th>Tên Truyện</th>
+                                            <th>Sửa</th>
+                                            <th>QL Nội Dung</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of truyens">
+                                            <td>
+                                                <div class="image-box">
+                                                    <img *ngIf="truyens" loading="lazy"
+                                                        data-src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"
+                                                        alt="image not available">
+                                                </div>
+                                            </td>
+                                            <td>{{ data.tenTruyen }}</td>
+                                            <td>
+                                                <button class="update-btn">Sửa</button>
+                                            </td>
+                                            <td>
+                                                <button class="control-btn">QL Nội Dung</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!--End Table Container-->
+                </div>
+            </div>
+        </div>
+        <!--End Content Container-->
+    </div>
+</body>

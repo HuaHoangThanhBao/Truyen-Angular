@@ -1,7 +1,7 @@
 import { Component, Input, Output, OnInit, ViewChild, EventEmitter } from '@angular/core';
 import { PaginationComponent } from '../pagination/pagination.component';
 import { environment } from '../../../environments/environment';
-import { HistoryManagement } from '../services/historyManagement.service';
+import { HistoryManagement } from '../../services/others/historyManagement.service';
 import { Truyen } from '../../model/truyen/Truyen.model';
 
 @Component({

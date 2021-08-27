@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RequestService } from '../../../../shared/services/request.service';
+import { RequestService } from '../../../../services/others/request.service';
 import { Chuong } from '../../../../model/chuong/Chuong.model';
 import { BinhLuan } from '../../../../model/binhluan/BinhLuan.model';
 import { Truyen } from '../../../../model/truyen/Truyen.model';
-import { ChuongService } from '../../../../services/chuongService.service';
-import { TruyenService } from '../../../../services/truyenService.service';
+import { ChuongService } from '../../../../services/model-service/chuongService.service';
+import { TruyenService } from '../../../../services/model-service/truyenService.service';
 import { RequestParam } from '../../../../model/param/RequestParam.model';
-import { BinhLuanService } from '../../../../services/binhLuanService.service';
-import { HistoryManagement } from '../../../../shared/services/historyManagement.service';
+import { BinhLuanService } from '../../../../services/model-service/binhLuanService.service';
+import { HistoryManagement } from '../../../../services/others/historyManagement.service';
 
 @Component({
   selector: 'app-story-reading',

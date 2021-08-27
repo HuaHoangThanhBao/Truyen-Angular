@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TruyenService } from '../../../services/model-service/truyenService.service';
+import { Truyen } from '../../../model/truyen/Truyen.model';
+declare function setUpAdmin(): void;
 
 @Component({
   selector: 'app-stories',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StoriesComponent implements OnInit {
 
-  constructor() { }
+  truyens: Truyen[];
+
+  constructor(private truyenService: TruyenService) {
+   }
 
   ngOnInit(): void {
+    setUpAdmin();
+
+    this.truyenService.getList().subscribe(truyens => {
+      this.truyens = truyens;
+    })
   }
 
 }

@@ -1,4 +1,4 @@
 export interface UpdateUserAvatarDto {
-    email: string;
+    userID: string;
     hinhAnh: string;
 }

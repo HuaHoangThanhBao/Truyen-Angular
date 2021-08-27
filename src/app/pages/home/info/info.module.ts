@@ -3,9 +3,10 @@ import { RouterModule } from '@angular/router';
 import { AccountComponent } from './account/account.component';
 import { FollowingComponent } from '../info/following/following.component';
 import { HistoryComponent } from '../info/history/history.component';
-import { GeneralModules } from '../generalModules.module';
+import { GeneralModules } from '../../generalModules.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthGuard } from '../../../modules/guards/auth-guard.service';
 
 @NgModule({
   declarations: [AccountComponent, FollowingComponent, HistoryComponent],
@@ -14,9 +15,9 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     GeneralModules,
     RouterModule.forChild([
-        { path: 'following', component: FollowingComponent},
+        { path: 'following', component: FollowingComponent/*, canActivate: [AuthGuard]*/},
         { path: 'history', component: HistoryComponent},
-        { path: 'account', component: AccountComponent/*, canActivate: [AuthGuard]*/},
+    { path: 'account', component: AccountComponent/*, canActivate: [AuthGuard]*/},
     ])
   ]
 })
