@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PubLishTheoDoiOfTruyenDto } from 'src/app/model/authentication/publishTheoDoiOfTruyen.model';
 import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 import { HistoryManagement } from '../../../../services/others/historyManagement.service';
-import { RequestService } from '../../../../services/others/request.service';
 import { RequestParam } from '../../../../model/param/RequestParam.model';
 import { TruyenService } from '../../../../services/model-service/truyenService.service';
 import { BinhLuanService } from '../../../../services/model-service/binhLuanService.service';
@@ -12,6 +10,8 @@ import { Truyen } from '../../../../model/truyen/Truyen.model';
 import { PhuLucService } from '../../../../services/model-service/phuLucService.service';
 import { PhuLuc } from '../../../../model/phuluc/PhuLuc.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { TheoDoiService } from '../../../../services/model-service/theoDoiService.service';
+import { TheoDoi } from '../../../../model/theodoi/TheoDoi.model';
 
 declare function expandBtn(): void;
 
@@ -30,8 +30,8 @@ export class StoryDetailComponent implements OnInit {
   truyenID: number;
 
   constructor(private jwtHelper: JwtHelperService, private route: ActivatedRoute, private _router: Router, private historyManagement: HistoryManagement,
-    private toast: ToastAlertService, private requestService: RequestService, private truyenService: TruyenService,
-    private binhLuanService: BinhLuanService, private phuLucService: PhuLucService) {
+    private toast: ToastAlertService, private truyenService: TruyenService,
+    private binhLuanService: BinhLuanService, private phuLucService: PhuLucService, private theoDoiService: TheoDoiService) {
 
     this.route.paramMap.subscribe((param) => {
       this.truyenID = parseInt(param.get('truyenID'));
@@ -67,18 +67,17 @@ export class StoryDetailComponent implements OnInit {
       var decode = this.jwtHelper.decodeToken(token);
 
       const userLoginID = decode['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'];
-      const theoDoiDto: PubLishTheoDoiOfTruyenDto = {
+      const theoDoiDto: TheoDoi = {
         truyenID: this.truyenID,
         userID: userLoginID
       }
 
-      this.requestService.post('theodoi', theoDoiDto)
-        .subscribe(res => {
-          this.toast.showToast("Thành công!", "Hệ thống sẽ thông báo cho bạn khi có chap mới", "success")
-        },
-          (error) => {
-            this.toast.showToast("Lỗi", "Hình như bạn đã theo dõi truyện này rồi!", "error");
-          })
+      this.theoDoiService.post(theoDoiDto)
+        .subscribe(error => {
+          if(!error){
+            this.toast.showToast("Thành công!", "Hệ thống sẽ thông báo cho bạn khi có chap mới", "success")
+          }
+        })
     }
     else {
       this._router.navigate(["authentication/login"]);

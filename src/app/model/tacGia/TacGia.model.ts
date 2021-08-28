@@ -1,5 +1,5 @@
 export interface TacGia{
-    tacGiaID: number;
+    tacGiaID?: number;
     tenTacGia: string;
-    tinhTrang: number;
+    tinhTrang?: number;
 }

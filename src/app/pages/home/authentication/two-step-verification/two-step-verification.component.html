@@ -8,8 +8,6 @@
 
                     <h1 class="card-title">Bạn vui lòng kiểm tra mail và nhập mã xác nhận vào ô dưới:</h1>
                     
-                    <div class="error alert alert-danger" *ngIf="errorMessage" role="alert">{{ errorMessage.error.message }}</div>
-    
                     <form [formGroup]="twoStepForm" autocomplete="off" novalidate (ngSubmit)="loginUser(twoStepForm.value)">
                         <div class="field">
                             <label for="twoFactorCode" class="col-form-label col-sm-2">Mã xác nhận:</label>

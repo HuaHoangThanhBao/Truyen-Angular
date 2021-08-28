@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 
 import { ResourceService } from './resourceService.service';
 import { Chuong } from '../../model/chuong/Chuong.model';
+import { ToastAlertService } from '../others/toast-alert-service.service';
 
 
 @Injectable({ providedIn: 'root' })
 export class ChuongService extends ResourceService<Chuong> {
-    constructor(protected httpClient: HttpClient) {
-        super(httpClient);
+    constructor(protected httpClient: HttpClient, protected toastService: ToastAlertService) {
+        super(httpClient, toastService);
     }
 
     getResourceUrl(): string {

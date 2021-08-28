@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { ICommentModel, ICommentModelJsonType } from '../../../model/authentication/truyenModel';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { TruyenService } from '../../../services/model-service/truyenService.service';
 import { Truyen } from '../../../model/truyen/Truyen.model';
@@ -21,8 +20,6 @@ export class IndexComponent implements OnInit {
   binhLuans: BinhLuan[];
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
-
-  commentFilter: ICommentModel[] = [];
 
   constructor(private truyenService: TruyenService, private binhLuanService: BinhLuanService) {
   }

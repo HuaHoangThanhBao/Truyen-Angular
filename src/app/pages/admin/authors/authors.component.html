@@ -12,23 +12,23 @@
 
                     <div class="header-title">
                         <h1>Quản lý tác giả</h1>
-                        <button id="add-btn" class="download-report-btn">
+                        <button id="add-btn" class="download-report-btn" (click)="openModel('modal-tacGia')">
                             <img src="assets/images/plus.svg">
                             Thêm mới
                         </button>
                     </div>
                     <!--Table Container-->
                     <div class="table">
-                        <div class="table-wrapper">
-                            <div class="table-header">
-                                <div class="table-col">
-                                    <h5>Danh Sách Tác Giả</h5>
-                                </div>
-                                <div class="table-col">
-                                    <p>Tìm kiếm:</p>
-                                    <input placeholder="Tìm kiếm">
-                                </div>
+                        <div class="table-header">
+                            <div class="table-col">
+                                <h5>Danh Sách Tác Giả</h5>
                             </div>
+                            <div class="table-col">
+                                <p>Tìm kiếm:</p>
+                                <input placeholder="Tìm kiếm" #search (input)="filter(search.value)">
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
                             <div class="table-area">
                                 <table>
                                     <thead>
@@ -38,8 +38,19 @@
                                             <th>Xóa</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody *ngIf="!searchResult">
                                         <tr *ngFor="let data of tacGias">
+                                            <td>{{ data.tenTacGia }}</td>
+                                            <td>
+                                                <button class="update-btn">Sửa</button>
+                                            </td>
+                                            <td>
+                                                <button class="update-btn">Xóa</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="searchResult">
+                                        <tr *ngFor="let data of searchResult">
                                             <td>{{ data.tenTacGia }}</td>
                                             <td>
                                                 <button class="update-btn">Sửa</button>
@@ -58,5 +69,18 @@
             </div>
         </div>
         <!--End Content Container-->
+    </div>
+
+    <div id="modal-tacGia" class="modal hide">
+        <div class="modal-main">
+            <button class="modal-close-btn" (click)="closeModel('modal-tacGia')">X</button>
+            <form [formGroup]="addForm" autocomplete="off" novalidate (ngSubmit)="addTacGia(addForm.value)">
+                <div class="modal-body">
+                    <input type="text" formControlName="tenTacGia" class="modal-input form-control" placeholder="Tên tác giả...">
+                    
+                    <button class="modal-submit-btn">Thêm mới</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>

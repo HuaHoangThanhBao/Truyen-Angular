@@ -4,12 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { ResourceService } from './resourceService.service';
 import { Truyen } from '../../model/truyen/Truyen.model';
 import { RequestParam } from '../../model/param/RequestParam.model';
+import { ToastAlertService } from '../others/toast-alert-service.service';
 
 
 @Injectable({ providedIn: 'root' })
 export class TruyenService extends ResourceService<Truyen> {
-    constructor(protected httpClient: HttpClient) {
-        super(httpClient);
+    constructor(protected httpClient: HttpClient, protected toastService: ToastAlertService) {
+        super(httpClient, toastService);
     }
 
     getResourceUrl(): string {

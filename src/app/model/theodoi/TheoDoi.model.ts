@@ -1,7 +1,7 @@
 export interface TheoDoi{
-    theoDoiID: number;
+    theoDoiID?: number;
     truyenID: number;
-    truyen: Object;
+    truyen?: Object;
     userID: string;
-    user: Object;
+    user?: Object;
 }

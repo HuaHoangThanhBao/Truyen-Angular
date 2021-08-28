@@ -1,6 +1,6 @@
 export interface TheLoai {
-    phuLucs: [];
+    phuLucs?: [];
     tenTheLoai: string;
-    theLoaiID: number;
-    tinhTrang: boolean;
+    theLoaiID?: number;
+    tinhTrang?: boolean;
 }

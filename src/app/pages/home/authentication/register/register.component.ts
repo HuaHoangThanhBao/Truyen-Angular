@@ -1,11 +1,11 @@
 import { Router } from '@angular/router';
 import { PasswordConfirmationValidatorService } from '../../../../services/others/password-confirmation-validator.service';
 import { UserForRegistrationDto } from '../../../../model/authentication/userForRegistrationDto.model';
-import { AuthenticationService } from '../../../../services/others/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { environment } from '../../../../../environments/environment';
 import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
+import { UserForRegistrationService } from '../../../../services/authentication/userForRegistrationService.service';
 
 @Component({
   selector: 'app-register',
@@ -15,12 +15,11 @@ import { ToastAlertService } from 'src/app/services/others/toast-alert-service.s
 export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
   public errorMessage: string = '';
-  public showError: boolean;
 
   btnSubmitLocked: boolean = false;
 
-  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,
-    private _router: Router, private toast: ToastAlertService) { }
+  constructor(private _passConfValidator: PasswordConfirmationValidatorService, private _router: Router, 
+    private toast: ToastAlertService, private userForRegistrationService: UserForRegistrationService) { }
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -45,7 +44,6 @@ export class RegisterComponent implements OnInit {
 
   public registerUser = (registerFormValue) => {
     this.btnSubmitLocked = true;
-    this.showError = false;
     const formValues = { ...registerFormValue };
 
     const user: UserForRegistrationDto = {
@@ -58,15 +56,16 @@ export class RegisterComponent implements OnInit {
       clientURI: `${environment.host}/authentication/email-confirmation`
     };
 
-    this._authService.registerUser("auth/registration", user)
-    .subscribe(_ => {
-      this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình để đến bước tiếp theo nhé!", "info");
-      window.location.href = "authentication/login";
-    },
-    error => {
-      this.errorMessage = error;
-      this.showError = true;
-      this.btnSubmitLocked = false;
+    this.userForRegistrationService.post(user)
+    .subscribe(error => {
+      if(!error){
+        this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình để đến bước tiếp theo nhé!", "info");
+        window.location.href = "authentication/login";
+        //this._router.navigate["authentication/login"];
+      }
+      else{
+        this.btnSubmitLocked = false;
+      }
     })
   }
 }

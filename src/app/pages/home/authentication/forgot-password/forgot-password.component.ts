@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ForgotPasswordDto} from 'src/app/model/authentication/forgotPasswordDto.model';
-import { AuthenticationService } from 'src/app/services/others/authentication.service';
 import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 import { environment } from '../../../../../environments/environment';
+import { ForgotPasswordService } from '../../../../services/authentication/forgotPasswordService.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,7 +18,8 @@ export class ForgotPasswordComponent implements OnInit {
   public showError: boolean;
   btnSubmitLocked: boolean = false;
 
-  constructor(private _authService: AuthenticationService, private toast: ToastAlertService) { }
+  constructor(private toast: ToastAlertService,
+    private forgotPasswordService: ForgotPasswordService) { }
 
   ngOnInit(): void {
     this.forgotPasswordForm = new FormGroup({
@@ -34,24 +35,26 @@ export class ForgotPasswordComponent implements OnInit {
     return this.forgotPasswordForm.controls[controlName].hasError(errorName)
   }
 
+  
   public forgotPassword = (forgotPasswordFormValue) => {
     this.btnSubmitLocked = true;
-    this.showError = this.showSuccess = false;
+    
     const forgotPass = { ...forgotPasswordFormValue };
     const forgotPassDto: ForgotPasswordDto = {
       email: forgotPass.email,
       clientURI: `${environment.host}/authentication/reset-password`
     }
-    this._authService.forgotPassword('auth/forgotpassword', forgotPassDto)
-    .subscribe(_ => {
-      this.toast.showToast("Xác thực", "Bạn vui lòng check mail của mình để tiến hành reset mật khẩu nhé", "info");
-      this.showSuccess = true;
-      this.successMessage = 'Đường dẫn để reset password đã được gửi qua mail của bạn, vui lòng kiểm tra mail để tiếp tục.'
-    },
-    err => {
-      this.showError = true;
-      this.errorMessage = err;
-      this.btnSubmitLocked = false;
+    
+    this.forgotPasswordService.post(forgotPassDto)
+    .subscribe(error => {
+      if(!error){
+        this.toast.showToast("Xác thực", "Bạn vui lòng check mail của mình để tiến hành reset mật khẩu nhé", "info");
+        this.showSuccess = true;
+        this.successMessage = 'Đường dẫn để reset password đã được gửi qua mail của bạn, vui lòng kiểm tra mail để tiếp tục.'
+      }
+      else{
+        this.btnSubmitLocked = false;
+      }
     })
   }
 }

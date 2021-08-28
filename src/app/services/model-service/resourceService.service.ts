@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { RequestParam } from '../../model/param/RequestParam.model';
+import { ToastAlertService } from '../others/toast-alert-service.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,10 +16,10 @@ export abstract class ResourceService<T> {
         headers: new HttpHeaders({
             "Content-Type": "application/json",
             'Api-Key': environment.apiKey
-        })
+        }),
     };
 
-    constructor(protected httpClient: HttpClient) {
+    constructor(protected httpClient: HttpClient, protected toastService: ToastAlertService) {
     }
 
     abstract getResourceUrl(): string;
@@ -53,7 +54,20 @@ export abstract class ResourceService<T> {
                 catchError(this.handleError<T>())
             );
     }
-    
+
+    customGetWithparams(_params: HttpParams): Observable<T> {
+        return this.httpClient.get<T>(`${this.APIUrl}`, {
+            headers: {
+                "Content-Type": "application/json",
+                'Api-Key': environment.apiKey
+            }, 
+            params: _params
+        })
+        .pipe(
+            catchError(this.handleError<T>())
+        );
+    }
+
     getDetail(id: string | number): Observable<T> {
         return this.httpClient.get<T>(`${this.APIUrl}/${id}/details`, this.httpOptions)
             .pipe(
@@ -61,7 +75,7 @@ export abstract class ResourceService<T> {
             );
     }
 
-    post(body: T): Observable<any> {
+    post(body: T | T[]): Observable<any> {
         return this.httpClient.post(`${this.APIUrl}`, body, this.httpOptions)
             .pipe(
                 catchError(this.handleError<T>())
@@ -82,7 +96,7 @@ export abstract class ResourceService<T> {
                 );
         }
     }
-    
+
     deleteWithParams(extendRoute: string, params: RequestParam): Observable<any> {
         if (extendRoute != "") {
             return this.httpClient.delete(`${this.APIUrl}/${extendRoute}?${this.convertParams(params)}`, this.httpOptions)
@@ -100,6 +114,13 @@ export abstract class ResourceService<T> {
 
     update(body: T) {
         return this.httpClient.put(`${this.APIUrl}`, body, this.httpOptions)
+            .pipe(
+                catchError(this.handleError<T>())
+            );
+    }
+    
+    updateExtendRoute(extendRoute: string , body: T) {
+        return this.httpClient.put(`${this.APIUrl}/${extendRoute}`, body, this.httpOptions)
             .pipe(
                 catchError(this.handleError<T>())
             );
@@ -126,7 +147,13 @@ export abstract class ResourceService<T> {
             //console.error(error); // log to console instead
 
             // TODO: better job of transforming error for user consumption
-            console.log(`${operation} failed: ${error.message}`);
+            //console.log(`${operation} failed: ${error.message}`);
+
+            if (error.status != 200)
+                this.toastService.showToast("Lỗi", error.error.message, "error");
+
+            //Trả về error (nếu có)
+            result = error;
 
             // Let the app keep running by returning an empty result.
             return of(result as T);

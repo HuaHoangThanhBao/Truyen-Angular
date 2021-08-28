@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ResetPasswordDto } from 'src/app/model/authentication/resetPasswordDto.model';
-import { AuthenticationService } from 'src/app/services/others/authentication.service';
 import { PasswordConfirmationValidatorService } from 'src/app/services/others/password-confirmation-validator.service';
 import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
+import { ResetPasswordService } from '../../../../services/authentication/resetPasswordService.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -21,8 +21,8 @@ export class ResetPasswordComponent implements OnInit {
   private _email: string;
   btnSubmitLocked: boolean = false;
 
-  constructor(private _authService: AuthenticationService, private _passConfValidator: PasswordConfirmationValidatorService,
-    private _route: ActivatedRoute, private toast: ToastAlertService) { }
+  constructor(private _passConfValidator: PasswordConfirmationValidatorService,
+    private _route: ActivatedRoute, private toast: ToastAlertService, private resetPasswordService: ResetPasswordService) { }
 
   ngOnInit(): void {
     this.resetPasswordForm = new FormGroup({
@@ -46,7 +46,7 @@ export class ResetPasswordComponent implements OnInit {
 
   public resetPassword = (resetPasswordFormValue) => {
     this.btnSubmitLocked = true;
-    this.showError = this.showSuccess = false;
+    
     const resetPass = { ...resetPasswordFormValue };
     const resetPassDto: ResetPasswordDto = {
       password: resetPass.password,
@@ -54,16 +54,17 @@ export class ResetPasswordComponent implements OnInit {
       token: this._token,
       email: this._email
     }
-    this._authService.resetPassword('auth/resetpassword', resetPassDto)
-      .subscribe(_ => {
-        this.showSuccess = true;
-        this.toast.showToast("Thành công", "Đổi mật khẩu thành công!", "success");
-        this.toast.showToast("Lưu ý", "Bảo vệ thông tin cùa mình thật kỹ nhé!", "warning");
-      },
-        error => {
-          this.showError = true;
-          this.errorMessage = error;
+    
+    this.resetPasswordService.post(resetPassDto)
+      .subscribe(error => {
+        if(!error){
+          this.showSuccess = true;
+          this.toast.showToast("Thành công", "Đổi mật khẩu thành công!", "success");
+          this.toast.showToast("Lưu ý", "Bảo vệ thông tin cùa mình thật kỹ nhé!", "warning");
+        }
+        else{
           this.btnSubmitLocked = false;
-        })
+        }
+      })
   }
 }

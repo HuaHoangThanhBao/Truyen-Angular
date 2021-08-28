@@ -12,6 +12,7 @@ declare function setUpAdmin(): void;
 export class UsersComponent implements OnInit {
 
   users: User[];
+  searchResult: User[];
 
   constructor(private userService: UserService) {
    }
@@ -21,7 +22,16 @@ export class UsersComponent implements OnInit {
 
     this.userService.getList().subscribe(users => {
       this.users = users;
+      console.log(users)
     })
   }
 
+  filter(value: string){
+    this.searchResult = [];
+    for(let i = 0; i < this.users.length; i++){
+      if(this.users[i].userName.toLowerCase().includes(value)){
+        this.searchResult.push(this.users[i])
+      }
+    }
+  }
 }

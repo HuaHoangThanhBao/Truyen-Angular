@@ -1,17 +1,17 @@
 import { Truyen } from '../truyen/Truyen.model';
 import { BinhLuan } from '../binhluan/BinhLuan.model';
 export interface Chuong{
-    chuongID: number;
+    chuongID?: number;
     truyenID: number;
-    truyen: Truyen;
+    truyen?: Truyen;
 
-    binhLuans: BinhLuan[];
-    noiDungChuongs: [];
+    binhLuans?: BinhLuan[];
+    noiDungChuongs?: [];
 
     tenChuong: string;
-    thoiGianCapNhat: string;
+    thoiGianCapNhat?: string;
 
-    luotXem: number;
-    trangThai: number;
-    tinhTrang: boolean;
+    luotXem?: number;
+    trangThai?: number;
+    tinhTrang?: boolean;
 }

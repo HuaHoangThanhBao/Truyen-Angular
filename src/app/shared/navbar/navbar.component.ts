@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { RequestService } from '../../services/others/request.service';
 import { RequestParam } from '../../model/param/RequestParam.model';
 import { TruyenService } from '../../services/model-service/truyenService.service';
 import { templateJitUrl } from '@angular/compiler';
@@ -12,8 +11,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
-  providers: [RequestService]
+  styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
   truyensOnSearch: Truyen[];
@@ -22,7 +20,7 @@ export class NavbarComponent implements OnInit {
   @Input() userLoginID: string;
   @Input() theLoais: TheLoai[];
 
-  constructor(private jwtHelper: JwtHelperService, private requestService: RequestService, private truyenService: TruyenService) { }
+  constructor(private jwtHelper: JwtHelperService, private truyenService: TruyenService) { }
 
   ngOnInit(): void {
   }

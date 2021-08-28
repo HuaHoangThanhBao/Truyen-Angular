@@ -11,12 +11,14 @@ import { StoriesComponent } from './stories/stories.component';
 import { UsersComponent } from './users/users.component';
 import { AdminSideNavbarComponent } from '../../shared/admin-side-navbar/admin-side-navbar.component';
 import { AdminTopNavbarComponent } from '../../shared/admin-top-navbar/admin-top-navbar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AdminSideNavbarComponent, AdminTopNavbarComponent, DashboardComponent, AcceptanceComponent, AuthorsComponent, ChartsComponent, GenresComponent, StoriesComponent, UsersComponent],
   imports: [
     CommonModule,
     GeneralModules,
+    ReactiveFormsModule,
     RouterModule.forChild([
         { path: 'dashboard', component: DashboardComponent},
         { path: 'acceptance', component: AcceptanceComponent},

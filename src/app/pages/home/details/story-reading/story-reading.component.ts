@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RequestService } from '../../../../services/others/request.service';
 import { Chuong } from '../../../../model/chuong/Chuong.model';
 import { BinhLuan } from '../../../../model/binhluan/BinhLuan.model';
 import { Truyen } from '../../../../model/truyen/Truyen.model';
@@ -15,7 +14,7 @@ import { HistoryManagement } from '../../../../services/others/historyManagement
   selector: 'app-story-reading',
   templateUrl: './story-reading.component.html',
   styleUrls: ['./story-reading.component.scss'],
-  providers: [RequestService, HistoryManagement]
+  providers: [HistoryManagement]
 })
 export class StoryReadingComponent implements OnInit {
 

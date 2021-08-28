@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../../environments/environment';
-import { RequestService } from '../../../../services/others/request.service';
 import { TruyenService } from '../../../../services/model-service/truyenService.service';
 import { BinhLuanService } from '../../../../services/model-service/binhLuanService.service';
 import { Truyen } from '../../../../model/truyen/Truyen.model';
@@ -16,8 +15,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Component({
   selector: 'app-following',
   templateUrl: './following.component.html',
-  styleUrls: ['./following.component.scss'],
-  providers: [RequestService]
+  styleUrls: ['./following.component.scss']
 })
 export class FollowingComponent implements OnInit {
   title = "Truyện đang theo dõi"
@@ -35,7 +33,7 @@ export class FollowingComponent implements OnInit {
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
-  constructor(private jwtHelper: JwtHelperService, private _router: Router, private toast: ToastAlertService, private requestService: RequestService, private truyenService: TruyenService,
+  constructor(private jwtHelper: JwtHelperService, private _router: Router, private toast: ToastAlertService, private truyenService: TruyenService,
     private binhLuanService: BinhLuanService, private theoDoiService: TheoDoiService) {
   }
 

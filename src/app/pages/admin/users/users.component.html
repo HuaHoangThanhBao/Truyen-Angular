@@ -19,16 +19,16 @@
                     </div>
                     <!--Table Container-->
                     <div class="table">
-                        <div class="table-wrapper">
-                            <div class="table-header">
-                                <div class="table-col">
-                                    <h5>Danh Sách User</h5>
-                                </div>
-                                <div class="table-col">
-                                    <p>Tìm kiếm:</p>
-                                    <input placeholder="Tìm kiếm">
-                                </div>
+                        <div class="table-header">
+                            <div class="table-col">
+                                <h5>Danh Sách User</h5>
                             </div>
+                            <div class="table-col">
+                                <p>Tìm kiếm:</p>
+                                <input placeholder="Tìm kiếm" #search (input)="filter(search.value)">
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
                             <div class="table-area">
                                 <table>
                                     <thead>
@@ -39,9 +39,21 @@
                                             <th>Xóa</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody *ngIf="!searchResult">
                                         <tr *ngFor="let data of users">
-                                            <td>{{ data.username }}</td>
+                                            <td>{{ data.userName }}</td>
+                                            <td>{{ data.quyen }}</td>
+                                            <td>
+                                                <button class="update-btn">Sửa</button>
+                                            </td>
+                                            <td>
+                                                <button class="update-btn">Xóa</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="searchResult">
+                                        <tr *ngFor="let data of searchResult">
+                                            <td>{{ data.userName }}</td>
                                             <td>{{ data.quyen }}</td>
                                             <td>
                                                 <button class="update-btn">Sửa</button>

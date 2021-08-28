@@ -1,9 +1,9 @@
 import { TwoFactorDto } from '../../../../model/authentication/twoFactorDto.model';
-import { AuthenticationService } from '../../../../services/others/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
+import { TwoStepVerificationService } from '../../../../services/authentication/twoStepVerificationService.service';
 
 @Component({
   selector: 'app-two-step-verification',
@@ -22,8 +22,8 @@ export class TwoStepVerificationComponent implements OnInit {
 
   btnSubmitLocked: boolean = false;
 
-  constructor(private _authService: AuthenticationService, private _route: ActivatedRoute,
-    private _router: Router, private toast: ToastAlertService) { }
+  constructor(private _route: ActivatedRoute,
+    private _router: Router, private toast: ToastAlertService, private twoStepVerificationService: TwoStepVerificationService) { }
 
   ngOnInit(): void {
     this.twoStepForm = new FormGroup({
@@ -45,7 +45,6 @@ export class TwoStepVerificationComponent implements OnInit {
 
   public loginUser = (twoStepFromValue) => {
     this.btnSubmitLocked = true;
-    this.showError = false;
 
     const formValue = { ...twoStepFromValue };
     let twoFactorDto: TwoFactorDto = {
@@ -54,7 +53,7 @@ export class TwoStepVerificationComponent implements OnInit {
       token: formValue.twoFactorCode
     }
 
-    this._authService.twoStepLogin('auth/LoginVerification', twoFactorDto)
+    this.twoStepVerificationService.post(twoFactorDto)
       .subscribe(res => {
         this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
 
@@ -63,13 +62,10 @@ export class TwoStepVerificationComponent implements OnInit {
         localStorage.setItem("jwt", token);
         localStorage.setItem("refreshToken", refreshToken);
 
-        this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-        window.location.href = this._returnUrl;
+        this._router.navigate([this._returnUrl]);
       },
-        error => {
-          this.errorMessage = error;
-          this.showError = true;
-          this.btnSubmitLocked = false;
-        })
+      error => {
+        this.btnSubmitLocked = false;
+      })
   }
 }

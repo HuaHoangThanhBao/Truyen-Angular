@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
 import { environment } from '../../../../../environments/environment';
-import { RequestService } from '../../../../services/others/request.service';
 import { Truyen } from '../../../../model/truyen/Truyen.model';
 import { RequestParam } from '../../../../model/param/RequestParam.model';
 import { TruyenService } from '../../../../services/model-service/truyenService.service';
@@ -13,8 +12,7 @@ import { TheLoaiService } from 'src/app/services/model-service/theLoaiService.se
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss'],
-  providers: [RequestService]
+  styleUrls: ['./category.component.scss']
 })
 export class CategoryComponent implements OnInit {
   title: string;

@@ -12,23 +12,23 @@
 
                     <div class="header-title">
                         <h1>Quản lý truyện</h1>
-                        <button id="add-btn" class="download-report-btn">
+                        <button id="add-btn" class="download-report-btn" (click)="openModel('modal-truyen')">
                             <img src="assets/images/plus.svg">
                             Thêm mới
                         </button>
                     </div>
                     <!--Table Container-->
                     <div class="table">
-                        <div class="table-wrapper">
-                            <div class="table-header">
-                                <div class="table-col">
-                                    <h5>Danh Sách Truyện</h5>
-                                </div>
-                                <div class="table-col">
-                                    <p>Tìm kiếm:</p>
-                                    <input placeholder="Tìm kiếm">
-                                </div>
+                        <div class="table-header">
+                            <div class="table-col">
+                                <h5>Danh Sách Truyện</h5>
                             </div>
+                            <div class="table-col">
+                                <p>Tìm kiếm:</p>
+                                <input placeholder="Tìm kiếm" #search (input)="filter(search.value)">
+                            </div>
+                        </div>
+                        <div class="table-wrapper">
                             <div class="table-area">
                                 <table>
                                     <thead>
@@ -36,10 +36,10 @@
                                             <th>Ảnh</th>
                                             <th>Tên Truyện</th>
                                             <th>Sửa</th>
-                                            <th>QL Nội Dung</th>
+                                            <th>QL Chương</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody *ngIf="!searchResult">
                                         <tr *ngFor="let data of truyens">
                                             <td>
                                                 <div class="image-box">
@@ -53,7 +53,27 @@
                                                 <button class="update-btn">Sửa</button>
                                             </td>
                                             <td>
-                                                <button class="control-btn">QL Nội Dung</button>
+                                                <button class="control-btn" (click)="openModelChuong(data.truyenID)">QL
+                                                    Chương</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="searchResult">
+                                        <tr *ngFor="let data of searchResult">
+                                            <td>
+                                                <div class="image-box">
+                                                    <img *ngIf="truyens" loading="lazy"
+                                                        data-src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"
+                                                        alt="image not available">
+                                                </div>
+                                            </td>
+                                            <td>{{ data.tenTruyen }}</td>
+                                            <td>
+                                                <button class="update-btn">Sửa</button>
+                                            </td>
+                                            <td>
+                                                <button class="control-btn" (click)="openModelChuong(data.truyenID)">QL
+                                                    Chương</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -66,5 +86,65 @@
             </div>
         </div>
         <!--End Content Container-->
+    </div>
+
+    <div id="modal-truyen" class="modal hide">
+        <div class="modal-main">
+            <button class="modal-close-btn" (click)="closeModel('modal-truyen')">X</button>
+            <form [formGroup]="addForm" autocomplete="off" novalidate (ngSubmit)="addTruyen(addForm.value)">
+                <div class="modal-body">
+                    <input type="text" formControlName="tenTruyen" class="modal-input form-control"
+                        placeholder="Tên truyện...">
+                    <input type="text" formControlName="moTa" class="modal-input form-control" placeholder="Mô tả...">
+                    <select name="" formControlName="tacGia" id="" class="modal-select">
+                        <option value="{{ tacGia.tacGiaID }}" class="modal-option" *ngFor="let tacGia of tacGias">{{
+                            tacGia.tenTacGia }}</option>
+                    </select>
+                    <button class="modal-submit-btn">Thêm mới</button>
+                </div>
+            </form>
+            <button onclick="authenticate().then(loadClient)">Đăng nhập google</button>
+            <button (click)="loadTruyenFolderData()">Load thư viện ảnh</button>
+            <div class="modal-chosen">
+                <h2>Tìm kiếm hình ảnh</h2>
+                <input type="text" #urlInput (input)="chooseImage(urlInput.value)">
+                <h2>Hình ảnh bạn đang chọn</h2>
+                <img class="modal-image" src="https://drive.google.com/uc?export=view&id={{ hinhAnhChosen }}">
+            </div>
+            <br>
+            <ul class="modal-list" *ngIf="danhSachHinhAnhTruyens">
+                <li class="modal-item" *ngFor="let img of danhSachHinhAnhTruyens">
+                    <img class="modal-image" src="https://drive.google.com/uc?export=view&id={{ img.id }}"
+                        (click)="chooseImage(img.id)">
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="modal-chuong" class="modal hide">
+        <div class="modal-main">
+            <button class="modal-close-btn" (click)="closeModel('modal-chuong')">X</button>
+
+            <button onclick="authenticate().then(loadClient)">Đăng nhập google</button>
+
+            <h2>Danh sách chương</h2>
+            <ul>
+                <li *ngFor="let t of currentTruyen?.chuongs">{{ t.tenChuong }}</li>
+            </ul>
+
+            <br>
+            
+            <div class="modal-body">
+                <form [formGroup]="addChuongForm" autocomplete="off" novalidate (ngSubmit)="addDanhSachChuong(addChuongForm.value)">
+                    
+                    <input type="text" class="modal-input" formControlName="tenChuong" placeholder="tên chương...">
+
+                    <input type="text" class="modal-input" formControlName="folderID" placeholder="folder id...">
+
+                    <br>
+                    <button>Thêm mới chương và thư mục hình ảnh</button>
+                </form>
+            </div>
+        </div>
     </div>
 </body>

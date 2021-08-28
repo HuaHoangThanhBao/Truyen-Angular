@@ -1,5 +1,4 @@
 import { Component, OnInit} from '@angular/core';
-import { RequestService } from './services/others/request.service';
 import { TheLoaiService } from './services/model-service/theLoaiService.service';
 import { TheLoai } from './model/theloai/TheLoai.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -13,8 +12,7 @@ declare function setUpDarkMode(): void;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [RequestService]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   title = 'RanhDocTruyen';
@@ -70,7 +68,7 @@ export class AppComponent implements OnInit {
 
     const isRefreshSuccess = await this.tryRefreshingTokens(token);
     if (!isRefreshSuccess) {
-      this.router.navigate(["/authentication/login"]);
+      //this.router.navigate(["/authentication/login"]);
     }
 
     return isRefreshSuccess;
