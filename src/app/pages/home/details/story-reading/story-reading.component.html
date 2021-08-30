@@ -91,7 +91,7 @@
                         <!--Image render list-->
                         <ul id="image__list" class="image__list">
                             <li class="image__list--item" *ngFor="let noidung of chuong?.noiDungChuongs">
-                                <img loading="lazy"
+                                <img *ngIf="noidung.tinhTrang != 1" loading="lazy"
                                     data-src="https://drive.google.com/uc?export=view&id={{ noidung.hinhAnh }}"
                                     alt="noidung.hinhAnh">
                             </li>

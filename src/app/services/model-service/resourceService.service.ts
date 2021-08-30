@@ -30,6 +30,13 @@ export abstract class ResourceService<T> {
                 catchError(this.handleError<T[]>())
             );
     }
+    
+    getListExtend(extendRoute: string): Observable<T[]> {
+        return this.httpClient.get<T[]>(`${this.APIUrl}/${extendRoute}`, this.httpOptions)
+            .pipe(
+                catchError(this.handleError<T[]>())
+            );
+    }
 
     getListWithParams(params: RequestParam): Observable<T[]> {
         return this.httpClient.get<T[]>(`${this.APIUrl}/pagination?${this.convertParams(params)}`, this.httpOptions)
@@ -81,6 +88,13 @@ export abstract class ResourceService<T> {
                 catchError(this.handleError<T>())
             );
     }
+    
+    postExtend(extendRoute, body: T | T[]): Observable<any> {
+        return this.httpClient.post(`${this.APIUrl}/${extendRoute}`, body, this.httpOptions)
+            .pipe(
+                catchError(this.handleError<T>())
+            );
+    }
 
     delete(extendRoute: string, id: string | number): Observable<any> {
         if (extendRoute != "") {
@@ -112,14 +126,21 @@ export abstract class ResourceService<T> {
         }
     }
 
-    update(body: T) {
+    update(body: T | T[]) {
         return this.httpClient.put(`${this.APIUrl}`, body, this.httpOptions)
             .pipe(
                 catchError(this.handleError<T>())
             );
     }
     
-    updateExtendRoute(extendRoute: string , body: T) {
+    updateWithID(id: string, body: T | T[]) {
+        return this.httpClient.put(`${this.APIUrl}/${id}`, body, this.httpOptions)
+            .pipe(
+                catchError(this.handleError<T>())
+            );
+    }
+    
+    updateExtendRoute(extendRoute: string , body: T | T[]): Observable<any> {
         return this.httpClient.put(`${this.APIUrl}/${extendRoute}`, body, this.httpOptions)
             .pipe(
                 catchError(this.handleError<T>())

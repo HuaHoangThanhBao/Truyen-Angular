@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { ToastAlertService } from '../../services/others/toast-alert-service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BinhLuan } from '../../model/binhluan/BinhLuan.model';
@@ -7,13 +7,14 @@ import { Chuong } from '../../model/chuong/Chuong.model';
 import { LoginService } from '../../services/others/login-service.service';
 import { Router } from '@angular/router';
 import { BinhLuanService } from '../../services/model-service/binhLuanService.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-comment-list',
   templateUrl: './comment-list.component.html',
   styleUrls: ['./comment-list.component.scss']
 })
-export class CommentListComponent implements OnInit {
+export class CommentListComponent implements OnInit, OnDestroy {
 
   public publishCommentForm: FormGroup;
 
@@ -27,14 +28,20 @@ export class CommentListComponent implements OnInit {
 
   public errorMessage: string = '';
   public showError: boolean;
+  
+  private loginSubscription: Subscription;
 
   constructor(private toast: ToastAlertService, private loginService: LoginService,
     private _router: Router, private binhLuanService: BinhLuanService) {
 
   }
+  
+  ngOnDestroy() {
+    this.loginSubscription.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.loginService.currentUser.subscribe(newID => {
+    this.loginSubscription = this.loginService.currentUser.subscribe(newID => {
       if (newID != "") {
         console.log(newID);
         this.userLoginID = newID;

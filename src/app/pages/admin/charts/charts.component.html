@@ -1,1 +1,66 @@
-<p>charts works!</p>
+<body>
+    <div class="container-fluid">
+        <!--Side Bar menu-->
+        <app-admin-side-navbar [currentTabName]="'thongke'"></app-admin-side-navbar>
+        <!--End Side Bar Menu-->
+
+        <!--Content Container-->
+        <div id="page-wrapper" class="page__content-wrapper">
+            <div class="page__content-container">
+                <div class="container-fluid">
+                    <app-admin-top-navbar></app-admin-top-navbar>
+
+                    <div class="header-title">
+                        <h1>Quản lý biểu đồ</h1>
+                        <button id="add-btn" class="download-report-btn">
+                            <img src="assets/images/plus.svg">
+                            Thêm mới
+                        </button>
+                    </div>
+                    <!--Table Container-->
+                    <div class="table">
+                        <div class="table-header">
+                            <div class="table-col">
+                                <h4>Top Theo Dõi Trong ngày</h4>
+                                <h5>Danh Sách Lượt Theo Dõi</h5>
+                            </div>
+                            <div class="table-col">
+                                <p>Tìm kiếm:</p>
+                                <input placeholder="Tìm kiếm">
+                            </div>
+                        </div>
+                        <div class="table-area">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Tên Truyện</th>
+                                        <th>Ngày</th>
+                                        <th>Thời gian</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="image-box">
+                                                <div class="image-box-outline">
+                                                    <img src="./images/boy.svg">
+                                                </div>
+                                                <p>Hua Hoang Thanh Bao</p>
+                                            </div>
+                                        </td>
+                                        <td>Kiem hiep truong nghia</td>
+                                        <td>25/01/2021</td>
+                                        <td>15:00 PM</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--End Table Container-->
+            </div>
+        </div>
+        <!--End Content Container-->
+    </div>
+</body>

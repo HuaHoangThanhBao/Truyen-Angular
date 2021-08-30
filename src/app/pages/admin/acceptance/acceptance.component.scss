@@ -1,1 +1,5 @@
 @import "../../../../assets/styles/admin.scss";
+
+.table .table-area thead tr th{
+    min-width: 200px;
+}

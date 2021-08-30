@@ -4,5 +4,5 @@ export interface NoiDungChuong{
     chuongID: number;
     chuong?: Chuong;
     hinhAnh: string;
-    tinhTrang?: number;
+    tinhTrang?: boolean;
 }

@@ -1,7 +1,7 @@
 <body>
     <div class="container-fluid">
         <!--Side Bar menu-->
-        <app-admin-side-navbar></app-admin-side-navbar>
+        <app-admin-side-navbar [currentTabName]="'user'"></app-admin-side-navbar>
         <!--End Side Bar Menu-->
 
         <!--Content Container-->
@@ -42,7 +42,11 @@
                                     <tbody *ngIf="!searchResult">
                                         <tr *ngFor="let data of users">
                                             <td>{{ data.userName }}</td>
-                                            <td>{{ data.quyen }}</td>
+                                            <td>
+                                                <p *ngIf="data.quyen == 0">user</p>
+                                                <p *ngIf="data.quyen == 1">editor</p>
+                                                <p *ngIf="data.quyen == 2">admin</p>
+                                            </td>
                                             <td>
                                                 <button class="update-btn">Sửa</button>
                                             </td>

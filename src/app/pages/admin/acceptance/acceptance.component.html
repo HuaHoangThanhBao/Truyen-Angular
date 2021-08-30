@@ -1,7 +1,7 @@
 <body>
     <div class="container-fluid">
         <!--Side Bar menu-->
-        <app-admin-side-navbar></app-admin-side-navbar>
+        <app-admin-side-navbar [currentTabName]="'duyetbai'"></app-admin-side-navbar>
         <!--End Side Bar Menu-->
 
         <!--Content Container-->
@@ -29,110 +29,37 @@
                                 <input placeholder="Tìm kiếm">
                             </div>
                         </div>
-                        <div class="table-area">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>User</th>
-                                        <th>Tên Truyện</th>
-                                        <th>Ngày</th>
-                                        <th>Thời gian</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="image-box">
-                                                <div class="image-box-outline">
-                                                    <img src="./images/boy.svg">
-                                                </div>
-                                                <p>Hua Hoang Thanh Bao</p>
-                                            </div>
-                                        </td>
-                                        <td>Kiem hiep truong nghia</td>
-                                        <td>25/01/2021</td>
-                                        <td>15:00 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="image-box">
-                                                <div class="image-box-outline">
-                                                    <img src="./images/boy.svg">
-                                                </div>
-                                                <p>Hua Hoang Thanh Bao</p>
-                                            </div>
-                                        </td>
-                                        <td>Kiem hiep truong nghia</td>
-                                        <td>25/01/2021</td>
-                                        <td>15:00 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="image-box">
-                                                <div class="image-box-outline">
-                                                    <img src="./images/boy.svg">
-                                                </div>
-                                                <p>Hua Hoang Thanh Bao</p>
-                                            </div>
-                                        </td>
-                                        <td>Kiem hiep truong nghia</td>
-                                        <td>25/01/2021</td>
-                                        <td>15:00 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="image-box">
-                                                <div class="image-box-outline">
-                                                    <img src="./images/boy.svg">
-                                                </div>
-                                                <p>Hua Hoang Thanh Bao</p>
-                                            </div>
-                                        </td>
-                                        <td>Kiem hiep truong nghia</td>
-                                        <td>25/01/2021</td>
-                                        <td>15:00 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="image-box">
-                                                <div class="image-box-outline">
-                                                    <img src="./images/boy.svg">
-                                                </div>
-                                                <p>Hua Hoang Thanh Bao</p>
-                                            </div>
-                                        </td>
-                                        <td>Kiem hiep truong nghia</td>
-                                        <td>25/01/2021</td>
-                                        <td>15:00 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="image-box">
-                                                <div class="image-box-outline">
-                                                    <img src="./images/boy.svg">
-                                                </div>
-                                                <p>Hua Hoang Thanh Bao</p>
-                                            </div>
-                                        </td>
-                                        <td>Kiem hiep truong nghia</td>
-                                        <td>25/01/2021</td>
-                                        <td>15:00 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <div class="image-box">
-                                                <div class="image-box-outline">
-                                                    <img src="./images/boy.svg">
-                                                </div>
-                                                <p>Hua Hoang Thanh Bao</p>
-                                            </div>
-                                        </td>
-                                        <td>Kiem hiep truong nghia</td>
-                                        <td>25/01/2021</td>
-                                        <td>15:00 PM</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="table-wrapper">
+                            <div class="table-area">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Chương ID</th>
+                                            <th>Tên chương</th>
+                                            <th>Tên truyện</th>
+                                            <th>Thời gian cập nhật</th>
+                                            <th>Trạng thái</th>
+                                            <th>Xét duyệt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let chuong of chuongs">
+                                            <td>{{ chuong.chuongID }}</td>
+                                            <td>{{ chuong.tenChuong }}</td>
+                                            <td>{{ chuong.truyen.tenTruyen }}</td>
+                                            <td>{{ chuong.thoiGianCapNhat }}</td>
+                                            <td>
+                                                <p *ngIf="chuong.trangThai == -1">Chưa duyệt</p>
+                                                <p *ngIf="chuong.trangThai != -1">Đã duyệt</p>
+                                            </td>
+                                            <td>
+                                                <button *ngIf="chuong.trangThai == -1" (click)="publishChapter(chuong)">Xét duyệt</button>
+                                                <p *ngIf="chuong.trangThai != -1">Đã duyệt</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

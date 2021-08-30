@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-top-navbar.component.scss']
 })
 export class AdminTopNavbarComponent implements OnInit {
+  userName: string;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.userName = sessionStorage.getItem('admin-username');
   }
 
 }

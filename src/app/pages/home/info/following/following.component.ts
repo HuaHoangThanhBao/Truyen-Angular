@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 import { StoryListComponent } from 'src/app/shared/story-list/story-list.component';
@@ -11,41 +11,43 @@ import { RequestParam } from '../../../../model/param/RequestParam.model';
 import { TheoDoiService } from '../../../../services/model-service/theoDoiService.service';
 import { TheoDoi } from '../../../../model/theodoi/TheoDoi.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { LoginService } from '../../../../services/others/login-service.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-following',
   templateUrl: './following.component.html',
   styleUrls: ['./following.component.scss']
 })
-export class FollowingComponent implements OnInit {
+export class FollowingComponent implements OnInit, OnDestroy {
   title = "Truyện đang theo dõi"
 
   truyensByTheoDoi: TheoDoi[];
   truyensTopView: Truyen[];
   binhLuans: BinhLuan[];
 
-  //jsonBinhLuanArr: any;
-  //mostViews: any;
-  //truyenPaginationData: any;
-
-  private userLoginID: string;
-  loggedIn: boolean = false;
+  userLoginID: string;
+  private loginSubscription: Subscription;
+  
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
-  constructor(private jwtHelper: JwtHelperService, private _router: Router, private toast: ToastAlertService, private truyenService: TruyenService,
-    private binhLuanService: BinhLuanService, private theoDoiService: TheoDoiService) {
+  constructor(private toast: ToastAlertService, private truyenService: TruyenService,
+    private binhLuanService: BinhLuanService, private theoDoiService: TheoDoiService, private loginService: LoginService) {
   }
 
+  ngOnDestroy() {
+    this.loginSubscription.unsubscribe();
+  }
 
   ngOnInit(): void {
-    const token = localStorage.getItem("jwt");
-    if (token && !this.jwtHelper.isTokenExpired(token)) {
-      var decode = this.jwtHelper.decodeToken(token);
-      this.userLoginID = decode['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'];
-      this.loggedIn = true;
-      this.reloadTruyenOnPag(1);
-    }
+    this.loginSubscription = this.loginService.currentUser.subscribe(newID => {
+      if (newID != "") {
+        console.log(newID);  
+        this.userLoginID = newID;
+        this.reloadTruyenOnPag(1);
+      }
+    })
 
     let binhLuanUpdateParams: RequestParam = { pageNumber: 1, pageSize: 20, lastestUpdate: true }
     this.binhLuanService.getListWithParams(binhLuanUpdateParams).subscribe(binhLuans => {

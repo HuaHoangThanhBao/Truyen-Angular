@@ -1,26 +1,29 @@
 <nav id="nav-sidebar-fixed" class="nav-sidebar">
-    <a class="nav-sidebar-brand" routerLink="/admin/dashboard">Story Dashboard</a>
+    <a class="nav-sidebar-brand" routerLink="/admin/dashboard">Dashboard</a>
     <ul class="nav-sidebar-list">
         <li class="nav-sidebar-header">
             Danh mục
         </li>
         <li class="nav-sidebar-item">
-            <a class="nav-sidebar-txt" routerLink="/admin/stories">Truyện</a>
+            <a [className]="currentTabName == 'truyen'? 'nav-sidebar-txt active': 'nav-sidebar-txt'" routerLink="/admin/stories">Truyện</a>
         </li>
         <li class="nav-sidebar-item">
-            <a class="nav-sidebar-txt" routerLink="/admin/genre">Thể loại</a>
+            <a [className]="currentTabName == 'theloai'? 'nav-sidebar-txt active': 'nav-sidebar-txt'" routerLink="/admin/genre">Thể loại</a>
         </li>
         <li class="nav-sidebar-item">
-            <a class="nav-sidebar-txt" routerLink="/admin/author">Tác giả</a>
+            <a [className]="currentTabName == 'tacgia'? 'nav-sidebar-txt active': 'nav-sidebar-txt'" routerLink="/admin/author">Tác giả</a>
         </li>
         <li class="nav-sidebar-item">
-            <a class="nav-sidebar-txt" routerLink="/admin/chart">Thống kê</a>
+            <a [className]="currentTabName == 'duyetbai'? 'nav-sidebar-txt active': 'nav-sidebar-txt'" routerLink="/admin/acceptance">Duyệt bài</a>
+        </li>
+        <li class="nav-sidebar-item">
+            <a [className]="currentTabName == 'thongke'? 'nav-sidebar-txt active': 'nav-sidebar-txt'" routerLink="/admin/chart">Thống kê</a>
         </li>
         <li class="nav-sidebar-header">
             Quản lý truy cập
         </li>
         <li class="nav-sidebar-item">
-            <a class="nav-sidebar-txt" routerLink="/admin/users">Phân quyền</a>
+            <a [className]="currentTabName == 'user'? 'nav-sidebar-txt active': 'nav-sidebar-txt'" routerLink="/admin/users">Phân quyền</a>
         </li>
     </ul>
 </nav>

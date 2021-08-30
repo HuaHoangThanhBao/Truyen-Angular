@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   navBarActive: boolean;
 
   constructor(private jwtHelper: JwtHelperService, private theLoaiService: TheLoaiService, private loginService: LoginService, private router: Router,
-    private http: HttpClient, private route: ActivatedRoute) {
+    private http: HttpClient, private _router: ActivatedRoute) {
   }
 
   ngOnInit(): void {

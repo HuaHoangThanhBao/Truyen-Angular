@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UpdatePasswordDto } from 'src/app/model/authentication/updatePasswordDto.model';
@@ -14,13 +14,14 @@ import { RequestParam } from '../../../../model/param/RequestParam.model';
 import { LoginService } from '../../../../services/others/login-service.service';
 import { UpdatePasswordService } from '../../../../services/authentication/updatePasswordService.service';
 import { JWTTokenService } from '../../../../services/jwt/jwtTokenService.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
 
   public updatePasswordForm: FormGroup;
 
@@ -32,18 +33,22 @@ export class AccountComponent implements OnInit {
   currentAvatar: string = "";
   btnSubmitLocked: boolean = false;
 
+  private loginSubscription: Subscription;
+
   constructor(private _router: Router, private toast: ToastAlertService, private _passConfValidator: PasswordConfirmationValidatorService,
     private truyenService: TruyenService, private binhLuanService: BinhLuanService,
     private userService: UserService, private loginService: LoginService, private updatePasswordService: UpdatePasswordService,
     private jwtTokenService: JWTTokenService) {
   }
 
+  ngOnDestroy() {
+    this.loginSubscription.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.loginService.currentUser.subscribe(newID => {
-      console.log(newID);
-      
-      if(newID != "")
-      {
+    this.loginSubscription = this.loginService.currentUser.subscribe(newID => {
+      if (newID != "") {
+        console.log(newID);  
         this.userLoginID = newID;
         this.userService.getDetail(this.userLoginID).subscribe(user => {
           this.user = user;
@@ -85,7 +90,7 @@ export class AccountComponent implements OnInit {
 
   public updatePassword = (updatePasswordFormValue) => {
     this.btnSubmitLocked = true;
-    
+
     const updatePass = { ...updatePasswordFormValue };
     const updatePassDto: UpdatePasswordDto = {
       email: this.user.email,
@@ -93,14 +98,14 @@ export class AccountComponent implements OnInit {
       password: updatePass.password,
       confirmPassword: updatePass.confirm
     }
-    
+
     this.updatePasswordService.update(updatePassDto)
       .subscribe(error => {
-        if(!error){
+        if (!error) {
           this.toast.showToast("Thành công", "Đổi mật khẩu thành công!", "success");
           this.toast.showToast("Lưu ý", "Hãy lưu mật khẩu ở nơi nào đó dễ nhớ nhé!", "warning");
         }
-        else{
+        else {
           this.btnSubmitLocked = false;
         }
       })
@@ -120,15 +125,12 @@ export class AccountComponent implements OnInit {
         hinhAnh: this.currentAvatar
       }
       console.log(updateAvatarDto);
-      
+
       this.userService.updateExtendRoute('UpdateUserAvatar', updateAvatarDto)
-        .subscribe(error => {
-          if(!error){
+        .subscribe(res => {
+          if (!res?.error) {
             this.toast.showToast("Thành công", "Bạn đã đổi sang avatar mới!", "success");
             this.toast.showToast("Nói nhỏ", "Bạn có thể đổi avatar theo sở thích cá nhân nhé", "info");
-          }
-          else{
-            this.btnSubmitLocked = false;
           }
         })
     }
@@ -140,7 +142,7 @@ export class AccountComponent implements OnInit {
     const credentials = JSON.stringify({ accessToken: token, refreshToken: refreshToken });
     this.jwtTokenService.post(credentials)
       .subscribe(error => {
-        if(!error){
+        if (!error) {
           localStorage.removeItem("jwt");
           localStorage.removeItem("refreshToken");
           this.toast.showToast("Rất tiếc khi bạn đăng xuất", "Hãy quay lại sớm nhé!", "warning");

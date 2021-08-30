@@ -31,10 +31,13 @@ export class StoriesComponent implements OnInit {
 
   hinhAnhChosen: string = "";
   soLuong: number[];
+  noImageToShow: boolean = false;
 
   currentTruyenID: number;
   currentTruyen: Truyen;
   searchResult: Truyen[];
+
+  googleLogIn: boolean = false;
 
   constructor(private truyenService: TruyenService, private tacGiaService: TacGiaService, private toast: ToastAlertService,
     private chuongService: ChuongService, private noiDungChuongService: NoiDungChuongService) {
@@ -66,13 +69,26 @@ export class StoriesComponent implements OnInit {
     });
   }
 
-  filter(value: string){
+  filter(value: string) {
     this.searchResult = [];
-    for(let i = 0; i < this.truyens.length; i++){
-      if(this.truyens[i].tenTruyen.toLowerCase().includes(value)){
+    for (let i = 0; i < this.truyens.length; i++) {
+      if (this.truyens[i].tenTruyen.toLowerCase().includes(value)) {
         this.searchResult.push(this.truyens[i])
       }
     }
+  }
+
+
+  async loadAuth() {
+    return await authenticate();
+  }
+
+  async loadAuthClient() {
+    return await loadClient();
+  }
+
+  googleSignInProcess() {
+    this.loadAuth().then(this.loadAuthClient).then(m => this.googleLogIn = true);
   }
 
   addTruyen = (addFormValues) => {
@@ -111,6 +127,10 @@ export class StoriesComponent implements OnInit {
   }
 
   async loadTruyenFolderData() {
+    if (!this.googleLogIn) {
+      this.toast.showToast("Lỗi", "Vui lòng đăng nhập google trước", "error");
+      return;
+    }
     const result = await execute("1ViYgS-kn329JigKiCJuavoMTMpvbudmm");
     this.danhSachHinhAnhTruyens = result;
     //console.log(this.danhSachHinhAnhTruyens);
@@ -127,7 +147,14 @@ export class StoriesComponent implements OnInit {
   }
 
   addDanhSachChuong = (form) => {
+    if (!this.googleLogIn) {
+      this.toast.showToast("Lỗi", "Vui lòng đăng nhập google trước", "error");
+      return;
+    }
+
     const formValues = { ...form };
+    //vì modal có sử dụng Model này nên phải reset lại
+    this.noiDungChuongs = [];
     //console.log(formValues);
 
     if (formValues.tenChuong == "" || formValues.folderID == "") {
@@ -140,12 +167,9 @@ export class StoriesComponent implements OnInit {
       tenChuong: formValues.tenChuong
     }];
 
-    this.chuongService.post(chuong).subscribe(newChuong => {
-      //console.log(newChuong);
 
-      this.loadNoiDungTruyenFolderData(formValues.folderID).then(result => {
-        console.log(result);
-
+    this.loadNoiDungTruyenFolderData(formValues.folderID).then(result => {
+      this.chuongService.post(chuong).subscribe(newChuong => {
         result.forEach((f) => {
           const n: NoiDungChuong = {
             chuongID: newChuong[0].chuongID,
@@ -153,8 +177,6 @@ export class StoriesComponent implements OnInit {
           };
           this.noiDungChuongs.push(n);
         })
-
-        //console.log(this.noiDungChuongs);
 
         this.noiDungChuongService.post(this.noiDungChuongs).subscribe(nd => {
           if (!nd?.error) {
@@ -165,6 +187,42 @@ export class StoriesComponent implements OnInit {
         })
       });
     })
+      .catch(_ =>
+        this.toast.showToast("Lỗi", "Không thể load hình ảnh trong folder", "error")
+      );
+  }
+
+
+
+
+  ///////////////////////////////////////
+  showHinhAnh(chuongID: number) {
+    this.noiDungChuongs = [];
+    this.chuongService.getDetail(chuongID).subscribe(chuong => {
+      console.log(this.noiDungChuongs)
+
+      this.noiDungChuongs = chuong.noiDungChuongs;
+      this.noImageToShow = this.noiDungChuongs.length > 0 ? false : true;
+    })
+  }
+
+  chooseHinhAnhForUpdate(nd: NoiDungChuong) {
+    nd.tinhTrang == false ? nd.tinhTrang = true : nd.tinhTrang = false;
+    console.log(this.noiDungChuongs)
+  }
+
+  updateAllNoiDungChuong() {
+    if (this.noiDungChuongs.length == 0 || !this.noiDungChuongs) {
+      this.toast.showToast("Lỗi", "Bạn chưa chọn chương để cập nhật", "error");
+      return;
+    }
+    this.noiDungChuongService.updateExtendRoute("multiple", this.noiDungChuongs).subscribe(res => {
+      if (!res?.error) {
+        console.log(res);
+        this.toast.showToast("Thành công", "Cập nhật chương thành công", "success");
+        this.noiDungChuongs = [];
+      }
+    })
   }
 
 
@@ -172,9 +230,10 @@ export class StoriesComponent implements OnInit {
 
 
   ///////////////////////////////////////
-  openModelChuong(truyendID: number) {
+  openModelWithID(truyendID: number, id: string) {
+    this.noiDungChuongs = [];
     this.truyenService.getDetail(truyendID).subscribe(details => {
-      const modal = document.getElementById('modal-chuong');
+      const modal = document.getElementById(id);
       modal.style.display = "block";
       this.currentTruyenID = details.truyenID;
 

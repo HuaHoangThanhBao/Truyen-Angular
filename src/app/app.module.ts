@@ -18,6 +18,7 @@ import { GeneralModules } from './pages/generalModules.module';
 import { RouterModule } from '@angular/router';
 import { AdminComponent } from './pages/admin/admin/admin.component';
 import { LoginService } from './services/others/login-service.service';
+import { AdminGuard } from './modules/guards/admin-guard.service';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -48,7 +49,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthGuard, ToastAlertService, LoginService],
+  providers: [AuthGuard, AdminGuard, ToastAlertService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
