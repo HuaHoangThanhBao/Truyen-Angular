@@ -43,7 +43,7 @@ function expandBtn(){
   /*Expand Chap*/
   const expand_chap = document.getElementById('expand-chap-cover');
   expand_chap.addEventListener('click', () => {
-    var chap = document.getElementById('chap__list');
+    var chap = document.getElementById('chapter-list');
     chap.style.maxHeight = "100%";
 
     expand_chap.parentNode.style.height = "0";

@@ -1,0 +1,59 @@
+.nav-menu {
+    @include SetWidthHeight(100%, auto);
+    display: block;
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 40px;
+
+    &-list {
+        @include SetWidthHeight(100%, auto);
+        @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
+        list-style: none;
+        justify-content: center;
+    }
+
+    &-item {
+        padding: 5px;
+        border-radius: 50%;
+
+        &:nth-child(6) {
+            @include SetWidthHeight(250px, auto);
+        }
+
+        @media (max-width: 519px) {
+            &:nth-child(4) {
+                width: auto;
+            }
+            &:nth-child(6) {
+                width: calc(60% - 100px);
+            }
+        }
+    }
+
+    &-select-box {
+        @include SetWidthHeight(100%, 100%);
+        @include Flex($isHorizontally: true, $isVertically: true, $isWrap: true);
+
+        select {
+            @include SetWidthHeight(100%, 100%);
+            @include noneOutLine($isNoneOutLine: true, $isNoneBorder: false);
+            border-radius: 5px;
+        }
+    }
+
+    &-item-box {
+        @include SetWidthHeight(100%, 100%);
+    }
+
+    &-item-icon {
+        @include Flex($isHorizontally: true, $isVertically: true, $isWrap: true);
+        border-radius: 50%;
+        padding: 8px;
+        background-color: $white;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+        img {
+            @include SetWidthHeight(17px, 17px);
+        }
+    }
+}

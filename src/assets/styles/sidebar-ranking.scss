@@ -1,0 +1,66 @@
+/*Phần Xếp hạng*/
+.ranking {
+    @include SetWidthHeight(100%, auto);
+    padding: var(--padding);
+
+    &-panel {
+        @include SetWidthHeight(100%, 100%);
+    }
+
+    &-list {
+        @include SetWidthHeight(100%, auto);
+        list-style: none;
+    }
+    &-item {
+        height: 60px;
+        display: flex;
+        margin-bottom: var(--padding);
+        margin-left: -20px;
+    }
+    &-detail {
+        margin-left: 20px;
+        &:first-child {
+            @include Flex($isHorizontally: false, $isVertically: true, $isWrap: false);
+            @include SetWidthHeight(20px, 100%);
+            p {
+                font-size: 18px;
+            }
+        }
+        &:nth-child(2) {
+            @include SetWidthHeight(55px, 100%);
+
+            img {
+                @include SetWidthHeight(100%, 100%);
+                object-fit: cover;
+                border-radius: 5px;
+            }
+        }
+        &:last-child {
+            flex: 1;
+            height: 100%;
+            position: relative;
+        }
+    }
+    &-info {
+        @include SetWidthHeight(100%, auto);
+        font-size: 14px;
+
+        span {
+            @media (max-width: 360px) {
+                clear: both;
+                position: absolute;
+                bottom: 0;
+                left: 15px;
+            }
+            @media (min-width: 361px) {
+                float: right !important;
+            }
+        }
+    }
+    &-link {
+        @include theme() {
+            color: theme-get("text-color");
+        }
+    }
+}
+/*End Xếp hạng*/

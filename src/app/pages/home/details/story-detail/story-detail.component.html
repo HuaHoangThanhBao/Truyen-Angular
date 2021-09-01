@@ -1,48 +1,48 @@
 <body>
     <main>
-        <div class="main__container container-fluid">
-            <div class="banner__container">
-                <div class="banner img-fade"></div>
+        <div class="hero container-fluid">
+            <div class="hero-main">
+                <div class="hero-banner img-fade"></div>
             </div>
-            <div class="body__container">
-                <div class="body__cover">
-                    <div class="overlay__panel">
-                        <div class="body__box">
+            <div class="hero-container">
+                <div class="hero-body">
+                    <div class="hero-o">
+                        <div class="hero-body-box">
 
                             <!--Section thông tin cơ bản của truyện-->
-                            <div class="box__container">
-                                <div class="panel__side">
+                            <div class="hero-container">
+                                <div class="hero-o-item">
                                     <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="300">
                                     </app-seleton-loader>
                                     <img *ngIf="truyen" 
                                         src="https://drive.google.com/uc?export=view&id={{truyen?.hinhAnh}}"
                                         alt="no image avaiable">
                                 </div>
-                                <div class="panel__side">
+                                <div class="hero-o-item">
                                     <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
                                         Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
-                                    <div *ngIf="truyen" class="truyen__detail-title">
+                                    <div *ngIf="truyen" class="hero-o-title">
                                         <h1>{{ truyen?.tenTruyen }}</h1>
                                     </div>
 
                                     <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
                                         Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
-                                    <div *ngIf="truyen" class="box__detail">
-                                        <div class="box__detail-txt">
+                                    <div *ngIf="truyen" class="hero-o-detail">
+                                        <div class="hero-o-detail-txt">
                                             <p>Tác giả: <span>{{ truyen?.tacGia.tenTacGia }}</span></p>
                                         </div>
-                                        <div class="box__detail-txt">
+                                        <div class="hero-o-detail-txt">
                                             <p>Tình trạng：<span>Đang Tiến Hành</span></p>
                                         </div>
                                     </div>
 
                                     <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
                                         Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
-                                    <div *ngIf="truyen" class="box__detail">
-                                        <div class="box__detail-txt">
+                                    <div *ngIf="truyen" class="hero-o-detail">
+                                        <div class="hero-o-detail-txt">
                                             <p>Lượt xem: <span>{{ tongLuotXem }}</span></p>
                                         </div>
-                                        <div class="box__detail-txt">
+                                        <div class="hero-o-detail-txt">
                                             <p>Thể loại:
                                                 <span *ngFor="let p of phuLucs; let l = last">
                                                     <a>{{ p.theLoai.tenTheLoai }}</a>
@@ -54,11 +54,11 @@
 
                                     <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
                                         Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
-                                    <div *ngIf="truyen" class="box__detail">
-                                        <div class="box__detail-txt">
+                                    <div *ngIf="truyen" class="hero-o-detail">
+                                        <div class="hero-o-detail-txt">
                                             <p>Lượt theo dõi: <span>71.000</span></p>
                                         </div>
-                                        <div class="box__detail-txt">
+                                        <div class="hero-o-detail-txt">
                                             <div>
                                                 <span>Đánh giá: </span>
                                                 <span class="star"><img loading="lazy"
@@ -80,29 +80,29 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="box__detail">
-                                        <div class="btn__group">
+                                    <div class="hero-o-detail">
+                                        <div class="hero-o-btn-group">
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyen" class="btn-social" (click)="addFollowing()">Theo Dõi</button>
+                                            <button *ngIf="truyen" class="hero-o-btn-item" (click)="addFollowing()">Theo Dõi</button>
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyen" class="btn-social">Like</button>
+                                            <button *ngIf="truyen" class="hero-o-btn-item">Like</button>
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyen" class="btn-social">Share</button>
+                                            <button *ngIf="truyen" class="hero-o-btn-item">Share</button>
                                         </div>
                                     </div>
-                                    <div class="box__detail">
-                                        <div class="btn__group">
+                                    <div class="hero-o-detail">
+                                        <div class="hero-o-btn-group">
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="100" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyen" class="btn-reading btn-social"
+                                            <button *ngIf="truyen" class="hero-o-btn-reading hero-o-btn-item"
                                                 (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyen?.tenTruyen,
                                                 truyen?.chuongs[0].chuongID, truyen?.chuongs[0].tenChuong, truyen?.hinhAnh)">Đọc từ đầu</button>
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="100" Cheight="35"
                                                 circle="20px"></app-seleton-loader>
-                                            <button *ngIf="truyen" class="btn-reading btn-social"
+                                            <button *ngIf="truyen" class="hero-o-btn-reading hero-o-btn-item"
                                                 (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyeboxxnDetailJson?.tenTruyen,
                                                 truyen?.chuongs.slice(-1)[0].chuongID, truyen?.chuongs.slice(-1)[0].tenChuong, truyen?.hinhAnh)">Đọc
                                                 mới nhất</button>
@@ -113,12 +113,12 @@
                             <!--End section thông tin cơ bản của truyện-->
 
                             <!--Section nội dung truyện-->
-                            <div class="box__container box-block">
-                                <div class="box__container--header">
+                            <div class="hero-o-section">
+                                <div class="hero-o-header">
                                     <h2>Nội Dung</h2>
                                 </div>
                                 <hr>
-                                <div class="box__detail--content">
+                                <div class="hero-o-content">
                                     <div class="content">
                                         <p class="js-excerpt excerpt-hidden" [innerHTML]="truyen?.moTa">
                                         </p>
@@ -132,31 +132,33 @@
                             <!--End section mô tả nội dung truyện-->
 
                             <!--Section danh sách chương-->
-                            <div class="box__container box-block">
-                                <h2>Danh Sách Chương</h2>
+                            <div class="hero-o-section">
+                                <div class="hero-o-header">
+                                    <h2>Danh sách chương</h2>
+                                </div>
                                 <hr>
-                                <div class="chap__list--container">
-                                    <div class="chap__list--header">
-                                        <div class="chap__list--heading">
+                                <div class="chapter">
+                                    <div class="chapter-header">
+                                        <div class="chapter-heading">
                                             <p>Số chương</p>
                                         </div>
-                                        <div class="chap__list--heading">
+                                        <div class="chapter-heading">
                                             <p>Cập nhật</p>
                                         </div>
-                                        <div class="chap__list--heading">
+                                        <div class="chapter-heading">
                                             <p>Lượt xem</p>
                                         </div>
                                     </div>
-                                    <ul id="chap__list" class="chap__list">
-                                        <li class="chap__list--item" *ngFor="let chuong of truyen?.chuongs">
-                                            <p class="chap__list--txt">
-                                                <a class="chap__list--link" (click)="this.historyManagement.addToHistory(chuong?.truyenID, truyen?.tenTruyen,
+                                    <ul id="chapter-list" class="chapter-list">
+                                        <li class="chapter-item" *ngFor="let chuong of truyen?.chuongs">
+                                            <p class="chapter-txt">
+                                                <a class="chapter-link" (click)="this.historyManagement.addToHistory(chuong?.truyenID, truyen?.tenTruyen,
                                                 chuong?.chuongID, chuong?.tenChuong, truyen?.hinhAnh)">
                                                     {{chuong.tenChuong }}
                                                 </a>
                                             </p>
-                                            <p class="chap__list--txt">{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy' }}</p>
-                                            <p class="chap__list--txt">{{ chuong.luotXem }}</p>
+                                            <p class="chapter-txt">{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy' }}</p>
+                                            <p class="chapter-txt">{{ chuong.luotXem }}</p>
                                         </li>
                                     </ul>
                                     <div class="expand-bottom">

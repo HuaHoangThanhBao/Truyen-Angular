@@ -47,10 +47,10 @@ export class NavbarComponent implements OnInit, AfterViewChecked {
   
         function showMenuOnTablet() {
           var x = document.getElementById("top__nav");
-          if (x.className === "nav__list") {
+          if (x.className === "header-list") {
             x.className += " responsive";
           } else {
-            x.className = "nav__list";
+            x.className = "header-list";
           }
         }
       }

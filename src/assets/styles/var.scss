@@ -10,11 +10,13 @@ $bold_style: bold;
 $themes: (
   darkTheme: (
     'text-color': white,
+    'normal-text-color': black,
     'bg-light-dark': #424242,
     'bg-dark': #282a2b,
     'bg-dark-strong': #1d1e1f,
   ),
   lightTheme: (
+    'normal-text-color': black,
     'text-color': black,
     'bg-white': #f4f4f4,
   )

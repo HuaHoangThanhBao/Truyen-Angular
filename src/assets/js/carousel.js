@@ -1,7 +1,7 @@
 function carouselInit() {
-  var carousel = document.querySelector('.caro__body');
-  var carouselContent = document.querySelector('.caro__body--slide');
-  var slides = document.querySelectorAll('.caro__body--item');
+  var carousel = document.querySelector('.carousel');
+  var carouselContent = document.querySelector('.carousel-slide');
+  var slides = document.querySelectorAll('.carousel-item');
   var arrayOfSlides = Array.prototype.slice.call(slides);
   var carouselDisplaying;
   var screenSize;
@@ -21,7 +21,7 @@ function carouselInit() {
   }
 
   function moveSlidesRight() {
-    var slides = document.querySelectorAll('.caro__body--item');
+    var slides = document.querySelectorAll('.carousel-item');
     var slidesArray = Array.prototype.slice.call(slides);
     var width = 0;
 
@@ -34,7 +34,7 @@ function carouselInit() {
   moveSlidesRight();
 
   function moveSlidesLeft() {
-    var slides = document.querySelectorAll('.caro__body--item');
+    var slides = document.querySelectorAll('.carousel-item');
     var slidesArray = Array.prototype.slice.call(slides);
     slidesArray = slidesArray.reverse();
     var maxWidth = (slidesArray.length - 1) * lengthOfSlide;
@@ -63,7 +63,7 @@ function carouselInit() {
   }
 
   function getScreenSize() {
-    var slides = document.querySelectorAll('.caro__body--item');
+    var slides = document.querySelectorAll('.carousel-item');
     var slidesArray = Array.prototype.slice.call(slides);
     lengthOfSlide = (carousel.offsetWidth / carouselDisplaying);
     var initialWidth = -lengthOfSlide;
@@ -148,7 +148,7 @@ function carouselInit() {
   }
 
   function getInitialPos() {
-    var slides = document.querySelectorAll('.caro__body--item');
+    var slides = document.querySelectorAll('.carousel-item');
     var slidesArray = Array.prototype.slice.call(slides);
     initialPos = [];
     slidesArray.forEach(function (el) {
@@ -158,7 +158,7 @@ function carouselInit() {
   }
 
   function slightMoveSlides(newX) {
-    var slides = document.querySelectorAll('.caro__body--item');
+    var slides = document.querySelectorAll('.carousel-item');
     var slidesArray = Array.prototype.slice.call(slides);
     slidesArray.forEach(function (el, i) {
       var oldLeft = initialPos[i];

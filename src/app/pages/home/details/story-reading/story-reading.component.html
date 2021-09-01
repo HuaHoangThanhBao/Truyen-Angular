@@ -1,71 +1,71 @@
 <body>
 
     <main>
-        <div class="main__container container-fluid">
-            <div class="body__container">
-                <div class="body__cover">
+        <div class="hero container-fluid">
+            <div class="hero-container">
+                <div class="hero-body">
 
                     <!--Phần Body chứa ảnh-->
-                    <div class="body__box">
-                        <div class="body__box--header">
-                            <div class="box__header--item">
+                    <div class="hero-body-box">
+                        <div class="hero-body-box-header">
+                            <div class="hero-body-box-item">
                                 <h1>{{chuong?.truyen.tenTruyen}}</h1>
                             </div>
-                            <div class="box__header--item">
+                            <div class="hero-body-box-item">
                                 <p>{{chuong?.truyen.tenChuong}}</p>
                             </div>
-                            <div class="box__header--item">
+                            <div class="hero-body-box-item">
                                 <p>Cập nhật lúc: <span>{{ chuong?.thoiGianCapNhat }}</span></p>
                             </div>
-                            <div class="nav__menu">
+                            <div class="nav-menu">
                                 <app-seleton-loader *ngIf="!truyen?.chuongs" Cheight="30" Cwidth="100%"></app-seleton-loader>
-                                <ul *ngIf="truyen?.chuongs" id="nav__menu--header" class="nav__menu--list">
+                                <ul *ngIf="truyen?.chuongs" id="nav-menu-header" class="nav-menu-list">
                                     {{scrollMenu()}}
-                                    <li class="nav__menu-item">
+                                    <li class="nav-menu-item">
                                         <a routerLink="/index">
-                                            <div class="nav__menu-item-box">
-                                                <div class="nav__menu-item-icon">
-                                                    <img loading="lazy" data-src="assets/images/home.svg"
+                                            <div class="nav-menu-item-box">
+                                                <div class="nav-menu-item-icon">
+                                                    <img src="assets/images/home.svg"
                                                         alt="no image avaiable">
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="nav__menu-item">
+                                    <li class="nav-menu-item">
                                         <a routerLink="/details/story-detail/{{chuong?.truyen.truyenID}}">
-                                            <div class="nav__menu-item-box">
-                                                <div class="nav__menu-item-icon">
-                                                    <img loading="lazy" data-src="assets/images/list.svg"
+                                            <div class="nav-menu-item-box">
+                                                <div class="nav-menu-item-icon">
+                                                    <img src="assets/images/list.svg"
                                                         alt="no image avaiable">
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="nav__menu-item">
+                                    <li class="nav-menu-item">
                                         <a routerLink="#">
-                                            <div class="nav__menu-item-box">
-                                                <div class="nav__menu-item-icon">
-                                                    <img loading="lazy" data-src="assets/images/heart.svg"
+                                            <div class="nav-menu-item-box">
+                                                <div class="nav-menu-item-icon">
+                                                    <img src="assets/images/heart.svg"
                                                         alt="no image avaiable">
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
 
-                                    <li class="nav__menu-item"></li>
+                                    <li class="nav-menu-item"></li>
 
-                                    <li class="nav__menu-item">
+                                    <li class="nav-menu-item">
                                         <a *ngIf="!first" (click)="redirectToAnotherChap(false)">
-                                            <div class="nav__menu-item-box">
-                                                <div class="nav__menu-item-icon">
-                                                    <img loading="lazy" data-src="assets/images/left-arrow.svg"
+                                            <div class="nav-menu-item-box">
+                                                <div class="nav-menu-item-icon">
+                                                    <img src="assets/images/left-arrow.svg"
                                                         alt="no image avaiable">
                                                 </div>
                                             </div>
                                         </a>
                                     </li>
-                                    <li class="nav__menu-item">
-                                        <div class="nav__menu-select-box">
+                                    <li class="nav-menu-item">
+                                        <div class="nav-menu-select-box">
                                             <select (change)="selectedChange($event.target.value)">
                                                 <option *ngFor="let c of truyen?.chuongs"
                                                     [attr.selected]="c?.chuongID == chuong?.chuongID ? true: null"
@@ -75,11 +75,11 @@
                                             </select>
                                         </div>
                                     </li>
-                                    <li class="nav__menu-item">
+                                    <li class="nav-menu-item">
                                         <a *ngIf="!last" (click)="redirectToAnotherChap(true)">
-                                            <div class="nav__menu-item-box">
-                                                <div class="nav__menu-item-icon">
-                                                    <img loading="lazy" data-src="assets/images/right-arrow.svg"
+                                            <div class="nav-menu-item-box">
+                                                <div class="nav-menu-item-icon">
+                                                    <img src="assets/images/right-arrow.svg"
                                                         alt="no image avaiable">
                                                 </div>
                                             </div>
@@ -89,10 +89,9 @@
                             </div>
                         </div>
                         <!--Image render list-->
-                        <ul id="image__list" class="image__list">
-                            <li class="image__list--item" *ngFor="let noidung of chuong?.noiDungChuongs">
-                                <img *ngIf="noidung.tinhTrang != 1" loading="lazy"
-                                    data-src="https://drive.google.com/uc?export=view&id={{ noidung.hinhAnh }}"
+                        <ul id="image-list">
+                            <li *ngFor="let noidung of chuong?.noiDungChuongs">
+                                <img *ngIf="noidung.tinhTrang != 1" src="https://drive.google.com/uc?export=view&id={{ noidung.hinhAnh }}"
                                     alt="noidung.hinhAnh">
                             </li>
                         </ul>
@@ -100,7 +99,7 @@
                     </div>
                     <!--End Body chứa ảnh-->
 
-                    <div class="body__box">
+                    <div class="hero-body-box">
                         <!--Section Bình luận-->
                         <app-comment-list [binhLuans]="binhLuans" [chuong]="chuong" [isDetail]="false">
                         </app-comment-list>

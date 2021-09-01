@@ -1,0 +1,102 @@
+/*Danh sách truyện*/
+.story {
+    @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
+    //gap: var(--list-item-columns-gap);
+    margin-left: -20px;
+
+    &-item {
+        @include SetWidthHeight(calc(calc(100% / var(--list-item-columns)) - var(--list-item-columns-gap)), auto);
+        display: block;
+        margin-left: 20px;
+        margin-bottom: 20px;
+    }
+    &-box {
+        position: relative;
+        @include SetWidthHeight(100%, 250px);
+    }
+    &-link {
+        img {
+            @include SetWidthHeight(100%, 100%);
+            position: relative;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+    }
+    &-info {
+        position: relative;
+        display: block;
+        margin-top: 10px;
+
+        .newest-chapters {
+            margin-top: 10px;
+
+            .chapter-link {
+                @include theme() {
+                    color: theme-get("text-color");
+                }
+                @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+                margin-bottom: 5px;
+
+                span {
+                    font-size: 12px;
+                    flex-direction: column;
+                    line-height: 1.5;
+                }
+
+                span:first-child {
+                    text-align: left;
+                }
+
+                span:last-child {
+                    color: #c0c4d1;
+                    text-align: right;
+                    position: absolute;
+                    right: 0;
+                }
+            }
+        }
+    }
+    &-delete-btn{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+        justify-content: center;
+        align-items: center;
+        height: 35px;
+        background: linear-gradient(rgba(0, 0, 0, 0.733), rgba(0, 0, 0, 0.541));
+        color: $white;
+
+        a{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+
+            span{
+                padding-right: 5px;
+            }
+        }
+    }
+    @media (min-width: 520px) and (max-width: 767px) {
+        &-item {
+            --list-item-columns: 3;
+        }
+    }
+
+    @media (min-width: 350px) and (max-width: 519px) {
+        &-item {
+            --list-item-columns: 2;
+        }
+    }
+
+    @media (max-width: 349px) {
+        &-item {
+            --list-item-columns: 1;
+        }
+    }
+}
+/*End Danh sách truyện*/

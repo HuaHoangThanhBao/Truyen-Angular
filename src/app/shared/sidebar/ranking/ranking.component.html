@@ -1,28 +1,28 @@
 <router-outlet></router-outlet>
 <!--Rank List-->
-<div class="body__box">
-  <div class="title-header">
+<div class="hero-body-box hero-body-ranking">
+  <div class="hero-body-header">
     <h2>Top phổ biến</h2>
   </div>
-  <div class="story__ranking">
-    <div class="story__ranking-panel">
-      <ul class="rank-list">
-        <li class="rank-item" *ngFor="let data of (truyenRanks ? truyenRanks : [].constructor(5)); let i = index">
-          <div class="rank-b">
+  <div class="ranking">
+    <div class="ranking-panel">
+      <ul class="ranking-list">
+        <li class="ranking-item" *ngFor="let data of (truyenRanks ? truyenRanks : [].constructor(5)); let i = index">
+          <div class="ranking-detail">
             <p>{{ "0" + (i + 1) }}</p>
           </div>
-          <div class="rank-b">
+          <div class="ranking-detail">
             <app-seleton-loader *ngIf="!truyenRanks" Cheight="45"></app-seleton-loader>
-            <a *ngIf="truyenRanks" class="rank-link" routerLink="/details/story-detail/{{ data?.truyenID }}">
-              <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"  alt="{{ data?.tenTruyen }}">
+            <a *ngIf="truyenRanks" class="ranking-link" routerLink="/details/story-detail/{{ data?.truyenID }}">
+              <img src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"  alt="{{ data?.tenTruyen }}">
             </a>
           </div>
-          <div class="rank-b">
+          <div class="ranking-detail">
             <app-seleton-loader Cheight="20" *ngIf="!truyenRanks"></app-seleton-loader>
             <ngContainer *ngIf="truyenRanks">
               <div *ngIf="truyenRanks" class="title-overflow">
                 <div class="title-overflow-content">
-                  <a class="rank-link" routerLink="/details/story-detail/{{ data?.truyenID }}"><b>{{
+                  <a class="ranking-link" routerLink="/details/story-detail/{{ data?.truyenID }}"><b>{{
                     data?.tenTruyen
                       }}</b></a>
                 </div>
@@ -31,8 +31,8 @@
 
             <app-seleton-loader Cheight="20" *ngIf="!truyenRanks"></app-seleton-loader>
             <ngContainer *ngIf="truyenRanks">
-              <div class="rank-info" *ngFor="let chuong of data?.chuongs.slice(-1).reverse()">
-                <a class="rank-link" 
+              <div class="ranking-info" *ngFor="let chuong of data?.chuongs.slice(-1).reverse()">
+                <a class="ranking-link" 
                 
                 (click)="this.historyManagement.addToHistory(data?.truyenID, data?.tenTruyen,
                 chuong.chuongID, chuong.tenChuong, data?.hinhAnh)" 

@@ -1,0 +1,88 @@
+
+//search
+.search {
+    width: 100%;
+
+    //Main
+    &-main {
+        position: relative;
+    }
+    &-body {
+        display: flex;
+        padding: 7px;
+        background-color: #e4e4e4;
+        border-radius: 25px;
+    }
+    &-input {
+        background: inherit;
+        width: calc(100% - 20px);
+        height: 25px;
+        float: left;
+
+        input {
+            background: transparent;
+            outline: none;
+            border: none;
+            @include SetWidthHeight(100%, 100%);
+            padding-right: 10px;
+            font-size: $menu_text_size;
+            @include noneOutLine();
+        }
+    }
+
+    //Result
+    &-result {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+    }
+
+    &-list {
+        min-height: 100px;
+        max-height: 300px;
+        overflow: auto;
+        list-style: none;
+        //padding: 0px 0px 0px 20px;
+        background: $white;
+    }
+
+    &-item {
+        padding: 15px 5px 5px 5px;
+        border: 1px solid #e7e7e7e7;
+        border-width: 0px 1px 1px 1px;
+    }
+
+    &-box {
+        display: flex;
+
+        img {
+            height: 55px;
+            width: 55px;
+            object-fit: cover;
+        }
+    }
+
+    &-title {
+        width: calc(100% - 35px);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        color: $black;
+        position: relative;
+        padding: 5px;
+
+        p {
+            position: absolute;
+            bottom: 2px;
+        }
+    }
+
+    @media (max-width: 799px) {
+        &-result {
+            position: relative;
+            left: 0;
+            right: 0;
+            border-bottom: 1px solid lightgrey;
+        }
+    }
+}

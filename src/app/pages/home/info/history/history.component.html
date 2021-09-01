@@ -1,15 +1,15 @@
 <body>
     <main>
-        <div class="main__container container-fluid">
-            <div class="banner__container">
-                <div class="banner"></div>
+        <div class="hero container-fluid">
+            <div class="hero-main">
+                <div class="hero-banner"></div>
             </div>
-            <div class="body__container">
-                <div class="body__cover">
+            <div class="hero-container">
+                <div class="hero-body">
 
                     
                     <!--Section bên trái-->
-                    <div class="body__cover--left right-padding">
+                    <div class="hero-body-left">
                         <!--Danh sách truyện-->
                         <app-story-list [truyens]="truyens" [headingTitle]="title" [isHistory]="true"
                         (refreshHistories)="refreshHistories()">
@@ -21,7 +21,7 @@
 
 
                     <!--Section bên phải (side-bar)-->
-                    <div class="body__cover--right left-padding">
+                    <div class="hero-body-right">
                         <!--Rank List-->
                         <app-ranking [truyenRanks]="truyensTopView"></app-ranking>
                         <!--End Rank List-->

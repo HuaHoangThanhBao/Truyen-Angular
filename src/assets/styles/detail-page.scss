@@ -1,0 +1,217 @@
+.hero-o {
+    @include SetWidthHeight(100%, 100%);
+    position: relative;
+
+    .hero-body-box {
+        border-radius: 20px;
+        z-index: 2;
+        margin-top: -450px;
+    }
+
+    .hero-container {
+        @include SetWidthHeight(100%, auto);
+        @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
+        padding: 20px 20px 0px 20px;
+    }
+    
+    &-section{
+        padding: 20px;
+    }
+    &-header{
+        margin-bottom: 20px;
+    }
+    &-item:first-child {
+        @include SetWidthHeight(250px, auto);
+        & > img {
+            @include SetWidthHeight(100%, 300px);
+            border-radius: 10px;
+            object-fit: cover;
+            margin-top: -40px;
+            box-shadow: 10px 10px 25px rgba(black, 0.2);
+        }
+    }
+    &-item:nth-child(2) {
+        width: calc(100% - 250px);
+        padding: 20px;
+    }
+    &-title {
+        margin-bottom: 20px;
+    }
+    &-detail {
+        position: relative;
+        @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
+        margin-top: 20px;
+
+        &-txt {
+            @include SetWidthHeight(50%, auto);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+    }
+    &-content{
+        margin-top: 20px;
+    }
+    /*Các button social*/
+    &-btn-group {
+        width: 100%;
+        height: auto;
+        display: flex;
+        gap: 20px;
+    }
+    &-btn-item {
+        @include SetWidthHeight(100px, 35px);
+        @include noneOutLine($isNoneOutLine: false, $isNoneBorder: true);
+        color: #000000;
+        border-radius: 20px;
+        //margin-right: 20px;
+        background-color: $primaryColor;
+
+        &:hover {
+            background-color: $green;
+            color: $white;
+        }
+    }
+    &-btn-reading {
+        @include SetWidthHeight(100px, 35px);
+        color: $white;
+        //border-radius: 20px;
+        //margin-right: 20px;
+        background-color: $orange;
+
+        &:hover {
+            background-color: $orange;
+            color: $white;
+        }
+    }
+    /*End Button*/
+
+    /*Nút read more cho nội dung*/
+    .box__detail--content {
+        .content {
+            margin: 0;
+            padding: 0;
+            padding-bottom: 1rem;
+            position: relative;
+            padding-top: 20px;
+            line-height: 1.2;
+        }
+    }
+
+    .excerpt-hidden {
+        max-height: 40px;
+        overflow: hidden;
+        position: relative;
+
+        &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            @include SetWidthHeight(100%, 64px);
+            // width: 100%;
+            // height: 64px;
+        }
+    }
+
+    .excerpt-visible {
+        height: auto;
+        // overflow: auto;
+    }
+    /*End nút read more*/
+
+    @media (max-width: 599px) {
+        & {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        &-detail {
+            &-txt {
+                @include SetWidthHeight(100%, auto);
+            }
+        }
+    }
+    @media (max-width: 799px) {
+        &-item:first-child {
+            @include SetWidthHeight(100%, auto);
+            display: block;
+        }
+        &-item:first-child {
+            & > img {
+                @include SetWidthHeight(250px, auto);
+            }
+        }
+        &-item:nth-child(2){
+            display: block;
+            padding: 20px 0px 20px 0px;
+            @include SetWidthHeight(100%, auto);
+        }
+    }
+}
+
+/*Danh sách chương*/
+.chapter{
+    @include SetWidthHeight(100%, auto);
+    max-height: 550px;
+    overflow-y: auto;
+    padding: 20px 0px 0px 0px;
+    //width: 100%;
+
+    &-header {
+        @include SetWidthHeight(100%, auto);
+        @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+        padding-top: 20px;
+        padding-bottom: 15px;
+        border: 1px dashed lightgrey;
+        border-width: 0px 0px 1px 0px;
+    }
+    &-heading {
+        @include SetWidthHeight(50%, auto);
+        padding-right: 5px;
+        font-weight: bold;
+
+        @media (max-width: 400px) {
+            font-size: 14px;
+        }
+    }
+    &-list {
+        @include SetWidthHeight(100%, auto);
+        display: block;
+        list-style: none;
+        margin-top: 15px;
+        position: relative;
+        max-height: 270px;
+        overflow: hidden;
+    }
+    &-item {
+        @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border: 1px dashed lightgrey;
+        border-width: 0px 0px 1px 0px;
+        &:last-child {
+            border-width: 0px;
+            margin-bottom: 0px;
+        }
+    }
+    &-link {
+        @include theme() {
+            color: theme-get("text-color");
+        }
+        &:hover {
+            color: rgb(241, 76, 11);
+        }
+    }
+    &-txt {
+        @include SetWidthHeight(33.33333%, auto);
+        padding-right: 5px;
+
+        &:first-child:hover {
+            color: $green;
+        }
+
+        @media (max-width: 400px) {
+            line-height: 1.4;
+            font-size: 12px;
+        }
+    }
+}

@@ -1,13 +1,13 @@
 <router-outlet></router-outlet>
-<div class="body__box">
-    <div class="title-header">
+<div class="hero-body-box">
+    <div class="hero-body-header">
         <h2>Bình Luận Mới Nhất</h2>
     </div>
-    <div class="chap__comment-panel">
+    <div class="comment">
         <ul class="comment-list">
             <li class="comment-item" *ngFor="let data of (binhLuans ? binhLuans : [].constructor(5))">
                 <ng-container>
-                    <div class="comment-b">
+                    <div class="comment-detail">
                         <div class="title-overflow pad-bot-10">
                             <div class="title-overflow-content txt-italic">
                                 <app-seleton-loader *ngIf="!binhLuans" Cheight="25"></app-seleton-loader>
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="comment-b">
+                    <div class="comment-detail">
                         <ng-container *ngIf="data?.chuong">
 
                         </ng-container>
@@ -39,19 +39,19 @@
                         <span *ngIf="binhLuans" >{{data?.ngayBL}}</span>
                     </div>
                     
-                    <div class="comment-b">
-                        <div class="comment-u-img">
+                    <div class="comment-detail">
+                        <div class="comment-image">
                             <app-seleton-loader *ngIf="!binhLuans" Cheight="45"></app-seleton-loader>
-                            <img *ngIf="binhLuans" loading="lazy" data-src="assets/images/avatar/{{ data?.user.hinhAnh }}" alt="no image avaiable">
+                            <img *ngIf="binhLuans" src="assets/images/avatar/{{ data?.user.hinhAnh }}" alt="no image avaiable">
                         </div>
-                        <div class="comment-des">
-                            <div class="comment-des-container">
+                        <div class="comment-content">
+                            <div class="comment-content-container">
                                 <app-seleton-loader *ngIf="!binhLuans" Cheight="20"></app-seleton-loader>
-                                <div *ngIf="binhLuans" class="comment-des-title">
+                                <div *ngIf="binhLuans" class="comment-content-title">
                                     <p class="comment-name">{{data?.user.userName}}</p>
                                 </div>
                                 <app-seleton-loader *ngIf="!binhLuans" Cheight="20"></app-seleton-loader>
-                                <div *ngIf="binhLuans" class="comment-des-content">
+                                <div *ngIf="binhLuans" class="comment-content-description">
                                     <div [innerHTML]="data?.noiDung"></div>
                                 </div>
                             </div>

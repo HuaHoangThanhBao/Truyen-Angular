@@ -1,14 +1,14 @@
 <!--Header Menu-->
 <header class="header container-fluid" *ngIf="active">
-  <nav class="nav">
-    <ul id="top__nav" class="nav__list">
-      <li class="nav__item">
-        <a class="nav__link logo" routerLink="/index">
+  <nav class="header-nav">
+    <ul id="top__nav" class="header-list">
+      <li class="header-item">
+        <a class="header-link header-logo" routerLink="/index">
           <img src="assets/images/nav-logo.png" alt="no image avaiable">
         </a>
       </li>
-      <li class="nav__item">
-        <a id="catagory-dropdown" class="nav__link">
+      <li class="header-item">
+        <a id="catagory-dropdown" class="header-link">
           <div class="toggle__button">
             <div class="bar1"></div>
             <div class="bar2"></div>
@@ -16,48 +16,48 @@
           </div>
         </a>
       </li>
-      <li class="nav__item">
-        <div class="menu-panel">
-          <div class="sep">
-            <a class="nav__link n-highL">
+      <li class="header-item">
+        <div class="menu">
+          <div class="menu-item">
+            <a class="header-link">
               Danh mục
             </a>
-            <div class="catagory-content">
-              <ul class="catagory-list">
-                <li class="catagory-item" *ngFor="let theloai of theLoais">
+            <div class="header-cat">
+              <ul class="header-cat-list">
+                <li class="header-cat-item" *ngFor="let theloai of theLoais">
                   <a routerLink="/details/category/{{ theloai.theLoaiID }}">{{ theloai.tenTheLoai }}</a>
                 </li>
               </ul>
             </div>
           </div>
-          <div class="sep">
-            <a class="nav__link n-highL" routerLink="/info/following">Theo Dõi</a>
+          <div class="menu-item">
+            <a class="header-link" routerLink="/info/following">Theo Dõi</a>
           </div>
-          <div class="sep">
-            <a class="nav__link n-highL" routerLink="/info/history">Lịch sử</a>
+          <div class="menu-item">
+            <a class="header-link" routerLink="/info/history">Lịch sử</a>
           </div>
-          <div class="sep">
-            <a *ngIf="!userLoginID" class="nav__link n-highL" routerLink="/authentication/login">Đăng nhập</a>
-            <a *ngIf="userLoginID" class="nav__link n-highL" routerLink="/info/account">Tài khoản</a>
+          <div class="menu-item">
+            <a *ngIf="!userLoginID" class="header-link" routerLink="/authentication/login">Đăng nhập</a>
+            <a *ngIf="userLoginID" class="header-link" routerLink="/info/account">Tài khoản</a>
           </div>
-          <div class="sep">
-            <div class="search__panel">
-              <form class="search__box">
-                <div class="search__outer">
-                  <div class="search__box-input">
+          <div class="menu-item">
+            <div class="search">
+              <form class="search-main">
+                <div class="search-body">
+                  <div class="search-input">
                     <input (input)="filterOnSearch($event.target.value)" type="text" placeholder="Tìm kiếm...">
                   </div>
                   <div class="icon">
                     <img src="assets/images/loupe.svg" class="search-icon" alt="no image avaiable">
                   </div>
                 </div>
-                <div class="search__result" *ngIf="truyensOnSearch?.length > 0">
-                  <ul class="search__result--list">
-                    <li class="search__result--item" *ngFor="let res of truyensOnSearch">
+                <div class="search-result" *ngIf="truyensOnSearch?.length > 0">
+                  <ul class="search-list">
+                    <li class="search-item" *ngFor="let res of truyensOnSearch">
                       <a routerLink="/details/story-detail/{{ res.truyenID }}">
-                        <div class="search__result--box">
+                        <div class="search-box">
                           <img src="https://drive.google.com/uc?export=view&id={{res.hinhAnh}}">
-                          <div class="search__result--title">
+                          <div class="search-title">
                             <b>{{ res.tenTruyen }}</b>
                             <p>Đọc ngay</p>
                           </div>

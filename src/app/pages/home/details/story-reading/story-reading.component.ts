@@ -120,8 +120,8 @@ export class StoryReadingComponent implements OnInit {
   scrollMenu() {
     window.onscroll = function () { fixedOnScroll() };
 
-    var nav_header = document.getElementById("nav__menu--header");
-    var whereToActive = document.getElementById("image__list");
+    var nav_header = document.getElementById("nav-menu-header");
+    var whereToActive = document.getElementById("image-list");
     var sticky = whereToActive.offsetTop;
 
     function fixedOnScroll() {

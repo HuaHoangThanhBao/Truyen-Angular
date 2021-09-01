@@ -1,32 +1,32 @@
 <router-outlet></router-outlet>
-<div class="body__box">
-  <div class="title-header">
+<div class="hero-body-box">
+  <div class="hero-body-header">
     <h2>{{headingTitle}}</h2>
   </div>
-  <div class="body__list-container">
-    <div id="list-area" class="list-area">
+  <div class="hero-body-list">
+    <div id="list-area" class="story">
       <!--Item-->
-      <div class="list-item"  *ngFor="let data of (truyens ? truyens : [].constructor(20))">
-        <div class="image-box">
-          <a class="image-link" routerLink="/details/story-detail/{{ data?.truyenID }}">
+      <div class="story-item"  *ngFor="let data of (truyens ? truyens : [].constructor(20))">
+        <div class="story-box">
+          <a class="story-link" routerLink="/details/story-detail/{{ data?.truyenID }}">
             <app-seleton-loader *ngIf="!truyens" Cwidth="25%" Cheight="250"></app-seleton-loader>
-            <img *ngIf="truyens" loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"
+            <img *ngIf="truyens" src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"
               alt="image not available">
           </a>
-          <div *ngIf="isHistory == true && truyens" class="image-btn">
+          <div *ngIf="isHistory == true && truyens" class="story-delete-btn">
               <a (click)="callRefreshHistories(data?.truyenID)">
                   <span>&#10006;</span>
                   <span>Xóa</span>
               </a>
           </div>
-          <div *ngIf="isFollowing == true && truyens" class="image-btn">
+          <div *ngIf="isFollowing == true && truyens" class="story-delete-btn">
               <a (click)="callDeleteFollowingItem(data?.truyenID)">
                   <span>&#10006;</span>
                   <span>Xóa</span>
               </a>
           </div>
         </div>
-        <div class="list_info">
+        <div class="story-info">
           <app-seleton-loader *ngIf="!truyens" Cheight="20" Cwidth="100%"></app-seleton-loader>
           <a *ngIf="truyens" class="chapter-link" routerLink="/details/story-detail/{{ data?.truyenID }}"><h3>{{data?.tenTruyen}}</h3></a>
           

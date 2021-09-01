@@ -1,102 +1,17 @@
-@import "../../../../../assets/styles/icon.scss";
-@import "../../../../../assets/styles/func.scss";
-@import "../../../../../assets/styles/var.scss";
-
-.main__container{
-  padding-top: 75px;
+.hero {
+  margin-top: 75px;
 }
 
-.body__cover {
+img{
+  width: 100%;
+}
 
-  .body__box {
-    border-radius: 5px;
-    padding: 20px 0px 20px 0px;
-    margin: 0px 0px 20px 0px;
-    max-width: 1300px;
-    @media (max-width: 799px) {
-      //padding: 0px 10px 0px 10px;
-      padding: 0px 0px 0px 0px;
-    }
-
-    .body__box--header {
-      @include SetWidthHeight(100%, auto);
-      text-align: center;
-
-      .box__header--item {
-        padding: 10px 0px 10px 0px;
-      }
-
-      .nav__menu {
-        @include SetWidthHeight(100%, auto);
-        display: block;
-        position: relative;
-        padding-top: 20px;
-        padding-bottom: 40px;
-
-        .nav__menu--list {
-          @include SetWidthHeight(100%, auto);
-          @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
-          list-style: none;
-          justify-content: center;
-
-          .nav__menu-item {
-            padding: 5px;
-            border-radius: 50%;
-
-            &:nth-child(6) {
-              @include SetWidthHeight(250px, auto);
-            }
-
-            @media (max-width: 519px) {
-              &:nth-child(4) {
-                width: auto;
-              }
-              &:nth-child(6) {
-                width: calc(60% - 100px);
-              }
-            }
-
-            .nav__menu-select-box {
-              @include SetWidthHeight(100%, 100%);
-              @include Flex($isHorizontally: true, $isVertically: true, $isWrap: true);
-
-              select {
-                @include SetWidthHeight(100%, 100%);
-                @include noneOutLine($isNoneOutLine: true, $isNoneBorder: false);
-                border-radius: 5px;
-              }
-            }
-
-            .nav__menu-item-box {
-              @include SetWidthHeight(100%, 100%);
-
-              .nav__menu-item-icon {
-                @include Flex($isHorizontally: true, $isVertically: true, $isWrap: true);
-                border-radius: 50%;
-                padding: 8px;
-                background-color: $white;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-
-                img {
-                  @include SetWidthHeight(17px, 17px);
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .image__list {
-      list-style: none;
-
-      .image__list--item {
-        display: block;
-
-        img {
-          @include SetWidthHeight(100%, auto);
-        }
-      }
-    }
+.hero-body-box {
+  margin-bottom: 20px;
+  &-header {
+    text-align: center;
+  }
+  &-item {
+    padding: 10px 0px 10px 0px;
   }
 }

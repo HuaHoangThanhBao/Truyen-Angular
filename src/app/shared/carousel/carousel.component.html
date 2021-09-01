@@ -1,29 +1,29 @@
-<div class="body__container">
-  <div class="body__cover">
-    <div class="body__box">
-      <div class="title-header">
+<div class="hero-container">
+  <div class="hero-body">
+    <div class="hero-body-box hero-body-carousel">
+      <div class="hero-body-header">
         <h2>Truyện đề cử</h2>
       </div>
 
       <!--Carousel-->
-        <div class="caro__body">
-          <div *ngIf="carouselJson" class="caro__body--nav nav-left">
+        <div class="carousel">
+          <div *ngIf="carouselJson" class="carousel-nav nav-left">
             <div class="ion-chevron-left carousel-arrow-icon-left"></div>
           </div>
 
           <app-seleton-loader *ngIf="!carouselJson" Cheight="100%" Cwidth="100%"></app-seleton-loader>
 
-          <div *ngIf="carouselJson" class="caro__body--slide">
-            <div class="caro__body--item" *ngFor="let ca of carouselJson; let l = last">
-              <div class="caro__item--wrapper">
+          <div *ngIf="carouselJson" class="carousel-slide">
+            <div class="carousel-item" *ngFor="let ca of carouselJson; let l = last">
+              <div class="carousel-item-wrapper">
                 <a routerLink="/details/story-detail/{{ ca.truyenID }}">
-                  <img loading="lazy" data-src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
+                  <img src="https://drive.google.com/uc?export=view&id={{ ca.hinhAnh }}">
                 </a>
-                <div class="caro__item--caption">
+                <div class="carousel-item-caption">
                   <a routerLink="/details/story-detail/{{ ca.truyenID }}">
                     <p class="truncate">{{ ca.tenTruyen }}</p>
                   </a>
-                  <div class="caro__item--href">
+                  <div class="carousel-item-link">
                     <a routerLink="/details/story-reading/{{ ca.truyenID }}/{{ ca.chuongs.slice(-1)[0].chuongID }}"
                     
                       (click)="this.historyManagement.addToHistory(ca?.truyenID, ca?.tenTruyen, ca.chuongs.slice(-1)[0].chuongID, ca.chuongs.slice(-1)[0].tenChuong, ca?.hinhAnh)" 
@@ -56,7 +56,7 @@
             </div>
           </div>
 
-          <div *ngIf="carouselJson" class="caro__body--nav nav-right">
+          <div *ngIf="carouselJson" class="carousel-nav nav-right">
             <div class="ion-chevron-right carousel-arrow-icon-right"></div>
           </div>
         </div>

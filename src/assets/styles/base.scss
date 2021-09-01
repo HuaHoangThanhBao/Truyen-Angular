@@ -1,0 +1,296 @@
+*,
+*:after,
+*:before {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+:root {
+    --list-item-columns: 4;
+    --list-item-columns-gap: 20px;
+    --padding: 20px;
+}
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../../assets/fonts/Poppins-Regular.eot");
+    src: url("../../assets/fonts/Poppins-Regular.eot?#iefix") format("embedded-opentype"),
+        url("../../assets/fonts/Poppins-Regular.woff2") format("woff2"),
+        url("../../assets/fonts/Poppins-Regular.woff") format("woff"),
+        url("../../assets/fonts/Poppins-Regular.ttf") format("truetype");
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    line-height: 1;
+    font-weight: 400;
+    background-color: $primaryColor;
+    @include theme() {
+        //color: theme-get('text-color');
+        background-color: theme-get("bg-dark");
+    }
+}
+
+.container-fluid {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/*Main Container*/
+.hero {
+    padding-bottom: 40px;
+
+    &-main {
+        width: 100%;
+        height: 600px;
+    }
+    &-banner {
+        margin-top: 75px;
+        width: 100%;
+        height: 100%;
+        background-image: url(../../assets/images/anime.jpg);
+        background-position: bottom center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        @media (max-width: 1000px) {
+            background-position: right center;
+        }
+    }
+    &-container {
+        @include SetWidthHeight(100%, auto);
+        display: flex;
+        justify-content: center;
+    }
+
+    &-body {
+        max-width: $max-scale-width;
+        @include SetWidthHeight(100%, 100%);
+        @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
+        padding: 10px;
+
+        &-left {
+            @include SetWidthHeight(calc(66.66666667% - 20px), auto);
+            margin-left: 20px;
+        }
+        &-right {
+            @include SetWidthHeight(calc(calc(100% - 66.66666667%) - 40px), auto);
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        &-box {
+            @include SetWidthHeight(100%, auto);
+            background-color: $white;
+            border-radius: 8px;
+            margin-bottom: 20x;
+            @include theme() {
+                color: theme-get("text-color");
+                background-color: theme-get("bg-light-dark");
+            }
+        }
+        &-header {
+            @include SetWidthHeight(100%, 65px);
+            padding: 20px;
+        }
+        &-list {
+            padding: var(--padding);
+            @include SetWidthHeight(100%, auto);
+        }
+        &-carousel {
+            margin: 20px;
+        }
+        &-ranking {
+            margin-bottom: 20px;
+        }
+    }
+    @media (max-width: 999px) {
+        &-body {
+            &-left {
+                width: 100%;
+                margin: 0;
+                margin-bottom: 20px;
+            }
+            &-right {
+                width: 100%;
+                margin: 0;
+            }
+            &-carousel {
+                margin: 0;
+            }
+        }
+    }
+}
+/*End Main Container*/
+
+/*Chữ tràn*/
+.title-overflow {
+    position: relative;
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    padding-bottom: 25px;
+
+    .title-overflow-content {
+        display: table-cell;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        line-height: 1.5;
+
+        b {
+            font-size: 16px;
+        }
+    }
+}
+/*End Chữ tràn*/
+
+.nav-sticky {
+    position: fixed;
+    display: block;
+    top: 75px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: $white;
+    @include theme() {
+        color: theme-get("text-color");
+        background-color: theme-get("bg-light-dark");
+    }
+    box-shadow: 0 5px 5px rgba(85, 85, 85, 0.288);
+    z-index: 2;
+    padding: 10px;
+}
+
+/*Các button ở trang Detail Truyện*/
+.btn-detail-group {
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 20px;
+
+    .btn-social {
+        @include SetWidthHeight(100px, 35px);
+        @include noneOutLine($isNoneOutLine: false, $isNoneBorder: true);
+        color: #000000;
+        border-radius: 20px;
+        //margin-right: 20px;
+        background-color: $primaryColor;
+
+        &:hover {
+            background-color: $green;
+            color: $white;
+        }
+    }
+
+    .btn-reading {
+        @include SetWidthHeight(100px, 35px);
+        color: $white;
+        //border-radius: 20px;
+        //margin-right: 20px;
+        background-color: $orange;
+
+        &:hover {
+            background-color: $orange;
+            color: $white;
+        }
+    }
+}
+/*End Button*/
+
+/*Expand list in item-page.html*/
+.js-excerpt {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.js-excerpt::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 30px;
+    background: linear-gradient(rgba(255, 255, 255, 0), white);
+    @include theme() {
+        background: linear-gradient(rgba(255, 255, 255, 0), theme-get("bg-light-dark"));
+    }
+}
+
+.js-show-more {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-size: 15px;
+    text-decoration: underline;
+    @include theme() {
+        color: theme-get("text-color");
+    }
+
+    &:hover {
+        color: tomato;
+        text-decoration: underline;
+    }
+}
+
+.expand-bottom {
+    @include SetWidthHeight(100%, 2.5rem);
+    display: block !important;
+    position: relative;
+
+    &.active::before {
+        height: 0;
+        top: 0;
+    }
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: -50px;
+        height: 50px;
+        background: linear-gradient(rgba(255, 255, 255, 0.322), white);
+        @include theme() {
+            background: linear-gradient(#42424271, theme-get("bg-light-dark"));
+        }
+    }
+
+    button {
+        @include SetWidthHeight(100%, 100%);
+        @include noneOutLine($isNoneOutLine: true, $isNoneBorder: true);
+        border-radius: 0.15rem;
+
+        &:hover {
+            background-color: rgb(221, 221, 221);
+        }
+    }
+}
+/*End*/
+
+/*Các hình ngôi sao đánh giá*/
+.star {
+    img {
+        height: 100%;
+        padding-bottom: 5px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+/*End*/
+
+.error {
+    padding: 10px 0px 10px 0px;
+    color: red;
+    line-height: 1.5;
+}
+
+
+em{
+    color: red;
+    font-size: 15px;
+}

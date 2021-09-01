@@ -19,6 +19,9 @@ h3 {
     font-size: 16px;
     line-height: 1.3;
     font-weight: 400;
+    @include theme() {
+        color: theme-get("text-color");
+    }
 }
 
 button {
@@ -28,7 +31,9 @@ button {
 a {
     cursor: pointer;
     text-decoration: none;
-    @include theme() {
-        color: theme-get("text-color");
-    }
+    color: inherit;
+}
+
+ul{
+    list-style: none;
 }

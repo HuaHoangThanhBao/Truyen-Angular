@@ -24,7 +24,7 @@ export class ToastAlertService {
       }, duration);
 
       const delay = (duration / 1000).toFixed(2);
-      toast.classList.add("toast", `toast--${type}`);
+      toast.classList.add("toast", `toast-${type}`);
       toast.style.animation = `slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
 
       const icons = {
@@ -101,12 +101,12 @@ export class ToastAlertService {
       const icon = icons[type];
 
       toast.innerHTML = `
-      <div class="toast__icon">
+      <div class="toast-icon">
       ${icon}
   </div>
-  <div class="toast__body">
-      <p class="toast__title">${title}</p>
-      <p class="toast__content">${message}</p>
+  <div class="toast-body">
+      <p class="toast-title">${title}</p>
+      <p class="toast-content">${message}</p>
   </div>
   </div>`;
       main.appendChild(toast);
