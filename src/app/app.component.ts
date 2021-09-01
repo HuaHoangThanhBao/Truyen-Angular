@@ -45,12 +45,7 @@ export class AppComponent implements OnInit {
       this.userLoginID = currentID;
     })
 
-    this.theLoaiService.getList().subscribe(theloais => {
-      this.theLoais = theloais
-    });
-
     setUpDarkMode();
-    this.categoryDropdownInit();
   }
 
   async canActivate() {
@@ -114,23 +109,5 @@ export class AppComponent implements OnInit {
       console.log(ex);
     }
     return isRefreshSuccess;
-  }
-
-  categoryDropdownInit() {
-    const catBut = document.getElementById('catagory-dropdown');
-    if(!catBut) return;
-    
-    catBut.addEventListener('click', function () {
-      showMenuOnTablet();
-    });
-
-    function showMenuOnTablet() {
-      var x = document.getElementById("top__nav");
-      if (x.className === "nav__list") {
-        x.className += " responsive";
-      } else {
-        x.className = "nav__list";
-      }
-    }
   }
 }

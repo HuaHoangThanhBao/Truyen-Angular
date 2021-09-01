@@ -15,9 +15,9 @@ import { AuthGuard } from '../../../modules/guards/auth-guard.service';
     ReactiveFormsModule,
     GeneralModules,
     RouterModule.forChild([
-        { path: 'following', component: FollowingComponent/*, canActivate: [AuthGuard]*/},
+        { path: 'following', component: FollowingComponent, canActivate: [AuthGuard]},
         { path: 'history', component: HistoryComponent},
-    { path: 'account', component: AccountComponent/*, canActivate: [AuthGuard]*/},
+    { path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
     ])
   ]
 })
