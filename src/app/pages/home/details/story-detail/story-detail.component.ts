@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, DoCheck } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastAlertService } from 'src/app/services/others/toast-alert-service.service';
 import { HistoryManagement } from '../../../../services/others/historyManagement.service';
@@ -12,6 +12,8 @@ import { PhuLuc } from '../../../../model/phuluc/PhuLuc.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TheoDoiService } from '../../../../services/model-service/theoDoiService.service';
 import { TheoDoi } from '../../../../model/theodoi/TheoDoi.model';
+import { Chuong } from 'src/app/model/chuong/Chuong.model';
+import { ChuongService } from '../../../../services/model-service/chuongService.service';
 
 declare function expandBtn(): void;
 
@@ -26,39 +28,64 @@ export class StoryDetailComponent implements OnInit {
   truyen: Truyen;
   phuLucs: PhuLuc;
 
+  tongSao: unknown;
   tongLuotXem: number;
   truyenID: number;
+  ultiliesInit: boolean = false;
 
   constructor(private jwtHelper: JwtHelperService, private route: ActivatedRoute, private _router: Router, private historyManagement: HistoryManagement,
-    private toast: ToastAlertService, private truyenService: TruyenService,
+    private toast: ToastAlertService, private truyenService: TruyenService, private chuongService: ChuongService,
     private binhLuanService: BinhLuanService, private phuLucService: PhuLucService, private theoDoiService: TheoDoiService) {
 
     this.route.paramMap.subscribe((param) => {
       this.truyenID = parseInt(param.get('truyenID'));
-    });
 
+      let binhLuansParams: RequestParam = { pageNumber: 1, pageSize: 5, sorting: true, truyenID: this.truyenID }
+      this.binhLuanService.getListWithParams(binhLuansParams).subscribe(binhLuans => {
+        this.binhLuans = binhLuans;
+        //console.log(binhLuans)
+      });
+
+      this.truyenService.getDetail(this.truyenID).subscribe(truyen => {
+        this.truyen = truyen;
+        this.tongLuotXem = truyen.chuongs.reduce((ac, cur) => { return ac + cur.luotXem }, 0);
+        //console.log(truyen)
+      });
+      
+      this.truyenService.getListExtend(`${this.truyenID}/danhgiasao`).subscribe(soSao => {
+        this.tongSao = soSao;
+        console.log(this.tongSao)
+      });
+
+      this.phuLucService.get(this.truyenID).subscribe(phulucs => {
+        this.phuLucs = phulucs;
+        //console.log(phulucs)
+      });
+
+      if (this.ultiliesInit) {
+        const chap = document.getElementById('chapter-list');
+        const expand = document.getElementById('expand');
+        chap.classList.remove('active');
+        expand.classList.remove('active');
+      }
+    });
   }
 
   ngOnInit(): void {
-    let binhLuansParams: RequestParam = { pageNumber: 1, pageSize: 5, sorting: true, truyenID: this.truyenID }
-    this.binhLuanService.getListWithParams(binhLuansParams).subscribe(binhLuans => {
-      this.binhLuans = binhLuans;
-      //console.log(binhLuans)
-    });
-
-    this.truyenService.getDetail(this.truyenID).subscribe(truyen => {
-      this.truyen = truyen;
-      this.tongLuotXem = truyen.chuongs.reduce((ac, cur) => { return ac + cur.luotXem }, 0);
-      //console.log(truyen)
-    });
-
-    this.phuLucService.get(this.truyenID).subscribe(phulucs => {
-      this.phuLucs = phulucs;
-      //console.log(phulucs)
-    });
-
-    expandBtn();
     //truyenUltiInit();
+    expandBtn();
+    this.ultiliesInit = true;
+  }
+  
+  postLuotXem(chuong: Chuong){
+    const newChuong: Chuong = {...chuong}
+    newChuong.luotXem += 1;
+    
+    this.chuongService.updateWithID(chuong.chuongID.toString(), newChuong)
+    .subscribe(_ => {}
+    );
+
+    this.historyManagement.addToHistory(chuong?.truyenID, this.truyen?.tenTruyen, chuong?.chuongID, chuong?.tenChuong, this.truyen?.hinhAnh)
   }
 
   addFollowing() {
@@ -73,8 +100,8 @@ export class StoryDetailComponent implements OnInit {
       }
 
       this.theoDoiService.post(theoDoiDto)
-        .subscribe(error => {
-          if(!error){
+        .subscribe(res => {
+          if (!res?.error) {
             this.toast.showToast("Thành công!", "Hệ thống sẽ thông báo cho bạn khi có chap mới", "success")
           }
         })

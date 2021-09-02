@@ -1,11 +1,15 @@
 <!--Pagination-->
-<div class="pagination-container">
-    <app-seleton-loader *ngIf="!pagingHeaderData" Cwidth="100%"></app-seleton-loader>
-    <div *ngIf="pagingHeaderData" id="pagination" class="pagination">
+<div class="pagination">
+    <app-seleton-loader *ngIf="!numbers" Cwidth="100%"></app-seleton-loader>
+    <div *ngIf="numbers" id="pagination" class="pagination-main">
         <a (click)="refreshStoryList(false)">&laquo;</a>
+
+
         <ng-container *ngFor="let i of numbers; let _i = index">
-            <a class="pag-link" (click)="refreshStoryList(i)" [class.current]="i == currentPage">{{ i }}</a>
+            <a class="pagination-link" (click)="refreshStoryList(i)" [class.current]="i == currentPage">{{ i }}</a>
         </ng-container>
+
+        
         <a (click)="refreshStoryList(true)">&raquo;</a>
     </div>
 </div>

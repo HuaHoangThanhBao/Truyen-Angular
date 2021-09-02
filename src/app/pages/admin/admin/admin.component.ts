@@ -64,8 +64,8 @@ export class AdminComponent implements OnInit {
     };
 
     this.adminForRegistrationService.post(user)
-    .subscribe(error => {
-      if(!error){
+    .subscribe(res => {
+      if (!res?.error) {
         this.toast.showToast("Thành công", "Bạn vui lòng đợi admin duyệt tài khoản nhé!", "info");
       }
       else{

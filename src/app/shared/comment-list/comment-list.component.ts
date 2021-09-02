@@ -28,14 +28,16 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
   public errorMessage: string = '';
   public showError: boolean;
-  
+
+  starRating = 0;
+
   private loginSubscription: Subscription;
 
   constructor(private toast: ToastAlertService, private loginService: LoginService,
     private _router: Router, private binhLuanService: BinhLuanService) {
 
   }
-  
+
   ngOnDestroy() {
     this.loginSubscription.unsubscribe();
   }
@@ -49,7 +51,7 @@ export class CommentListComponent implements OnInit, OnDestroy {
     })
 
     this.publishCommentForm = new FormGroup({
-      noiDung: new FormControl('', [Validators.required]),
+      noiDung: new FormControl('', [Validators.required])
     });
   }
 
@@ -62,6 +64,11 @@ export class CommentListComponent implements OnInit, OnDestroy {
   }
 
   publishComment = (publishCommentFormValue) => {
+    if (this.starRating == 0) {
+      this.toast.showToast("Ui chao", "Bạn vui lòng đánh giá sao cho truyện nhé!", "warning");
+      return;
+    }
+
     this.btnSubmitLocked = true;
     this.showError = false;
     const formValues = { ...publishCommentFormValue };
@@ -71,26 +78,27 @@ export class CommentListComponent implements OnInit, OnDestroy {
       binhLuanDto = {
         userID: this.userLoginID,
         truyenID: this.truyen?.truyenID,
-        noiDung: formValues.noiDung
+        noiDung: formValues.noiDung,
+        danhGiaSao: this.starRating
       }
     }
     else {
       binhLuanDto = {
         userID: this.userLoginID,
         chuongID: this.chuong?.chuongID,
-        noiDung: formValues.noiDung
+        noiDung: formValues.noiDung,
+        danhGiaSao: this.starRating
       }
     }
-    
+
     this.binhLuanService.post(binhLuanDto)
       .subscribe(res => {
-        console.log(res)
         if (!res?.error) {
           this.toast.showToast("Chúc mừng", "Bạn đã đăng bình luận thành công!", "success");
           this.publishCommentForm.setValue({ noiDung: '' });
           this.btnSubmitLocked = false;
         }
-        else{
+        else {
           this.btnSubmitLocked = false;
         }
       })
@@ -98,5 +106,10 @@ export class CommentListComponent implements OnInit, OnDestroy {
 
   navigateToLoginPage() {
     this._router.navigate(['authentication/login']);
+  }
+
+  /////
+  rating(star: number) {
+    this.starRating = star;
   }
 }

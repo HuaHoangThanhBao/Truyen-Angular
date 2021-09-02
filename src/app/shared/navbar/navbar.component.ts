@@ -38,28 +38,42 @@ export class NavbarComponent implements OnInit, AfterViewChecked {
     if (this.active == true) {
       if(this.navBarInit == false){
         this.navBarInit = true;
-        const catBut = document.getElementById('catagory-dropdown');
-        if (!catBut) return;
+        const catBut = document.getElementById('toggle-link');
+        const navBar = document.getElementById("nav-bar");
+        const searchResult = document.getElementById('search-result');
+
+        if (!catBut || !navBar || !searchResult) return;
   
         catBut.addEventListener('click', function () {
           showMenuOnTablet();
         });
   
         function showMenuOnTablet() {
-          var x = document.getElementById("top__nav");
-          if (x.className === "header-list") {
-            x.className += " responsive";
+          if (navBar.className === "header-list") {
+            navBar.className += " responsive";
           } else {
-            x.className = "header-list";
+            navBar.className = "header-list";
           }
         }
+
+        //Nếu click vào element không phải là toggle btn thì đóng menu bar lại
+        document.onclick = function(e){
+          const target = e.target as HTMLElement;
+          if(!target.id.includes("toggle") && !target.id.includes("header-cat-list-link") && !target.className.includes("search")){
+            navBar.className = "header-list";
+            searchResult.classList.add('disable');
+          }
+        }  
       }
     }
   }
 
   filterOnSearch(value) {
     if (value != "") {
-      let truyenLatestUpdateParams: RequestParam = { sorting: true, tenTruyen: value }
+      const searchResult = document.getElementById('search-result');
+      searchResult.classList.remove('disable');
+
+      let truyenLatestUpdateParams: RequestParam = { sorting: true, tenTruyen: value.toLowerCase().trim() }
       this.truyenService.getListWithParams(truyenLatestUpdateParams).subscribe(truyens => {
         this.truyensOnSearch = truyens;
         //console.log(truyens)

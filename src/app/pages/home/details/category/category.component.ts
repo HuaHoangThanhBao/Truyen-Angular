@@ -30,6 +30,17 @@ export class CategoryComponent implements OnInit {
     this.route.paramMap.subscribe((param) => {
       this.theLoaiId = parseInt(param.get('id'));
 
+      this.theLoaiService.get(this.theLoaiId).subscribe(theLoai => {
+        this.title = `Danh mục: ${theLoai["tenTheLoai"]}`
+        //console.log(truyens)
+      });
+
+      let truyenLatestUpdateParams: RequestParam = { pageNumber: 1, pageSize: 20, sorting: true, theLoaiID: this.theLoaiId }
+      this.truyenService.getListWithParams(truyenLatestUpdateParams).subscribe(truyens => {
+        this.truyensByCategory = truyens;
+        //console.log(truyens)
+      });
+
       let truyenHeaderPagParams: RequestParam = { pageNumber: 1, pageSize: 20, sorting: true, theLoaiID: this.theLoaiId }
       this.truyenService.getPaginationHeaders(truyenHeaderPagParams).then(headers => {
         this.storyListComponent.passPagingHeaders(headers);
@@ -38,17 +49,6 @@ export class CategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.theLoaiService.get(this.theLoaiId).subscribe(theLoai => {
-      this.title = `Danh mục: ${theLoai["tenTheLoai"]}`
-      //console.log(truyens)
-    });
-
-    let truyenLatestUpdateParams: RequestParam = { pageNumber: 1, pageSize: 20, sorting: true, theLoaiID: this.theLoaiId }
-    this.truyenService.getListWithParams(truyenLatestUpdateParams).subscribe(truyens => {
-      this.truyensByCategory = truyens;
-      //console.log(truyens)
-    });
-
     let truyenTopViewParams: RequestParam = { pageNumber: 1, pageSize: 5, topView: true }
     this.truyenService.getListWithParams(truyenTopViewParams).subscribe(truyens => {
       this.truyensTopView = truyens;

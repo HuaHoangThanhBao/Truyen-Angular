@@ -46,10 +46,11 @@
     }
 
     &-item-icon {
-        @include Flex($isHorizontally: true, $isVertically: true, $isWrap: true);
+        @include Flex($isHorizontally: true, $isVertically: true, $isWrap: false);
         border-radius: 50%;
         padding: 8px;
         background-color: $white;
+        width: 33px;
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 
         img {

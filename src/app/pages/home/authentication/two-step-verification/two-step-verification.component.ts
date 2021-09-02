@@ -55,17 +55,19 @@ export class TwoStepVerificationComponent implements OnInit {
 
     this.twoStepVerificationService.post(twoFactorDto)
       .subscribe(res => {
-        this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
+        if (!res?.error) {
+          this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
 
-        const token = (<any>res).token;
-        const refreshToken = (<any>res).refreshToken;
-        localStorage.setItem("jwt", token);
-        localStorage.setItem("refreshToken", refreshToken);
+          const token = (<any>res).token;
+          const refreshToken = (<any>res).refreshToken;
+          localStorage.setItem("jwt", token);
+          localStorage.setItem("refreshToken", refreshToken);
 
-        this._router.navigate([this._returnUrl]);
-      },
-      error => {
-        this.btnSubmitLocked = false;
+          this._router.navigate([this._returnUrl]);
+        }
+        else {
+          this.btnSubmitLocked = false;
+        }
       })
   }
 }

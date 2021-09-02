@@ -15,6 +15,7 @@ import { LoginService } from '../../../../services/others/login-service.service'
 import { UpdatePasswordService } from '../../../../services/authentication/updatePasswordService.service';
 import { JWTTokenService } from '../../../../services/jwt/jwtTokenService.service';
 import { Subscription } from 'rxjs';
+import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-account',
@@ -36,9 +37,9 @@ export class AccountComponent implements OnInit, OnDestroy {
   private loginSubscription: Subscription;
 
   constructor(private _router: Router, private toast: ToastAlertService, private _passConfValidator: PasswordConfirmationValidatorService,
-    private truyenService: TruyenService, private binhLuanService: BinhLuanService,
-    private userService: UserService, private loginService: LoginService, private updatePasswordService: UpdatePasswordService,
-    private jwtTokenService: JWTTokenService) {
+    private truyenService: TruyenService, private binhLuanService: BinhLuanService, private userService: UserService,
+    private loginService: LoginService, private updatePasswordService: UpdatePasswordService,
+    private jwtTokenService: JWTTokenService, private confirmationDialogService: ConfirmationDialogService) {
   }
 
   ngOnDestroy() {
@@ -48,7 +49,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loginSubscription = this.loginService.currentUser.subscribe(newID => {
       if (newID != "") {
-        console.log(newID);  
+        console.log(newID);
         this.userLoginID = newID;
         this.userService.getDetail(this.userLoginID).subscribe(user => {
           this.user = user;
@@ -100,8 +101,8 @@ export class AccountComponent implements OnInit, OnDestroy {
     }
 
     this.updatePasswordService.update(updatePassDto)
-      .subscribe(error => {
-        if (!error) {
+      .subscribe(res => {
+        if (!res?.error) {
           this.toast.showToast("Thành công", "Đổi mật khẩu thành công!", "success");
           this.toast.showToast("Lưu ý", "Hãy lưu mật khẩu ở nơi nào đó dễ nhớ nhé!", "warning");
         }
@@ -137,17 +138,29 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   logoutClick() {
-    const token = localStorage.getItem("jwt");
-    const refreshToken: string = localStorage.getItem("refreshToken");
-    const credentials = JSON.stringify({ accessToken: token, refreshToken: refreshToken });
-    this.jwtTokenService.post(credentials)
-      .subscribe(error => {
-        if (!error) {
-          localStorage.removeItem("jwt");
-          localStorage.removeItem("refreshToken");
-          this.toast.showToast("Rất tiếc khi bạn đăng xuất", "Hãy quay lại sớm nhé!", "warning");
-          window.location.href = 'index';
+    this.openConfirmationDialogForLogout();
+  }
+
+
+  public openConfirmationDialogForLogout() {
+    this.confirmationDialogService.confirm('Vui lòng xác nhận', 'Bạn có muốn đăng xuất ngay không?')
+      .then((confirmed) => {
+        //console.log('User confirmed:', confirmed);
+        if (confirmed == true) {
+          const token = localStorage.getItem("jwt");
+          const refreshToken: string = localStorage.getItem("refreshToken");
+          const credentials = JSON.stringify({ accessToken: token, refreshToken: refreshToken });
+          this.jwtTokenService.post(credentials)
+            .subscribe(res => {
+              if (!res?.error) {
+                localStorage.removeItem("jwt");
+                localStorage.removeItem("refreshToken");
+                this.toast.showToast("Rất tiếc khi bạn đăng xuất", "Hãy quay lại sớm nhé!", "warning");
+                window.location.href = 'index';
+              }
+            });
         }
-      });
+      })
+      .catch(() => { });
   }
 }

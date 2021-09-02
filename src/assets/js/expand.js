@@ -38,17 +38,18 @@ const ExcerptWidget = {
   }
 };
 function expandBtn(){
-  ExcerptWidget.showMore('.js-show-more', '.js-excerpt');
+  ExcerptWidget.showMore('.hero-o-content-show-more', '.hero-o-content-excerpt');
 
   /*Expand Chap*/
-  const expand_chap = document.getElementById('expand-chap-cover');
-  expand_chap.addEventListener('click', () => {
-    var chap = document.getElementById('chapter-list');
-    chap.style.maxHeight = "100%";
+  const expand = document.getElementById('expand');
+  const expandBtn = document.getElementById('expand-btn');
+  const chap = document.getElementById('chapter-list');
 
-    expand_chap.parentNode.style.height = "0";
-    expand_chap.parentNode.classList.add('active');
-    expand_chap.style.display = "none";
+  if(!expandBtn || !chap) return;
+
+  expandBtn.addEventListener('click', () => {
+    chap.classList.add('active');
+    expand.classList.add('active');
   });
   /*End*/
 }

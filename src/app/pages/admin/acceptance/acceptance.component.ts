@@ -28,8 +28,8 @@ export class AcceptanceComponent implements OnInit {
 
   publishChapter(chuong: Chuong){
     chuong.trangThai = 1;//
-    this.chuongService.updateWithID(chuong.chuongID + "", chuong).subscribe(error => {
-      if(!error){
+    this.chuongService.updateWithID(chuong.chuongID + "", chuong).subscribe(res => {
+      if (!res?.error) {
         this.toast.showToast("Thành công", "Xét duyệt chap thành công", "info");
       }
     });

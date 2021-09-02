@@ -56,8 +56,8 @@ export class ResetPasswordComponent implements OnInit {
     }
     
     this.resetPasswordService.post(resetPassDto)
-      .subscribe(error => {
-        if(!error){
+      .subscribe(res => {
+        if (!res?.error) {
           this.showSuccess = true;
           this.toast.showToast("Thành công", "Đổi mật khẩu thành công!", "success");
           this.toast.showToast("Lưu ý", "Bảo vệ thông tin cùa mình thật kỹ nhé!", "warning");

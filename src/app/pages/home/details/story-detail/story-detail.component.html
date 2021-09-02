@@ -61,47 +61,42 @@
                                         <div class="hero-o-detail-txt">
                                             <div>
                                                 <span>Đánh giá: </span>
-                                                <span class="star"><img loading="lazy"
-                                                        data-src="assets/images/star-on.png"
-                                                        alt="no image avaiable"></span>
-                                                <span class="star"><img loading="lazy"
-                                                        data-src="assets/images/star-on.png"
-                                                        alt="no image avaiable"></span>
-                                                <span class="star"><img loading="lazy"
-                                                        data-src="assets/images/star-on.png"
-                                                        alt="no image avaiable"></span>
-                                                <span class="star"><img loading="lazy"
-                                                        data-src="assets/images/star-on.png"
-                                                        alt="no image avaiable"></span>
-                                                <span class="star"><img loading="lazy"
-                                                        data-src="assets/images/star-on.png"
-                                                        alt="no image avaiable"></span>
-                                                <span> 3.5</span>
+                                                <span> {{ tongSao }} / 5</span>
+                                                <div class="rate">
+                                                    <span [className]="tongSao >= 1 ? 'active': ''"></span>
+                                                    <span [className]="tongSao >= 2 ? 'active': ''"></span>
+                                                    <span [className]="tongSao >= 3 ? 'active': ''"></span>
+                                                    <span [className]="tongSao >= 4 ? 'active': ''"></span>
+                                                    <span [className]="tongSao == 5 ? 'active': ''"></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="hero-o-detail">
                                         <div class="hero-o-btn-group">
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
-                                                circle="20px"></app-seleton-loader>
+                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
                                             <button *ngIf="truyen" class="hero-o-btn-item" (click)="addFollowing()">Theo Dõi</button>
+
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
-                                                circle="20px"></app-seleton-loader>
+                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
                                             <button *ngIf="truyen" class="hero-o-btn-item">Like</button>
+
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
-                                                circle="20px"></app-seleton-loader>
+                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
                                             <button *ngIf="truyen" class="hero-o-btn-item">Share</button>
                                         </div>
                                     </div>
                                     <div class="hero-o-detail">
-                                        <div class="hero-o-btn-group">
+                                        <div class="hero-o-btn-group top-margin">
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="100" Cheight="35"
-                                                circle="20px"></app-seleton-loader>
+                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
                                             <button *ngIf="truyen" class="hero-o-btn-reading hero-o-btn-item"
                                                 (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyen?.tenTruyen,
                                                 truyen?.chuongs[0].chuongID, truyen?.chuongs[0].tenChuong, truyen?.hinhAnh)">Đọc từ đầu</button>
+                                                
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="100" Cheight="35"
-                                                circle="20px"></app-seleton-loader>
+                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
                                             <button *ngIf="truyen" class="hero-o-btn-reading hero-o-btn-item"
                                                 (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyeboxxnDetailJson?.tenTruyen,
                                                 truyen?.chuongs.slice(-1)[0].chuongID, truyen?.chuongs.slice(-1)[0].tenChuong, truyen?.hinhAnh)">Đọc
@@ -119,11 +114,11 @@
                                 </div>
                                 <hr>
                                 <div class="hero-o-content">
-                                    <div class="content">
-                                        <p class="js-excerpt excerpt-hidden" [innerHTML]="truyen?.moTa">
+                                    <div class="hero-o-content-short">
+                                        <p class="hero-o-content-excerpt excerpt-hidden" [innerHTML]="truyen?.moTa">
                                         </p>
                                     </div>
-                                    <a role="button" class="js-show-more">
+                                    <a role="button" class="hero-o-content-show-more">
                                         <span id="expand-text">Xem thêm</span>
                                         <!-- <i class="fa fa-angle-right"></i> -->
                                     </a>
@@ -152,8 +147,7 @@
                                     <ul id="chapter-list" class="chapter-list">
                                         <li class="chapter-item" *ngFor="let chuong of truyen?.chuongs">
                                             <p class="chapter-txt">
-                                                <a class="chapter-link" (click)="this.historyManagement.addToHistory(chuong?.truyenID, truyen?.tenTruyen,
-                                                chuong?.chuongID, chuong?.tenChuong, truyen?.hinhAnh)">
+                                                <a class="chapter-link" (click)="postLuotXem(chuong)">
                                                     {{chuong.tenChuong }}
                                                 </a>
                                             </p>
@@ -161,8 +155,8 @@
                                             <p class="chapter-txt">{{ chuong.luotXem }}</p>
                                         </li>
                                     </ul>
-                                    <div class="expand-bottom">
-                                        <button id="expand-chap-cover">Xem thêm</button>
+                                    <div id="expand" class="expand">
+                                        <button id="expand-btn" class="expand-btn">Xem thêm</button>
                                     </div>
                                 </div>
                             </div>

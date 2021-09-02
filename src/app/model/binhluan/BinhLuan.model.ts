@@ -6,6 +6,7 @@ export interface BinhLuan{
     binhLuanID?: number;
     chuong?: Chuong;
     chuongID?: number;
+    danhGiaSao?: number;
     ngayBL?: string;
     noiDung?: string;
     tinhTrang?: boolean;

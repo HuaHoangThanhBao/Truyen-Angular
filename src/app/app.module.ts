@@ -19,6 +19,8 @@ import { RouterModule } from '@angular/router';
 import { AdminComponent } from './pages/admin/admin/admin.component';
 import { LoginService } from './services/others/login-service.service';
 import { AdminGuard } from './modules/guards/admin-guard.service';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogService } from './shared/confirmation-dialog/confirmation-dialog.service';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -32,7 +34,8 @@ export function tokenGetter() {
     CarouselComponent,
     FooterComponent,
     NavbarComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     RouterModule,
@@ -49,7 +52,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthGuard, AdminGuard, ToastAlertService, LoginService],
+  providers: [AuthGuard, AdminGuard, ToastAlertService, ConfirmationDialogService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

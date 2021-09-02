@@ -1,0 +1,29 @@
+
+.rate {
+    float: left;
+    //height: 46px;
+    //margin: 15px 0;
+    span{
+        margin-top: -8px;
+    }
+    .active:before{
+        color: #ffc800;
+    }
+    &:not(:checked) > input {
+        position: absolute;
+        opacity: 0;
+    }
+    &:not(:checked) > span {
+        float: left;
+        width: 1em;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        //font-size: 30px;
+        font-size: 25px;
+        color: #ccc;
+    }
+    &:not(:checked) > span:before {
+        content: "★ ";
+    }
+}

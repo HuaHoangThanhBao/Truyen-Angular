@@ -1,10 +1,10 @@
 
-.pagination-container {
+.pagination {
     @include SetWidthHeight(100%, auto);
     @include Flex($isHorizontally: true, $isVertically: false, $isWrap: false);
     margin: 20px 0px 0px 0px;
   
-    .pagination {
+    &-main {
       display: block;
       position: relative;
   

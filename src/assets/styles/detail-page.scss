@@ -13,11 +13,11 @@
         @include Flex($isHorizontally: false, $isVertically: false, $isWrap: true);
         padding: 20px 20px 0px 20px;
     }
-    
-    &-section{
+
+    &-section {
         padding: 20px;
     }
-    &-header{
+    &-header {
         margin-bottom: 20px;
     }
     &-item:first-child {
@@ -48,23 +48,80 @@
             line-height: 1.5;
         }
     }
-    &-content{
+    &-content {
         margin-top: 20px;
+
+        &-short {
+            margin-bottom: 10px;
+        }
+        /*Expand list in item-page.html*/
+        &-excerpt {
+            font-size: 16px;
+            line-height: 1.5;
+
+            &.excerpt-hidden {
+                max-height: 40px;
+                overflow: hidden;
+                position: relative;
+
+                &:after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    @include SetWidthHeight(100%, 64px);
+                    // width: 100%;
+                    // height: 64px;
+                }
+            }
+            &.excerpt-visible {
+                height: auto;
+                // overflow: auto;
+            }
+        }
+        &-excerpt::after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 30px;
+            background: linear-gradient(rgba(255, 255, 255, 0), white);
+            @include theme() {
+                background: linear-gradient(rgba(255, 255, 255, 0), theme-get("bg-light-dark"));
+            }
+        }
+        &-show-more {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            font-size: 15px;
+            text-decoration: underline;
+            @include theme() {
+                color: theme-get("text-color");
+            }
+
+            &:hover {
+                color: tomato;
+                text-decoration: underline;
+            }
+        }
     }
     /*Các button social*/
     &-btn-group {
         width: 100%;
         height: auto;
         display: flex;
-        gap: 20px;
+        flex-wrap: wrap;
+        margin-left: -20px;
     }
     &-btn-item {
         @include SetWidthHeight(100px, 35px);
         @include noneOutLine($isNoneOutLine: false, $isNoneBorder: true);
         color: #000000;
         border-radius: 20px;
-        //margin-right: 20px;
         background-color: $primaryColor;
+        margin-left: 20px;
 
         &:hover {
             background-color: $green;
@@ -77,6 +134,7 @@
         //border-radius: 20px;
         //margin-right: 20px;
         background-color: $orange;
+        margin-left: 20px;
 
         &:hover {
             background-color: $orange;
@@ -85,40 +143,16 @@
     }
     /*End Button*/
 
-    /*Nút read more cho nội dung*/
-    .box__detail--content {
-        .content {
-            margin: 0;
-            padding: 0;
-            padding-bottom: 1rem;
-            position: relative;
-            padding-top: 20px;
-            line-height: 1.2;
+    @media (max-width: 499px) {
+        &-btn-item {
+            margin-bottom: 20px;
+        }
+        &-btn-group {
+            &.top-margin {
+                margin-top: -20px;
+            }
         }
     }
-
-    .excerpt-hidden {
-        max-height: 40px;
-        overflow: hidden;
-        position: relative;
-
-        &:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            @include SetWidthHeight(100%, 64px);
-            // width: 100%;
-            // height: 64px;
-        }
-    }
-
-    .excerpt-visible {
-        height: auto;
-        // overflow: auto;
-    }
-    /*End nút read more*/
-
     @media (max-width: 599px) {
         & {
             padding-left: 10px;
@@ -140,7 +174,7 @@
                 @include SetWidthHeight(250px, auto);
             }
         }
-        &-item:nth-child(2){
+        &-item:nth-child(2) {
             display: block;
             padding: 20px 0px 20px 0px;
             @include SetWidthHeight(100%, auto);
@@ -149,7 +183,7 @@
 }
 
 /*Danh sách chương*/
-.chapter{
+.chapter {
     @include SetWidthHeight(100%, auto);
     max-height: 550px;
     overflow-y: auto;
@@ -161,7 +195,7 @@
         @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
         padding-top: 20px;
         padding-bottom: 15px;
-        border: 1px dashed lightgrey;
+        border: 1px dashed rgb(218, 218, 218);
         border-width: 0px 0px 1px 0px;
     }
     &-heading {
@@ -181,6 +215,9 @@
         position: relative;
         max-height: 270px;
         overflow: hidden;
+        &.active {
+            max-height: 100%;
+        }
     }
     &-item {
         @include Flex($isHorizontally: false, $isVertically: false, $isWrap: false);
@@ -203,7 +240,7 @@
     }
     &-txt {
         @include SetWidthHeight(33.33333%, auto);
-        padding-right: 5px;
+        padding: 5px;
 
         &:first-child:hover {
             color: $green;
@@ -215,3 +252,46 @@
         }
     }
 }
+
+.expand {
+    @include SetWidthHeight(100%, 2.5rem);
+    display: block !important;
+    position: relative;
+
+    &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: -50px;
+        height: 50px;
+        background: linear-gradient(rgba(255, 255, 255, 0.322), white);
+        @include theme() {
+            background: linear-gradient(#42424271, theme-get("bg-light-dark"));
+        }
+    }
+    &-btn {
+        @include SetWidthHeight(100%, 100%);
+        @include noneOutLine($isNoneOutLine: true, $isNoneBorder: true);
+        border-radius: 0.15rem;
+        background-color: rgb(226, 226, 226);
+
+        &:hover {
+            background-color: rgb(221, 221, 221);
+        }
+    }
+    &.active {
+        height: 0;
+
+        .expand-btn {
+            display: none;
+        }
+        &::before {
+            height: 0;
+            top: 0;
+        }
+    }
+}
+/*End*/

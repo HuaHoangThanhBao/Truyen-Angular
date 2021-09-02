@@ -18,15 +18,15 @@ export class LoginComponent implements OnInit {
 
   jsonTheLoaiArr: any;
   invalidLogin: boolean;
-  
+
   public loginForm: FormGroup;
   public errorMessage: string = '';
   private _returnUrl: string;
-  
+
   btnSubmitLocked: boolean = false;
 
   constructor(private _router: Router, private _route: ActivatedRoute,
-    private toast: ToastAlertService, private userForLoginService: UserForLoginService) {}
+    private toast: ToastAlertService, private userForLoginService: UserForLoginService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
 
   public loginUser = (loginFormValue) => {
     this.btnSubmitLocked = true;
-    const login = {... loginFormValue };
+    const login = { ...loginFormValue };
 
     const user: UserForLoginDto = {
       email: login.email,
@@ -57,18 +57,20 @@ export class LoginComponent implements OnInit {
     }
 
     this.userForLoginService.post(user)
-    .subscribe(res => {
-      if(res.is2StepVerificationRequired) {
-        this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình nhé!", "info");
-        this._router.navigate(['/authentication/two-step-verification'], 
-          { queryParams: { returnUrl: this._returnUrl, provider: res.provider, email: user.email }});
-      }
-      else {
-        this._router.navigate([this._returnUrl]);
-      }
-    },
-    error => {
-      this.btnSubmitLocked = false;
-    })
+      .subscribe(res => {
+        if (!res?.error) {
+          if (res.is2StepVerificationRequired) {
+            this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình nhé!", "info");
+            this._router.navigate(['/authentication/two-step-verification'],
+              { queryParams: { returnUrl: this._returnUrl, provider: res.provider, email: user.email } });
+          }
+          else {
+            this._router.navigate([this._returnUrl]);
+          }
+        }
+        else {
+          this.btnSubmitLocked = false;
+        }
+      })
   }
 }

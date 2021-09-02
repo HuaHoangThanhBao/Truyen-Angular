@@ -46,8 +46,8 @@ export class ForgotPasswordComponent implements OnInit {
     }
     
     this.forgotPasswordService.post(forgotPassDto)
-    .subscribe(error => {
-      if(!error){
+    .subscribe(res => {
+      if (!res?.error) {
         this.toast.showToast("Xác thực", "Bạn vui lòng check mail của mình để tiến hành reset mật khẩu nhé", "info");
         this.showSuccess = true;
         this.successMessage = 'Đường dẫn để reset password đã được gửi qua mail của bạn, vui lòng kiểm tra mail để tiếp tục.'

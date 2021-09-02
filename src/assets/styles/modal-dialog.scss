@@ -1,0 +1,68 @@
+.modal {
+    &-dialog {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(7, 7, 7, 0.8);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        max-width: 320px;
+        pointer-events: auto;
+        background-color: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0.3rem;
+        outline: 0;
+    }
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 1rem;
+        border-bottom: 1px solid #dee2e6;
+        border-top-left-radius: calc(0.3rem - 1px);
+        border-top-right-radius: calc(0.3rem - 1px);
+    }
+    &-body {
+        position: relative;
+        flex: 1 1 auto;
+        padding: 1rem;
+    }
+    &-footer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0.75rem;
+        border-top: 1px solid #dee2e6;
+        border-bottom-right-radius: calc(0.3rem - 1px);
+        border-bottom-left-radius: calc(0.3rem - 1px);
+    }
+}
+
+.btn-danger {
+    color: $white;
+    background-color: $danger;
+    border-color: $danger;
+    padding: 10px 20px;
+}
+.btn-primary {
+    color: $white;
+    background-color: $green;
+    border-color: $green;
+    padding: 10px 20px;
+    margin-right: 20px;
+}
+
+.modal-header .close {
+    font-size: 30px;
+}

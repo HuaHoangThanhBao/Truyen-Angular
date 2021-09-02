@@ -3,6 +3,7 @@ import { PaginationComponent } from '../pagination/pagination.component';
 import { environment } from '../../../environments/environment';
 import { HistoryManagement } from '../../services/others/historyManagement.service';
 import { Truyen } from '../../model/truyen/Truyen.model';
+import { ConfirmationDialogService } from '../confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-story-list',
@@ -24,7 +25,7 @@ export class StoryListComponent implements OnInit {
 
   testData: Truyen[];
 
-  constructor(private historyManagement: HistoryManagement) { }
+  constructor(private historyManagement: HistoryManagement, private confirmationDialogService: ConfirmationDialogService) { }
 
   ngOnInit(): void {
   }
@@ -40,11 +41,33 @@ export class StoryListComponent implements OnInit {
   }
 
   callDeleteFollowingItem(truyenID) {
-    this.deleteFollowingItemEvent.emit(truyenID);
+    this.openConfirmationDialogForFollowing(truyenID);
   }
 
   callRefreshHistories(truyenID) {
-    this.historyManagement.delelteHistoryItem(truyenID);
-    this.refreshHistories.emit(truyenID);
+    this.openConfirmationDialogForHistory(truyenID);
+  }
+  
+  public openConfirmationDialogForFollowing(truyenID) {
+    this.confirmationDialogService.confirm('Vui lòng xác nhận', 'Bạn có muốn xóa truyện này khỏi danh sách theo dõi không?')
+      .then((confirmed) => {
+        //console.log('User confirmed:', confirmed);
+        if (confirmed == true) {
+          this.deleteFollowingItemEvent.emit(truyenID);
+        }
+      })
+    .catch(() => {});
+  }
+
+  public openConfirmationDialogForHistory(truyenID) {
+    this.confirmationDialogService.confirm('Vui lòng xác nhận', 'Bạn có muốn xóa truyện này khỏi lịch sử đọc không?')
+      .then((confirmed) => {
+        //console.log('User confirmed:', confirmed);
+        if (confirmed == true) {
+          this.historyManagement.delelteHistoryItem(truyenID);
+          this.refreshHistories.emit(truyenID);
+        }
+      })
+    .catch(() => {});
   }
 }

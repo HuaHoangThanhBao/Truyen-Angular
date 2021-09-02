@@ -126,14 +126,14 @@ export abstract class ResourceService<T> {
         }
     }
 
-    update(body: T | T[]) {
+    update(body: T | T[]): Observable<any> {
         return this.httpClient.put(`${this.APIUrl}`, body, this.httpOptions)
             .pipe(
                 catchError(this.handleError<T>())
             );
     }
     
-    updateWithID(id: string, body: T | T[]) {
+    updateWithID(id: string, body: T | T[]): Observable<any> {
         return this.httpClient.put(`${this.APIUrl}/${id}`, body, this.httpOptions)
             .pipe(
                 catchError(this.handleError<T>())

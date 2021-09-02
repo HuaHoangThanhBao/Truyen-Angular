@@ -14,7 +14,7 @@ export class HistoryManagement {
             let hist_arr = [...localHist];
             return hist_arr;
         }
-        return null;
+        return [];
     }
 
     public addToHistory(truyenID: number, tenTruyen: string, chuongID: number, tenChuong: string, hinhAnh: string) {

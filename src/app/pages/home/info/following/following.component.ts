@@ -28,7 +28,7 @@ export class FollowingComponent implements OnInit, OnDestroy {
 
   userLoginID: string;
   private loginSubscription: Subscription;
-  
+
 
   @ViewChild(StoryListComponent) storyListComponent: StoryListComponent;
 
@@ -43,7 +43,7 @@ export class FollowingComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loginSubscription = this.loginService.currentUser.subscribe(newID => {
       if (newID != "") {
-        console.log(newID);  
+        console.log(newID);
         this.userLoginID = newID;
         this.reloadTruyenOnPag(1);
       }
@@ -80,9 +80,11 @@ export class FollowingComponent implements OnInit, OnDestroy {
 
   deleteFollowingItem(truyenID) {
     let truyenOnDeleteParams: RequestParam = { userID: this.userLoginID, truyenID: truyenID }
-    this.theoDoiService.deleteWithParams("deleteforuser", truyenOnDeleteParams).subscribe(_ => {
-      this.toast.showToast("Thành công", "Bỏ theo dõi truyện thành công!", "success");
-      this.reloadTruyenOnPag(1);
+    this.theoDoiService.deleteWithParams("deleteforuser", truyenOnDeleteParams).subscribe(res => {
+      if (!res?.error) {
+        this.toast.showToast("Thành công", "Bỏ theo dõi truyện thành công!", "success");
+        this.reloadTruyenOnPag(1);
+      }
     });
   }
 }

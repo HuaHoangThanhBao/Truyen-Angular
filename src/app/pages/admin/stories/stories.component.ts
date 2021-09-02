@@ -178,9 +178,9 @@ export class StoriesComponent implements OnInit {
           this.noiDungChuongs.push(n);
         })
 
-        this.noiDungChuongService.post(this.noiDungChuongs).subscribe(nd => {
-          if (!nd?.error) {
-            console.log(nd);
+        this.noiDungChuongService.post(this.noiDungChuongs).subscribe(res => {
+          if (!res?.error) {
+            console.log(res);
             this.toast.showToast("Thành công", "Thêm chương và nội dung thành công", "success");
             this.noiDungChuongs = [];
           }
