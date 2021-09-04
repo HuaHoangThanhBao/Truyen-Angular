@@ -54,7 +54,7 @@ export class StoryDetailComponent implements OnInit {
       
       this.truyenService.getListExtend(`${this.truyenID}/danhgiasao`).subscribe(soSao => {
         this.tongSao = soSao;
-        console.log(this.tongSao)
+        //console.log(this.tongSao)
       });
 
       this.phuLucService.get(this.truyenID).subscribe(phulucs => {

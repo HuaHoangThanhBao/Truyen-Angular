@@ -16,6 +16,8 @@ import { UpdatePasswordService } from '../../../../services/authentication/updat
 import { JWTTokenService } from '../../../../services/jwt/jwtTokenService.service';
 import { Subscription } from 'rxjs';
 import { ConfirmationDialogService } from 'src/app/shared/confirmation-dialog/confirmation-dialog.service';
+import { TheoDoiService } from '../../../../services/model-service/theoDoiService.service';
+import { TheoDoi } from '../../../../model/theodoi/TheoDoi.model';
 
 @Component({
   selector: 'app-account',
@@ -28,6 +30,9 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   truyensTopView: Truyen[];
   binhLuans: BinhLuan[];
+  binhLuansByUser: BinhLuan[];
+  theoDoisByUser: TheoDoi[];
+
   user: User;
   userLoginID: string;
 
@@ -37,8 +42,8 @@ export class AccountComponent implements OnInit, OnDestroy {
   private loginSubscription: Subscription;
 
   constructor(private _router: Router, private toast: ToastAlertService, private _passConfValidator: PasswordConfirmationValidatorService,
-    private truyenService: TruyenService, private binhLuanService: BinhLuanService, private userService: UserService,
-    private loginService: LoginService, private updatePasswordService: UpdatePasswordService,
+    private truyenService: TruyenService, private binhLuanService: BinhLuanService, private userService: UserService, 
+    private theoDoiService: TheoDoiService, private loginService: LoginService, private updatePasswordService: UpdatePasswordService,
     private jwtTokenService: JWTTokenService, private confirmationDialogService: ConfirmationDialogService) {
   }
 
@@ -51,8 +56,17 @@ export class AccountComponent implements OnInit, OnDestroy {
       if (newID != "") {
         console.log(newID);
         this.userLoginID = newID;
+
         this.userService.getDetail(this.userLoginID).subscribe(user => {
           this.user = user;
+        });
+        
+        this.binhLuanService.getListExtend(`${this.userLoginID}/binhluansbyuser`).subscribe(binhLuans => {
+          this.binhLuansByUser = binhLuans;
+        });
+        
+        this.theoDoiService.getListExtend(`${this.userLoginID}/theodoisbyuser`).subscribe(theodois => {
+          this.theoDoisByUser = theodois;
         });
       }
     })

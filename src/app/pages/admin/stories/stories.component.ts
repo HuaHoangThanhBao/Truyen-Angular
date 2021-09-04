@@ -10,9 +10,10 @@ import { ChuongService } from '../../../services/model-service/chuongService.ser
 import { Chuong } from '../../../model/chuong/Chuong.model';
 import { NoiDungChuong } from '../../../model/noidungchuong/NoiDungChuong.model';
 import { NoiDungChuongService } from '../../../services/model-service/noiDungChuongService.service';
+import { environment } from '../../../../environments/environment';
 declare function setUpAdmin(): void;
 declare function authenticate();
-declare function loadClient();
+declare function loadClient(apiKey);
 declare function execute(folderID);
 
 @Component({
@@ -84,7 +85,7 @@ export class StoriesComponent implements OnInit {
   }
 
   async loadAuthClient() {
-    return await loadClient();
+    return await loadClient(environment.googleApiKey);
   }
 
   googleSignInProcess() {
@@ -131,7 +132,7 @@ export class StoriesComponent implements OnInit {
       this.toast.showToast("Lỗi", "Vui lòng đăng nhập google trước", "error");
       return;
     }
-    const result = await execute("1ViYgS-kn329JigKiCJuavoMTMpvbudmm");
+    const result = await execute(environment.folderGGDriveImageID);
     this.danhSachHinhAnhTruyens = result;
     //console.log(this.danhSachHinhAnhTruyens);
   }

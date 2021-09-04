@@ -1,15 +1,16 @@
 <body>
     <!--Confirm Area-->
     <main>
-        <div class="main__container container-fluid">
-            <div class="form__wrapper">
+        <div class="hero-container container-fluid">
+            <div class="form">
                 <!--Confirm form-->
-                <div class="form__container">
-                    <h1 class="card-title">Xác thực đăng ký</h1>
+                <div class="form-container">
+                    <h1 class="form-title">Xác thực đăng ký</h1>
 
-                    <div *ngIf="showSuccess" class="alert alert-success" role="alert">
-                        Tài khoản của bạn đã được xác thực. Vui lòng <a class="redirect-link"
-                            routerLink="/authentication/login"> bấm vào đây để đăng nhập. </a>
+                    <div *ngIf="showSuccess" class="form-link">
+                        Tài khoản của bạn đã được xác thực. Vui lòng 
+                        <a routerLink="/authentication/login"> bấm vào đây để đăng nhập. 
+                        </a>
                     </div>
                 </div>
                 <!--End Confirm Form-->

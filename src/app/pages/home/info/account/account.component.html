@@ -61,7 +61,8 @@
                                                 <img id="user-data" loading="lazy"
                                                     data-src="assets/images/avatar/{{ user.hinhAnh }}">
                                             </div>
-                                            <p *ngIf="!user || !user?.hinhAnh">Bạn chưa có avatar, vui lòng chọn một trong các
+                                            <p *ngIf="!user || !user?.hinhAnh">Bạn chưa có avatar, vui lòng chọn một
+                                                trong các
                                                 hình dưới đây nhé!</p>
                                             <br>
                                             <h3>Bạn có thể thay đổi avatar của mình bằng một trong các hình dưới đây:
@@ -99,9 +100,9 @@
                                         </div>
                                         <div class="tab-content tab3">
                                             <h2>Truyện đang theo dõi</h2>
-                                            <ng-container *ngIf="user?.theoDois">
+                                            <ng-container *ngIf="theoDoisByUser">
                                                 <ul class="fol-list">
-                                                    <li class="fol-item" *ngFor="let data of user?.theoDois">
+                                                    <li class="fol-item" *ngFor="let data of theoDoisByUser">
                                                         <a
                                                             routerLink="/details/story-detail/{{ data.truyen.truyenID }}">
                                                             <img class="img" loading="lazy"
@@ -114,18 +115,18 @@
                                                     </li>
                                                 </ul>
                                             </ng-container>
-                                            <ng-container *ngIf="!user?.theoDois">
+                                            <ng-container *ngIf="!theoDoisByUser">
                                                 <p>Rất tiếc, bạn chưa theo dõi truyện nào!</p>
                                             </ng-container>
                                         </div>
                                         <div class="tab-content tab4">
                                             <h2>Bình luận mà bạn đã đăng</h2>
 
-                                            <ng-container *ngIf="user?.binhLuans">
+                                            <ng-container *ngIf="binhLuansByUser">
                                                 <!--Timeline-->
                                                 <div class="timeline-area">
                                                     <div class="timeline">
-                                                        <div class="timeline-item" *ngFor="let data of user?.binhLuans">
+                                                        <div class="timeline-item" *ngFor="let data of binhLuansByUser">
                                                             <span class="bounce-btn"></span>
                                                             <div class="timeline-txt impor" *ngIf="data?.truyen">
                                                                 <h3 class="timeline-title">{{ data?.truyen.tenTruyen }}
@@ -148,80 +149,75 @@
                                                 <!--End Timeline-->
                                             </ng-container>
 
-                                            <ng-container *ngIf="!user?.binhLuans">
+                                            <ng-container *ngIf="!binhLuansByUser">
                                                 <p>Bạn chưa có bình luận nào. Hãy tích cực tham gia bình luận nhé!</p>
                                             </ng-container>
                                         </div>
                                         <div class="tab-content tab5">
                                             <h2>Đổi mật khẩu</h2>
-                                            <div class="form__wrapper">
+                                            <div class="form">
                                                 <!--Reset form-->
-                                                <div class="form__container">
-                                                    
-                                                    <div class="form-container">
-                                                        <div class="form-inner">
-                                                            <form [formGroup]="updatePasswordForm" autocomplete="off"
-                                                                novalidate
-                                                                (ngSubmit)="updatePassword(updatePasswordForm.value)">
-                                                                <div class="field">
-                                                                    <label for="password"
-                                                                        class="col-form-label col-sm-2">Mật khẩu
-                                                                        cũ</label>
-                                                                    <div class="form-field">
-                                                                        <input type="password" id="oldpassword"
-                                                                            formControlName="oldpassword"
-                                                                            class="form-control"
-                                                                            placeholder="Mật khẩu cũ" />
-                                                                    </div>
-                                                                    <div class="form-field">
-                                                                        <em
-                                                                            *ngIf="validateControl('oldpassword') && hasError('oldpassword', 'required')">*Vui
-                                                                            lòng không để trống</em>
-                                                                    </div>
+                                                <div class="form-container">
+                                                    <div class="form-inner">
+                                                        <form [formGroup]="updatePasswordForm" autocomplete="off"
+                                                            novalidate
+                                                            (ngSubmit)="updatePassword(updatePasswordForm.value)">
+                                                            <div class="form-row">
+                                                                <label for="password"
+                                                                    class="col-form-label col-sm-2">Mật khẩu
+                                                                    cũ</label>
+                                                                <div class="form-field">
+                                                                    <input type="password" id="oldpassword"
+                                                                        formControlName="oldpassword"
+                                                                        class="form-input form-control"
+                                                                        placeholder="Mật khẩu cũ" />
                                                                 </div>
-                                                                <div class="field">
-                                                                    <label for="password"
-                                                                        class="col-form-label col-sm-2">Mật khẩu
-                                                                        mới</label>
-                                                                    <div class="form-field">
-                                                                        <input type="password" id="password"
-                                                                            formControlName="password"
-                                                                            class="form-control"
-                                                                            placeholder="Mật khẩu mới" />
-                                                                    </div>
-                                                                    <div class="form-field">
-                                                                        <em
-                                                                            *ngIf="validateControl('password') && hasError('password', 'required')">*Vui
-                                                                            lòng không để trống</em>
-                                                                    </div>
+                                                                <div class="form-field">
+                                                                    <em
+                                                                        *ngIf="validateControl('oldpassword') && hasError('oldpassword', 'required')">*Vui
+                                                                        lòng không để trống</em>
                                                                 </div>
-                                                                <div class="field">
-                                                                    <label for="confirm"
-                                                                        class="col-form-label col-sm-2">Xác nhận mật
-                                                                        khẩu mới</label>
-                                                                    <div class="form-field">
-                                                                        <input type="password" id="confirm"
-                                                                            formControlName="confirm"
-                                                                            class="form-control"
-                                                                            placeholder="Xác nhận mật khẩu mới" />
-                                                                    </div>
-                                                                    <div class="form-field">
-                                                                        <em
-                                                                            *ngIf="validateControl('confirm') && hasError('confirm', 'required')">*Vui
-                                                                            lòng không để trống</em>
-                                                                        <em *ngIf="hasError('confirm', 'mustMatch')">Mật
-                                                                            khẩu xác nhận không khớp</em>
-                                                                    </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <label for="password"
+                                                                    class="col-form-label col-sm-2">Mật khẩu
+                                                                    mới</label>
+                                                                <div class="form-field">
+                                                                    <input type="password" id="password"
+                                                                        formControlName="password" class="form-input form-control"
+                                                                        placeholder="Mật khẩu mới" />
                                                                 </div>
-                                                                <br>
-                                                                <div class="field btn">
-                                                                    <div class="btn-layer"></div>
-                                                                    <button type="submit" class="btn btn-info"
-                                                                        [disabled]="!updatePasswordForm.valid || btnSubmitLocked">Đặt
-                                                                        lại mật khẩu</button>
+                                                                <div class="form-field">
+                                                                    <em
+                                                                        *ngIf="validateControl('password') && hasError('password', 'required')">*Vui
+                                                                        lòng không để trống</em>
                                                                 </div>
-                                                            </form>
-                                                        </div>
+                                                            </div>
+                                                            <div class="form-row">
+                                                                <label for="confirm" class="col-form-label col-sm-2">Xác
+                                                                    nhận mật
+                                                                    khẩu mới</label>
+                                                                <div class="form-field">
+                                                                    <input type="password" id="confirm"
+                                                                        formControlName="confirm" class="form-input form-control"
+                                                                        placeholder="Xác nhận mật khẩu mới" />
+                                                                </div>
+                                                                <div class="form-field">
+                                                                    <em
+                                                                        *ngIf="validateControl('confirm') && hasError('confirm', 'required')">*Vui
+                                                                        lòng không để trống</em>
+                                                                    <em *ngIf="hasError('confirm', 'mustMatch')">Mật
+                                                                        khẩu xác nhận không khớp</em>
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                            <div class="form-field btn">
+                                                                <div class="btn-layer"></div>
+                                                                <button type="submit"  [className]="!updatePasswordForm.valid || btnSubmitLocked ? 'btn btn-info': 'btn btn-info active'"
+                                                                    [disabled]="!updatePasswordForm.valid || btnSubmitLocked">Đặt
+                                                                    lại mật khẩu</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                                 <!--End Reset Form-->

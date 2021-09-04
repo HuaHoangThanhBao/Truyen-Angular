@@ -1,17 +1,17 @@
 <body>
     <!--Login Area-->
     <main>
-        <div class="main__container container-fluid">
-            <div class="form__wrapper">
+        <div class="hero-container container-fluid">
+            <div class="form">
                 <!--Login form-->
-                <div class="form__container">
-                    <h1 class="card-title">Đăng nhập</h1>
+                <div class="form-container">
+                    <h1 class="form-title">Đăng nhập</h1>
 
                     <form [formGroup]="loginForm" autocomplete="off" novalidate
                         (ngSubmit)="loginUser(loginForm.value)">
-                        <div class="field">
+                        <div class="form-row">
                             <div class="form-field">
-                                <input type="text" id="email" formControlName="email" class="form-control"
+                                <input type="text" id="email" formControlName="email" class="form-input form-control"
                                     placeholder="Email..." />
                             </div>
                             <div>
@@ -19,9 +19,9 @@
                                 <em *ngIf="validateControl('email') && hasError('email', 'required')">*Vui lòng không để trống</em>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-row">
                             <div class="form-field">
-                                <input type="password" id="password" formControlName="password" class="form-control"
+                                <input type="password" id="password" formControlName="password" class="form-input form-control"
                                     placeholder="Mật khẩu..." />
                             </div>
                             <div>
@@ -29,19 +29,24 @@
                                     lòng không để trống</em>
                             </div>
                         </div>
-                        <div *ngIf="invalidLogin" class="alert alert-danger">Tên đăng nhập hoặc mật khẩu không
+                        <div *ngIf="invalidLogin" class="form-alert">Tên đăng nhập hoặc mật khẩu không
                             khớp.</div>
-                        
-                        <div class="pass-link">
+
+                        <div class="form-link">
                             <a routerLink="/authentication/forgot-password">Quên mật khẩu?</a>
                         </div>
-                        <div class="field btn">
+                        
+                        <!--Google sign in button-->
+                        <div id="gSignIn"></div>
+
+                        <div class="form-field btn">
                             <div class="btn-layer"></div>
-                            <button type="submit" class="btn btn-info" [disabled]="!loginForm.valid || btnSubmitLocked">Đăng nhập</button>
+                            <button type="submit" [className]="!loginForm.valid || btnSubmitLocked ? 'btn btn-info': 'btn btn-info active'"
+                             [disabled]="!loginForm.valid || btnSubmitLocked">Đăng nhập</button>
                         </div>
-                        <div class="signup-link">Chưa có tài khoản? <a
+                        <div class="form-link">Chưa có tài khoản? <a
                                 routerLink="/authentication/register">Đăng ký ngay</a></div>
-                        <div class="signup-link"><a routerLink="/index">Quay về trang chủ</a></div>
+                        <div class="form-link"><a routerLink="/index">Quay về trang chủ</a></div>
                     </form>
                 </div>
                 <!--End Register Form-->

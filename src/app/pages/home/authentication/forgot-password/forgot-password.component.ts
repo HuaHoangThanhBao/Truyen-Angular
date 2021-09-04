@@ -11,11 +11,7 @@ import { ForgotPasswordService } from '../../../../services/authentication/forgo
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
-  public forgotPasswordForm: FormGroup
-  public successMessage: string;
-  public errorMessage: string;
-  public showSuccess: boolean;
-  public showError: boolean;
+  public forgotPasswordForm: FormGroup;
   btnSubmitLocked: boolean = false;
 
   constructor(private toast: ToastAlertService,
@@ -49,8 +45,6 @@ export class ForgotPasswordComponent implements OnInit {
     .subscribe(res => {
       if (!res?.error) {
         this.toast.showToast("Xác thực", "Bạn vui lòng check mail của mình để tiến hành reset mật khẩu nhé", "info");
-        this.showSuccess = true;
-        this.successMessage = 'Đường dẫn để reset password đã được gửi qua mail của bạn, vui lòng kiểm tra mail để tiếp tục.'
       }
       else{
         this.btnSubmitLocked = false;

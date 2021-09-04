@@ -8,6 +8,13 @@ import { ToastAlertService } from 'src/app/services/others/toast-alert-service.s
 import { environment } from 'src/environments/environment';
 import { UserForLoginDto } from '../../../../model/authentication/userForLoginDto.model';
 import { UserForLoginService } from '../../../../services/authentication/userForLoginService.service';
+import { SocialUser } from 'src/app/model/social/SocialUser.model';
+import { ExternalAuthDto } from 'src/app/model/authentication/externalAuthDto.model';
+import { SocialLoginGoogleService } from 'src/app/services/authentication/socialLoginGoogleService.service';
+import { LoginService } from '../../../../services/others/login-service.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+declare function getGAPIInstance(): void;
 
 @Component({
   selector: 'app-login',
@@ -24,9 +31,14 @@ export class LoginComponent implements OnInit {
   private _returnUrl: string;
 
   btnSubmitLocked: boolean = false;
+  gapi: any;
+  googleInitCount: number = 0;
 
-  constructor(private _router: Router, private _route: ActivatedRoute,
-    private toast: ToastAlertService, private userForLoginService: UserForLoginService) { }
+  constructor(private _router: Router, private _route: ActivatedRoute, private socialLoginGoogleService: SocialLoginGoogleService,
+    private toast: ToastAlertService, private userForLoginService: UserForLoginService, private loginService: LoginService,
+    private jwtHelper: JwtHelperService) {
+    this.gapi = getGAPIInstance();
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -35,7 +47,86 @@ export class LoginComponent implements OnInit {
     })
 
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
+
+    this.renderButton();
   }
+
+  renderButton() {
+    this.gapi.signin2.render('gSignIn', {
+      'scope': 'profile email',
+      'width': 'auto',
+      'height': 50,
+      'longtitle': true,
+      'theme': 'dark',
+      'onsuccess': () => {
+        this.signInWithGoogle()
+      }
+    });
+  }
+
+  signInWithGoogle() {
+    this.googleInitCount++;
+    if (this.googleInitCount > 1) {
+      this.gapi.client.load('oauth2', 'v2', () => {
+        //var profile = googleUser.getBasicProfile();
+
+        var request = this.gapi.client.oauth2.userinfo.get({
+          'userId': 'me'
+        });
+        request.execute((res) => {
+          //console.log(res);
+
+          const user: SocialUser = { ...res };
+          //console.log(user);
+
+          const externalAuth: ExternalAuthDto = {
+            email: user.email,
+            provider: 'GOOGLE',
+            idToken: user.id,
+            quyen: 0,
+            userName: user.name,
+            clientURI: `${environment.host}/authentication/email-confirmation`
+          }
+          //console.log(externalAuth);
+
+          this.validateExternalAuth(externalAuth);
+        });
+      });
+    }
+  }
+
+  private validateExternalAuth(externalAuth: ExternalAuthDto) {
+    this.socialLoginGoogleService.post(externalAuth)
+      .subscribe(res => {
+        console.log(res);
+        if (!res?.error) {
+          this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
+
+          const token = (<any>res).token;
+          const refreshToken = (<any>res).refreshToken;
+          localStorage.setItem("jwt", token);
+          localStorage.setItem("refreshToken", refreshToken);
+
+          const decode = this.jwtHelper.decodeToken(token);
+          const userLoginID = decode['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'];
+          this.loginService.setNewID(userLoginID);
+
+          window.location.href = "index";
+        }
+      });
+  }
+
+  // // Sign out the user
+  // signOut() {
+  //   var auth2 = this.gapi.auth2.getAuthInstance();
+  //   auth2.signOut().then(function () {
+  //     // document.getElementsByClassName("userContent")[0].innerHTML = '';
+  //     // document.getElementsByClassName("userContent")[0].style.display = "none";
+  //     // document.getElementById("gSignIn").style.display = "block";
+  //   });
+
+  //   auth2.disconnect();
+  // }
 
   ////////
   public validateControl = (controlName: string) => {
@@ -58,6 +149,7 @@ export class LoginComponent implements OnInit {
 
     this.userForLoginService.post(user)
       .subscribe(res => {
+        console.log(res);
         if (!res?.error) {
           if (res.is2StepVerificationRequired) {
             this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình nhé!", "info");

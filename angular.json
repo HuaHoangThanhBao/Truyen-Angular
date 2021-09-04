@@ -36,7 +36,7 @@
               "src/assets/js/expand.js",
               "src/assets/js/login.js",
               "src/assets/js/admin.js",
-              "src/assets/js/google-drive.js"
+              "src/assets/js/google-service.js"
             ],
             "vendorChunk": true,
             "extractLicenses": false,

@@ -1,10 +1,14 @@
+function getGAPIInstance() {
+    return gapi;
+}
+
 function authenticate() {
     return gapi.auth2.getAuthInstance()
         .signIn({ scope: "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.metadata https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.photos.readonly https://www.googleapis.com/auth/drive.readonly" });
 }
 
-function loadClient() {
-    gapi.client.setApiKey("AIzaSyBY6ueBgxRiu67wSD8mgKc1Lh3Lgj5Bf4E");
+function loadClient(apiKey) {
+    gapi.client.setApiKey(apiKey);
     return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/drive/v2/rest");
 }
 

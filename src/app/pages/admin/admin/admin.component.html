@@ -1,56 +1,56 @@
 <main>
-    <div class="main__container container-fluid">
-        <div class="form__wrapper">
+    <div class="hero-container container-fluid">
+        <div class="form">
             <!--Register form-->
-            <div class="form__container">
+            <div class="form-container">
                 <ng-container *ngIf="!isLoginTab">
-                    <h1 class="card-title">Đăng ký</h1>
+                    <h1 class="form-title">Đăng ký</h1>
     
                     <form [formGroup]="registerForm" autocomplete="off" novalidate
                         (ngSubmit)="registerUser(registerForm.value)">
-                        <div class="field">
+                        <div class="form-row">
                             <label for="lastName" class="col-form-label col-sm-2">Họ</label>
                             <div class="form-field">
-                                <input type="text" id="lastName" formControlName="lastName" class="form-control" />
+                                <input type="text" id="lastName" formControlName="lastName" class="form-input form-control" />
                             </div>
                             <div>
                                 <em *ngIf="validateControl('lastName') && hasError('lastName', 'required')">*Vui lòng không để trống</em>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-row">
                             <label for="firstName" class="col-form-label col-sm-2">Tên</label>
                             <div class="form-field">
-                                <input type="text" id="firstName" formControlName="firstName" class="form-control" />
+                                <input type="text" id="firstName" formControlName="firstName" class="form-input form-control" />
                             </div>
                             <div>
                                 <em *ngIf="validateControl('firstName') && hasError('firstName', 'required')">*Vui lòng không để trống</em>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-row">
                             <label for="email" class="col-form-label col-sm-2">Email</label>
                             <div class="form-field">
-                                <input type="email" id="email" formControlName="email" class="form-control" />
+                                <input type="email" id="email" formControlName="email" class="form-input form-control" />
                             </div>
                             <div>
                                 <em *ngIf="validateControl('email') && hasError('email', 'email')">*Vui lòng cung cấp email hợp lệ</em>
                                 <em *ngIf="validateControl('email') && hasError('email', 'required')">*Vui lòng không để trống</em>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-row">
                             <label for="password" class="col-form-label col-sm-2">Mật khẩu</label>
                             <div class="form-field">
                                 <input type="password" id="password" formControlName="password"
-                                    class="form-control" />
+                                    class="form-input form-control" />
                             </div>
                             <div>
                                 <em *ngIf="validateControl('password') && hasError('password', 'required')">*Vui lòng không để trống</em>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-row">
                             <label for="confirm" class="col-form-label col-sm-2">Xác nhận mật khẩu</label>
                             <div class="form-field">
                                 <input type="password" id="confirm" formControlName="confirm"
-                                    class="form-control" />
+                                    class="form-input form-control" />
                             </div>
                             <div>
                                 <em *ngIf="validateControl('confirm') && hasError('confirm', 'required')">*Vui lòng không để trống</em>
@@ -59,17 +59,18 @@
                         </div>
                         <br>
     
-                        <div class="field btn">
+                        <div class="form-row btn">
                             <div class="btn-layer"></div>
-                            <button type="submit" class="btn btn-info" [disabled]="!registerForm.valid || btnSubmitLocked">Đăng ký</button>
+                            <button type="submit" [className]="!registerForm.valid || btnSubmitLocked ? 'btn btn-info': 'btn btn-info active'" 
+                            [disabled]="!registerForm.valid || btnSubmitLocked">Đăng ký</button>
                         </div>
                     </form>
                     <br>
                     <small>Mặc định khi đăng ký, bạn sẽ sẽ được cấp quyền Editor</small>
                     <br>
                     <small>Sau khi đăng ký, bạn phải chờ admin duyệt thì mới đăng nhập vào được</small>
-                    <div class="signup-link">Đã có tài khoản? <a  (click)="changeStatus(true)">Đăng nhập</a></div>
-                    <div class="signup-link"><a routerLink="/index">Quay về trang chủ</a></div>
+                    <div class="form-link">Đã có tài khoản? <a  (click)="changeStatus(true)">Đăng nhập</a></div>
+                    <div class="form-link"><a routerLink="/index">Quay về trang chủ</a></div>
                 </ng-container>
                 <!---->
                 
@@ -79,9 +80,9 @@
         
                     <form [formGroup]="loginForm" autocomplete="off" novalidate
                         (ngSubmit)="loginUser(loginForm.value)">
-                        <div class="field">
+                        <div class="form-row">
                             <div class="form-field">
-                                <input type="text" id="email" formControlName="email" class="form-control"
+                                <input type="text" id="email" formControlName="email" class="form-input form-control"
                                     placeholder="Email..." />
                             </div>
                             <div>
@@ -89,9 +90,9 @@
                                 <em *ngIf="validateControl('email') && hasError('email', 'required')">*Vui lòng không để trống</em>
                             </div>
                         </div>
-                        <div class="field">
+                        <div class="form-row">
                             <div class="form-field">
-                                <input type="password" id="password" formControlName="password" class="form-control"
+                                <input type="password" id="password" formControlName="password" class="form-input form-control"
                                     placeholder="Mật khẩu..." />
                             </div>
                             <div>
@@ -102,15 +103,16 @@
                         <div *ngIf="invalidLogin" class="alert alert-danger">Tên đăng nhập hoặc mật khẩu không
                             khớp.</div>
                         
-                        <div class="pass-link">
+                        <div class="form-link">
                             <a routerLink="/authentication/forgot-password">Quên mật khẩu?</a>
                         </div>
-                        <div class="field btn">
+                        <div class="fowm-row btn">
                             <div class="btn-layer"></div>
-                            <button type="submit" class="btn btn-info" [disabled]="!loginForm.valid || btnSubmitLocked">Đăng nhập</button>
+                            <button type="submit" [className]="!loginForm.valid || btnSubmitLocked ? 'btn btn-info': 'btn btn-info active'" 
+                            [disabled]="!loginForm.valid || btnSubmitLocked">Đăng nhập</button>
                         </div>
-                        <div class="signup-link">Chưa có tài khoản? <a (click)="changeStatus(false)">Đăng ký</a></div>
-                        <div class="signup-link"><a routerLink="/index">Quay về trang chủ</a></div>
+                        <div class="form-link">Chưa có tài khoản? <a (click)="changeStatus(false)">Đăng ký</a></div>
+                        <div class="form-link"><a routerLink="/index">Quay về trang chủ</a></div>
                     </form>
                 </ng-container>
             </div>

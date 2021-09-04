@@ -8,6 +8,7 @@ import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 declare function setUpDarkMode(): void;
+declare function getGAPIInstance(): void;
 
 @Component({
   selector: 'app-root',
@@ -19,9 +20,11 @@ export class AppComponent implements OnInit {
   theLoais: TheLoai[];
   userLoginID: string;
   navBarActive: boolean;
+  gapi: any;
 
   constructor(private jwtHelper: JwtHelperService, private theLoaiService: TheLoaiService, private loginService: LoginService, private router: Router,
     private http: HttpClient, private _router: ActivatedRoute) {
+      this.gapi = getGAPIInstance();
   }
 
   ngOnInit(): void {
@@ -45,6 +48,11 @@ export class AppComponent implements OnInit {
       this.userLoginID = currentID;
     })
 
+    //Init google client
+    this.gapi.load("client:auth2", () => {
+      this.gapi.auth2.init({ client_id: environment.clientId });
+    });
+    
     setUpDarkMode();
   }
 
