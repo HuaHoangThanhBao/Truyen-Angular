@@ -5,8 +5,8 @@
         <!--End Side Bar Menu-->
 
         <!--Content Container-->
-        <div id="page-wrapper" class="page__content-wrapper">
-            <div class="page__content-container">
+        <div id="page-wrapper" class="page-content">
+            <div class="page-content-container">
                 <div class="container-fluid">
                     <app-admin-top-navbar></app-admin-top-navbar>
 
@@ -50,11 +50,11 @@
                                             </td>
                                             <td>{{ data.tenTruyen }}</td>
                                             <td>
-                                                <button class="update-btn"
+                                                <button class="btn update-btn"
                                                     (click)="openModelWithID(data.truyenID, 'modal-update')">QL hình ảnh của chương</button>
                                             </td>
                                             <td>
-                                                <button class="control-btn"
+                                                <button class="btn control-btn"
                                                     (click)="openModelWithID(data.truyenID, 'modal-chuong')">QL
                                                     Chương</button>
                                             </td>
@@ -71,11 +71,11 @@
                                             </td>
                                             <td>{{ data.tenTruyen }}</td>
                                             <td>
-                                                <button class="update-btn"
+                                                <button class="btn update-btn"
                                                     (click)="openModelWithID(data.truyenID, 'modal-update')">Sửa</button>
                                             </td>
                                             <td>
-                                                <button class="control-btn"
+                                                <button class="btn control-btn"
                                                     (click)="openModelWithID(data.truyenID, 'modal-chuong')">QL
                                                     Chương</button>
                                             </td>
@@ -94,7 +94,7 @@
 
     <div id="modal-truyen" class="modal hide">
         <div class="modal-main">
-            <button class="modal-close-btn" (click)="closeModel('modal-truyen')">X</button>
+            <button class="btn modal-close-btn" (click)="closeModel('modal-truyen')">X</button>
             
             <button (click)="googleSignInProcess()">Đăng nhập google</button>
             <br>
@@ -112,7 +112,7 @@
                             tacGia.tenTacGia }}</option>
                     </select>
                     <br>
-                    <button class="modal-submit-btn">Thêm mới</button>
+                    <button class="btn modal-submit-btn">Thêm mới</button>
                 </div>
             </form>
 
@@ -136,7 +136,7 @@
 
     <div id="modal-chuong" class="modal hide">
         <div class="modal-main">
-            <button class="modal-close-btn" (click)="closeModel('modal-chuong')">X</button>
+            <button class="btn modal-close-btn" (click)="closeModel('modal-chuong')">X</button>
 
             <button (click)="googleSignInProcess()">Đăng nhập google</button>
 
@@ -165,7 +165,7 @@
 
     <div id="modal-update" class="modal hide">
         <div class="modal-main">
-            <button class="modal-close-btn" (click)="closeModel('modal-update')">X</button>
+            <button class="btn modal-close-btn" (click)="closeModel('modal-update')">X</button>
 
             <h2>Danh sách chương</h2>
             <div class="modal-area">

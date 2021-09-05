@@ -125,24 +125,11 @@
                                             <ng-container *ngIf="binhLuansByUser">
                                                 <!--Timeline-->
                                                 <div class="timeline-area">
-                                                    <div class="timeline">
-                                                        <div class="timeline-item" *ngFor="let data of binhLuansByUser">
-                                                            <span class="bounce-btn"></span>
-                                                            <div class="timeline-txt impor" *ngIf="data?.truyen">
-                                                                <h3 class="timeline-title">{{ data?.truyen.tenTruyen }}
-                                                                </h3>
-                                                                <!-- <h4 class="timeline-sup">{{ data.chuong.tenChuong }}</h4> -->
-                                                                <div class="timeline-content"
-                                                                    [innerHTML]="data?.noiDung"></div>
-                                                            </div>
-                                                            <div class="timeline-txt impor" *ngIf="data?.chuong">
-                                                                <h3 class="timeline-title">{{
-                                                                    data?.chuong.truyen.tenTruyen }}</h3>
-                                                                <h4 class="timeline-sup">{{ data?.chuong.tenChuong }}
-                                                                </h4>
-                                                                <div class="timeline-content"
-                                                                    [innerHTML]="data.noiDung"></div>
-                                                            </div>
+                                                    <div class="timeline-item" *ngFor="let data of binhLuansByUser">
+                                                        <div class="timeline-time">{{ data.ngayBL }}</div>
+                                                        <span class="bounce-btn"></span>
+                                                        <div class="timeline-txt">
+                                                            <p>{{ data.noiDung }}</p>
                                                         </div>
                                                     </div>
                                                 </div>

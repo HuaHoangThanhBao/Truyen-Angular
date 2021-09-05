@@ -56,7 +56,7 @@
                                         Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
                                     <div *ngIf="truyen" class="hero-o-detail">
                                         <div class="hero-o-detail-txt">
-                                            <p>Lượt theo dõi: <span>71.000</span></p>
+                                            <p>Lượt theo dõi: <span>{{ tongTheoDoi }}</span></p>
                                         </div>
                                         <div class="hero-o-detail-txt">
                                             <div>
@@ -78,17 +78,6 @@
                                                 circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
                                             <button *ngIf="truyen" class="hero-o-btn-item" (click)="addFollowing()">Theo Dõi</button>
 
-                                            <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
-                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
-                                            <button *ngIf="truyen" class="hero-o-btn-item">Like</button>
-
-                                            <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
-                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
-                                            <button *ngIf="truyen" class="hero-o-btn-item">Share</button>
-                                        </div>
-                                    </div>
-                                    <div class="hero-o-detail">
-                                        <div class="hero-o-btn-group top-margin">
                                             <app-seleton-loader *ngIf="!truyen" Cwidth="100" Cheight="35"
                                                 circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
                                             <button *ngIf="truyen" class="hero-o-btn-reading hero-o-btn-item"

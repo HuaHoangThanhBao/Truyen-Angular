@@ -7,22 +7,23 @@
                 <div class="form-container">
                     <h1 class="form-title">Đăng nhập</h1>
 
-                    <form [formGroup]="loginForm" autocomplete="off" novalidate
-                        (ngSubmit)="loginUser(loginForm.value)">
+                    <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm.value)">
                         <div class="form-row">
                             <div class="form-field">
                                 <input type="text" id="email" formControlName="email" class="form-input form-control"
                                     placeholder="Email..." />
                             </div>
                             <div>
-                                <em *ngIf="validateControl('email') && hasError('email', 'email')">*Vui lòng cung cấp email hợp lệ</em>
-                                <em *ngIf="validateControl('email') && hasError('email', 'required')">*Vui lòng không để trống</em>
+                                <em *ngIf="validateControl('email') && hasError('email', 'email')">*Vui lòng cung cấp
+                                    email hợp lệ</em>
+                                <em *ngIf="validateControl('email') && hasError('email', 'required')">*Vui lòng không để
+                                    trống</em>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-field">
-                                <input type="password" id="password" formControlName="password" class="form-input form-control"
-                                    placeholder="Mật khẩu..." />
+                                <input type="password" id="password" formControlName="password"
+                                    class="form-input form-control" placeholder="Mật khẩu..." />
                             </div>
                             <div>
                                 <em *ngIf="validateControl('password') && hasError('password', 'required')">*Vui
@@ -35,17 +36,23 @@
                         <div class="form-link">
                             <a routerLink="/authentication/forgot-password">Quên mật khẩu?</a>
                         </div>
-                        
+
                         <!--Google sign in button-->
-                        <div id="gSignIn"></div>
+                        <a id="signInGoogleBtn" class="signInGoogleBtn">
+                            <img src="assets/images/g-normal.png">
+                            <div class="signInGoogleBtn-inline">
+                                Đăng nhập Google
+                            </div>
+                        </a>
 
                         <div class="form-field btn">
                             <div class="btn-layer"></div>
-                            <button type="submit" [className]="!loginForm.valid || btnSubmitLocked ? 'btn btn-info': 'btn btn-info active'"
-                             [disabled]="!loginForm.valid || btnSubmitLocked">Đăng nhập</button>
+                            <button type="submit"
+                                [className]="!loginForm.valid || btnSubmitLocked ? 'btn btn-info': 'btn btn-info active'"
+                                [disabled]="!loginForm.valid || btnSubmitLocked">Đăng nhập</button>
                         </div>
-                        <div class="form-link">Chưa có tài khoản? <a
-                                routerLink="/authentication/register">Đăng ký ngay</a></div>
+                        <div class="form-link">Chưa có tài khoản? <a routerLink="/authentication/register">Đăng ký
+                                ngay</a></div>
                         <div class="form-link"><a routerLink="/index">Quay về trang chủ</a></div>
                     </form>
                 </div>

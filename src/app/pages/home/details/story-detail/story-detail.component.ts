@@ -29,6 +29,7 @@ export class StoryDetailComponent implements OnInit {
   phuLucs: PhuLuc;
 
   tongSao: unknown;
+  tongTheoDoi: unknown;
   tongLuotXem: number;
   truyenID: number;
   ultiliesInit: boolean = false;
@@ -55,6 +56,11 @@ export class StoryDetailComponent implements OnInit {
       this.truyenService.getListExtend(`${this.truyenID}/danhgiasao`).subscribe(soSao => {
         this.tongSao = soSao;
         //console.log(this.tongSao)
+      });
+
+      this.theoDoiService.getListExtend(`${this.truyenID}/soluottheodoibytruyen`).subscribe(soLuotTheoDoi => {
+        this.tongTheoDoi = soLuotTheoDoi;
+        //console.log(soLuotTheoDoi)
       });
 
       this.phuLucService.get(this.truyenID).subscribe(phulucs => {

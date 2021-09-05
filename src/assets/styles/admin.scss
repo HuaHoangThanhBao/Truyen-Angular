@@ -53,13 +53,13 @@
 }
 
 @media (min-width: 992px) {
-  .toggled#page-wrapper {
+  .admin-nav-toggled#page-wrapper {
     background-color: red;
     width: calc(100% - 270px);
   }
 }
 
-.toggle#nav-sidebar-fixed {
+.admin-nav-toggle#nav-sidebar-fixed {
   width: 270px !important;
   height: 100%;
   left: 0px;
@@ -68,7 +68,7 @@
   transition: all 0.5s ease;
 }
 
-.toggle#page-wrapper {
+.admin-nav-toggle#page-wrapper {
   margin-left: 270px;
   transition: all 0.5s ease;
 }
@@ -113,6 +113,31 @@
     width: 100%;
     height: 100%;
   }
+
+  input,
+  select {
+    height: 30px;
+    width: 300px;
+    margin-bottom: 20px;
+  }
+
+  button {
+    min-width: 150px;
+    margin-bottom: 20px;
+    border: none;
+    padding: 10px 10px;
+    background: lightgrey;
+  }
+
+  span {
+    font-weight: bold;
+  }
+}
+
+.modal-close-btn {
+  padding: 10px;
+  background: red;
+  color: white;
 }
 
 .percent {
@@ -326,6 +351,14 @@
   padding: 20px;
   border-radius: 10px;
 
+  button {
+    margin-bottom: 20px;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 0;
+    background: whitesmoke;
+  }
+
   &-wrapper {
     padding: 30px;
     max-height: 700px;
@@ -440,6 +473,9 @@
     position: absolute;
     right: 0;
   }
+  &-body{
+    position: inherit;
+  }
   &-main {
     height: 100%;
     width: 100%;
@@ -447,6 +483,32 @@
     overflow: auto;
     padding: 20px;
     background: white;
+
+    input,
+    select {
+      height: 30px;
+      width: 300px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      min-width: 150px;
+      margin-bottom: 20px;
+      border: none;
+      padding: 10px 10px;
+      border-radius: 0;
+      background: whitesmoke;
+    }
+
+    .modal-close-btn {
+      padding: 10px;
+      background: red;
+      color: white;
+    }
+
+    span {
+      font-weight: bold;
+    }
   }
   &-list {
     list-style: none;
@@ -458,7 +520,7 @@
       justify-content: space-between;
     }
   }
-  &-list-normal{
+  &-list-normal {
     list-style: none;
     overflow: auto;
     max-height: 300px;
@@ -483,34 +545,11 @@
       background-color: rgba(0, 0, 0, 0.4);
     }
   }
-  &-no-image{
+  &-no-image {
     display: flex;
     height: 100%;
     width: 100%;
     align-items: center;
     justify-content: center;
   }
-}
-
-input, select {
-  height: 30px;
-  width: 300px;
-  margin-bottom: 20px;
-}
-
-button {
-  min-width: 150px;
-  margin-bottom: 20px;
-  border: none;
-  padding: 10px 10px;
-}
-
-.modal-close-btn {
-  padding: 10px;
-  background: red;
-  color: white;
-}
-
-span{
-  font-weight: bold;
 }

@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   btnSubmitLocked: boolean = false;
   gapi: any;
-  googleInitCount: number = 0;
+  auth2: any;
 
   constructor(private _router: Router, private _route: ActivatedRoute, private socialLoginGoogleService: SocialLoginGoogleService,
     private toast: ToastAlertService, private userForLoginService: UserForLoginService, private loginService: LoginService,
@@ -48,34 +48,36 @@ export class LoginComponent implements OnInit {
 
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
 
-    this.renderButton();
+    this.googleSignInInit();
   }
 
-  renderButton() {
-    this.gapi.signin2.render('gSignIn', {
-      'scope': 'profile email',
-      'width': 'auto',
-      'height': 50,
-      'longtitle': true,
-      'theme': 'dark',
-      'onsuccess': () => {
-        this.signInWithGoogle()
-      }
+  googleSignInInit() {
+    this.auth2 = this.gapi.auth2.init({
+      client_id: `${environment.clientId}`,
+      cookiepolicy: 'single_host_origin',
+      // Request scopes in addition to 'profile' and 'email'
+      //scope: 'additional_scope'
     });
+    this.attachSignIn();
+  }
+
+  attachSignIn(){
+    this.auth2.attachClickHandler(document.getElementById('signInGoogleBtn'), {},
+      () => {
+        this.signInWithGoogle();
+      }, function(error) {
+        console.log(error);
+      });
   }
 
   signInWithGoogle() {
-    this.googleInitCount++;
-    if (this.googleInitCount > 1) {
-      this.gapi.client.load('oauth2', 'v2', () => {
-        //var profile = googleUser.getBasicProfile();
+    this.gapi.client.load('oauth2', 'v2', () => {
+      //var profile = googleUser.getBasicProfile();
 
-        var request = this.gapi.client.oauth2.userinfo.get({
-          'userId': 'me'
-        });
-        request.execute((res) => {
-          //console.log(res);
-
+      var request = this.gapi.client.oauth2.userinfo.get({
+        'userId': 'me'
+      });
+      request.execute((res) => {
           const user: SocialUser = { ...res };
           //console.log(user);
 
@@ -91,8 +93,7 @@ export class LoginComponent implements OnInit {
 
           this.validateExternalAuth(externalAuth);
         });
-      });
-    }
+    });
   }
 
   private validateExternalAuth(externalAuth: ExternalAuthDto) {

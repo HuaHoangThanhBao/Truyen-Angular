@@ -63,11 +63,13 @@ export class GenresComponent implements OnInit {
   }
   
   openModel(id: string) {
+    console.log(id)
     const modal = document.getElementById(`${id}`);
     modal.style.display = "block";
   }
 
   closeModel(id: string) {
+    console.log(id)
     const modal = document.getElementById(`${id}`);
     modal.style.display = "none";
   }

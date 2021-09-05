@@ -125,6 +125,33 @@ body {
 }
 /*End Main Container*/
 
+/*Google sign in button*/
+.signInGoogleBtn {
+    margin-top: 20px;
+    color: white;
+    background: #4285F4;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding: 2px 2px;
+    border-radius: 5px;
+    text-align: center;
+
+    img{
+        height: 47px;
+        width: 47px;
+        border-radius: 3px;
+    }
+    &-inline {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: center;
+        padding: 15px 0px;
+    }
+}
+/*End*/
+
 /*Chữ tràn*/
 .title-overflow {
     position: relative;
@@ -133,7 +160,7 @@ body {
     table-layout: fixed;
     padding-bottom: 25px;
 
-    .title-overflow-content {
+    &-content {
         display: table-cell;
         white-space: nowrap;
         text-overflow: ellipsis;

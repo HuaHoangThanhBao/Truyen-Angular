@@ -19,11 +19,11 @@ function setUpAdmin() {
   toggleBtn.addEventListener("click", function () {
     count++;
     if (count % 2 != 0) {
-      pages.classList.add("toggle");
-      nav.classList.add("toggle");
+      pages.classList.add("admin-nav-toggle");
+      nav.classList.add("admin-nav-toggle");
     } else {
-      pages.classList.remove("toggle");
-      nav.classList.remove("toggle");
+      pages.classList.remove("admin-nav-toggle");
+      nav.classList.remove("admin-nav-toggle");
     }
   });
 

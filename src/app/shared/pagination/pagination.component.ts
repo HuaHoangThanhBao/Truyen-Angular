@@ -10,7 +10,7 @@ import { Component, EventEmitter, Input, Output, OnInit, AfterViewInit } from '@
 export class PaginationComponent implements OnInit {
 
   paginationHeader: any;
-  numbers: any[] = [];
+  numbers: any[] = [1];
   currentPage: number = 1;
 
   @Output() refresh: EventEmitter<any> = new EventEmitter();
@@ -33,6 +33,7 @@ export class PaginationComponent implements OnInit {
     //console.log(this.paginationHeader)
     //console.log(this.paginationHeader.TotalPages)
 
+    if (!this.paginationHeader?.TotalPages) return;
     if (this.paginationHeader.TotalPages == 0) return;
 
     if (this.paginationHeader.TotalPages == 1) this.numbers = [1];
@@ -79,6 +80,7 @@ export class PaginationComponent implements OnInit {
   }
 
   refreshStoryList(value) {
+    if (!this.paginationHeader?.TotalPages) return;
     if (value == '...') return;
 
     if (typeof value == 'number') this.currentPage = value;
