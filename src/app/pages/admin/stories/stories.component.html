@@ -35,6 +35,9 @@
                                         <tr>
                                             <th>Ảnh</th>
                                             <th>Tên Truyện</th>
+                                            <th>Phê duyệt</th>
+                                            <th>Thay avatar</th>
+                                            <th>QL phụ lục</th>
                                             <th>QL hình ảnh của chương</th>
                                             <th>QL Chương</th>
                                         </tr>
@@ -50,12 +53,33 @@
                                             </td>
                                             <td>{{ data.tenTruyen }}</td>
                                             <td>
+                                                <p *ngIf="data.trangThai == 0">
+                                                    <button (click)="pheDuyetTruyen(data)"
+                                                        [disabled]="btnSubmitLocked"
+                                                        class="admin-btn-edit">Phê duyệt</button>
+                                                </p>
+                                                <p *ngIf="data.trangThai == 1">Đã duyệt</p>
+                                            </td>
+                                            <td>
+                                                <button (click)="openModelWithID(data.truyenID, 'modal-avatar')" 
+                                                class="admin-btn-normal">Thay avatar</button>
+                                            </td>
+                                            <td>
                                                 <button class="btn update-btn"
-                                                    (click)="openModelWithID(data.truyenID, 'modal-update')">QL hình ảnh của chương</button>
+                                                    (click)="openModelWithID(data.truyenID, 'modal-phuluc')" 
+                                                    class="admin-btn-normal">QL phụ
+                                                    lục</button>
+                                            </td>
+                                            <td>
+                                                <button class="btn update-btn"
+                                                    (click)="openModelWithID(data.truyenID, 'modal-update')"
+                                                    class="admin-btn-normal">QL hình ảnh
+                                                    của chương</button>
                                             </td>
                                             <td>
                                                 <button class="btn control-btn"
-                                                    (click)="openModelWithID(data.truyenID, 'modal-chuong')">QL
+                                                    (click)="openModelWithID(data.truyenID, 'modal-chuong')"
+                                                    class="admin-btn-normal">QL
                                                     Chương</button>
                                             </td>
                                         </tr>
@@ -71,12 +95,33 @@
                                             </td>
                                             <td>{{ data.tenTruyen }}</td>
                                             <td>
+                                                <p *ngIf="data.trangThai == 0">
+                                                    <button (click)="pheDuyetTruyen(data)"
+                                                        [disabled]="btnSubmitLocked"
+                                                        class="admin-btn-edit">Phê duyệt</button>
+                                                </p>
+                                                <p *ngIf="data.trangThai == 1">Đã duyệt</p>
+                                            </td>
+                                            <td>
+                                                <button (click)="openModelWithID(data.truyenID, 'modal-avatar')" 
+                                                class="admin-btn-normal">Thay avatar</button>
+                                            </td>
+                                            <td>
                                                 <button class="btn update-btn"
-                                                    (click)="openModelWithID(data.truyenID, 'modal-update')">Sửa</button>
+                                                    (click)="openModelWithID(data.truyenID, 'modal-phuluc')" 
+                                                    class="admin-btn-normal">QL phụ
+                                                    lục</button>
+                                            </td>
+                                            <td>
+                                                <button class="btn update-btn"
+                                                    (click)="openModelWithID(data.truyenID, 'modal-update')"
+                                                    class="admin-btn-normal">QL hình ảnh
+                                                    của chương</button>
                                             </td>
                                             <td>
                                                 <button class="btn control-btn"
-                                                    (click)="openModelWithID(data.truyenID, 'modal-chuong')">QL
+                                                    (click)="openModelWithID(data.truyenID, 'modal-chuong')"
+                                                    class="admin-btn-normal">QL
                                                     Chương</button>
                                             </td>
                                         </tr>
@@ -92,19 +137,76 @@
         <!--End Content Container-->
     </div>
 
+    <div id="modal-avatar" class="modal hide">
+        <div class="modal-main">
+            <button class="btn modal-close-btn" (click)="closeModel('modal-avatar')">X</button>
+
+            <h2>Thay avatar</h2>
+            <button (click)="googleSignInProcess()" class="admin-btn-normal">Đăng nhập google</button>
+            <br>
+            <button (click)="loadTruyenFolderData()" class="admin-btn-normal">Load thư viện ảnh</button>
+            
+            <div class="modal-chosen">
+                <h2>Tìm kiếm hình ảnh</h2>
+                <input type="text" #urlInput (input)="chooseImage(urlInput.value)">
+                <h2>Hình ảnh bạn đang chọn</h2>
+                <img class="modal-image" src="https://drive.google.com/uc?export=view&id={{ hinhAnhChosen }}">
+                <br>
+                <button (click)="updateAvatar()" [disabled]="btnSubmitLocked" class="admin-btn-orange">Cập nhật avatar</button>
+            </div>
+            <br>
+            <hr>
+            <h2>Thư viện hình ảnh</h2>
+            <br>
+            <ul class="modal-list" *ngIf="danhSachHinhAnhTruyens">
+                <li class="modal-item" *ngFor="let img of danhSachHinhAnhTruyens">
+                    <img class="modal-image" src="https://drive.google.com/uc?export=view&id={{ img.id }}"
+                        (click)="chooseImage(img.id)">
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div id="modal-phuluc" class="modal hide">
+        <div class="modal-main">
+            <button class="btn modal-close-btn" (click)="closeModel('modal-phuluc')">X</button>
+
+            <h2>Danh sách phụ lục</h2>
+            <div class="modal-area">
+                <div class="modal-col">
+                    <ul class="modal-list-auto" *ngIf="phuLucsOfTruyen && theLoais">
+                        <li class="modal-item" *ngFor="let t of theLoais">
+                            <input type="checkbox" value="{{t.theLoaiID}}" class="phu-luc-checkbox"
+                                [checked]="checkTheLoaiID(t.theLoaiID)" [disabled]="btnSubmitLocked">
+                            {{ t.tenTheLoai }}
+                        </li>
+                    </ul>
+                </div>
+                <!-- <div class="modal-col">
+                    <input placeholder="chuỗi phụ lục...">
+                </div> -->
+            </div>
+            <hr>
+            <br>
+            <h2>Bạn có muốn cập nhật lại danh sách phụ lục</h2>
+            <button (click)="updateAllPhulucs()" class="admin-btn-orange">Cập nhật lại toàn bộ phụ lục của truyện</button>
+        </div>
+    </div>
+
     <div id="modal-truyen" class="modal hide">
         <div class="modal-main">
             <button class="btn modal-close-btn" (click)="closeModel('modal-truyen')">X</button>
-            
-            <button (click)="googleSignInProcess()">Đăng nhập google</button>
+
+            <button (click)="googleSignInProcess()"  class="admin-btn-normal">Đăng nhập google</button>
             <br>
-            <button (click)="loadTruyenFolderData()">Load thư viện ảnh</button>
+            <button (click)="loadTruyenFolderData()"  class="admin-btn-normal">Load thư viện ảnh</button>
 
             <form [formGroup]="addForm" autocomplete="off" novalidate (ngSubmit)="addTruyen(addForm.value)">
                 <div class="modal-body">
                     <input type="text" formControlName="tenTruyen" class="modal-input form-control"
                         placeholder="Tên truyện...">
-                        <br>
+                    <br>
                     <input type="text" formControlName="moTa" class="modal-input form-control" placeholder="Mô tả...">
                     <br>
                     <select name="" formControlName="tacGia" id="" class="modal-select">
@@ -112,7 +214,7 @@
                             tacGia.tenTacGia }}</option>
                     </select>
                     <br>
-                    <button class="btn modal-submit-btn">Thêm mới</button>
+                    <button class="btn modal-submit-btn" [disabled]="btnSubmitLocked" class="admin-btn-orange">Thêm mới</button>
                 </div>
             </form>
 
@@ -125,6 +227,7 @@
             <br>
             <hr>
             <h2>Thư viện hình ảnh</h2>
+            <br>
             <ul class="modal-list" *ngIf="danhSachHinhAnhTruyens">
                 <li class="modal-item" *ngFor="let img of danhSachHinhAnhTruyens">
                     <img class="modal-image" src="https://drive.google.com/uc?export=view&id={{ img.id }}"
@@ -138,26 +241,37 @@
         <div class="modal-main">
             <button class="btn modal-close-btn" (click)="closeModel('modal-chuong')">X</button>
 
-            <button (click)="googleSignInProcess()">Đăng nhập google</button>
 
             <h2>Danh sách chương</h2>
-            <ul class="modal-list-normal">
-                <li class="modal-item" *ngFor="let t of currentTruyen?.chuongs">{{ t.tenChuong }}</li>
-            </ul>
+            <div class="modal-area">
+                <div class="modal-col">
 
-            <br>
+                    <button (click)="googleSignInProcess()">Đăng nhập google</button>
 
-            <div class="modal-body">
-                <form [formGroup]="addChuongForm" autocomplete="off" novalidate
-                    (ngSubmit)="addDanhSachChuong(addChuongForm.value)">
+                    <ul class="modal-list-auto">
+                        <li class="modal-item" *ngFor="let t of currentTruyen?.chuongs">
+                            {{ t.tenChuong }}
 
-                    <input type="text" class="modal-input" formControlName="tenChuong" placeholder="tên chương...">
-                    <br>
-                    <input type="text" class="modal-input" formControlName="folderID" placeholder="folder id...">
+                            <button *ngIf="t.trangThai == 0" (click)="pheDuyetChuong(t)" class="admin-btn-green">Duyệt chương</button>
+                            <button *ngIf="t.trangThai == 1" (click)="disableChuong(t)" class="admin-btn-update">Chuyển về bản nháp</button>
+                        </li>
+                    </ul>
 
-                    <br>
-                    <button>Thêm mới chương và thư mục hình ảnh</button>
-                </form>
+                </div>
+                <div class="modal-col">
+                    <form [formGroup]="addChuongForm" autocomplete="off" novalidate
+                        (ngSubmit)="addDanhSachChuong(addChuongForm.value)">
+
+                        <input type="number" class="modal-input" formControlName="tenChuong"
+                            placeholder="Số thứ tự chương...">
+                        <br>
+                        <input type="text" class="modal-input" formControlName="folderID"
+                            placeholder="Folder Google Drive ID...">
+
+                        <br>
+                        <button [disabled]="btnSubmitLocked" class="admin-btn-orange">Thêm mới chương và thư mục hình ảnh</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -177,7 +291,7 @@
                             <br>
                             <p>Tên chương: <span>{{ t.tenChuong }}</span></p>
                             <br>
-                            <button (click)="showHinhAnh(t.chuongID)">Show hình ảnh</button>
+                            <button (click)="showHinhAnh(t.chuongID)"  class="admin-btn-edit">Show hình ảnh</button>
                         </li>
                     </ul>
                 </div>
@@ -201,7 +315,8 @@
             <hr>
             <br>
             <h2>Bạn có muốn cập nhật lại nội dung chương?</h2>
-            <button (click)="updateAllNoiDungChuong()">Cập nhật lại toàn bộ nội dung chương</button>
+            <button (click)="updateAllNoiDungChuong()" [disabled]="btnSubmitLocked"  class="admin-btn-orange">Cập nhật lại toàn bộ nội dung
+                chương</button>
         </div>
     </div>
 </body>

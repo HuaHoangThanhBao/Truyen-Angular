@@ -17,8 +17,10 @@ export class AuthorsComponent implements OnInit {
   addForm: FormGroup;
   searchResult: TacGia[];
 
+  btnSubmitLocked: boolean = false;
+
   constructor(private tacGiaService: TacGiaService, private toast: ToastAlertService) {
-   }
+  }
 
   ngOnInit(): void {
     setUpAdmin();
@@ -26,25 +28,27 @@ export class AuthorsComponent implements OnInit {
     this.tacGiaService.getList().subscribe(tacGias => {
       this.tacGias = tacGias
     })
-    
+
     this.addForm = new FormGroup({
       tenTacGia: new FormControl('', [Validators.required]),
     });
   }
-  
-  filter(value: string){
+
+  filter(value: string) {
     this.searchResult = [];
-    for(let i = 0; i < this.tacGias.length; i++){
-      if(this.tacGias[i].tenTacGia.toLowerCase().includes(value)){
+    for (let i = 0; i < this.tacGias.length; i++) {
+      if (this.tacGias[i].tenTacGia.toLowerCase().includes(value)) {
         this.searchResult.push(this.tacGias[i])
       }
     }
   }
 
   addTacGia = (addFormValues) => {
+    this.btnSubmitLocked = true;
     const formValues = { ...addFormValues };
 
     if (formValues.tenTacGia == "") {
+      this.btnSubmitLocked = false;
       this.toast.showToast("Lỗi", "Vui lòng điền đầy đủ thông tin", "error");
       return;
     }
@@ -56,11 +60,16 @@ export class AuthorsComponent implements OnInit {
     this.tacGiaService.post(tacGia)
       .subscribe(res => {
         if (!res?.error) {
-        this.toast.showToast("Thành công", "Thêm tác giả thành công", "success");
+          this.btnSubmitLocked = false;
+          this.toast.showToast("Thành công", "Thêm tác giả thành công", "success");
+
+          this.tacGiaService.getList().subscribe(tacGias => {
+            this.tacGias = tacGias
+          })
         }
       });
   }
-  
+
   openModel(id: string) {
     const modal = document.getElementById(`${id}`);
     modal.style.display = "block";

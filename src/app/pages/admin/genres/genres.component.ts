@@ -17,8 +17,10 @@ export class GenresComponent implements OnInit {
   addForm: FormGroup;
   searchResult: TheLoai[];
 
+  btnSubmitLocked: boolean = false;
+
   constructor(private theLoaiService: TheLoaiService, private toast: ToastAlertService) {
-   }
+  }
 
   ngOnInit(): void {
     setUpAdmin();
@@ -27,25 +29,28 @@ export class GenresComponent implements OnInit {
       this.theLoais = theLoais;
     })
 
-    
+
     this.addForm = new FormGroup({
       tenTheLoai: new FormControl('', [Validators.required]),
     });
   }
-  
-  filter(value: string){
+
+  filter(value: string) {
     this.searchResult = [];
-    for(let i = 0; i < this.theLoais.length; i++){
-      if(this.theLoais[i].tenTheLoai.toLowerCase().includes(value)){
+    for (let i = 0; i < this.theLoais.length; i++) {
+      if (this.theLoais[i].tenTheLoai.toLowerCase().includes(value)) {
         this.searchResult.push(this.theLoais[i])
       }
     }
   }
 
   addTheLoai = (addFormValues) => {
+    this.btnSubmitLocked = true;
+
     const formValues = { ...addFormValues };
 
     if (formValues.tenTheLoai == "") {
+      this.btnSubmitLocked = false;
       this.toast.showToast("Lỗi", "Vui lòng điền đầy đủ thông tin", "error");
       return;
     }
@@ -57,11 +62,16 @@ export class GenresComponent implements OnInit {
     this.theLoaiService.post(theLoai)
       .subscribe(res => {
         if (!res?.error) {
-        this.toast.showToast("Thành công", "Thêm thể loại thành công", "success");
+          this.btnSubmitLocked = false;
+          this.toast.showToast("Thành công", "Thêm thể loại thành công", "success");
+
+          this.theLoaiService.getList().subscribe(theLoais => {
+            this.theLoais = theLoais;
+          })
         }
       });
   }
-  
+
   openModel(id: string) {
     console.log(id)
     const modal = document.getElementById(`${id}`);

@@ -42,10 +42,10 @@
                                         <tr *ngFor="let data of theLoais">
                                             <td>{{ data.tenTheLoai }}</td>
                                             <td>
-                                                <button class="update-btn">Sửa</button>
+                                                <button class="update-btn" class="admin-btn-normal">Sửa</button>
                                             </td>
                                             <td>
-                                                <button class="update-btn">Xóa</button>
+                                                <button class="update-btn" class="admin-btn-danger">Xóa</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -53,10 +53,10 @@
                                         <tr *ngFor="let data of searchResult">
                                             <td>{{ data.tenTheLoai }}</td>
                                             <td>
-                                                <button class="update-btn">Sửa</button>
+                                                <button class="update-btn" class="admin-btn-normal">Sửa</button>
                                             </td>
                                             <td>
-                                                <button class="update-btn">Xóa</button>
+                                                <button class="update-btn" class="admin-btn-danger">Xóa</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -78,7 +78,7 @@
                 <div class="modal-body">
                     <input type="text" formControlName="tenTheLoai" class="modal-input form-control" placeholder="Tên thể loại...">
                     
-                    <button class="modal-submit-btn">Thêm mới</button>
+                    <button class="modal-submit-btn" [disabled]="btnSubmitLocked" class="admin-btn-orange">Thêm mới</button>
                 </div>
             </form>
         </div>

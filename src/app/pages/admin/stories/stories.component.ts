@@ -11,6 +11,10 @@ import { Chuong } from '../../../model/chuong/Chuong.model';
 import { NoiDungChuong } from '../../../model/noidungchuong/NoiDungChuong.model';
 import { NoiDungChuongService } from '../../../services/model-service/noiDungChuongService.service';
 import { environment } from '../../../../environments/environment';
+import { PhuLucService } from '../../../services/model-service/phuLucService.service';
+import { PhuLuc } from '../../../model/phuluc/PhuLuc.model';
+import { TheLoaiService } from '../../../services/model-service/theLoaiService.service';
+import { TheLoai } from '../../../model/theloai/TheLoai.model';
 declare function setUpAdmin(): void;
 declare function authenticate();
 declare function loadClient(apiKey);
@@ -26,22 +30,27 @@ export class StoriesComponent implements OnInit {
   truyens: Truyen[];
   tacGias: TacGia[];
   noiDungChuongs: NoiDungChuong[] = [];
+  theLoais: TheLoai[];
+  phuLucsOfTruyen: PhuLuc[];
+
   addForm: FormGroup;
   addChuongForm: FormGroup;
   danhSachHinhAnhTruyens: DriveModel[] = [];
 
   hinhAnhChosen: string = "";
   soLuong: number[];
-  noImageToShow: boolean = false;
 
   currentTruyenID: number;
   currentTruyen: Truyen;
   searchResult: Truyen[];
 
+  noImageToShow: boolean = false;
   googleLogIn: boolean = false;
+  btnSubmitLocked: boolean = false;
 
   constructor(private truyenService: TruyenService, private tacGiaService: TacGiaService, private toast: ToastAlertService,
-    private chuongService: ChuongService, private noiDungChuongService: NoiDungChuongService) {
+    private chuongService: ChuongService, private noiDungChuongService: NoiDungChuongService, private phuLucService: PhuLucService,
+    private theLoaiService: TheLoaiService) {
   }
 
   ngOnInit(): void {
@@ -55,7 +64,6 @@ export class StoriesComponent implements OnInit {
     this.tacGiaService.getList().subscribe(tacGias => {
       this.tacGias = tacGias;
     })
-
     ///
 
     this.addForm = new FormGroup({
@@ -93,7 +101,10 @@ export class StoriesComponent implements OnInit {
   }
 
   addTruyen = (addFormValues) => {
+    this.btnSubmitLocked = true;
+
     if (this.hinhAnhChosen == "") {
+      this.btnSubmitLocked = false;
       this.toast.showToast("Lỗi", "Bạn chưa chọn hình ảnh cho truyện", "error");
       return;
     }
@@ -101,6 +112,7 @@ export class StoriesComponent implements OnInit {
     const formValues = { ...addFormValues };
 
     if (formValues.moTa == "" || formValues.tenTruyen == "" || formValues.tacGiaID == "" || formValues.hinhAnh == "") {
+      this.btnSubmitLocked = false;
       this.toast.showToast("Lỗi", "Vui lòng điền đầy đủ thông tin", "error");
       return;
     }
@@ -117,8 +129,13 @@ export class StoriesComponent implements OnInit {
     this.truyenService.post(truyen)
       .subscribe(res => {
         if (!res?.error) {
+          this.btnSubmitLocked = false;
           this.toast.showToast("Thành công", "Thêm truyện thành công", "success");
           this.hinhAnhChosen = "";
+
+          this.truyenService.getList().subscribe(truyens => {
+            this.truyens = truyens;
+          })
         }
       });
   }
@@ -137,6 +154,22 @@ export class StoriesComponent implements OnInit {
     //console.log(this.danhSachHinhAnhTruyens);
   }
 
+  pheDuyetTruyen(truyen: Truyen) {
+    this.btnSubmitLocked = true;
+
+    truyen.trangThai = 1;
+    this.truyenService.updateWithID(truyen.truyenID.toString(), truyen).subscribe(res => {
+      if(!res?.error){
+        this.btnSubmitLocked = false;
+        this.toast.showToast("Thành công", "Phê duyệt truyện thành công", "success");
+  
+        this.truyenService.getList().subscribe(truyens => {
+          this.truyens = truyens;
+        })
+      }
+    })
+  }
+
 
 
 
@@ -148,7 +181,10 @@ export class StoriesComponent implements OnInit {
   }
 
   addDanhSachChuong = (form) => {
+    this.btnSubmitLocked = true;
+
     if (!this.googleLogIn) {
+      this.btnSubmitLocked = false;
       this.toast.showToast("Lỗi", "Vui lòng đăng nhập google trước", "error");
       return;
     }
@@ -159,13 +195,14 @@ export class StoriesComponent implements OnInit {
     //console.log(formValues);
 
     if (formValues.tenChuong == "" || formValues.folderID == "") {
+      this.btnSubmitLocked = false;
       this.toast.showToast("Lỗi", "Vui lòng điền đầy đủ thông tin", "error");
       return;
     }
 
     const chuong: Chuong[] = [{
       truyenID: this.currentTruyenID,
-      tenChuong: formValues.tenChuong
+      tenChuong: "Chap " + formValues.tenChuong
     }];
 
 
@@ -181,18 +218,51 @@ export class StoriesComponent implements OnInit {
 
         this.noiDungChuongService.post(this.noiDungChuongs).subscribe(res => {
           if (!res?.error) {
+            this.btnSubmitLocked = false;
             console.log(res);
             this.toast.showToast("Thành công", "Thêm chương và nội dung thành công", "success");
             this.noiDungChuongs = [];
+
+
+            this.truyenService.getDetail(this.currentTruyenID).subscribe(details => {
+              this.currentTruyenID = details.truyenID;
+              this.currentTruyen = details;
+            })
           }
         })
       });
     })
-      .catch(_ =>
+      .catch(_ => {
+        this.btnSubmitLocked = false;
         this.toast.showToast("Lỗi", "Không thể load hình ảnh trong folder", "error")
-      );
+      });
   }
 
+  pheDuyetChuong(chuong: Chuong) {
+    chuong.trangThai = 1;
+    this.chuongService.updateWithID(chuong.chuongID.toString(), chuong).subscribe(res => {
+      if(!res?.error){
+        this.toast.showToast("Thành công", "Phê duyệt chương thành công", "success");
+        this.truyenService.getDetail(this.currentTruyenID).subscribe(details => {
+          this.currentTruyenID = details.truyenID;
+          this.currentTruyen = details;
+        })
+      }
+    })
+  }
+
+  disableChuong(chuong: Chuong) {
+    chuong.trangThai = 0;
+    this.chuongService.updateWithID(chuong.chuongID.toString(), chuong).subscribe(res => {
+      if(!res?.error){
+        this.toast.showToast("Cẩn thận", "Chương này tạm thời bị ẩn nên user sẽ không thấy được. Hãy cẩn thận", "success");
+        this.truyenService.getDetail(this.currentTruyenID).subscribe(details => {
+          this.currentTruyenID = details.truyenID;
+          this.currentTruyen = details;
+        })
+      }
+    })
+  }
 
 
 
@@ -213,15 +283,25 @@ export class StoriesComponent implements OnInit {
   }
 
   updateAllNoiDungChuong() {
+    this.btnSubmitLocked = true;
+
     if (this.noiDungChuongs.length == 0 || !this.noiDungChuongs) {
+      this.btnSubmitLocked = false;
       this.toast.showToast("Lỗi", "Bạn chưa chọn chương để cập nhật", "error");
       return;
     }
     this.noiDungChuongService.updateExtendRoute("multiple", this.noiDungChuongs).subscribe(res => {
       if (!res?.error) {
+        this.btnSubmitLocked = false;
         console.log(res);
         this.toast.showToast("Thành công", "Cập nhật chương thành công", "success");
         this.noiDungChuongs = [];
+
+
+        this.truyenService.getDetail(this.currentTruyenID).subscribe(details => {
+          this.currentTruyenID = details.truyenID;
+          this.currentTruyen = details;
+        })
       }
     })
   }
@@ -231,15 +311,74 @@ export class StoriesComponent implements OnInit {
 
 
   ///////////////////////////////////////
-  openModelWithID(truyendID: number, id: string) {
+  openModelWithID(truyenID: number, id: string) {
     this.noiDungChuongs = [];
-    this.truyenService.getDetail(truyendID).subscribe(details => {
+    this.hinhAnhChosen = "";
+    
+    this.truyenService.getDetail(truyenID).subscribe(details => {
       const modal = document.getElementById(id);
       modal.style.display = "block";
       this.currentTruyenID = details.truyenID;
 
       console.log(details);
       this.currentTruyen = details;
+    })
+
+    this.theLoaiService.getList().subscribe(theLoais => {
+      this.theLoais = theLoais;
+      //console.log(theLoais)
+    });
+
+    this.phuLucService.getListExtend(`${truyenID}`).subscribe(phulucs => {
+      this.phuLucsOfTruyen = phulucs;
+      console.log(phulucs)
+    });
+  }
+
+  checkTheLoaiID(theLoaiID: number): boolean {
+    const checkCallBack = (element) => element.theLoaiID == theLoaiID && !element.tinhTrang;
+    return this.phuLucsOfTruyen.some(checkCallBack);
+  }
+
+  checkTheLoaiIDNormal(theLoaiID: number): boolean {
+    const checkCallBack = (element) => element.theLoaiID == theLoaiID;
+    return this.phuLucsOfTruyen.some(checkCallBack);
+  }
+
+  updateAllPhulucs() {
+    this.btnSubmitLocked = true;
+    const tmp: PhuLuc[] = [...this.phuLucsOfTruyen];
+
+    var checkBoxes = document.querySelectorAll('.phu-luc-checkbox') as NodeListOf<HTMLInputElement>;
+    checkBoxes.forEach(item => {
+      //console.log(item.value + "/" + item.checked);
+
+      const found = this.checkTheLoaiIDNormal(parseInt(item.value))
+      if (!found && item.checked) {
+        const newPhuLuc: PhuLuc = {
+          theLoaiID: parseInt(item.value),
+          truyenID: this.currentTruyenID,
+          tinhTrang: false
+        }
+        tmp.push(newPhuLuc);
+      }
+      else {
+        for (let i = 0; i < tmp.length; i++) {
+          if (tmp[i].theLoaiID == parseInt(item.value)) {
+            tmp[i].tinhTrang = !item.checked;
+            break;
+          }
+        }
+      }
+    })
+    console.log(tmp);
+    this.phuLucService.update(tmp).subscribe(res => {
+      if(!res?.error){
+        this.phuLucService.getListExtend(`${this.currentTruyenID}`).subscribe(phulucs => {
+          this.phuLucsOfTruyen = phulucs;
+          this.btnSubmitLocked = false;
+        });
+      }
     })
   }
 
@@ -251,5 +390,32 @@ export class StoriesComponent implements OnInit {
   closeModel(id: string) {
     const modal = document.getElementById(`${id}`);
     modal.style.display = "none";
+  }
+
+
+
+
+  /////////Avatar
+  updateAvatar() {
+    this.btnSubmitLocked = true;
+
+    if(this.hinhAnhChosen == ""){
+      this.btnSubmitLocked = false;
+      this.toast.showToast("Lỗi", "Bạn chưa chọn hình ảnh", "error");
+      return;
+    }
+
+    this.currentTruyen.hinhAnh = this.hinhAnhChosen;
+    this.truyenService.updateWithID(this.currentTruyen.truyenID.toString(), this.currentTruyen).subscribe(res => {
+      if(!res?.error){
+        this.btnSubmitLocked = false;
+        this.toast.showToast("Thành công", "Cập nhật avatar cho truyện thành công", "success");
+  
+        this.truyenService.getList().subscribe(truyens => {
+          this.truyens = truyens;
+          //console.log(truyens)
+        })
+      }
+    })
   }
 }

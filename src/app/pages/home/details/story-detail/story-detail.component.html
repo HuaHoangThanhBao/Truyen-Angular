@@ -134,14 +134,18 @@
                                         </div>
                                     </div>
                                     <ul id="chapter-list" class="chapter-list">
-                                        <li class="chapter-item" *ngFor="let chuong of truyen?.chuongs">
-                                            <p class="chapter-txt">
-                                                <a class="chapter-link" (click)="postLuotXem(chuong)">
-                                                    {{chuong.tenChuong }}
-                                                </a>
-                                            </p>
-                                            <p class="chapter-txt">{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy' }}</p>
-                                            <p class="chapter-txt">{{ chuong.luotXem }}</p>
+                                        <li *ngFor="let chuong of truyen?.chuongs">
+                                            <ng-container *ngIf="chuong.trangThai == 1">
+                                                <div class="chapter-item">
+                                                    <p class="chapter-txt">
+                                                        <a class="chapter-link" (click)="postLuotXem(chuong)">
+                                                            {{chuong.tenChuong }}
+                                                        </a>
+                                                    </p>
+                                                    <p class="chapter-txt">{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy' }}</p>
+                                                    <p class="chapter-txt">{{ chuong.luotXem }}</p>
+                                                </div>
+                                            </ng-container>
                                         </li>
                                     </ul>
                                     <div id="expand" class="expand">

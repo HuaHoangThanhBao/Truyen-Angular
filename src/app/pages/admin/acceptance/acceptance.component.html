@@ -38,7 +38,6 @@
                                             <th>Tên chương</th>
                                             <th>Tên truyện</th>
                                             <th>Thời gian cập nhật</th>
-                                            <th>Trạng thái</th>
                                             <th>Xét duyệt</th>
                                         </tr>
                                     </thead>
@@ -49,12 +48,13 @@
                                             <td>{{ chuong.truyen.tenTruyen }}</td>
                                             <td>{{ chuong.thoiGianCapNhat }}</td>
                                             <td>
-                                                <p *ngIf="chuong.trangThai == -1">Chưa duyệt</p>
-                                                <p *ngIf="chuong.trangThai != -1">Đã duyệt</p>
-                                            </td>
-                                            <td>
-                                                <button *ngIf="chuong.trangThai == -1" (click)="publishChapter(chuong)">Xét duyệt</button>
-                                                <p *ngIf="chuong.trangThai != -1">Đã duyệt</p>
+                                                
+                                                <p *ngIf="chuong.trangThai == 0">
+                                                    <button *ngIf="chuong.trangThai == 0" 
+                                                    (click)="publishChapter(chuong)" 
+                                                    class="admin-btn-green">Xét duyệt</button>
+                                                </p>
+                                                <p *ngIf="chuong.trangThai == 1">Đã duyệt</p>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -227,10 +227,6 @@
         padding-bottom: 15px;
         border: 1px dashed lightgrey;
         border-width: 0px 0px 1px 0px;
-        &:last-child {
-            border-width: 0px;
-            margin-bottom: 0px;
-        }
     }
     &-link {
         @include theme() {

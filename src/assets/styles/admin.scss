@@ -114,7 +114,7 @@
     height: 100%;
   }
 
-  input,
+  input:not([type="checkbox"]),
   select {
     height: 30px;
     width: 300px;
@@ -126,7 +126,6 @@
     margin-bottom: 20px;
     border: none;
     padding: 10px 10px;
-    background: lightgrey;
   }
 
   span {
@@ -356,7 +355,6 @@
     border: none;
     padding: 10px 10px;
     border-radius: 0;
-    background: whitesmoke;
   }
 
   &-wrapper {
@@ -473,7 +471,7 @@
     position: absolute;
     right: 0;
   }
-  &-body{
+  &-body {
     position: inherit;
   }
   &-main {
@@ -484,7 +482,7 @@
     padding: 20px;
     background: white;
 
-    input,
+    input:not([type="checkbox"]),
     select {
       height: 30px;
       width: 300px;
@@ -497,7 +495,6 @@
       border: none;
       padding: 10px 10px;
       border-radius: 0;
-      background: whitesmoke;
     }
 
     .modal-close-btn {
@@ -524,6 +521,9 @@
     list-style: none;
     overflow: auto;
     max-height: 300px;
+  }
+  &-list-auto {
+    list-style: none;
   }
   &-item {
     position: relative;
@@ -552,4 +552,34 @@
     align-items: center;
     justify-content: center;
   }
+}
+
+.admin-btn-danger {
+  background-color: $danger;
+  color: white;
+}
+
+.admin-btn-green {
+  background-color: $green;
+  color: white;
+}
+
+.admin-btn-edit {
+  background-color: $firstColor;
+  color: white;
+}
+
+.admin-btn-update {
+  background-color: $firstColorLight;
+  color: white;
+}
+
+.admin-btn-normal {
+  background-color: whitesmoke;
+  color: $black;
+}
+
+.admin-btn-orange {
+  background-color: $orange;
+  color: $black;
 }

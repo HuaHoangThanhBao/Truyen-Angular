@@ -7,7 +7,6 @@ import { AdminComponent } from './pages/admin/admin/admin.component';
 const routes: Routes = [
   { path: '', redirectTo: 'index', pathMatch: 'full' },
   { path: 'index', component: IndexComponent},
-  { path: 'admin', component: AdminComponent},
   { path: 'admin', loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule) },
   { path: 'authentication', loadChildren: () => import('./pages/home/authentication/authentication.module').then(m => m.AuthenticationModule) },
   { path: 'details', loadChildren: () => import('./pages/home/details/details.module').then(m => m.DetailsModule) },

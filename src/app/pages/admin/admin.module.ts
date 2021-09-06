@@ -13,6 +13,7 @@ import { AdminSideNavbarComponent } from '../../shared/admin-side-navbar/admin-s
 import { AdminTopNavbarComponent } from '../../shared/admin-top-navbar/admin-top-navbar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdminGuard } from '../../modules/guards/admin-guard.service';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [AdminSideNavbarComponent, AdminTopNavbarComponent, DashboardComponent, AcceptanceComponent, AuthorsComponent, ChartsComponent, GenresComponent, StoriesComponent, UsersComponent],
@@ -21,6 +22,7 @@ import { AdminGuard } from '../../modules/guards/admin-guard.service';
     GeneralModules,
     ReactiveFormsModule,
     RouterModule.forChild([
+        { path: 'login', component: AdminComponent},
         { path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard]},
         { path: 'acceptance', component: AcceptanceComponent, canActivate: [AdminGuard]},
         { path: 'author', component: AuthorsComponent, canActivate: [AdminGuard]},
