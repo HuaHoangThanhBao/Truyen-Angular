@@ -26,95 +26,80 @@ export class StoryReadingComponent implements OnInit {
   chuongID: number;
   first: boolean;
   last: boolean;
+  currentChapIndex: number;
 
   chuongCatagoryList: [];
 
-  constructor(private route: ActivatedRoute, private _router: Router, private historyManagement: HistoryManagement, private truyenService: TruyenService, 
+  constructor(private route: ActivatedRoute, private _router: Router, private historyManagement: HistoryManagement, private truyenService: TruyenService,
     private binhLuanService: BinhLuanService, private chuongService: ChuongService) {
     this.route.paramMap.subscribe((param) => {
       this.chuongID = parseInt(param.get('chuongID'));
       this.truyenID = parseInt(param.get('truyenID'));
+
+      this.chapNavigation(this.chuongID);
+
+      this.chuongService.getDetail(this.chuongID).subscribe(chuong => {
+        this.chuong = chuong;
+        //console.log(chuong)
+      });
+
+      let binhLuansParams: RequestParam = { pageNumber: 1, pageSize: 10, sorting: true, chuongID: this.chuongID }
+      this.binhLuanService.getListWithParams(binhLuansParams).subscribe(binhLuans => {
+        this.binhLuans = binhLuans;
+        //console.log(truyens)
+      });
     });
   }
 
   ngOnInit(): void {
-    this.chuongService.getDetail(this.chuongID).subscribe(chuong => {
-      this.chuong = chuong;
-      //console.log(phulucs)
-    });
-
     this.truyenService.getDetail(this.truyenID).subscribe(truyen => {
       this.truyen = truyen;
-      //console.log(truyen);
-
-      let index;
-
-      for (let i = 0; i < truyen.chuongs.length; i++) {
-        if (truyen.chuongs[i].chuongID == this.chuongID) {
-          index = i;
-          break;
-        }
-      }
-
-      if (index == 0) {
-        this.first = true;
-        this.last = false;
-      }
-      if (index == truyen.chuongs.length - 1) {
-        this.first = false;
-        this.last = true;
-      }
+      console.log(truyen);
+      this.chapNavigation(this.chuongID);
     })
-
-    let binhLuansParams: RequestParam = {pageNumber: 1, pageSize: 10, sorting: true, chuongID: this.chuongID}
-    this.binhLuanService.getListWithParams(binhLuansParams).subscribe(binhLuans => {
-      this.binhLuans = binhLuans;
-      //console.log(truyens)
-    });
 
     //this.scrollMenu();
   }
 
-  redirectToAnotherChap(value) {
-    let index;
-    let resultID;
-
+  chapNavigation(chuongID) {
     if (this.truyen) {
-      if (typeof value == 'boolean') {
-        for (let i = 0; i < this.truyen.chuongs.length; i++) {
-          if (this.truyen.chuongs[i].chuongID == this.chuongID) {
-            index = i;
-            break;
-          }
-        }
+      const index = this.truyen.chuongs.findIndex((chuong) => {
+        return chuong.chuongID == chuongID;
+      });
+      this.currentChapIndex = index;
 
-        index = value === true ? index + 1 : index - 1;
-        if (index >= this.truyen.chuongs.length - 1) index = this.truyen.chuongs.length - 1;
-        if (index <= 0) index = 0;
+      if (index == this.truyen.chuongs.length - 1) this.last = true;
+      else this.last = false;
 
-        for (let i = 0; i < this.truyen.chuongs.length; i++) {
-          if (i == index) {
-            resultID = this.truyen.chuongs[i].chuongID;
-            break;
-          }
-        }
-      }
-      else index = value;
+      if (index == 0) this.first = true;
+      else this.first = false;
     }
-
-    // this.historyManagement.addToHistory(
-    //   this.truyen[index].truyenID, 
-    //   this.truyen[index].tenTruyen, 
-    //   resultID, 
-    //   this.truyen[resultID].chuong.tenChuong, 
-    //   this.truyen[index].hinhAnh);
-    
-    //console.log(index);
-    if (resultID) window.location.href = `details/story-reading/${this.truyen.truyenID}/${resultID}`;
   }
 
-  selectedChange(value) {
-    window.location.href = `details/story-reading/${this.truyen.truyenID}/${value}`;
+  goBackChap() {
+    this.currentChapIndex--;
+    const chapDirID = this.truyen.chuongs[this.currentChapIndex].chuongID;
+    const chapDirName = this.truyen.chuongs[this.currentChapIndex].tenChuong;
+    this.historyManagement.addToHistory(this.truyenID, this.truyen.tenTruyen, chapDirID, chapDirName, this.truyen.hinhAnh);
+    this._router.navigate([`details/story-reading/${this.truyen.truyenID}/${chapDirID}`]);
+  }
+
+  goContinousChap() {
+    this.currentChapIndex++;
+    const chapDirID = this.truyen.chuongs[this.currentChapIndex].chuongID;
+    const chapDirName = this.truyen.chuongs[this.currentChapIndex].tenChuong;
+    this.historyManagement.addToHistory(this.truyenID, this.truyen.tenTruyen, chapDirID, chapDirName, this.truyen.hinhAnh);
+    this._router.navigate([`details/story-reading/${this.truyen.truyenID}/${chapDirID}`]);
+  }
+
+  selectedChange(chuongID) {
+    if (this.truyen) {
+      const c = this.truyen.chuongs.find((chuong) => {
+        return chuong.chuongID == chuongID;
+      });
+      this.historyManagement.addToHistory(this.truyenID, this.truyen.tenTruyen, chuongID, c.tenChuong, this.truyen.hinhAnh);
+      this._router.navigate([`details/story-reading/${this.truyen.truyenID}/${chuongID}`]);
+    }
   }
 
   scrollMenu() {

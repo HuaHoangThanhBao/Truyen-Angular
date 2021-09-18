@@ -18,7 +18,6 @@ export class HistoryManagement {
     }
 
     public addToHistory(truyenID: number, tenTruyen: string, chuongID: number, tenChuong: string, hinhAnh: string) {
-        //alert(truyenID + "/" + chuongID)
         const data = { "truyenID": truyenID, "tenTruyen": tenTruyen, "chuongID": chuongID, "tenChuong": tenChuong, "hinhAnh": hinhAnh };
         const localHist = JSON.parse(localStorage.getItem("tr_hist"));
         let hist_arr;
@@ -28,6 +27,9 @@ export class HistoryManagement {
             hist_arr = [...localHist];
             found = checkDuplicate();
 
+            //Kiểm tra có duplicate không?
+            //Có: thì cập nhật lại thông tin truyện/chương đang đọc
+            //không: sang bước kế
             function checkDuplicate() {
                 for (let i = 0; i < hist_arr.length; i++) {
                     if (hist_arr[i]["truyenID"] === truyenID) {
@@ -43,36 +45,19 @@ export class HistoryManagement {
         }
         else hist_arr = [];
 
-        if (!found)
-            hist_arr.push(data);
+        if (!found) hist_arr.push(data);
 
-        //console.log(hist_arr)
         localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
-
         this.route.navigate([`details/story-reading/${truyenID}/${chuongID}`]);
     }
 
     public delelteHistoryItem(truyenID: number) {
-        let hist_arr;
         const localHist = JSON.parse(localStorage.getItem("tr_hist"));
-
-        if (localHist != null) {
-            hist_arr = [...localHist];
-
-            const index = findIndex();
-            hist_arr.splice(index, 1);
-
-            function findIndex() {
-                for (let i = 0; i < hist_arr.length; i++) {
-                    if (hist_arr[i]["truyenID"] === truyenID) {
-                        return i;
-                    }
-                }
-            }
-
-            localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
-
-            //this.route.navigate(["/history"]);
-        }
+        const hist_arr = [...localHist];
+        const index = hist_arr.findIndex((item) => {
+            return item["truyenID"] === truyenID;
+        });
+        hist_arr.splice(index, 1);
+        localStorage.setItem("tr_hist", JSON.stringify(hist_arr));
     }
 }

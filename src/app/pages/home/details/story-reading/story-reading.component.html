@@ -15,10 +15,13 @@
                                 <p>{{chuong?.truyen.tenChuong}}</p>
                             </div>
                             <div class="hero-body-box-item">
-                                <p>Cập nhật lúc: <span>{{ chuong?.thoiGianCapNhat }}</span></p>
+                                <p>Thời gian cập nhật: <span>{{ chuong?.thoiGianCapNhat | dateAgo: chuong?.thoiGianCapNhat}}</span></p>
                             </div>
                             <div class="nav-menu">
-                                <app-seleton-loader *ngIf="!truyen?.chuongs" Cheight="30" Cwidth="100%"></app-seleton-loader>
+                                <app-seleton-loader *ngIf="!truyen?.chuongs" 
+                                                    Cheight="30" 
+                                                    Cwidth="100%"></app-seleton-loader>
+
                                 <ul *ngIf="truyen?.chuongs" id="nav-menu-header" class="nav-menu-list">
                                     {{scrollMenu()}}
                                     <li class="nav-menu-item">
@@ -55,7 +58,7 @@
                                     <li class="nav-menu-item"></li>
 
                                     <li class="nav-menu-item">
-                                        <a *ngIf="!first" (click)="redirectToAnotherChap(false)">
+                                        <a *ngIf="!first" (click)="goBackChap()">
                                             <div class="nav-menu-item-box">
                                                 <div class="nav-menu-item-icon">
                                                     <img src="assets/images/left-arrow.svg"
@@ -68,15 +71,15 @@
                                         <div class="nav-menu-select-box">
                                             <select (change)="selectedChange($event.target.value)">
                                                 <option *ngFor="let c of truyen?.chuongs"
-                                                    [attr.selected]="c?.chuongID == chuong?.chuongID ? true: null"
-                                                    [attr.value]="c?.chuongID">
+                                                    [selected]="c?.chuongID == truyen?.chuongs[currentChapIndex]?.chuongID ? true: null"
+                                                    [value]="c?.chuongID">
                                                     {{ c.tenChuong }}
                                                 </option>
                                             </select>
                                         </div>
                                     </li>
                                     <li class="nav-menu-item">
-                                        <a *ngIf="!last" (click)="redirectToAnotherChap(true)">
+                                        <a *ngIf="!last" (click)="goContinousChap()">
                                             <div class="nav-menu-item-box">
                                                 <div class="nav-menu-item-icon">
                                                     <img src="assets/images/right-arrow.svg"

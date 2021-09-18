@@ -10,7 +10,7 @@ export class LoginService {
   constructor() { }
 
   setNewID(newID: string) {
-    console.log(newID);
+    //console.log(newID);
     this.userLoginID.next(newID)
   }
 

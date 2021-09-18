@@ -42,10 +42,20 @@
                                         <tr *ngFor="let data of tacGias">
                                             <td>{{ data.tenTacGia }}</td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-normal">Sửa</button>
+                                                <button class="update-btn" 
+                                                        class="admin-btn-normal" 
+                                                        (click)="openModelWithID(data.tacGiaID, 'modal-tacGia-edit')">Sửa</button>
                                             </td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-danger">Xóa</button>
+                                                <button class="update-btn admin-btn-danger"
+                                                        *ngIf="!data.tinhTrang" 
+                                                        (click)="deleteTacGia(data)" 
+                                                        [disabled]="btnSubmitLocked">Ẩn</button>
+                                                        
+                                                <button class="update-btn admin-btn-orange"
+                                                        *ngIf="data.tinhTrang" 
+                                                        (click)="activeTacGia(data)" 
+                                                        [disabled]="btnSubmitLocked">Bỏ ẩn</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -53,10 +63,20 @@
                                         <tr *ngFor="let data of searchResult">
                                             <td>{{ data.tenTacGia }}</td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-normal">Sửa</button>
+                                                <button class="update-btn" 
+                                                        class="admin-btn-normal" 
+                                                        (click)="openModelWithID(data.tacGiaID, 'modal-tacGia-edit')">Sửa</button>
                                             </td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-danger">Xóa</button>
+                                                <button class="update-btn admin-btn-danger"
+                                                        *ngIf="!data.tinhTrang" 
+                                                        (click)="deleteTacGia(data)" 
+                                                        [disabled]="btnSubmitLocked">Ẩn</button>
+                                                        
+                                                <button class="update-btn admin-btn-orange"
+                                                        *ngIf="data.tinhTrang" 
+                                                        (click)="activeTacGia(data)" 
+                                                        [disabled]="btnSubmitLocked">Bỏ ẩn</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -79,6 +99,19 @@
                     <input type="text" formControlName="tenTacGia" class="modal-input form-control" placeholder="Tên tác giả...">
                     
                     <button class="modal-submit-btn" [disabled]="btnSubmitLocked" class="admin-btn-orange">Thêm mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="modal-tacGia-edit" class="modal hide">
+        <div class="modal-main">
+            <button class="modal-close-btn" (click)="closeModel('modal-tacGia-edit')">X</button>
+            <form [formGroup]="addForm" autocomplete="off" novalidate (ngSubmit)="updateTacGia(addForm.value)">
+                <div class="modal-body">
+                    <input type="text" formControlName="tenTacGia" class="modal-input form-control" [value]="getTacGiaName(currentTacGiaID)">
+                    
+                    <button class="modal-submit-btn" [disabled]="btnSubmitLocked" class="admin-btn-orange">Cập nhật</button>
                 </div>
             </form>
         </div>

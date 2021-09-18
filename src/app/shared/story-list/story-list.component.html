@@ -9,9 +9,13 @@
       <div class="story-item"  *ngFor="let data of (truyens ? truyens : [].constructor(20))">
         <div class="story-box">
           <a class="story-link" routerLink="/details/story-detail/{{ data?.truyenID }}">
-            <app-seleton-loader *ngIf="!truyens" Cwidth="25%" Cheight="250"></app-seleton-loader>
-            <img *ngIf="truyens" src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"
-              alt="image not available">
+            <app-seleton-loader *ngIf="!truyens" 
+                                Cwidth="25%" 
+                                Cheight="250"></app-seleton-loader>
+                                
+            <img *ngIf="truyens" 
+                  src="https://drive.google.com/uc?export=view&id={{ data?.hinhAnh }}"
+                  alt="image not available">
           </a>
           <div *ngIf="isHistory == true && truyens" class="story-delete-btn">
               <a (click)="callRefreshHistories(data?.truyenID)">
@@ -27,12 +31,19 @@
           </div>
         </div>
         <div class="story-info">
-          <app-seleton-loader *ngIf="!truyens" Cheight="20" Cwidth="100%"></app-seleton-loader>
-          <a *ngIf="truyens" class="chapter-link" routerLink="/details/story-detail/{{ data?.truyenID }}"><h3>{{data?.tenTruyen}}</h3></a>
+          <app-seleton-loader *ngIf="!truyens" 
+                              Cheight="20" 
+                              Cwidth="100%"></app-seleton-loader>
+                              
+          <a *ngIf="truyens" class="chapter-link" 
+              routerLink="/details/story-detail/{{ data?.truyenID }}">
+              <h3>{{data?.tenTruyen}}</h3>
+          </a>
           
           <ngContainer *ngIf="isHistory == true">
             <div class="newest-chapters">
-              <a *ngIf="truyens" class="chapter-link" routerLink="/details/story-reading/{{ data?.truyenID }}/{{ data?.chuongID }}">
+              <a *ngIf="truyens" class="chapter-link" 
+                  routerLink="/details/story-reading/{{ data?.truyenID }}/{{ data?.chuongID }}">
                 <span>Đọc tiếp</span>
                 <span>{{ data?.tenChuong }}</span>
               </a>
@@ -41,14 +52,14 @@
 
           <ngContainer *ngIf="truyens && isHistory == false">
             <div class="newest-chapters" *ngFor="let chap of data?.chuongs.slice(-3).reverse()">
-              <app-seleton-loader *ngIf="!truyens" Cwidth="100%"></app-seleton-loader>
+              <app-seleton-loader *ngIf="!truyens" 
+                                  Cwidth="100%"></app-seleton-loader>
+
               <a *ngIf="truyens" class="chapter-link"
-
-              (click)="this.historyManagement.addToHistory(data?.truyenID,data?.tenTruyen, chap.chuongID, chap.tenChuong, data?.hinhAnh)" 
-
-              routerLink="/details/story-reading/{{data?.truyenID }}/{{ chap.chuongID }}">
+                  (click)="this.historyManagement.addToHistory(data?.truyenID,data?.tenTruyen, chap.chuongID, chap.tenChuong, data?.hinhAnh)" 
+                  routerLink="/details/story-reading/{{data?.truyenID }}/{{ chap.chuongID }}">
                 <span>{{chap.tenChuong}}</span>
-                <span>{{chap.thoiGianCapNhat | date: 'dd/MM/yyyy'}}</span>
+                <span>{{chap.thoiGianCapNhat | dateAgo: chap.thoiGianCapNhat}}</span>
               </a>
             </div>
           </ngContainer>

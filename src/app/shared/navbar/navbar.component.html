@@ -25,7 +25,7 @@
             <div class="header-cat">
               <ul class="header-cat-list">
                 <li class="header-cat-item" *ngFor="let theloai of theLoais">
-                  <a href="details/category/{{ theloai.theLoaiID }}">{{ theloai.tenTheLoai }}</a>
+                  <a routerLink="details/category/{{ theloai.theLoaiID }}" [queryParams]="{reset: true}">{{ theloai.tenTheLoai }}</a>
                 </li>
               </ul>
             </div>

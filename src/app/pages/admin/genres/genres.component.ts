@@ -16,7 +16,8 @@ export class GenresComponent implements OnInit {
   theLoais: TheLoai[];
   addForm: FormGroup;
   searchResult: TheLoai[];
-
+  searchValue: string = "";
+  currentTheLoaiID: number;
   btnSubmitLocked: boolean = false;
 
   constructor(private theLoaiService: TheLoaiService, private toast: ToastAlertService) {
@@ -29,19 +30,16 @@ export class GenresComponent implements OnInit {
       this.theLoais = theLoais;
     })
 
-
     this.addForm = new FormGroup({
       tenTheLoai: new FormControl('', [Validators.required]),
     });
   }
 
   filter(value: string) {
-    this.searchResult = [];
-    for (let i = 0; i < this.theLoais.length; i++) {
-      if (this.theLoais[i].tenTheLoai.toLowerCase().includes(value)) {
-        this.searchResult.push(this.theLoais[i])
-      }
-    }
+    this.searchValue = value;
+    this.searchResult = this.theLoais.filter((theLoai) => {
+      return theLoai.tenTheLoai.toLowerCase().includes(value);
+    });
   }
 
   addTheLoai = (addFormValues) => {
@@ -72,8 +70,85 @@ export class GenresComponent implements OnInit {
       });
   }
 
+  deleteTheLoai(theLoai: TheLoai) {
+    this.btnSubmitLocked = true;
+    this.theLoaiService.delete("", theLoai.theLoaiID).subscribe(res => {
+      this.btnSubmitLocked = false;//thành công/không thành công thì mở lại button
+      if (!res?.error) {
+        this.toast.showToast("Thành công", "Ẩn thể loại thành công", "success");
+
+        this.theLoaiService.getList().subscribe(theLoais => {
+          this.theLoais = theLoais;
+          if (this.searchValue != "")
+            this.filter(this.searchValue);
+        })
+      }
+    })
+  }
+
+  activeTheLoai(theLoai: TheLoai) {
+    this.btnSubmitLocked = true;
+    theLoai.tinhTrang = false;
+    this.theLoaiService.updateWithID(theLoai.theLoaiID.toString(), theLoai).subscribe(res => {
+      this.btnSubmitLocked = false;//thành công/không thành công thì mở lại button
+      if (!res?.error) {
+        this.toast.showToast("Thành công", "Active thể loại thành công", "success");
+
+        this.theLoaiService.getList().subscribe(theLoais => {
+          this.theLoais = theLoais;
+          if (this.searchValue != "")
+            this.filter(this.searchValue);
+        })
+      }
+    })
+  }
+  
+  getTheLoaiName(theLoaiID: number): string {
+    if (theLoaiID) {
+      return this.theLoais.find(tacGia => {
+        return tacGia.theLoaiID === theLoaiID
+      }).tenTheLoai;
+    }
+    else return "";
+  }
+
+  
+  updateTheLoai = (addFormValues) => {
+    this.btnSubmitLocked = true;
+
+    const formValues = { ...addFormValues };
+
+    if (formValues.tenTheLoai == "") {
+      this.btnSubmitLocked = false;
+      this.toast.showToast("Lỗi", "Vui lòng điền đầy đủ thông tin", "error");
+      return;
+    }
+
+    const theLoai: TheLoai = {
+      tenTheLoai: formValues.tenTheLoai
+    }
+
+    this.theLoaiService.updateWithID(this.currentTheLoaiID.toString(), theLoai)
+      .subscribe(res => {
+        this.btnSubmitLocked = false;
+        if (!res?.error) {
+          this.toast.showToast("Thành công", "Cập nhật thể loại thành công", "success");
+
+          this.closeModel('modal-theloai-edit');
+
+          this.theLoaiService.getList().subscribe(theLoais => {
+            this.theLoais = theLoais;
+          })
+        }
+      });
+  }
+  
+  openModelWithID(theLoaiID: number, id: string) {
+    this.currentTheLoaiID = theLoaiID;
+    this.openModel(id);
+  }
+
   openModel(id: string) {
-    console.log(id)
     const modal = document.getElementById(`${id}`);
     modal.style.display = "block";
   }

@@ -58,10 +58,9 @@ export class RegisterComponent implements OnInit {
 
     this.userForRegistrationService.post(user)
     .subscribe(res => {
-      if (!res?.error) {
+      if (res?.message) {
         this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình để đến bước tiếp theo nhé!", "info");
-        window.location.href = "authentication/login";
-        //this._router.navigate["authentication/login"];
+        this._router.navigate(["authentication/login"])
       }
       else{
         this.btnSubmitLocked = false;

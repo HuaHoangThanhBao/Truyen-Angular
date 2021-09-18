@@ -40,7 +40,7 @@
                 routerLink="/details/story-reading/{{ data?.truyenID }}/{{ chuong.chuongID }}">
                   {{ chuong.tenChuong }}
                 </a>
-                <span>{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy'}}</span>
+                <span>{{ chuong.thoiGianCapNhat | dateAgo: chuong.thoiGianCapNhat}}</span>
               </div>
             </ngContainer>
           </div>

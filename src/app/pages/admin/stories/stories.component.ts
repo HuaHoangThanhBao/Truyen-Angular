@@ -100,7 +100,7 @@ export class StoriesComponent implements OnInit {
     this.loadAuth().then(this.loadAuthClient).then(m => this.googleLogIn = true);
   }
 
-  addTruyen = (addFormValues) => {
+  addTruyen = (addFormValues, modalID) => {
     this.btnSubmitLocked = true;
 
     if (this.hinhAnhChosen == "") {
@@ -124,14 +124,16 @@ export class StoriesComponent implements OnInit {
       hinhAnh: this.hinhAnhChosen
     }]
 
-    console.log(truyen)
+    //console.log(truyen)
 
     this.truyenService.post(truyen)
       .subscribe(res => {
+        this.btnSubmitLocked = false;
         if (!res?.error) {
-          this.btnSubmitLocked = false;
           this.toast.showToast("Thành công", "Thêm truyện thành công", "success");
           this.hinhAnhChosen = "";
+
+          this.closeModal(modalID);
 
           this.truyenService.getList().subscribe(truyens => {
             this.truyens = truyens;
@@ -159,10 +161,10 @@ export class StoriesComponent implements OnInit {
 
     truyen.trangThai = 1;
     this.truyenService.updateWithID(truyen.truyenID.toString(), truyen).subscribe(res => {
-      if(!res?.error){
-        this.btnSubmitLocked = false;
+      this.btnSubmitLocked = false;
+      if (!res?.error) {
         this.toast.showToast("Thành công", "Phê duyệt truyện thành công", "success");
-  
+
         this.truyenService.getList().subscribe(truyens => {
           this.truyens = truyens;
         })
@@ -180,7 +182,7 @@ export class StoriesComponent implements OnInit {
     return result;
   }
 
-  addDanhSachChuong = (form) => {
+  addDanhSachChuong = (form, modalID) => {
     this.btnSubmitLocked = true;
 
     if (!this.googleLogIn) {
@@ -217,12 +219,13 @@ export class StoriesComponent implements OnInit {
         })
 
         this.noiDungChuongService.post(this.noiDungChuongs).subscribe(res => {
+          this.btnSubmitLocked = false;
           if (!res?.error) {
-            this.btnSubmitLocked = false;
-            console.log(res);
+            //console.log(res);
             this.toast.showToast("Thành công", "Thêm chương và nội dung thành công", "success");
             this.noiDungChuongs = [];
 
+            this.closeModal(modalID);
 
             this.truyenService.getDetail(this.currentTruyenID).subscribe(details => {
               this.currentTruyenID = details.truyenID;
@@ -241,7 +244,7 @@ export class StoriesComponent implements OnInit {
   pheDuyetChuong(chuong: Chuong) {
     chuong.trangThai = 1;
     this.chuongService.updateWithID(chuong.chuongID.toString(), chuong).subscribe(res => {
-      if(!res?.error){
+      if (!res?.error) {
         this.toast.showToast("Thành công", "Phê duyệt chương thành công", "success");
         this.truyenService.getDetail(this.currentTruyenID).subscribe(details => {
           this.currentTruyenID = details.truyenID;
@@ -254,7 +257,7 @@ export class StoriesComponent implements OnInit {
   disableChuong(chuong: Chuong) {
     chuong.trangThai = 0;
     this.chuongService.updateWithID(chuong.chuongID.toString(), chuong).subscribe(res => {
-      if(!res?.error){
+      if (!res?.error) {
         this.toast.showToast("Cẩn thận", "Chương này tạm thời bị ẩn nên user sẽ không thấy được. Hãy cẩn thận", "success");
         this.truyenService.getDetail(this.currentTruyenID).subscribe(details => {
           this.currentTruyenID = details.truyenID;
@@ -270,7 +273,7 @@ export class StoriesComponent implements OnInit {
   showHinhAnh(chuongID: number) {
     this.noiDungChuongs = [];
     this.chuongService.getDetail(chuongID).subscribe(chuong => {
-      console.log(this.noiDungChuongs)
+      //console.log(this.noiDungChuongs)
 
       this.noiDungChuongs = chuong.noiDungChuongs;
       this.noImageToShow = this.noiDungChuongs.length > 0 ? false : true;
@@ -279,10 +282,10 @@ export class StoriesComponent implements OnInit {
 
   chooseHinhAnhForUpdate(nd: NoiDungChuong) {
     nd.tinhTrang == false ? nd.tinhTrang = true : nd.tinhTrang = false;
-    console.log(this.noiDungChuongs)
+    //console.log(this.noiDungChuongs)
   }
 
-  updateAllNoiDungChuong() {
+  updateAllNoiDungChuong(modalID) {
     this.btnSubmitLocked = true;
 
     if (this.noiDungChuongs.length == 0 || !this.noiDungChuongs) {
@@ -291,12 +294,13 @@ export class StoriesComponent implements OnInit {
       return;
     }
     this.noiDungChuongService.updateExtendRoute("multiple", this.noiDungChuongs).subscribe(res => {
+      this.btnSubmitLocked = false;
       if (!res?.error) {
-        this.btnSubmitLocked = false;
-        console.log(res);
+        //console.log(res);
         this.toast.showToast("Thành công", "Cập nhật chương thành công", "success");
         this.noiDungChuongs = [];
 
+        this.closeModal(modalID);
 
         this.truyenService.getDetail(this.currentTruyenID).subscribe(details => {
           this.currentTruyenID = details.truyenID;
@@ -311,16 +315,16 @@ export class StoriesComponent implements OnInit {
 
 
   ///////////////////////////////////////
-  openModelWithID(truyenID: number, id: string) {
+  openModalWithID(truyenID: number, id: string) {
     this.noiDungChuongs = [];
     this.hinhAnhChosen = "";
-    
+
     this.truyenService.getDetail(truyenID).subscribe(details => {
       const modal = document.getElementById(id);
       modal.style.display = "block";
       this.currentTruyenID = details.truyenID;
 
-      console.log(details);
+      //console.log(details);
       this.currentTruyen = details;
     })
 
@@ -331,7 +335,7 @@ export class StoriesComponent implements OnInit {
 
     this.phuLucService.getListExtend(`${truyenID}`).subscribe(phulucs => {
       this.phuLucsOfTruyen = phulucs;
-      console.log(phulucs)
+      //console.log(phulucs)
     });
   }
 
@@ -345,7 +349,7 @@ export class StoriesComponent implements OnInit {
     return this.phuLucsOfTruyen.some(checkCallBack);
   }
 
-  updateAllPhulucs() {
+  updateAllPhulucs(modalID) {
     this.btnSubmitLocked = true;
     const tmp: PhuLuc[] = [...this.phuLucsOfTruyen];
 
@@ -371,23 +375,27 @@ export class StoriesComponent implements OnInit {
         }
       }
     })
-    console.log(tmp);
+
     this.phuLucService.update(tmp).subscribe(res => {
-      if(!res?.error){
+      this.btnSubmitLocked = false;
+      if (!res?.error) {
+        this.toast.showToast("Thành công", "Cập nhật danh sách phụ lục thành công", "success");
+
+        this.closeModal(modalID);
+
         this.phuLucService.getListExtend(`${this.currentTruyenID}`).subscribe(phulucs => {
           this.phuLucsOfTruyen = phulucs;
-          this.btnSubmitLocked = false;
         });
       }
     })
   }
 
-  openModel(id: string) {
+  openModal(id: string) {
     const modal = document.getElementById(`${id}`);
     modal.style.display = "block";
   }
 
-  closeModel(id: string) {
+  closeModal(id: string) {
     const modal = document.getElementById(`${id}`);
     modal.style.display = "none";
   }
@@ -395,27 +403,56 @@ export class StoriesComponent implements OnInit {
 
 
 
-  /////////Avatar
-  updateAvatar() {
-    this.btnSubmitLocked = true;
+  /////////Info
 
-    if(this.hinhAnhChosen == ""){
-      this.btnSubmitLocked = false;
-      this.toast.showToast("Lỗi", "Bạn chưa chọn hình ảnh", "error");
-      return;
+  getTruyenName(truyenID: number): string {
+    if (truyenID) {
+      return this.truyens.find(truyen => {
+        return truyen.truyenID === truyenID
+      }).tenTruyen;
+    }
+    else return "";
+  }
+
+  getMoTa(truyenID: number): string {
+    if (truyenID) {
+      return this.truyens.find(truyen => {
+        return truyen.truyenID === truyenID
+      }).moTa;
+    }
+    else return "";
+  }
+
+  updateTruyen = (addFormValues, modalID) => {
+    this.closeModal(modalID);
+    this.btnSubmitLocked = true;
+    const formValues = { ...addFormValues };
+    const t = this.truyens.find(truyen => {
+      return truyen.truyenID === this.currentTruyenID
+    })
+
+    const truyen: Truyen = {
+      moTa: formValues.moTa === "" ? t.moTa : formValues.moTa,
+      tenTruyen: formValues.tenTruyen === "" ? t.tenTruyen : formValues.tenTruyen,
+      tacGiaID: formValues.tacGia === "" ? t.tacGiaID: formValues.tacGia,
+      hinhAnh: this.hinhAnhChosen === "" ? t.hinhAnh: formValues.hinhAnh,
+      tinhTrang: t.tinhTrang,
+      trangThai: t.trangThai,
     }
 
-    this.currentTruyen.hinhAnh = this.hinhAnhChosen;
-    this.truyenService.updateWithID(this.currentTruyen.truyenID.toString(), this.currentTruyen).subscribe(res => {
-      if(!res?.error){
+    this.truyenService.updateWithID(this.currentTruyenID.toString(), truyen)
+      .subscribe(res => {
         this.btnSubmitLocked = false;
-        this.toast.showToast("Thành công", "Cập nhật avatar cho truyện thành công", "success");
-  
-        this.truyenService.getList().subscribe(truyens => {
-          this.truyens = truyens;
-          //console.log(truyens)
-        })
-      }
-    })
+        if (!res?.error) {
+          this.toast.showToast("Thành công", "Cập nhật truyện thành công", "success");
+          this.hinhAnhChosen = "";
+
+          this.closeModal(modalID);
+
+          this.truyenService.getList().subscribe(truyens => {
+            this.truyens = truyens;
+          })
+        }
+      });
   }
 }

@@ -12,10 +12,10 @@
 
                     <div class="header-title">
                         <h1>Quản lí phân quyền</h1>
-                        <button id="add-btn" class="download-report-btn">
+                        <!-- <button id="add-btn" class="download-report-btn">
                             <img src="assets/images/plus.svg">
                             Thêm mới
-                        </button>
+                        </button> -->
                     </div>
                     <!--Table Container-->
                     <div class="table">
@@ -35,8 +35,8 @@
                                         <tr>
                                             <th>Username</th>
                                             <th>Quyền</th>
-                                            <th>Sửa</th>
-                                            <th>Xóa</th>
+                                            <th>Phê duyệt</th>
+                                            <th>Ẩn</th>
                                         </tr>
                                     </thead>
                                     <tbody *ngIf="!searchResult">
@@ -48,10 +48,24 @@
                                                 <p *ngIf="data.quyen == 2">admin</p>
                                             </td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-normal">Sửa</button>
+                                                <button *ngIf="data.quyen == 1 && data.lockoutEnabled" 
+                                                        class="update-btn" 
+                                                        class="admin-btn-normal" 
+                                                        (click)="pheDuyetUser(data)">Phê duyệt</button>
+
+                                                <p *ngIf="data.quyen == 1 && !data.lockoutEnabled">Đã phê duyệt</p>
+                                                <p *ngIf="data.quyen != 1">Không được phép</p>
                                             </td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-danger">Xóa</button>
+                                                <button class="update-btn admin-btn-danger"
+                                                        *ngIf="!data.tinhTrang" 
+                                                        (click)="deleteUser(data)" 
+                                                        [disabled]="btnSubmitLocked">Ẩn</button>
+                                                        
+                                                <button class="update-btn admin-btn-orange"
+                                                        *ngIf="data.tinhTrang" 
+                                                        (click)="activeUser(data)" 
+                                                        [disabled]="btnSubmitLocked">Bỏ ẩn</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -60,10 +74,24 @@
                                             <td>{{ data.userName }}</td>
                                             <td>{{ data.quyen }}</td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-normal">Sửa</button>
+                                                <button *ngIf="data.quyen == 1 && data.lockoutEnabled" 
+                                                        class="update-btn" 
+                                                        class="admin-btn-normal" 
+                                                        (click)="pheDuyetUser(data)">Phê duyệt</button>
+
+                                                <p *ngIf="data.quyen == 1 && !data.lockoutEnabled">Đã phê duyệt</p>
+                                                <p *ngIf="data.quyen != 1">Không được phép</p>
                                             </td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-danger">Xóa</button>
+                                                <button class="update-btn admin-btn-danger"
+                                                        *ngIf="!data.tinhTrang" 
+                                                        (click)="deleteUser(data)" 
+                                                        [disabled]="btnSubmitLocked">Ẩn</button>
+                                                        
+                                                <button class="update-btn admin-btn-orange"
+                                                        *ngIf="data.tinhTrang" 
+                                                        (click)="activeUser(data)" 
+                                                        [disabled]="btnSubmitLocked">Bỏ ẩn</button>
                                             </td>
                                         </tr>
                                     </tbody>

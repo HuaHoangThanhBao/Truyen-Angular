@@ -58,8 +58,8 @@
                                             <br>
                                             <div *ngIf="user && user?.hinhAnh">
                                                 <h3>Avatar của bạn</h3>
-                                                <img id="user-data" loading="lazy"
-                                                    data-src="assets/images/avatar/{{ user.hinhAnh }}">
+                                                <img id="user-data" 
+                                                    src="assets/images/avatar/{{ user.hinhAnh }}">
                                             </div>
                                             <p *ngIf="!user || !user?.hinhAnh">Bạn chưa có avatar, vui lòng chọn một
                                                 trong các
@@ -70,28 +70,28 @@
                                             <div class="img-form">
                                                 <div class="img-list">
                                                     <button (click)="setCurrentAvatar('cat-lie.png')">
-                                                        <img class="img" loading="lazy"
-                                                            data-src="assets/images/avatar/cat-lie.png">
+                                                        <img class="img" 
+                                                            src="assets/images/avatar/cat-lie.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('panda-eat.png')">
-                                                        <img class="img" loading="lazy"
-                                                            data-src="assets/images/avatar/panda-eat.png">
+                                                        <img class="img" 
+                                                            src="assets/images/avatar/panda-eat.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('panda-lie.png')">
-                                                        <img class="img" loading="lazy"
-                                                            data-src="assets/images/avatar/panda-lie.png">
+                                                        <img class="img" 
+                                                            src="assets/images/avatar/panda-lie.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('fox-hello.png')">
-                                                        <img class="img" loading="lazy"
-                                                            data-src="assets/images/avatar/fox-hello.png">
+                                                        <img class="img" 
+                                                            src="assets/images/avatar/fox-hello.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('chicken-hello.png')">
-                                                        <img class="img" loading="lazy"
-                                                            data-src="assets/images/avatar/chicken-hello.png">
+                                                        <img class="img" 
+                                                            src="assets/images/avatar/chicken-hello.png">
                                                     </button>
                                                     <button (click)="setCurrentAvatar('cow-eat.png')">
-                                                        <img class="img" loading="lazy"
-                                                            data-src="assets/images/avatar/cow-eat.png">
+                                                        <img class="img" 
+                                                            src="assets/images/avatar/cow-eat.png">
                                                     </button>
                                                 </div>
                                                 <button class="save-avatar-btn" type="submit" (click)="updateAvatar()"
@@ -105,8 +105,8 @@
                                                     <li class="fol-item" *ngFor="let data of theoDoisByUser">
                                                         <a
                                                             routerLink="/details/story-detail/{{ data.truyen.truyenID }}">
-                                                            <img class="img" loading="lazy"
-                                                                data-src="https://drive.google.com/uc?export=view&id={{ data.truyen.hinhAnh }}">
+                                                            <img class="img" 
+                                                                src="https://drive.google.com/uc?export=view&id={{ data.truyen.hinhAnh }}">
                                                         </a>
                                                         <a
                                                             routerLink="/details/story-detail/{{ data.truyen.truyenID }}">
@@ -126,7 +126,7 @@
                                                 <!--Timeline-->
                                                 <div class="timeline-area">
                                                     <div class="timeline-item" *ngFor="let data of binhLuansByUser">
-                                                        <div class="timeline-time">{{ data.ngayBL }}</div>
+                                                        <div class="timeline-time">{{ data.ngayBL | dateAgo: data.ngayBL }}</div>
                                                         <span class="bounce-btn"></span>
                                                         <div class="timeline-txt">
                                                             <p>{{ data.noiDung }}</p>
@@ -146,19 +146,23 @@
                                                 <!--Reset form-->
                                                 <div class="form-container">
                                                     <div class="form-inner">
-                                                        <form [formGroup]="updatePasswordForm" autocomplete="off"
+                                                        <form [formGroup]="updatePasswordForm" 
+                                                            autocomplete="off"
                                                             novalidate
                                                             (ngSubmit)="updatePassword(updatePasswordForm.value)">
                                                             <div class="form-row">
                                                                 <label for="password"
                                                                     class="col-form-label col-sm-2">Mật khẩu
                                                                     cũ</label>
+
                                                                 <div class="form-field">
-                                                                    <input type="password" id="oldpassword"
+                                                                    <input type="password" 
+                                                                        id="oldpassword"
                                                                         formControlName="oldpassword"
                                                                         class="form-input form-control"
                                                                         placeholder="Mật khẩu cũ" />
                                                                 </div>
+
                                                                 <div class="form-field">
                                                                     <em
                                                                         *ngIf="validateControl('oldpassword') && hasError('oldpassword', 'required')">*Vui
@@ -169,11 +173,15 @@
                                                                 <label for="password"
                                                                     class="col-form-label col-sm-2">Mật khẩu
                                                                     mới</label>
+
                                                                 <div class="form-field">
-                                                                    <input type="password" id="password"
-                                                                        formControlName="password" class="form-input form-control"
+                                                                    <input type="password" 
+                                                                        id="password"
+                                                                        formControlName="password" 
+                                                                        class="form-input form-control"
                                                                         placeholder="Mật khẩu mới" />
                                                                 </div>
+
                                                                 <div class="form-field">
                                                                     <em
                                                                         *ngIf="validateControl('password') && hasError('password', 'required')">*Vui
@@ -184,11 +192,15 @@
                                                                 <label for="confirm" class="col-form-label col-sm-2">Xác
                                                                     nhận mật
                                                                     khẩu mới</label>
+
                                                                 <div class="form-field">
-                                                                    <input type="password" id="confirm"
-                                                                        formControlName="confirm" class="form-input form-control"
+                                                                    <input type="password" 
+                                                                        id="confirm"
+                                                                        formControlName="confirm" 
+                                                                        class="form-input form-control"
                                                                         placeholder="Xác nhận mật khẩu mới" />
                                                                 </div>
+
                                                                 <div class="form-field">
                                                                     <em
                                                                         *ngIf="validateControl('confirm') && hasError('confirm', 'required')">*Vui
@@ -200,9 +212,10 @@
                                                             <br>
                                                             <div class="form-field btn">
                                                                 <div class="btn-layer"></div>
-                                                                <button type="submit"  [className]="!updatePasswordForm.valid || btnSubmitLocked ? 'btn btn-info': 'btn btn-info active'"
-                                                                    [disabled]="!updatePasswordForm.valid || btnSubmitLocked">Đặt
-                                                                    lại mật khẩu</button>
+                                                                <button type="submit"  
+                                                                    [className]="!updatePasswordForm.valid || btnSubmitLocked ? 'btn btn-info': 'btn btn-info active'"
+                                                                    [disabled]="!updatePasswordForm.valid || btnSubmitLocked">
+                                                                    Đặt lại mật khẩu</button>
                                                             </div>
                                                         </form>
                                                     </div>

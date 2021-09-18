@@ -8,6 +8,9 @@ export interface User {
     lastName?: string;
     email?: string;
     hinhAnh: string;
+    quyen?: boolean;
     theoDois?: TheoDoi[];
     binhLuans?: BinhLuan[];
+    tinhTrang?: boolean;
+    lockoutEnabled?: boolean;
 }

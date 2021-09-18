@@ -31,18 +31,27 @@
                 <form [formGroup]="publishCommentForm" autocomplete="off" novalidate
                     (ngSubmit)="publishComment(publishCommentForm.value)">
 
-                    <textarea id="noiDung" formControlName="noiDung" class="form-control"
-                        placeholder="Các bạn có thể bình luận tại đây..."></textarea>
+                    <textarea id="noiDung" 
+                                formControlName="noiDung" 
+                                class="form-control"
+                                placeholder="Các bạn có thể bình luận tại đây..."></textarea>
+
                     <div class="comment-alert">
                         <em *ngIf="validateControl('noiDung') && hasError('noiDung', 'required')">*Vui lòng không để
                             trống</em>
                     </div>
 
-                    <app-seleton-loader *ngIf="!binhLuans" Cwidth="100" Cheight="35" Cmargin="20px 0 0 0" circle="20px">
+                    <app-seleton-loader *ngIf="!binhLuans" 
+                                        Cwidth="100" 
+                                        Cheight="35" 
+                                        Cmargin="20px 0 0 0" 
+                                        circle="20px">
                     </app-seleton-loader>
+
                     <div *ngIf="binhLuans" class="btn-detail-group pad-top-10 pad-bot-25">
-                        <button class="btn-social" type="submit"
-                            [disabled]="!publishCommentForm.valid || btnSubmitLocked">Gửi</button>
+                        <button class="btn-social" 
+                                type="submit"
+                                [disabled]="!publishCommentForm.valid || btnSubmitLocked">Gửi</button>
                     </div>
                 </form>
             </ng-container>
@@ -59,17 +68,25 @@
                 <ng-container>
                     <div class="comment-detail">
                         <div class="comment-image">
-                            <app-seleton-loader *ngIf="!binhLuans" Cwidth="45" Cheight="45"></app-seleton-loader>
+                            <app-seleton-loader *ngIf="!binhLuans" 
+                                                Cwidth="45" 
+                                                Cheight="45"></app-seleton-loader>
+
                             <img *ngIf="binhLuans" src="assets/images/avatar/{{ data?.user.hinhAnh }}"
                                 alt="no image avaiable">
                         </div>
                         <div class="comment-content">
                             <div class="comment-content-container">
-                                <app-seleton-loader *ngIf="!binhLuans" Cheight="20"></app-seleton-loader>
+                                <app-seleton-loader *ngIf="!binhLuans" 
+                                                    Cheight="20"></app-seleton-loader>
+
                                 <div *ngIf="binhLuans" class="comment-content-title">
                                     <p class="comment-name">{{ data?.user.userName }}</p>
                                 </div>
-                                <app-seleton-loader *ngIf="!binhLuans" Cheight="20"></app-seleton-loader>
+
+                                <app-seleton-loader *ngIf="!binhLuans" 
+                                                    Cheight="20"></app-seleton-loader>
+
                                 <div *ngIf="binhLuans" class="comment-content-description">
                                     <div [innerHTML]="data?.noiDung"></div>
                                 </div>

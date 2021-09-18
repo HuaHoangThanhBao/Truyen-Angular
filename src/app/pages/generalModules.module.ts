@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { SeletonLoaderModule } from '../modules/seleton-loader/seleton-loader.module';
 import { ImagesLazyloadModule } from '../shared/images-lazyload/images.lazyload.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DateAgoPipe } from '../pipes/date-ago.pipe';
 
 @NgModule({
     imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, SeletonLoaderModule, ImagesLazyloadModule],
@@ -18,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CommentSidebarComponent,
         CommentListComponent,
         PaginationComponent,
+        DateAgoPipe
     ],
     exports: [
         StoryListComponent,
@@ -26,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         CommentListComponent,
         PaginationComponent,
         SeletonLoaderModule,
-        ImagesLazyloadModule
+        ImagesLazyloadModule,
+        DateAgoPipe
     ]
 })
 export class GeneralModules { }

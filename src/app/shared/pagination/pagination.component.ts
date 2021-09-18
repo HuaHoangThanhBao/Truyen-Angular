@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, AfterViewInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 /*Khai báo hàm từ file pagination.js*/
 //declare function paginationInit(totalCount, currentPage, pageSize): void;
 
@@ -15,14 +16,18 @@ export class PaginationComponent implements OnInit {
 
   @Output() refresh: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) {
+    this.route.paramMap.subscribe((param) => {
+      const reset = this.route.snapshot.queryParams['reset'];
+      if(reset) this.currentPage = 1;
+    });
+   }
 
   ngOnInit(): void {
   }
 
   //Gọi ở story-list component
   passPagingData(data) {
-    //console.log(data);
     this.renderPagination(data, this.currentPage);
   }
 
@@ -62,7 +67,7 @@ export class PaginationComponent implements OnInit {
       }
     }
 
-    //console.log(this.numbers);
+    //console.log('numbers: ', this.numbers);
   }
 
   scrollTo(id: string): void {

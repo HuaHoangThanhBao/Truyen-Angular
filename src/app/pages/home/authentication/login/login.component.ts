@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private _router: Router, private _route: ActivatedRoute, private socialLoginGoogleService: SocialLoginGoogleService,
     private toast: ToastAlertService, private userForLoginService: UserForLoginService, private loginService: LoginService,
-    private jwtHelper: JwtHelperService) {
+    private jwtHelper: JwtHelperService, private _ngZone: NgZone) {
     this.gapi = getGAPIInstance();
   }
 
@@ -61,11 +61,11 @@ export class LoginComponent implements OnInit {
     this.attachSignIn();
   }
 
-  attachSignIn(){
+  attachSignIn() {
     this.auth2.attachClickHandler(document.getElementById('signInGoogleBtn'), {},
       () => {
         this.signInWithGoogle();
-      }, function(error) {
+      }, function (error) {
         console.log(error);
       });
   }
@@ -78,28 +78,28 @@ export class LoginComponent implements OnInit {
         'userId': 'me'
       });
       request.execute((res) => {
-          const user: SocialUser = { ...res };
-          //console.log(user);
+        const user: SocialUser = { ...res };
+        //console.log(user);
 
-          const externalAuth: ExternalAuthDto = {
-            email: user.email,
-            provider: 'GOOGLE',
-            idToken: user.id,
-            quyen: 0,
-            userName: user.name,
-            clientURI: `${environment.host}/authentication/email-confirmation`
-          }
-          //console.log(externalAuth);
+        const externalAuth: ExternalAuthDto = {
+          email: user.email,
+          provider: 'GOOGLE',
+          idToken: user.id,
+          quyen: 0,
+          userName: user.name,
+          clientURI: `${environment.host}/authentication/email-confirmation`
+        }
+        //console.log(externalAuth);
 
-          this.validateExternalAuth(externalAuth);
-        });
+        this.validateExternalAuth(externalAuth);
+      });
     });
   }
 
   private validateExternalAuth(externalAuth: ExternalAuthDto) {
     this.socialLoginGoogleService.post(externalAuth)
       .subscribe(res => {
-        console.log(res);
+        //console.log(res);
         if (!res?.error) {
           this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
 
@@ -112,22 +112,12 @@ export class LoginComponent implements OnInit {
           const userLoginID = decode['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid'];
           this.loginService.setNewID(userLoginID);
 
-          window.location.href = "index";
+          this._ngZone.run(() => {
+            this._router.navigate(['/index'])
+          });
         }
       });
   }
-
-  // // Sign out the user
-  // signOut() {
-  //   var auth2 = this.gapi.auth2.getAuthInstance();
-  //   auth2.signOut().then(function () {
-  //     // document.getElementsByClassName("userContent")[0].innerHTML = '';
-  //     // document.getElementsByClassName("userContent")[0].style.display = "none";
-  //     // document.getElementById("gSignIn").style.display = "block";
-  //   });
-
-  //   auth2.disconnect();
-  // }
 
   ////////
   public validateControl = (controlName: string) => {

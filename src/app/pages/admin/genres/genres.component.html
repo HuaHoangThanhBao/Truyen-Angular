@@ -35,17 +35,27 @@
                                         <tr>
                                             <th>Tên thể loại</th>
                                             <th>Sửa</th>
-                                            <th>Xóa</th>
+                                            <th>Ẩn</th>
                                         </tr>
                                     </thead>
                                     <tbody *ngIf="!searchResult">
                                         <tr *ngFor="let data of theLoais">
                                             <td>{{ data.tenTheLoai }}</td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-normal">Sửa</button>
+                                                <button class="update-btn" 
+                                                        class="admin-btn-normal" 
+                                                        (click)="openModelWithID(data.theLoaiID, 'modal-theloai-edit')">Sửa</button>
                                             </td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-danger">Xóa</button>
+                                                <button class="update-btn admin-btn-danger"
+                                                        *ngIf="!data.tinhTrang" 
+                                                        (click)="deleteTheLoai(data)" 
+                                                        [disabled]="btnSubmitLocked">Ẩn</button>
+                                                        
+                                                <button class="update-btn admin-btn-orange"
+                                                        *ngIf="data.tinhTrang" 
+                                                        (click)="activeTheLoai(data)" 
+                                                        [disabled]="btnSubmitLocked">Bỏ ẩn</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -53,10 +63,20 @@
                                         <tr *ngFor="let data of searchResult">
                                             <td>{{ data.tenTheLoai }}</td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-normal">Sửa</button>
+                                                <button class="update-btn" 
+                                                        class="admin-btn-normal" 
+                                                        (click)="openModelWithID(data.theLoaiID, 'modal-theloai-edit')">Sửa</button>
                                             </td>
                                             <td>
-                                                <button class="update-btn" class="admin-btn-danger">Xóa</button>
+                                                <button class="update-btn admin-btn-danger"
+                                                        *ngIf="!data.tinhTrang" 
+                                                        (click)="deleteTheLoai(data)" 
+                                                        [disabled]="btnSubmitLocked">Ẩn</button>
+                                                        
+                                                <button class="update-btn admin-btn-orange"
+                                                        *ngIf="data.tinhTrang" 
+                                                        (click)="activeTheLoai(data)" 
+                                                        [disabled]="btnSubmitLocked">Bỏ ẩn</button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -79,6 +99,19 @@
                     <input type="text" formControlName="tenTheLoai" class="modal-input form-control" placeholder="Tên thể loại...">
                     
                     <button class="modal-submit-btn" [disabled]="btnSubmitLocked" class="admin-btn-orange">Thêm mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="modal-theloai-edit" class="modal hide">
+        <div class="modal-main">
+            <button class="modal-close-btn" (click)="closeModel('modal-theloai-edit')">X</button>
+            <form [formGroup]="addForm" autocomplete="off" novalidate (ngSubmit)="updateTheLoai(addForm.value)">
+                <div class="modal-body">
+                    <input type="text" formControlName="tenTheLoai" class="modal-input form-control" [value]="getTheLoaiName(currentTheLoaiID)">
+                    
+                    <button class="modal-submit-btn" [disabled]="btnSubmitLocked" class="admin-btn-orange">Cập nhật</button>
                 </div>
             </form>
         </div>

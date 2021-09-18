@@ -19,14 +19,21 @@
                                         alt="no image avaiable">
                                 </div>
                                 <div class="hero-o-item">
-                                    <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
-                                        Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
+                                    <app-seleton-loader *ngIf="!truyen" 
+                                                        Cwidth="100%" 
+                                                        Cheight="20"
+                                                        Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
+
                                     <div *ngIf="truyen" class="hero-o-title">
                                         <h1>{{ truyen?.tenTruyen }}</h1>
                                     </div>
 
-                                    <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
-                                        Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
+                                    <app-seleton-loader *ngIf="!truyen" 
+                                                        Cwidth="100%" 
+                                                        Cheight="20"
+                                                        Cmargin="0 0 20px 0" 
+                                                        circle="20px"></app-seleton-loader>
+
                                     <div *ngIf="truyen" class="hero-o-detail">
                                         <div class="hero-o-detail-txt">
                                             <p>Tác giả: <span>{{ truyen?.tacGia.tenTacGia }}</span></p>
@@ -36,24 +43,34 @@
                                         </div>
                                     </div>
 
-                                    <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
-                                        Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
+                                    <app-seleton-loader *ngIf="!truyen" 
+                                                        Cwidth="100%" 
+                                                        Cheight="20"
+                                                        Cmargin="0 0 20px 0" 
+                                                        circle="20px"></app-seleton-loader>
+
                                     <div *ngIf="truyen" class="hero-o-detail">
                                         <div class="hero-o-detail-txt">
                                             <p>Lượt xem: <span>{{ tongLuotXem }}</span></p>
                                         </div>
                                         <div class="hero-o-detail-txt">
                                             <p>Thể loại:
-                                                <span *ngFor="let p of phuLucs; let l = last">
-                                                    <a>{{ p.theLoai.tenTheLoai }}</a>
-                                                    <span *ngIf="!l"> - </span>
+                                                <span *ngFor="let p of phuLucs; let i = index">
+                                                    <ng-conteiner *ngIf="!p.tinhTrang">
+                                                        <span *ngIf="i > 0"> - </span>
+                                                        <a>{{ p.theLoai.tenTheLoai }}</a>
+                                                    </ng-conteiner>
                                                 </span>
                                             </p>
                                         </div>
                                     </div>
 
-                                    <app-seleton-loader *ngIf="!truyen" Cwidth="100%" Cheight="20"
-                                        Cmargin="0 0 20px 0" circle="20px"></app-seleton-loader>
+                                    <app-seleton-loader *ngIf="!truyen" 
+                                                        Cwidth="100%" 
+                                                        Cheight="20"
+                                                        Cmargin="0 0 20px 0" 
+                                                        circle="20px"></app-seleton-loader>
+
                                     <div *ngIf="truyen" class="hero-o-detail">
                                         <div class="hero-o-detail-txt">
                                             <p>Lượt theo dõi: <span>{{ tongTheoDoi }}</span></p>
@@ -74,22 +91,36 @@
                                     </div>
                                     <div class="hero-o-detail">
                                         <div class="hero-o-btn-group">
-                                            <app-seleton-loader *ngIf="!truyen" Cwidth="50" Cheight="35"
-                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
+                                            <app-seleton-loader *ngIf="!truyen" 
+                                                                Cwidth="50" 
+                                                                Cheight="35"
+                                                                circle="20px" 
+                                                                Cmargin="5px 0 5px 20px"></app-seleton-loader>
+
                                             <button *ngIf="truyen" class="hero-o-btn-item" (click)="addFollowing()">Theo Dõi</button>
 
-                                            <app-seleton-loader *ngIf="!truyen" Cwidth="100" Cheight="35"
-                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
-                                            <button *ngIf="truyen" class="hero-o-btn-reading hero-o-btn-item"
-                                                (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyen?.tenTruyen,
+                                            <app-seleton-loader *ngIf="!truyen" 
+                                                                Cwidth="100" 
+                                                                Cheight="35"
+                                                                circle="20px" 
+                                                                Cmargin="5px 0 5px 20px"></app-seleton-loader>
+
+                                            <button *ngIf="truyen" 
+                                                    class="hero-o-btn-reading hero-o-btn-item"
+                                                    (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyen?.tenTruyen,
                                                 truyen?.chuongs[0].chuongID, truyen?.chuongs[0].tenChuong, truyen?.hinhAnh)">Đọc từ đầu</button>
                                                 
-                                            <app-seleton-loader *ngIf="!truyen" Cwidth="100" Cheight="35"
-                                                circle="20px" Cmargin="5px 0 5px 20px"></app-seleton-loader>
-                                            <button *ngIf="truyen" class="hero-o-btn-reading hero-o-btn-item"
-                                                (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyeboxxnDetailJson?.tenTruyen,
-                                                truyen?.chuongs.slice(-1)[0].chuongID, truyen?.chuongs.slice(-1)[0].tenChuong, truyen?.hinhAnh)">Đọc
-                                                mới nhất</button>
+                                            <app-seleton-loader *ngIf="!truyen" 
+                                                                Cwidth="100" 
+                                                                Cheight="35"
+                                                                circle="20px" 
+                                                                Cmargin="5px 0 5px 20px"></app-seleton-loader>
+
+                                            <button *ngIf="truyen" 
+                                                    class="hero-o-btn-reading hero-o-btn-item"
+                                                    (click)="this.historyManagement.addToHistory(truyen?.truyenID, truyeboxxnDetailJson?.tenTruyen,
+                                                truyen?.chuongs.slice(-1)[0].chuongID, truyen?.chuongs.slice(-1)[0].tenChuong, truyen?.hinhAnh)">
+                                                Đọc mới nhất</button>
                                         </div>
                                     </div>
                                 </div>
@@ -142,7 +173,7 @@
                                                             {{chuong.tenChuong }}
                                                         </a>
                                                     </p>
-                                                    <p class="chapter-txt">{{ chuong.thoiGianCapNhat | date: 'dd/MM/yyyy' }}</p>
+                                                    <p class="chapter-txt">{{ chuong.thoiGianCapNhat  | dateAgo: chuong.thoiGianCapNhat }}</p>
                                                     <p class="chapter-txt">{{ chuong.luotXem }}</p>
                                                 </div>
                                             </ng-container>

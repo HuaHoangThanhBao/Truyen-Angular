@@ -16,7 +16,8 @@ export class AuthorsComponent implements OnInit {
   tacGias: TacGia[];
   addForm: FormGroup;
   searchResult: TacGia[];
-
+  searchValue: string = "";
+  currentTacGiaID: number;
   btnSubmitLocked: boolean = false;
 
   constructor(private tacGiaService: TacGiaService, private toast: ToastAlertService) {
@@ -26,7 +27,8 @@ export class AuthorsComponent implements OnInit {
     setUpAdmin();
 
     this.tacGiaService.getList().subscribe(tacGias => {
-      this.tacGias = tacGias
+      this.tacGias = tacGias;
+      console.log(tacGias)
     })
 
     this.addForm = new FormGroup({
@@ -35,12 +37,10 @@ export class AuthorsComponent implements OnInit {
   }
 
   filter(value: string) {
-    this.searchResult = [];
-    for (let i = 0; i < this.tacGias.length; i++) {
-      if (this.tacGias[i].tenTacGia.toLowerCase().includes(value)) {
-        this.searchResult.push(this.tacGias[i])
-      }
-    }
+    this.searchValue = value;
+    this.searchResult = this.tacGias.filter((tacGia) => {
+      return tacGia.tenTacGia.toLowerCase().includes(value);
+    });
   }
 
   addTacGia = (addFormValues) => {
@@ -64,10 +64,86 @@ export class AuthorsComponent implements OnInit {
           this.toast.showToast("Thành công", "Thêm tác giả thành công", "success");
 
           this.tacGiaService.getList().subscribe(tacGias => {
-            this.tacGias = tacGias
+            this.tacGias = tacGias;
           })
         }
       });
+  }
+
+  deleteTacGia(tacGia: TacGia) {
+    this.btnSubmitLocked = true;
+    this.tacGiaService.delete("", tacGia.tacGiaID).subscribe(res => {
+      this.btnSubmitLocked = false;//thành công/không thành công thì mở lại button
+      if (!res?.error) {
+        this.toast.showToast("Thành công", "Ẩn tác giả thành công", "success");
+
+        this.tacGiaService.getList().subscribe(tacGias => {
+          this.tacGias = tacGias;
+          if (this.searchValue != "")
+            this.filter(this.searchValue);
+        })
+      }
+    })
+  }
+
+  getTacGiaName(tacGiaID: number): string {
+    if (tacGiaID) {
+      return this.tacGias.find(tacGia => {
+        return tacGia.tacGiaID === tacGiaID
+      }).tenTacGia;
+    }
+    else return "";
+  }
+
+  updateTacGia = (addFormValues) => {
+    this.btnSubmitLocked = true;
+    const formValues = { ...addFormValues };
+
+    if (formValues.tenTacGia == "") {
+      this.btnSubmitLocked = false;
+      this.toast.showToast("Lỗi", "Vui lòng điền đầy đủ thông tin", "error");
+      return;
+    }
+
+    const tacGia: TacGia = {
+      tenTacGia: formValues.tenTacGia
+    }
+
+    this.tacGiaService.updateWithID(this.currentTacGiaID.toString(), tacGia)
+      .subscribe(res => {
+        this.btnSubmitLocked = false;
+        if (!res?.error) {
+          this.toast.showToast("Thành công", "Cập nhật tác giả thành công", "success");
+
+          this.closeModel('modal-tacGia-edit');
+
+          this.tacGiaService.getList().subscribe(tacGias => {
+            this.tacGias = tacGias;
+          })
+        }
+      });
+  }
+
+  activeTacGia(tacGia: TacGia) {
+    this.btnSubmitLocked = true;
+    tacGia.tinhTrang = false;
+    this.tacGiaService.updateWithID(tacGia.tacGiaID.toString(), tacGia).subscribe(res => {
+      this.btnSubmitLocked = false;//thành công/không thành công thì mở lại button
+      if (!res?.error) {
+        this.toast.showToast("Thành công", "Active tác giả thành công", "success");
+
+        this.tacGiaService.getList().subscribe(tacGias => {
+          this.tacGias = tacGias;
+          if (this.searchValue != "")
+            this.filter(this.searchValue);
+        })
+      }
+    })
+  }
+
+  openModelWithID(tacGiaID: number, id: string) {
+    this.currentTacGiaID = tacGiaID;
+    this.openModel(id);
   }
 
   openModel(id: string) {

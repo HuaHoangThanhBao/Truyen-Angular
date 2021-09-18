@@ -91,11 +91,17 @@
         &-item {
             --list-item-columns: 2;
         }
+        &-box{
+            height: 230px;
+        }
     }
 
     @media (max-width: 349px) {
         &-item {
             --list-item-columns: 1;
+        }
+        &-box{
+            height: 200px;
         }
     }
 }

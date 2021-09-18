@@ -10,7 +10,7 @@ export interface Truyen{
     hinhAnh: string;
     moTa: string;
     phuLucs?: PhuLuc[];
-    tacGiaID: number;
+    tacGiaID?: number;
     tacGia?: TacGia;
     tenTruyen: string;
     theoDois?: TheoDoi[];

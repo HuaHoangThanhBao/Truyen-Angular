@@ -87,7 +87,7 @@ export class AdminComponent implements OnInit {
     .subscribe(res => {
       if(!res?.error){
         this.toast.showToast("Thành công", "Bây giờ bạn có thể xem thông tin dashboard", "info");
-        console.log(res);
+        //console.log(res);
 
         this._router.navigate(["/admin/dashboard"]);
         sessionStorage.setItem('admin-id', res.userID)
