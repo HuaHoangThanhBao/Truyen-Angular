@@ -22,9 +22,7 @@
             <ngContainer *ngIf="truyenRanks">
               <div *ngIf="truyenRanks" class="title-overflow">
                 <div class="title-overflow-content">
-                  <a class="ranking-link" routerLink="/details/story-detail/{{ data?.truyenID }}"><b>{{
-                    data?.tenTruyen
-                      }}</b></a>
+                  <a class="ranking-link" routerLink="/details/story-detail/{{ data?.truyenID }}"><b>{{data?.tenTruyen | titlecase}}</b></a>
                 </div>
               </div>
             </ngContainer>
@@ -38,7 +36,7 @@
                 chuong.chuongID, chuong.tenChuong, data?.hinhAnh)" 
               
                 routerLink="/details/story-reading/{{ data?.truyenID }}/{{ chuong.chuongID }}">
-                  {{ chuong.tenChuong }}
+                  {{ chuong.tenChuong | titlecase}}
                 </a>
                 <span>{{ chuong.thoiGianCapNhat | dateAgo: chuong.thoiGianCapNhat}}</span>
               </div>

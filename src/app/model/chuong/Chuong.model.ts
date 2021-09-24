@@ -2,6 +2,7 @@ import { Truyen } from '../truyen/Truyen.model';
 import { BinhLuan } from '../binhluan/BinhLuan.model';
 export interface Chuong{
     chuongID?: number;
+    stt?: number;
     truyenID: number;
     truyen?: Truyen;
 

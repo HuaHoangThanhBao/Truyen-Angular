@@ -37,7 +37,7 @@ export class IndexComponent implements OnInit {
     });
 
 
-    let truyenLatestUpdateParams: RequestParam = {pageNumber: 1, pageSize: 20, getAll: true}
+    let truyenLatestUpdateParams: RequestParam = {pageNumber: 1, pageSize: 20, lastestUpdate: true}
     this.truyenService.getListWithParams(truyenLatestUpdateParams).subscribe(truyens => {
       this.truyens = truyens;
       //console.log(truyens)

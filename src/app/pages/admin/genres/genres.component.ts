@@ -38,7 +38,7 @@ export class GenresComponent implements OnInit {
   filter(value: string) {
     this.searchValue = value;
     this.searchResult = this.theLoais.filter((theLoai) => {
-      return theLoai.tenTheLoai.toLowerCase().includes(value);
+      return theLoai.tenTheLoai.toLowerCase().includes(value.toLowerCase().trim());
     });
   }
 

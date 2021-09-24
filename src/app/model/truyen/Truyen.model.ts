@@ -13,6 +13,7 @@ export interface Truyen{
     tacGiaID?: number;
     tacGia?: TacGia;
     tenTruyen: string;
+    tenKhac?: string;
     theoDois?: TheoDoi[];
     tinhTrang?: boolean;
     trangThai?: number;

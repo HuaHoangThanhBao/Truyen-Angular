@@ -81,7 +81,7 @@
                                                     Cheight="20"></app-seleton-loader>
 
                                 <div *ngIf="binhLuans" class="comment-content-title">
-                                    <p class="comment-name">{{ data?.user.userName }}</p>
+                                    <p class="comment-name">{{ data?.user.userName | titlecase}}</p>
                                 </div>
 
                                 <app-seleton-loader *ngIf="!binhLuans" 

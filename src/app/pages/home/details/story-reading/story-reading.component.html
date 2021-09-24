@@ -9,20 +9,20 @@
                     <div class="hero-body-box">
                         <div class="hero-body-box-header">
                             <div class="hero-body-box-item">
-                                <h1>{{chuong?.truyen.tenTruyen}}</h1>
+                                <h1><a routerLink="/details/story-detail/{{truyen?.truyenID}}">{{chuong?.truyen.tenTruyen | titlecase}}</a></h1>
                             </div>
                             <div class="hero-body-box-item">
-                                <p>{{chuong?.truyen.tenChuong}}</p>
+                                <p>{{chuong?.truyen.tenChuong | titlecase}}</p>
                             </div>
                             <div class="hero-body-box-item">
                                 <p>Thời gian cập nhật: <span>{{ chuong?.thoiGianCapNhat | dateAgo: chuong?.thoiGianCapNhat}}</span></p>
                             </div>
                             <div class="nav-menu">
-                                <app-seleton-loader *ngIf="!truyen?.chuongs" 
+                                <app-seleton-loader *ngIf="!chuongs" 
                                                     Cheight="30" 
                                                     Cwidth="100%"></app-seleton-loader>
 
-                                <ul *ngIf="truyen?.chuongs" id="nav-menu-header" class="nav-menu-list">
+                                <ul *ngIf="chuongs" id="nav-menu-header" class="nav-menu-list">
                                     {{scrollMenu()}}
                                     <li class="nav-menu-item">
                                         <a routerLink="/index">
@@ -35,7 +35,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-menu-item">
-                                        <a routerLink="/details/story-detail/{{chuong?.truyen.truyenID}}">
+                                        <a routerLink="/details/story-detail/{{truyen?.truyenID}}">
                                             <div class="nav-menu-item-box">
                                                 <div class="nav-menu-item-icon">
                                                     <img src="assets/images/list.svg"
@@ -45,7 +45,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-menu-item">
-                                        <a routerLink="#">
+                                        <a (click)="addFollowing()">
                                             <div class="nav-menu-item-box">
                                                 <div class="nav-menu-item-icon">
                                                     <img src="assets/images/heart.svg"
@@ -70,8 +70,8 @@
                                     <li class="nav-menu-item">
                                         <div class="nav-menu-select-box">
                                             <select (change)="selectedChange($event.target.value)">
-                                                <option *ngFor="let c of truyen?.chuongs"
-                                                    [selected]="c?.chuongID == truyen?.chuongs[currentChapIndex]?.chuongID ? true: null"
+                                                <option *ngFor="let c of chuongs"
+                                                    [selected]="c?.chuongID == chuongs[currentChapIndex]?.chuongID ? true: null"
                                                     [value]="c?.chuongID">
                                                     {{ c.tenChuong }}
                                                 </option>

@@ -54,7 +54,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loginSubscription = this.loginService.currentUser.subscribe(newID => {
       if (newID != "") {
-        console.log(newID);
+        //console.log(newID);
         this.userLoginID = newID;
 
         this.userService.getDetail(this.userLoginID).subscribe(user => {

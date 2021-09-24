@@ -31,6 +31,13 @@ export abstract class ResourceService<T> {
             );
     }
     
+    getListWithID(id: string): Observable<T[]> {
+        return this.httpClient.get<T[]>(`${this.APIUrl}/${id}`, this.httpOptions)
+            .pipe(
+                catchError(this.handleError<T[]>())
+            );
+    }
+    
     getListExtend(extendRoute: string): Observable<T[]> {
         return this.httpClient.get<T[]>(`${this.APIUrl}/${extendRoute}`, this.httpOptions)
             .pipe(
@@ -93,6 +100,13 @@ export abstract class ResourceService<T> {
         return this.httpClient.post(`${this.APIUrl}/${extendRoute}`, body, this.httpOptions)
             .pipe(
                 catchError(this.handleError<T>())
+            );
+    }
+    
+    postExtendNonCatchError(extendRoute, body: T | T[]): Observable<any> {
+        return this.httpClient.post(`${this.APIUrl}/${extendRoute}`, body, this.httpOptions)
+            .pipe(
+                catchError(this.handleErrorNonAlert<T>())
             );
     }
 
@@ -173,6 +187,16 @@ export abstract class ResourceService<T> {
             if (error.status != 200)
                 this.toastService.showToast("Lỗi", error.error.message, "error");
 
+            //Trả về error (nếu có)
+            result = error;
+
+            // Let the app keep running by returning an empty result.
+            return of(result as T);
+        };
+    }
+    
+    private handleErrorNonAlert<T>(operation = 'operation', result?: T) {
+        return (error: any): Observable<T> => {
             //Trả về error (nếu có)
             result = error;
 

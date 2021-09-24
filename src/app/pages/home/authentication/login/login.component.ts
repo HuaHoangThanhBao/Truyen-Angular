@@ -79,7 +79,6 @@ export class LoginComponent implements OnInit {
       });
       request.execute((res) => {
         const user: SocialUser = { ...res };
-        //console.log(user);
 
         const externalAuth: ExternalAuthDto = {
           email: user.email,
@@ -89,7 +88,6 @@ export class LoginComponent implements OnInit {
           userName: user.name,
           clientURI: `${environment.host}/authentication/email-confirmation`
         }
-        //console.log(externalAuth);
 
         this.validateExternalAuth(externalAuth);
       });
@@ -99,7 +97,6 @@ export class LoginComponent implements OnInit {
   private validateExternalAuth(externalAuth: ExternalAuthDto) {
     this.socialLoginGoogleService.post(externalAuth)
       .subscribe(res => {
-        //console.log(res);
         if (!res?.error) {
           this.toast.showToast("Đăng nhập thành công", "Hãy khám phá những điều thú vị nào!", "success");
 
@@ -140,7 +137,6 @@ export class LoginComponent implements OnInit {
 
     this.userForLoginService.post(user)
       .subscribe(res => {
-        console.log(res);
         if (!res?.error) {
           if (res.is2StepVerificationRequired) {
             this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình nhé!", "info");

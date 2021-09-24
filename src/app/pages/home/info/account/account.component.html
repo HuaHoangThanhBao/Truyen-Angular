@@ -49,9 +49,12 @@
                                     <section class="tab-col">
                                         <div class="tab-content tab1">
                                             <h2>Thông tin tài khoản</h2>
-                                            <p>Họ: {{user?.lastName}}</p>
-                                            <p>Tên: {{user?.firstName}}</p>
-                                            <p>Email: {{user?.email}}</p>
+                                            <p *ngIf="user?.lastName">Họ: <b>{{user?.lastName}}</b></p>
+                                            <p *ngIf="user?.firstName">Tên:<b> {{user?.firstName}}</b></p>
+                                            <p *ngIf="user?.userName">Username: <b>{{user?.userName}}</b></p>
+                                            <p *ngIf="user?.lastName && user?.firstName">Hình thức đăng ký: <b>đăng ký với form</b></p>
+                                            <p *ngIf="!user?.lastName || !user?.firstName">Hình thức đăng ký: <b>đăng ký qua Google</b></p>
+                                            <p>Email: <b>{{user?.email}}</b></p>
                                         </div>
                                         <div class="tab-content tab2">
                                             <h2>Thông tin chung</h2>

@@ -1,3 +1,4 @@
+<script src="https://apis.google.com/js/api.js"></script>
 <body>
     <div class="container-fluid">
         <!--Side Bar menu-->
@@ -148,7 +149,7 @@
             
             <h2>Tìm kiếm hình ảnh</h2>
             <div class="modal-chosen">
-                <input type="text" #urlInput (input)="chooseImage(urlInput.value)" placeholder="Nhập image id (nếu có)...">
+                <input type="text" (change)="chooseImage($event.target.value)" placeholder="Nhập image id (nếu có)...">
                 <br>
                 <h2>Hình ảnh bạn đang chọn</h2>
                 <img class="modal-image" src="https://drive.google.com/uc?export=view&id={{ hinhAnhChosen }}">
@@ -157,7 +158,11 @@
             <form [formGroup]="addForm" autocomplete="off" novalidate (ngSubmit)="updateTruyen(addForm.value, 'modal-info')">
                 <p>Tên truyện:</p>
                 <br>
-                <input type="text" formControlName="tenTruyen" class="modal-input form-control" [value]="getTruyenName(currentTruyenID)">
+                <input type="text" formControlName="tenTruyen" class="modal-input form-control" [value]="getTruyenName(currentTruyen?.truyenID)">
+                <br>
+                <p>Tên khác:</p>
+                <br>
+                <input type="text" formControlName="tenKhac" class="modal-input form-control" [value]="getTenKhac(currentTruyen?.truyenID)">
                 <br>
                 <p>Tác giả:</p>
                 <br>
@@ -171,7 +176,7 @@
                 <br>
                 <p>Mô tả:</p>
                 <br>
-                <textarea formControlName="moTa" class="modal-input form-control" [value]="getMoTa(currentTruyenID)"></textarea>
+                <textarea formControlName="moTa" class="modal-input form-control" [value]="getMoTa(currentTruyen?.truyenID)"></textarea>
                 <br>
                 <br>
                 <button [disabled]="btnSubmitLocked" class="admin-btn-orange">Cập nhật thông tin truyện</button>
@@ -230,9 +235,15 @@
                     <input type="text" formControlName="tenTruyen" class="modal-input form-control"
                         placeholder="Tên truyện...">
                     <br>
+                    <input type="text" formControlName="tenKhac" class="modal-input form-control"
+                        placeholder="Tên khác...">
+                    <br>
                     <p>Mô tả:</p>
                     <br>
                     <input type="text" formControlName="moTa" class="modal-input form-control" placeholder="Mô tả...">
+                    <br>
+                    <input type="text" class="modal-input form-control" (change)="searchTacGia($event.target.value)" placeholder="Tên tác giả cần tìm...">
+                    <input type="text" class="modal-input form-control" placeholder="ID tác giả..." value={{idTacGiaOnSearch}} disabled>
                     <br>
                     <p>Tác giả:</p>
                     <br>
@@ -247,7 +258,7 @@
 
             <div class="modal-chosen">
                 <h2>Tìm kiếm hình ảnh</h2>
-                <input type="text" #urlInput (input)="chooseImage(urlInput.value)" placeholder="Nhập image id (nếu có)...">
+                <input type="text" (change)="chooseImage($event.target.value)" placeholder="Nhập image id (nếu có)...">
                 <h2>Hình ảnh bạn đang chọn</h2>
                 <img class="modal-image" src="https://drive.google.com/uc?export=view&id={{ hinhAnhChosen }}">
             </div>
@@ -273,10 +284,10 @@
             <div class="modal-area">
                 <div class="modal-col">
 
-                    <button (click)="googleSignInProcess()">Đăng nhập google</button>
+                    <button class="admin-btn-normal" (click)="googleSignInProcess()">Đăng nhập google</button>
 
                     <ul class="modal-list-auto">
-                        <li class="modal-item" *ngFor="let t of currentTruyen?.chuongs">
+                        <li class="modal-item" *ngFor="let t of chuongs">
                             {{ t.tenChuong }}
 
                             <button *ngIf="t.trangThai == 0" (click)="pheDuyetChuong(t)" class="admin-btn-green">Duyệt chương</button>
@@ -288,6 +299,14 @@
                 <div class="modal-col">
                     <form [formGroup]="addChuongForm" autocomplete="off" novalidate
                         (ngSubmit)="addDanhSachChuong(addChuongForm.value, 'modal-chuong')">
+
+                        <input type="text" class="modal-input" placeholder="Tên parent folder..." (input)="attachParentFolder($event.target.value)">
+                        <br>
+                        <input type="text" class="modal-input" placeholder="Sub folder name..." #subFolder (input)="attachSubFolder($event.target.value)">
+                        <br>
+                        <input type="text" class="modal-input" disabled [value]="searchSubFolderResultTitle != subFolder.value ? 'Không tìm thấy': searchSubFolderResultTitle">
+                        <input type="text" class="modal-input" disabled [value]="searchSubFolderResultTitle != subFolder.value ? 'Không tìm thấy': searchSubFolderResultID">
+                        <br>
 
                         <input type="number" class="modal-input" formControlName="tenChuong"
                             placeholder="Số thứ tự chương...">

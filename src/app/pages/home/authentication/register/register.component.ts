@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit {
 
     this.userForRegistrationService.post(user)
     .subscribe(res => {
-      if (res?.message) {
+      if (!res?.error) {
         this.toast.showToast("Xác thực", "Bạn hãy kiểm tra email của mình để đến bước tiếp theo nhé!", "info");
         this._router.navigate(["authentication/login"])
       }

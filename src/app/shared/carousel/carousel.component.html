@@ -21,14 +21,14 @@
                 </a>
                 <div class="carousel-item-caption">
                   <a routerLink="/details/story-detail/{{ ca.truyenID }}">
-                    <p class="truncate">{{ ca.tenTruyen }}</p>
+                    <p class="truncate">{{ ca.tenTruyen | titlecase}}</p>
                   </a>
                   <div class="carousel-item-link">
                     <a routerLink="/details/story-reading/{{ ca.truyenID }}/{{ ca.chuongs.slice(-1)[0].chuongID }}"
                     
                       (click)="this.historyManagement.addToHistory(ca?.truyenID, ca?.tenTruyen, ca.chuongs.slice(-1)[0].chuongID, ca.chuongs.slice(-1)[0].tenChuong, ca?.hinhAnh)" 
                     >
-                      {{ ca.chuongs.slice(-1)[0].tenChuong }}
+                      {{ ca.chuongs.slice(-1)[0].tenChuong | titlecase}}
                     </a>
                     <a>
                       <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"

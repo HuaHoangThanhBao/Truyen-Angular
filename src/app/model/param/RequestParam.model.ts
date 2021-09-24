@@ -9,5 +9,6 @@ export interface RequestParam{
     userID?: string;
     truyenID?: number;
     chuongID?: number;
-    tenTruyen?: string
+    tenTruyen?: string;
+    tenKhac?: string;
 }

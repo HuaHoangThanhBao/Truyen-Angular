@@ -74,11 +74,12 @@
         color: $black;
         position: relative;
         padding: 5px;
-
-        p {
-            position: absolute;
-            bottom: 2px;
-        }
+    }
+    &-small-title {
+        font-size: 13px;
+    }
+    &-txt{
+        line-height: 1.5;
     }
 
     @media (max-width: 799px) {
@@ -86,7 +87,6 @@
             position: relative;
             left: 0;
             right: 0;
-            border-bottom: 1px solid lightgrey;
         }
     }
 }

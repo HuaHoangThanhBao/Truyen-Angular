@@ -28,7 +28,7 @@ export class AuthorsComponent implements OnInit {
 
     this.tacGiaService.getList().subscribe(tacGias => {
       this.tacGias = tacGias;
-      console.log(tacGias)
+      //console.log(tacGias)
     })
 
     this.addForm = new FormGroup({
@@ -39,7 +39,7 @@ export class AuthorsComponent implements OnInit {
   filter(value: string) {
     this.searchValue = value;
     this.searchResult = this.tacGias.filter((tacGia) => {
-      return tacGia.tenTacGia.toLowerCase().includes(value);
+      return tacGia.tenTacGia.toLowerCase().includes(value.toLowerCase().trim());
     });
   }
 

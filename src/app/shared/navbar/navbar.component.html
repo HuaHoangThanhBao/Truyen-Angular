@@ -59,7 +59,9 @@
                           <img src="https://drive.google.com/uc?export=view&id={{res.hinhAnh}}">
                           <div class="search-title">
                             <b>{{ res.tenTruyen }}</b>
-                            <p>Đọc ngay</p>
+                            <br>
+                            <i *ngIf="res.tenKhac != null" class="search-small-title search-txt">{{ res.tenKhac }}</i>
+                            <p *ngIf="res.newestChapter" class="search-small-title search-txt">{{ res.newestChapter.tenChuong }}</p>
                           </div>
                         </div>
                       </a>

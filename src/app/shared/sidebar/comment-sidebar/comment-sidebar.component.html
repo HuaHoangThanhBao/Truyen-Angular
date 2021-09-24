@@ -14,12 +14,12 @@
 
                                 <a *ngIf="binhLuans" class="comment-link"
                                     routerLink="/details/story-detail/{{ data?.truyen?.truyenID }}">
-                                    <b>{{ data?.truyen?.tenTruyen }}</b>
+                                    <b>{{ data?.truyen?.tenTruyen | titlecase}}</b>
                                 </a>
                                 
                                 <a *ngIf="binhLuans" class="comment-link"
                                     routerLink="/details/story-detail/{{ data?.chuong?.truyen.truyenID }}">
-                                    <b>{{ data?.chuong?.truyen.tenTruyen }}</b>
+                                    <b>{{ data?.chuong?.truyen.tenTruyen | titlecase}}</b>
                                 </a>
                             </div>
                         </div>
@@ -34,7 +34,7 @@
                         data?.chuong?.chuongID, data?.chuong?.tenChuong, data?.chuong?.truyen.hinhAnh)"
     
                         routerLink="/details/story-reading/{{ data?.chuong?.truyen.truyenID }}/{{ data?.chuong?.chuongID }}">
-                        {{data?.chuong.tenChuong}}</a>
+                        {{data?.chuong.tenChuong | titlecase}}</a>
                         
                         <span *ngIf="binhLuans" >{{data?.ngayBL | dateAgo: data.thoiGianCapNhat}}</span>
                     </div>
@@ -48,7 +48,7 @@
                             <div class="comment-content-container">
                                 <app-seleton-loader *ngIf="!binhLuans" Cheight="20"></app-seleton-loader>
                                 <div *ngIf="binhLuans" class="comment-content-title">
-                                    <p class="comment-name">{{data?.user.userName}}</p>
+                                    <p class="comment-name">{{data?.user.userName | titlecase}}</p>
                                 </div>
                                 <app-seleton-loader *ngIf="!binhLuans" Cheight="20"></app-seleton-loader>
                                 <div *ngIf="binhLuans" class="comment-content-description">

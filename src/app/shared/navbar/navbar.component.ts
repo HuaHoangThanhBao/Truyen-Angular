@@ -1,13 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { Component, Input, OnInit, AfterViewChecked } from '@angular/core';
 import { RequestParam } from '../../model/param/RequestParam.model';
 import { TruyenService } from '../../services/model-service/truyenService.service';
-import { templateJitUrl } from '@angular/compiler';
-import { Truyen } from '../../model/truyen/Truyen.model';
 import { TheLoai } from '../../model/theloai/TheLoai.model';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { TheLoaiService } from '../../services/model-service/theLoaiService.service';
+import { TruyenOnSearch } from 'src/app/model/truyen/TruyenOnSearch.model';
+import { TruyenOnSearchService } from '../../services/model-service/truyenOnSearchService.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,14 +12,14 @@ import { TheLoaiService } from '../../services/model-service/theLoaiService.serv
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, AfterViewChecked {
-  truyensOnSearch: Truyen[];
+  truyensOnSearch: TruyenOnSearch[];
 
   @Input() active: boolean;
   @Input() userLoginID: string;
   theLoais: TheLoai[];
   navBarInit: boolean = false;
 
-  constructor(private truyenService: TruyenService, private theLoaiService: TheLoaiService) { }
+  constructor(private truyenService: TruyenService, private truyenOnSearchService: TruyenOnSearchService, private theLoaiService: TheLoaiService) { }
 
   ngOnInit(): void {
     this.theLoaiService.getList().subscribe(theloais => {
@@ -73,10 +70,9 @@ export class NavbarComponent implements OnInit, AfterViewChecked {
       const searchResult = document.getElementById('search-result');
       searchResult.classList.remove('disable');
 
-      let truyenLatestUpdateParams: RequestParam = { sorting: true, tenTruyen: value.toLowerCase().trim() }
-      this.truyenService.getListWithParams(truyenLatestUpdateParams).subscribe(truyens => {
+      let truyenLatestUpdateParams: RequestParam = { sorting: true, tenTruyen: value.toLowerCase().trim(), tenKhac: value.toLowerCase().trim()}
+      this.truyenOnSearchService.getListWithParams(truyenLatestUpdateParams).subscribe(truyens => {
         this.truyensOnSearch = truyens;
-        //console.log(truyens)
       });
     }
     else this.truyensOnSearch = [];

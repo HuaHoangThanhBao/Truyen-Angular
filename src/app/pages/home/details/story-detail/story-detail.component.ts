@@ -24,9 +24,11 @@ declare function expandBtn(): void;
   providers: [HistoryManagement]
 })
 export class StoryDetailComponent implements OnInit {
-  binhLuans: BinhLuan[];
+
   truyen: Truyen;
-  phuLucs: PhuLuc;
+  chuongs: Chuong[];
+  binhLuans: BinhLuan[];
+  phuLucs: PhuLuc[];
 
   tongSao: unknown;
   tongTheoDoi: unknown;
@@ -62,8 +64,13 @@ export class StoryDetailComponent implements OnInit {
         this.tongTheoDoi = soLuotTheoDoi;
         //console.log(soLuotTheoDoi)
       });
+      
+      this.chuongService.getListExtend(`${this.truyenID}/chuongbytruyenid`).subscribe(chuongs => {
+        this.chuongs = chuongs;
+        //console.log(chuongs)
+      });
 
-      this.phuLucService.get(this.truyenID).subscribe(phulucs => {
+      this.phuLucService.getListWithID(this.truyenID.toString()).subscribe(phulucs => {
         this.phuLucs = phulucs;
         //console.log(phulucs)
       });
