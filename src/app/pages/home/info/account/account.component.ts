@@ -170,7 +170,7 @@ export class AccountComponent implements OnInit, OnDestroy {
                 localStorage.removeItem("jwt");
                 localStorage.removeItem("refreshToken");
                 this.toast.showToast("Rất tiếc khi bạn đăng xuất", "Hãy quay lại sớm nhé!", "warning");
-                window.location.href = 'index';
+                this._router.navigate(['index']);
               }
             });
         }

@@ -167,6 +167,9 @@
         }
     }
     @media (max-width: 799px) {
+        .hero-body-box{
+            margin-top: -200px;
+        }
         &-item:first-child {
             @include SetWidthHeight(100%, auto);
             display: block;

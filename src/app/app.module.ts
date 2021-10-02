@@ -23,7 +23,7 @@ import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confir
 import { ConfirmationDialogService } from './shared/confirmation-dialog/confirmation-dialog.service';
 
 export function tokenGetter() {
-  return localStorage.getItem("token");
+  return localStorage.getItem("jwt");
 }
 
 @NgModule({

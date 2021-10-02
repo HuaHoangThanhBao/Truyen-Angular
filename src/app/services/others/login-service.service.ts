@@ -11,7 +11,8 @@ export class LoginService {
 
   setNewID(newID: string) {
     //console.log(newID);
-    this.userLoginID.next(newID)
+    this.userLoginID.next(newID);
+    return newID;
   }
 
 }

@@ -20,12 +20,13 @@ export class StoryListComponent implements OnInit {
   @Output() deleteFollowingItemEvent: EventEmitter<any> = new EventEmitter();
   @Output() refreshHistories: EventEmitter<any> = new EventEmitter();
   @ViewChild(PaginationComponent) paginationComponent: PaginationComponent;
+  _confirmationDialogService: ConfirmationDialogService;
 
   pagingData: any;
 
-  testData: Truyen[];
-
-  constructor(private historyManagement: HistoryManagement, private confirmationDialogService: ConfirmationDialogService) { }
+  constructor(private historyManagement: HistoryManagement, private confirmationDialogService: ConfirmationDialogService) { 
+    this._confirmationDialogService = confirmationDialogService;
+  }
 
   ngOnInit(): void {
   }
@@ -38,18 +39,26 @@ export class StoryListComponent implements OnInit {
 
   callReloadList(value) {
     this.reload.emit(value);
+    return value;
+  }
+
+  callReloadHistories(truyenID){
+    this.refreshHistories.emit(truyenID);
+    return truyenID;
   }
 
   callDeleteFollowingItem(truyenID) {
     this.openConfirmationDialogForFollowing(truyenID);
+    return truyenID;
   }
 
   callRefreshHistories(truyenID) {
     this.openConfirmationDialogForHistory(truyenID);
+    return truyenID;
   }
   
   public openConfirmationDialogForFollowing(truyenID) {
-    this.confirmationDialogService.confirm('Vui lòng xác nhận', 'Bạn có muốn xóa truyện này khỏi danh sách theo dõi không?')
+    this._confirmationDialogService.confirm('Vui lòng xác nhận', 'Bạn có muốn xóa truyện này khỏi danh sách theo dõi không?')
       .then((confirmed) => {
         //console.log('User confirmed:', confirmed);
         if (confirmed == true) {
@@ -60,12 +69,12 @@ export class StoryListComponent implements OnInit {
   }
 
   public openConfirmationDialogForHistory(truyenID) {
-    this.confirmationDialogService.confirm('Vui lòng xác nhận', 'Bạn có muốn xóa truyện này khỏi lịch sử đọc không?')
+    this._confirmationDialogService.confirm('Vui lòng xác nhận', 'Bạn có muốn xóa truyện này khỏi lịch sử đọc không?')
       .then((confirmed) => {
         //console.log('User confirmed:', confirmed);
         if (confirmed == true) {
           this.historyManagement.delelteHistoryItem(truyenID);
-          this.refreshHistories.emit(truyenID);
+          this.callReloadHistories(truyenID);
         }
       })
     .catch(() => {});

@@ -29,6 +29,7 @@ export class PaginationComponent implements OnInit {
   //Gọi ở story-list component
   passPagingData(data) {
     this.renderPagination(data, this.currentPage);
+    return data;
   }
 
   renderPagination(data, index) {
@@ -66,22 +67,23 @@ export class PaginationComponent implements OnInit {
         this.numbers.splice(1, 0, this.currentPage - 1)
       }
     }
-
     //console.log('numbers: ', this.numbers);
+    return this.numbers;
   }
 
-  scrollTo(id: string): void {
+  scrollTo(id: string) {
     const target = document.getElementById(id);
+    if (!target) return undefined;
+
     const offset = 100;
     const bodyRect = document.body.getBoundingClientRect().top;
     const elementRect = target.getBoundingClientRect().top;
     const elementPosition = elementRect - bodyRect;
     const offsetPosition = elementPosition - offset;
 
-    if (!target)
-      return
-
     window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+
+    return id;
   }
 
   refreshStoryList(value) {
@@ -94,9 +96,10 @@ export class PaginationComponent implements OnInit {
     if (this.currentPage >= this.paginationHeader.TotalPages) this.currentPage = this.paginationHeader.TotalPages;
     if (this.currentPage <= 1) this.currentPage = 1;
 
-    this.renderPagination(this.paginationHeader, this.currentPage);
-    this.scrollTo("list-area")
-
     this.refresh.emit(this.currentPage);
+    this.renderPagination(this.paginationHeader, this.currentPage);
+    this.scrollTo("list-area");
+    
+    return value;
   }
 }

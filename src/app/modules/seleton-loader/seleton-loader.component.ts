@@ -9,10 +9,10 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SeletonLoaderComponent implements OnInit {
 
-  @Input() Cwidth;
-  @Input() Cheight;
-  @Input() Cmargin;
-  @Input() circle;
+  @Input() Cwidth: string = '';
+  @Input() Cheight: string = '';
+  @Input() Cmargin: string = '';
+  @Input() circle: string = '';
 
   constructor() { }
 

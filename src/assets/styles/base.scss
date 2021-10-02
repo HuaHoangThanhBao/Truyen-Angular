@@ -122,6 +122,11 @@ body {
             }
         }
     }
+    @media (max-width: 799px) {
+        &-main {
+            height: 250px;
+        }
+    }
 }
 /*End Main Container*/
 
